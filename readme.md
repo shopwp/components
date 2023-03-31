@@ -1,9 +1,9 @@
-# Components
+# 💽 ShopWP React Components
 
-React component library for ShopWP
+A React component library for ShopWP
 
 ## Install
 
 ```
-npm install Components
+npm install @shopwp/components
 ```
