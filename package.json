@@ -1,7 +1,7 @@
 {
   "name": "@shopwp/components",
   "version": "7.0.5",
-  "description": "React component library for ShopWP",
+  "description": "React component library for ShopWP.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.babel.js",
