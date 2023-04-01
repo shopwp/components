@@ -15,3 +15,11 @@ export { default as Reviews } from "./src/reviews"
 export { default as IconRemove } from "./src/icon-remove"
 export { default as ButtonSecondary } from "./src/button-secondary"
 export { default as IconLogo } from "./src/icon-logo"
+export {
+  default as useShopState,
+  default as useShopDispatch,
+} from "./src/shop/_state/hooks"
+export {
+  default as useCartState,
+  default as useCartDispatch,
+} from "./src/cart/_state/hooks"
