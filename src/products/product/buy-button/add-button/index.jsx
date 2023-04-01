@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
 import { findVariantFromSelectedOptions, allOptionsSelectedMatch } from "Common"
-import { buttonCSS, mq } from "Common/css"
+import { buttonCSS, mq } from "Common"
 import {
   useProductBuyButtonState,
   useProductBuyButtonDispatch,
@@ -14,7 +14,7 @@ import { useShopState } from "ShopState"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import Quantity from "../../../../quantity"
-import { getButtonText } from "Common/settings"
+import { getButtonText } from "Common"
 
 const { useRef, useEffect, useState } = wp.element
 
@@ -415,13 +415,9 @@ function AddButtonText({
 
     return wp.hooks.applyFilters(
       "product.addToCartText",
-      wp.hooks.applyFilters(
-        "product.addToCart.text",
-        text,
-        productBuyButtonState,
-        productState
-      ),
-      productBuyButtonState
+      text,
+      productBuyButtonState,
+      productState
     )
   }
 

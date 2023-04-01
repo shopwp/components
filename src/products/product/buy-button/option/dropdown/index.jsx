@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { ProductOptionContext } from "../_state/context"
-import { mq } from "Common/css"
+import { mq } from "Common"
 
 import "tippy.js/dist/tippy.css"
 import "tippy.js/animations/shift-away.css"

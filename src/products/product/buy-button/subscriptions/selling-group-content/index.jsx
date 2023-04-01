@@ -5,7 +5,7 @@ import { useProductState, useProductDispatch } from "../../../_state/hooks"
 import { useSubscriptionsBuyButtonState } from "../_state/hooks"
 import { useShopState } from "ShopState"
 import { findDiscountPrice } from "Common"
-import Price from "Common/pricing"
+import { Price } from "Components"
 
 function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
   const { useEffect } = wp.element

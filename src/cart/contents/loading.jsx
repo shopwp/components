@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Loader from "../../loader"
-import { IconLogo } from "Common/icons/icon-remove.jsx"
+import { IconLogo } from "Components"
 import { useShopState } from "ShopState"
 
 function CartLoadingContents({ isUpdating }) {

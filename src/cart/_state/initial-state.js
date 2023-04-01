@@ -1,5 +1,5 @@
 import defaults from "./defaults"
-import { mergeDefaults } from "Common/state"
+import { mergeDefaults } from "Common"
 
 function CartInitialState(props) {
   let settings = mergeDefaults(props.settings, defaults)

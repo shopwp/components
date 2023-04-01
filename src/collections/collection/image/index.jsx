@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "Hooks"
-import { addCustomSizingToImageUrl } from "Common/images"
+import { addCustomSizingToImageUrl } from "Common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useCollectionState } from "../_state/hooks"
 

@@ -1,4 +1,4 @@
-import { hasLink } from "Common/settings"
+import { hasLink } from "Common"
 import { isOnSale, hasManyVariants, getInitialQuantity } from "Common"
 
 function ProductInitialState(props) {

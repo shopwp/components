@@ -1,5 +1,5 @@
 import defaults from "./defaults"
-import { mergeDefaults } from "Common/state"
+import { mergeDefaults } from "Common"
 import isBase64 from "is-base64"
 
 function SettingsInitialState({

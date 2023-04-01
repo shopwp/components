@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "Hooks"
 import { Rating } from "react-simple-star-rating"
-import { fadeIn } from "Common/css"
+import { fadeIn } from "Common"
 import { useProductReviewsState } from "../_state/hooks"
 import { useShopState } from "ShopState"
 

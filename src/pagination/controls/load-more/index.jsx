@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "Hooks"
-import { buttonCSS } from "Common/css"
+import { buttonCSS } from "Common"
 import { InView } from "react-intersection-observer"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {

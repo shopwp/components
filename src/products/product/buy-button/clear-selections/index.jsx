@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useProductDispatch } from "../../_state/hooks"
-import { fadeIn } from "Common/css"
+import { fadeIn } from "Common"
 import { useProductBuyButtonDispatch } from "../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useShopState } from "ShopState"

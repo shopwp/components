@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, mq } from "Common/css"
+import { containerFluidCSS, flexRowCSS, mq } from "Common"
 import IconDecrement from "../icon-decrement"
 import IconIncrement from "../icon-increment"
 import { useDebounce } from "use-debounce"
 import { useFirstRender } from "Hooks"
-import { findNewPotentialTotal } from "Common/cart"
+import { findNewPotentialTotal } from "Common"
 import { useShopState } from "ShopState"
 
 function Quantity({

@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Thumbnails from "./mapped"
-import { doFeaturedSizing } from "Common/images"
-import { mq } from "Common/css"
+import { doFeaturedSizing } from "Common"
+import { mq } from "Common"
 import isEmpty from "lodash/isEmpty"
 import to from "await-to-js"
 import { useProductState } from "../../_state/hooks"

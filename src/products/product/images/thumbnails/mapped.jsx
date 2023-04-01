@@ -1,5 +1,5 @@
 import ProductThumbnailImage from "../thumbnail"
-import { getMediaInfo } from "Common/images"
+import { getMediaInfo } from "Common"
 
 function Thumbnails({ thumbnails, customOnClick }) {
   function getMediaId(image) {

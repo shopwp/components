@@ -4,9 +4,9 @@ import { has } from "lodash"
 import { useCartState, useCartDispatch } from "CartState"
 import { useShopState, useShopDispatch } from "ShopState"
 import { useAction, useFirstRender } from "Hooks"
-import { checkoutRedirect } from "Common/checkout"
-import { mq } from "Common/css"
-import { SlideInFromRightCart } from "Common/animations"
+import { checkoutRedirect } from "Common"
+import { mq } from "Common"
+import { SlideInFromRightCart } from "Common"
 
 import {
   addLines,

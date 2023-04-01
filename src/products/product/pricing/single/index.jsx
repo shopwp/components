@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Price from "Common/pricing"
+import { Price } from "Components"
 
 const ProductPriceSingle = wp.element.forwardRef((props, ref) => {
   const priceCSS = css`

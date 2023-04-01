@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 import CartTitle from "../title"
 import CartClose from "../close"
 import { useShopState } from "ShopState"
-import { containerFluidCSS } from "Common/css"
+import { containerFluidCSS } from "Common"
 
 function CartHeader({ settings }) {
   const shopState = useShopState()

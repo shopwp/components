@@ -8,7 +8,7 @@ import max from "lodash/max"
 
 import ProductPricingRange from "../range"
 import ProductPriceSingle from "../single"
-import { SlideInFromRight } from "Common/animations"
+import { SlideInFromRight } from "Common"
 import { firstPriceCompareAt } from "Common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
-import { isShowingComponent } from "Common/components"
+import { isShowingComponent } from "Common"
 import ErrorFallback from "../../../error-fallback"
 import { useProductState, useProductDispatch } from "../_state/hooks"
 import BuyButtonSkeleton from "../buy-button/skeleton"

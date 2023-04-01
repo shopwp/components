@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { SlideInFromTop } from "Common/animations"
+import { SlideInFromTop } from "Common"
 import { useShopState } from "ShopState"
 
 function ProductBuyButtonTextNotice({ settings }) {

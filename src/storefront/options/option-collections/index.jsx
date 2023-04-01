@@ -6,7 +6,7 @@ import has from "lodash/has"
 import to from "await-to-js"
 import { fetchCollections, maybeHandleApiError } from "Api"
 import { shouldOpenOnLoad } from "Common"
-import ButtonSecondary from "Components"
+import { ButtonSecondary } from "Components"
 import { useShopState } from "ShopState"
 
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>

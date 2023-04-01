@@ -6,7 +6,7 @@ import {
   useProductReviewsDispatch,
 } from "../_state/hooks"
 import { prettyDate } from "Common"
-import { mq, fadeIn, buttonCSS } from "Common/css"
+import { mq, fadeIn, buttonCSS } from "Common"
 import Gravatar from "react-gravatar"
 import ReviewsPagination from "../pagination"
 import ReviewForm from "../write"

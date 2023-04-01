@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 import CartLineItems from "../lineitems"
 import { useCartState } from "CartState"
 import { useShopState, useShopDispatch } from "ShopState"
-import { IconLogo } from "Common/icons/icon-remove.jsx"
+import { IconLogo } from "Components"
 import { useCartToggle } from "Hooks"
 
 function CartContents() {

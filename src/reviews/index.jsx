@@ -7,7 +7,6 @@ import { useShopState } from "ShopState"
 
 function Reviews(props) {
   const shopState = useShopState()
-
   return shopwp.misc.hasYotpo && props.settings.showReviews
     ? usePortal(
         <ProductReviewsProvider shopState={shopState} {...props}>

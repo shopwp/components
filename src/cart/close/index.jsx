@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common/css"
+import { mq } from "Common"
 import { useShopDispatch, useShopState } from "ShopState"
 
 function CartClose() {

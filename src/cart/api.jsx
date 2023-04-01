@@ -11,7 +11,7 @@ import {
   updateNote,
   updateBuyerIdentity,
 } from "Api"
-import { checkoutRedirect } from "Common/checkout"
+import { checkoutRedirect } from "Common"
 import Cookies from "js-cookie"
 
 function hasDiscount(cartData) {

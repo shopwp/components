@@ -1,5 +1,5 @@
 import CollectionProvider from "./_state/provider"
-import { isShowingComponent } from "Common/components"
+import { isShowingComponent } from "Common"
 import { itemWidthClass } from "Common"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 

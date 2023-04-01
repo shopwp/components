@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "Hooks"
-import { hasLink } from "Common/settings"
+import { hasLink } from "Common"
 import { useCollectionState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { StorefrontSelectionsValues } from "./values"
-import { getSelectionTypes } from "Common/selections"
+import { getSelectionTypes } from "Common"
 import { useStorefrontState } from "../_state/hooks"
 import isEmpty from "lodash/isEmpty"
 

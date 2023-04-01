@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Price from "Common/pricing"
-import { mq } from "Common/css"
+import { Price } from "Components"
+import { mq } from "Common"
 import SavingsInline from "../../../savings-inline"
 import { useCartState } from "CartState"
 import { useShopState } from "ShopState"

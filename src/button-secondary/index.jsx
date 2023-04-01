@@ -34,4 +34,4 @@ function ButtonSecondary({
   )
 }
 
-export { ButtonSecondary }
+export default ButtonSecondary

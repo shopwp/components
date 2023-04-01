@@ -2,7 +2,7 @@ import isEmpty from "lodash/isEmpty"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import StorefrontOptionsProvider from "./_state/provider"
 import StorefrontOptionsWrapper from "./wrapper"
-import { createSelectionsOfType, buildNewSelection } from "Common/selections"
+import { createSelectionsOfType, buildNewSelection } from "Common"
 
 function StorefrontOptions({ settings }) {
   const { useEffect } = wp.element

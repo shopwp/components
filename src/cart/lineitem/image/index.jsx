@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common/css"
-import { addCustomSizingToImageUrl } from "Common/images"
+import { mq } from "Common"
+import { addCustomSizingToImageUrl } from "Common"
 
 const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../link")

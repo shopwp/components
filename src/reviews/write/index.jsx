@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import ReviewRating from "../rating"
-import { buttonCSS } from "Common/css"
+import { buttonCSS } from "Common"
 import Loader from "../../loader"
 import to from "await-to-js"
 import { createYotpoReview, maybeHandleApiError } from "Api"

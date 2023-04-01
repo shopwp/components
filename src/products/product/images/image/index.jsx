@@ -1,9 +1,9 @@
 import ProductGalleryContext from "../gallery/_state/context"
-import { doFeaturedSizing, doThumbnailSizing } from "Common/images"
+import { doFeaturedSizing, doThumbnailSizing } from "Common"
 import Img from "./img"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
-import { hasLink } from "Common/settings"
+import { hasLink } from "Common"
 
 const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../../link")

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { IconRemove } from "Common/icons/icon-remove.jsx"
-import { createSelectionsOfType, buildNewSelection } from "Common/selections"
+import { IconRemove } from "Components"
+import { createSelectionsOfType, buildNewSelection } from "Common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import isString from "lodash/isString"
 import { useShopState } from "ShopState"

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, flexColSmallCSS, mq } from "Common/css"
+import { containerFluidCSS, flexRowCSS, flexColSmallCSS, mq } from "Common"
 import { FilterHook, shouldShowSaleNotice } from "Common"
 import { useCartState } from "CartState"
 import { useShopState } from "ShopState"

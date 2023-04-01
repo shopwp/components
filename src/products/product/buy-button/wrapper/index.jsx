@@ -1,4 +1,4 @@
-import { onlyAvailableOptionsFromVariants } from "Common/variants"
+import { onlyAvailableOptionsFromVariants } from "Common"
 import { findVariantFromSelectedOptions, allOptionsSelectedMatch } from "Common"
 import isEmpty from "lodash/isEmpty"
 

@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "Hooks"
 import { FilterHook } from "Common"
-import { hasLink } from "Common/settings"
+import { hasLink } from "Common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useProductState } from "../_state/hooks"
 import Link from "../../../link"

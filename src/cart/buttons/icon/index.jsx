@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { IconCSS } from "Common/css"
+import { IconCSS } from "Common"
 
 function CartIconWrapper({ settings, fixed = false }) {
   const pathCSS = css`

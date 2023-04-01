@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { getItemLink } from "Common/settings"
+import { getItemLink } from "Common"
 import { usePayloadState } from "../items/_state/payload/hooks"
 
 function LinkNormal({

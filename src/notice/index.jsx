@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import useIsMounted from "ismounted"
-import { SlideInFromTop } from "Common/animations"
+import { SlideInFromTop } from "Common"
 import Expire from "../expire"
 import { removeSkelly } from "Common"
 

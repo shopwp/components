@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { buttonCSS } from "Common/css"
+import { buttonCSS } from "Common"
 import {
   useProductReviewsState,
   useProductReviewsDispatch,

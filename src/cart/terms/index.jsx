@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { flexRowCSS } from "Common/css"
+import { flexRowCSS } from "Common"
 import { useCartState, useCartDispatch } from "CartState"
 import { useShopState } from "ShopState"
 

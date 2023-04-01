@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Price from "Common/pricing"
+import { Price } from "Components"
 import CartLineItemPriceSaleNoticeText from "./notice"
 
 function CartLineItemPriceSaleNotice({ salePrice }) {

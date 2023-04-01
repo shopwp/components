@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common/css"
-import Price from "Common/pricing"
+import { mq } from "Common"
+import { Price } from "Components"
 import CartLineItemPriceSaleNotice from "../sale-notice"
 
 function CartLineItemPriceSubscriptionDiscountNotice({
