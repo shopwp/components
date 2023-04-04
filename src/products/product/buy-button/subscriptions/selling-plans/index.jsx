@@ -7,10 +7,13 @@ import {
   useSubscriptionsBuyButtonState,
 } from "../_state/hooks"
 
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
-import { getRechargeSellingGroupsFromProductId, maybeHandleApiError } from "Api"
-import { getFirstSellingPlanData } from "Common"
+import {
+  getRechargeSellingGroupsFromProductId,
+  maybeHandleApiError,
+} from "@shopwp/api"
+import { getFirstSellingPlanData } from "@shopwp/common"
 
 import useIsMounted from "ismounted"
 import SubscriptionSkeleton from "../skeleton"
@@ -34,6 +37,7 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
     margin: 0 auto 16px auto;
     font-size: 14px;
     background: white;
+    color: black;
   `
 
   async function fetchSellingGroups(productId) {

@@ -1,4 +1,4 @@
-import { rSet } from "Common"
+import { rSet } from "@shopwp/common"
 import update from "immutability-helper"
 
 function ShopReducer(state, action) {

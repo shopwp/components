@@ -1,7 +1,10 @@
 import { ProductOptionContext } from "../_state/context"
 import { useProductState, useProductDispatch } from "../../../_state/hooks"
-import { createSelectedOptionsObject, findVariantFromVariantId } from "Common"
-import { useFirstRender } from "Hooks"
+import {
+  createSelectedOptionsObject,
+  findVariantFromVariantId,
+} from "@shopwp/common"
+import { useFirstRender } from "@shopwp/hooks"
 import {
   useProductBuyButtonState,
   useProductBuyButtonDispatch,

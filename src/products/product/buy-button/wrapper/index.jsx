@@ -1,5 +1,8 @@
-import { onlyAvailableOptionsFromVariants } from "Common"
-import { findVariantFromSelectedOptions, allOptionsSelectedMatch } from "Common"
+import { onlyAvailableOptionsFromVariants } from "@shopwp/common"
+import {
+  findVariantFromSelectedOptions,
+  allOptionsSelectedMatch,
+} from "@shopwp/common"
 import isEmpty from "lodash/isEmpty"
 
 import {
@@ -10,10 +13,10 @@ import {
 import ProductAddButton from "../add-button"
 import ProductOptions from "../options"
 import SubscriptionsBuyButton from "../subscriptions"
-import { useAction } from "Hooks"
+import { useAction } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function shouldShowSubscriptions(payload, settings) {
   var sellingPlanGroups = payload.sellingPlanGroups

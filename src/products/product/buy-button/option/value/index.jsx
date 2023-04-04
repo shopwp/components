@@ -1,5 +1,5 @@
 import { ProductOptionContext } from "../_state/context"
-import { createObj, findVariantFromVariantsList } from "Common"
+import { createObj, findVariantFromVariantsList } from "@shopwp/common"
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 

@@ -1,5 +1,5 @@
-import { prettyPrice } from "Common"
-import { useShopState } from "ShopState"
+import { prettyPrice } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 function Price({ price }) {
   const shopState = useShopState()

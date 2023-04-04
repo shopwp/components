@@ -12,7 +12,7 @@ import {
   isOneTimeSubscription,
   findSubscriptionFromProductId,
   getFirstSellingPlanData,
-} from "Common"
+} from "@shopwp/common"
 
 function SellingGroups() {
   const state = useSubscriptionsBuyButtonState()

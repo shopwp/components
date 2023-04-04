@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Products from "../../../products"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useSearchState } from "../../_state/hooks"
 import { useItemsState } from "../../../items/_state/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 const SearchModal = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchModal-public' */ "../modal")

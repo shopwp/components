@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import Select from "react-select"
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function SellingPlansList({ plans, sellingGroup }) {
   const { useState } = wp.element

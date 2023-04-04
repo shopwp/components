@@ -1,6 +1,6 @@
-import { getAllVendors } from "Api"
-import { shouldOpenOnLoad } from "Common"
-import { useShopState } from "ShopState"
+import { getAllVendors } from "@shopwp/api"
+import { shouldOpenOnLoad } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 const StorefrontFilterOptionsGroupOption = wp.element.lazy(() =>
   import(

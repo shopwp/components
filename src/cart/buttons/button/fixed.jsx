@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
-import { useCartState } from "CartState"
-import { useShopState, useShopDispatch } from "ShopState"
+import { useCartState } from "@shopwp/components"
+import { useShopState, useShopDispatch } from "@shopwp/components"
 import CartIconWrapper from "../icon"
 import CartCounter from "../counter"
 

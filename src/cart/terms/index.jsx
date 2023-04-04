@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { flexRowCSS } from "Common"
-import { useCartState, useCartDispatch } from "CartState"
-import { useShopState } from "ShopState"
+import { flexRowCSS } from "@shopwp/common"
+import { useCartState, useCartDispatch } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 function CartTerms() {
   const cartDispatch = useCartDispatch()

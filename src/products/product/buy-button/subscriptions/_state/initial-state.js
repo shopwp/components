@@ -1,4 +1,4 @@
-import { getPrices } from "Common"
+import { getPrices } from "@shopwp/common"
 
 function defaultSellingGroups(props) {
   if (props.payload && props.payload.requiresSellingPlan) {

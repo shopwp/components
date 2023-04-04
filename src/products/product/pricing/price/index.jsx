@@ -8,8 +8,8 @@ import max from "lodash/max"
 
 import ProductPricingRange from "../range"
 import ProductPriceSingle from "../single"
-import { SlideInFromRight } from "Common"
-import { firstPriceCompareAt } from "Common"
+import { SlideInFromRight } from "@shopwp/common"
+import { firstPriceCompareAt } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 const { useEffect, useRef, useState } = wp.element

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { StorefrontSelectionsValues } from "./values"
-import { getSelectionTypes } from "Common"
+import { getSelectionTypes } from "@shopwp/common"
 import { useStorefrontState } from "../_state/hooks"
 import isEmpty from "lodash/isEmpty"
 

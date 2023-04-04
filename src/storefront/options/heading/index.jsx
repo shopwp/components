@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
-import { useShopState } from "ShopState"
+import { usePortal } from "@shopwp/hooks"
+import { useShopState } from "@shopwp/components"
 
 function StorefrontFilterOptionsHeading({ dropzone }) {
   const shopState = useShopState()

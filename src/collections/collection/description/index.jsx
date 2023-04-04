@@ -1,4 +1,4 @@
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useCollectionState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 

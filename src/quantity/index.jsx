@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, mq } from "Common"
+import { containerFluidCSS, flexRowCSS, mq } from "@shopwp/common"
 import IconDecrement from "../icon-decrement"
 import IconIncrement from "../icon-increment"
 import { useDebounce } from "use-debounce"
-import { useFirstRender } from "Hooks"
-import { findNewPotentialTotal } from "Common"
-import { useShopState } from "ShopState"
+import { useFirstRender } from "@shopwp/hooks"
+import { findNewPotentialTotal } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 function Quantity({
   initialQuantity,

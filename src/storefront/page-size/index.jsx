@@ -5,9 +5,9 @@ import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
-import { findDefaultSelectVal } from "Common"
+import { findDefaultSelectVal } from "@shopwp/common"
 import Selects from "../selects"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function StorefrontPageSize() {
   const settings = useSettingsState()

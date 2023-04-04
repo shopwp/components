@@ -1,5 +1,5 @@
 import { ProductPrices } from "./prices"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
 function ProductPricing() {

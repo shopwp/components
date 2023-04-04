@@ -5,14 +5,14 @@ import {
   useProductReviewsState,
   useProductReviewsDispatch,
 } from "../_state/hooks"
-import { prettyDate } from "Common"
-import { mq, fadeIn, buttonCSS } from "Common"
+import { prettyDate } from "@shopwp/common"
+import { mq, fadeIn, buttonCSS } from "@shopwp/common"
 import Gravatar from "react-gravatar"
 import ReviewsPagination from "../pagination"
 import ReviewForm from "../write"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import Notice from "../../notice"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ReviewVerifiedBuyer() {
   const shopState = useShopState()

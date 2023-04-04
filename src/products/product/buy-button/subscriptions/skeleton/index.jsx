@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function SubscriptionSkeleton() {
   const shopState = useShopState()

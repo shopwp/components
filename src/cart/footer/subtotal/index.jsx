@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { Price } from "Components"
-import { mq } from "Common"
+import { Price } from "@shopwp/components"
+import { mq } from "@shopwp/common"
 import SavingsInline from "../../../savings-inline"
-import { useCartState } from "CartState"
-import { useShopState } from "ShopState"
+import { useCartState } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 function CartFooterSubtotal() {
   const cartState = useCartState()

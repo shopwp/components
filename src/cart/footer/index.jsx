@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useCartState } from "CartState"
-import { useShopState } from "ShopState"
+import { useCartState } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 const CartFooterTotal = wp.element.lazy(() =>
   import(/* webpackChunkName: 'CartFooterTotal-public' */ "./total")

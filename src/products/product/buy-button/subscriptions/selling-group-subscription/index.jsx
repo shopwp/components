@@ -1,8 +1,8 @@
 import { useSubscriptionsBuyButtonState } from "../_state/hooks"
 import SellingGroupContent from "../selling-group-content"
 import SellingPlans from "../selling-plans"
-import { isOneTimeSubscription } from "Common"
-import { useShopState } from "ShopState"
+import { isOneTimeSubscription } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 function SellingGroupSubscription({
   isSelected,

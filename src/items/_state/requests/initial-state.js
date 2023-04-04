@@ -4,6 +4,16 @@ function RequestsInitialState({
   queryType = "products",
   isFetchingNew = true,
 }) {
+  if (settings.collectionId) {
+    var query = "id:" + settings.collectionId
+  } else {
+    var query = queryParams?.query
+      ? queryParams.query
+      : settings?.query
+      ? settings.query
+      : false
+  }
+
   const first = queryParams?.first
     ? queryParams.first
     : settings?.pageSize
@@ -13,11 +23,7 @@ function RequestsInitialState({
     : shopwp.general.numPosts
 
   const finalQueryParams = {
-    query: queryParams?.query
-      ? queryParams.query
-      : settings?.query
-      ? settings.query
-      : false,
+    query: query,
     sortKey: queryParams?.sortKey
       ? queryParams.sortKey.toUpperCase()
       : settings?.sortBy

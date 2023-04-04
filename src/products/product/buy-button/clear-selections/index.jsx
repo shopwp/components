@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useProductDispatch } from "../../_state/hooks"
-import { fadeIn } from "Common"
+import { fadeIn } from "@shopwp/common"
 import { useProductBuyButtonDispatch } from "../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ClearSelections() {
   const productDispatch = useProductDispatch()

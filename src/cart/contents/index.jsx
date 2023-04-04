@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import CartLineItems from "../lineitems"
-import { useCartState } from "CartState"
-import { useShopState, useShopDispatch } from "ShopState"
-import { IconLogo } from "Components"
-import { useCartToggle } from "Hooks"
+import { useCartState } from "@shopwp/components"
+import { useShopState, useShopDispatch } from "@shopwp/components"
+import { IconLogo } from "@shopwp/components"
+import { useCartToggle } from "@shopwp/hooks"
 
 function CartContents() {
   const cartState = useCartState()

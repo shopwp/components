@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import ReviewRating from "../rating"
-import { buttonCSS } from "Common"
+import { buttonCSS } from "@shopwp/common"
 import Loader from "../../loader"
 import to from "await-to-js"
-import { createYotpoReview, maybeHandleApiError } from "Api"
+import { createYotpoReview, maybeHandleApiError } from "@shopwp/api"
 import { useProductReviewsState } from "../_state/hooks"
 import Notice from "../../notice"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ReviewForm(props) {
   const { useState } = wp.element

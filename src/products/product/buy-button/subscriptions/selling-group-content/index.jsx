@@ -3,9 +3,9 @@ import { jsx, css } from "@emotion/react"
 import { Radio } from "react-radio-group"
 import { useProductState, useProductDispatch } from "../../../_state/hooks"
 import { useSubscriptionsBuyButtonState } from "../_state/hooks"
-import { useShopState } from "ShopState"
-import { findDiscountPrice } from "Common"
-import { Price } from "Components"
+import { useShopState } from "@shopwp/components"
+import { findDiscountPrice } from "@shopwp/common"
+import { Price } from "@shopwp/components"
 
 function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
   const { useEffect } = wp.element

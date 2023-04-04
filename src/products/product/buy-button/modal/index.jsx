@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import Products from "../../../index"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
-import { useSettings } from "Hooks"
+import { useSettings } from "@shopwp/hooks"
 import Modal from "react-modal"
 import { useItemsState } from "../../../../items/_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"

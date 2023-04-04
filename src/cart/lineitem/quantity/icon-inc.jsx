@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common"
+import { mq } from "@shopwp/common"
 
 function CartLineItemQuantityIncIcon() {
   const cartLineItemQuantityIncIconCSS = css`

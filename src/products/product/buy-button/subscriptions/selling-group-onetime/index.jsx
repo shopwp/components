@@ -1,6 +1,6 @@
 import SellingGroupContent from "../selling-group-content"
 import { useProductDispatch } from "../../../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function SellingGroupOnetime({ isSelected, sellingGroup }) {
   const { useEffect } = wp.element

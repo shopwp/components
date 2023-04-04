@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { useProductState } from "../../_state/hooks"
 import ProductPrice from "../price"
-import { FilterHook, getPrices } from "Common"
+import { FilterHook, getPrices } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 const ProductPricesCompareAt = wp.element.lazy(() =>

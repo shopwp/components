@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common"
-import { useShopDispatch, useShopState } from "ShopState"
+import { mq } from "@shopwp/common"
+import { useShopDispatch, useShopState } from "@shopwp/components"
 
 function CartClose() {
   const shopDispatch = useShopDispatch()

@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import ProductImage from "../image"
 import ProductGalleryContext from "../gallery/_state/context"
-import { FilterHook } from "Common"
+import { FilterHook } from "@shopwp/common"
 
 function ProductThumbnailImage({
   image,

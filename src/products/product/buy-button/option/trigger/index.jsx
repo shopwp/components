@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
-import { buttonCSS, IconCSS } from "Common"
-import { useFirstRender } from "Hooks"
+import { buttonCSS, IconCSS } from "@shopwp/common"
+import { useFirstRender } from "@shopwp/hooks"
 import { ProductOptionContext } from "../_state/context"
 import isEmpty from "lodash/isEmpty"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"

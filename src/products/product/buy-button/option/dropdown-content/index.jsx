@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { ProductOptionContext } from "../_state/context"
-import { useOnClickOutside } from "Hooks"
+import { useOnClickOutside } from "@shopwp/hooks"
 import ProductOptionValue from "../value"
 import ProductVariantDropdownValue from "../dropdown-value"
 

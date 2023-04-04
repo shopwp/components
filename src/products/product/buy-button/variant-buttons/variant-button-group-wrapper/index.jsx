@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 import { ProductOptionContext } from "../../option/_state/context"
 import ProductVariantsButtons from "../variants"
 import ProductVariantMissingSelection from "../missing-selection"
-import { FilterHook } from "Common"
+import { FilterHook } from "@shopwp/common"
 
 function ProductVariantButtonGroupWrapper({
   option,
@@ -24,6 +24,7 @@ function ProductVariantButtonGroupWrapper({
   const groupStyles = css`
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
   `
 
   return (

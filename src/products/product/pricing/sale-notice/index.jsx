@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ProductPriceSaleNotice({ children }) {
   const shopState = useShopState()

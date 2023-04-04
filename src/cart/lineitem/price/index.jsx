@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common"
-import { Price } from "Components"
+import { mq } from "@shopwp/common"
+import { Price } from "@shopwp/components"
 import CartLineItemPriceSaleNotice from "../sale-notice"
 
 function CartLineItemPriceSubscriptionDiscountNotice({

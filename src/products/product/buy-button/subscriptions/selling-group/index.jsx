@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { isOneTimeSubscription } from "Common"
+import { isOneTimeSubscription } from "@shopwp/common"
 import SellingGroupOnetime from "../selling-group-onetime"
 
 const SellingGroupSubscription = wp.element.lazy(() =>

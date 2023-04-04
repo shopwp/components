@@ -1,4 +1,4 @@
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../notice")

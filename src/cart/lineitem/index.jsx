@@ -1,9 +1,14 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, flexColSmallCSS, mq } from "Common"
-import { FilterHook, shouldShowSaleNotice } from "Common"
-import { useCartState } from "CartState"
-import { useShopState } from "ShopState"
+import {
+  containerFluidCSS,
+  flexRowCSS,
+  flexColSmallCSS,
+  mq,
+} from "@shopwp/common"
+import { FilterHook, shouldShowSaleNotice } from "@shopwp/common"
+import { useCartState } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")

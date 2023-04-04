@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { Price } from "Components"
-import { useShopState } from "ShopState"
+import { Price } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 function SavingsInline({ amount, type }) {
   const shopState = useShopState()

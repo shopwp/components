@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useShopState, useShopDispatch } from "ShopState"
-import { useCartState, useCartDispatch } from "CartState"
+import { useShopState, useShopDispatch } from "@shopwp/components"
+import { useCartState, useCartDispatch } from "@shopwp/components"
 import { useDebounce } from "use-debounce"
 import { updateCartNote } from "../api.jsx"
-import { useFirstRender } from "Hooks"
+import { useFirstRender } from "@shopwp/hooks"
 
 function CartNote() {
   const { useState, useRef, useEffect } = wp.element

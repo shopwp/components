@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { Price } from "Components"
-import { mq } from "Common"
-import { useShopState } from "ShopState"
+import { Price } from "@shopwp/components"
+import { mq } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 const CartFooterEstimatedTaxTooltip = wp.element.lazy(() =>
   import(

@@ -2,7 +2,7 @@ import { useProductState } from "../../_state/hooks"
 import ProductGalleryContext from "./_state/context"
 import ProductThumbnailImages from "../thumbnails"
 import ProductFeaturedImage from "../featured"
-import { hasLink } from "Common"
+import { hasLink } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 function ProductGallery({ carousel }) {

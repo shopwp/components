@@ -4,10 +4,10 @@ import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
 import isNull from "lodash/isNull"
 import Drift from "drift-zoom"
-import { useFirstRender } from "Hooks"
+import { useFirstRender } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 const ProductImageSoldOutLabel = wp.element.lazy(() =>
   import(
@@ -198,15 +198,17 @@ function ProductFeaturedImage() {
         <ProductFeaturedImageVideo videoData={galleryState.featImage} />
       ) : (
         <>
-          {productState.isOnSale && settings.showSaleNotice && !isOutOfStock && (
-            <Suspense fallback={false}>
-              <ProductImageOnSaleLabel
-                text={shopState.t.l.sale}
-                onlyAvailableVariants={onlyAvailableVariants}
-                showSaleNoticePercentage={settings.showSaleNoticePercentage}
-              />
-            </Suspense>
-          )}
+          {productState.isOnSale &&
+            settings.showSaleNotice &&
+            !isOutOfStock && (
+              <Suspense fallback={false}>
+                <ProductImageOnSaleLabel
+                  text={shopState.t.l.sale}
+                  onlyAvailableVariants={onlyAvailableVariants}
+                  showSaleNoticePercentage={settings.showSaleNoticePercentage}
+                />
+              </Suspense>
+            )}
 
           {isOutOfStock &&
             galleryState.featImage &&

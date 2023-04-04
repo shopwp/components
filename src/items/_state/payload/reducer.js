@@ -1,5 +1,5 @@
 import has from "lodash/has"
-import { updatePayload } from "Common"
+import { updatePayload } from "@shopwp/common"
 
 function PayloadReducer(currentPayload, action) {
   switch (action.type) {

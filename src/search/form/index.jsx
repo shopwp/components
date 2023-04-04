@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import SearchInput from "./input"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 

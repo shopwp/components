@@ -4,10 +4,10 @@ import isEmpty from "lodash/isEmpty"
 import union from "lodash/union"
 import has from "lodash/has"
 import to from "await-to-js"
-import { fetchCollections, maybeHandleApiError } from "Api"
-import { shouldOpenOnLoad } from "Common"
-import { ButtonSecondary } from "Components"
-import { useShopState } from "ShopState"
+import { fetchCollections, maybeHandleApiError } from "@shopwp/api"
+import { shouldOpenOnLoad } from "@shopwp/common"
+import { ButtonSecondary } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
   import(

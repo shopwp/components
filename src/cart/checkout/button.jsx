@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useCartState, useCartDispatch } from "CartState"
-import { buttonCSS, mq } from "Common"
-import { checkoutRedirect } from "Common"
-import { useShopState } from "ShopState"
+import { useCartState, useCartDispatch } from "@shopwp/components"
+import { buttonCSS, mq } from "@shopwp/common"
+import { checkoutRedirect } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../../loader")

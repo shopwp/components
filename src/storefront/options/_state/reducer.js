@@ -1,4 +1,4 @@
-import { rSet } from "Common"
+import { rSet } from "@shopwp/common"
 
 function StorefrontOptionsReducer(state, action) {
   switch (action.type) {

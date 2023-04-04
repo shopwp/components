@@ -1,5 +1,5 @@
 import ProductThumbnailImage from "../thumbnail"
-import { getMediaInfo } from "Common"
+import { getMediaInfo } from "@shopwp/common"
 
 function Thumbnails({ thumbnails, customOnClick }) {
   function getMediaId(image) {

@@ -1,5 +1,5 @@
 import ProductGalleryWrapper from "./gallery/wrapper"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useProductState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 

@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import isString from "lodash/isString"
 import isObject from "lodash/isObject"
 import isArray from "lodash/isArray"
 import Notice from "../notice"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function Notices({ notices, dropzone = false, noticeGroup = "" }) {
   const shopState = useShopState()

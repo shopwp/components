@@ -4,7 +4,7 @@ import SettingsProvider from "./_state/settings/provider"
 import ItemsProvider from "./_state/provider"
 import ItemsWrapper from "./wrapper"
 import Pagination from "../pagination"
-import { addSkeletonLoader } from "Common"
+import { addSkeletonLoader } from "@shopwp/common"
 
 function Items(props) {
   const { useEffect } = wp.element

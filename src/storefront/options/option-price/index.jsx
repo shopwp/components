@@ -1,5 +1,5 @@
-import { shouldOpenOnLoad } from "Common"
-import { useShopState } from "ShopState"
+import { shouldOpenOnLoad } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
   import(

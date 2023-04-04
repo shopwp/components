@@ -6,9 +6,9 @@ import {
   queryOptionsNoRefetch,
   queryOptionsWithRefetch,
   maybeHandleApiError,
-} from "Api"
+} from "@shopwp/api"
 
-import { removeSkelly, findLastItem } from "Common"
+import { removeSkelly, findLastItem } from "@shopwp/common"
 import { useQuery } from "@tanstack/react-query"
 import isEmpty from "lodash/isEmpty"
 import has from "lodash/has"
@@ -18,7 +18,7 @@ import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
 import { useSettingsState, useSettingsDispatch } from "../_state/settings/hooks"
 import { usePayloadDispatch } from "../_state/payload/hooks"
 import { useItemsState, useItemsDispatch } from "../_state/hooks"
-import { useShopState, useShopDispatch } from "ShopState"
+import { useShopState, useShopDispatch } from "@shopwp/components"
 import isBase64 from "is-base64"
 
 function useGetItemsQuery() {

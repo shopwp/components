@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import ProductPriceSingle from "../single"
-import { SlideInFromRight } from "Common"
+import { SlideInFromRight } from "@shopwp/common"
 
 function ProductPricesSubscription({ subscriptionInfo, selectedVariant }) {
   const ProductPricesSubscriptionCSS = css`

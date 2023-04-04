@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { Rating } from "react-simple-star-rating"
-import { fadeIn } from "Common"
+import { fadeIn } from "@shopwp/common"
 import { useProductReviewsState } from "../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ReviewsRating({
   reviewScore = false,

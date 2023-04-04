@@ -2,8 +2,8 @@
 import { jsx, css } from "@emotion/react"
 import CartTitle from "../title"
 import CartClose from "../close"
-import { useShopState } from "ShopState"
-import { containerFluidCSS } from "Common"
+import { useShopState } from "@shopwp/components"
+import { containerFluidCSS } from "@shopwp/common"
 
 function CartHeader({ settings }) {
   const shopState = useShopState()

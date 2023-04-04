@@ -5,9 +5,9 @@ import {
   getYotpoReviewsByProductId,
   getYotpoReviews,
   maybeHandleApiError,
-} from "Api"
+} from "@shopwp/api"
 import ReviewsSkeleton from "../skeleton"
-import { removeSkelly } from "Common"
+import { removeSkelly } from "@shopwp/common"
 import {
   useProductReviewsState,
   useProductReviewsDispatch,

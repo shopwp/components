@@ -1,4 +1,4 @@
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function StockStatusInline({ inStock }) {
   const shopState = useShopState()

@@ -1,7 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { isMatching, findVariantFromOptionObject, FilterHook } from "Common"
-import { Price } from "Components"
+import {
+  isMatching,
+  findVariantFromOptionObject,
+  FilterHook,
+} from "@shopwp/common"
+import { Price } from "@shopwp/components"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
 function ProductVariantButtonValue({

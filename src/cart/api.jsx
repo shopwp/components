@@ -10,8 +10,8 @@ import {
   applyDiscount,
   updateNote,
   updateBuyerIdentity,
-} from "Api"
-import { checkoutRedirect } from "Common"
+} from "@shopwp/api"
+import { checkoutRedirect } from "@shopwp/common"
 import Cookies from "js-cookie"
 
 function hasDiscount(cartData) {

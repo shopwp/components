@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import PaginationControls from "../controls"
-import { isHidingPagination } from "Common"
+import { isHidingPagination } from "@shopwp/common"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
 

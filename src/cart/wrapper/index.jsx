@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { has } from "lodash"
-import { useCartState, useCartDispatch } from "CartState"
-import { useShopState, useShopDispatch } from "ShopState"
-import { useAction, useFirstRender } from "Hooks"
-import { checkoutRedirect } from "Common"
-import { mq } from "Common"
-import { SlideInFromRightCart } from "Common"
+import { useCartState, useCartDispatch } from "@shopwp/components"
+import { useShopState, useShopDispatch } from "@shopwp/components"
+import { useAction, useFirstRender } from "@shopwp/hooks"
+import { checkoutRedirect } from "@shopwp/common"
+import { mq } from "@shopwp/common"
+import { SlideInFromRightCart } from "@shopwp/common"
 
 import {
   addLines,
@@ -41,8 +41,8 @@ function CartWrapper() {
   const doDirectCheckout = useAction("do.directCheckout", null)
   const doCartToggle = useAction("do.cartToggle", null)
   const doToggleCartTerms = useAction("do.toggleCartTerms", null)
-
   const doCheckout = useAction("do.checkout", null)
+  const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity", null)
 
   const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
 
@@ -86,6 +86,17 @@ function CartWrapper() {
 
     updateIdentity(cartId, shopState.buyerIdentity, shopDispatch, cartDispatch)
   }, [shopState.buyerIdentity])
+
+  useEffect(() => {
+    if (doUpdateBuyerIdentity === null) {
+      return
+    }
+
+    shopDispatch({
+      type: "UPDATE_BUYER_IDENTITY",
+      payload: doUpdateBuyerIdentity,
+    })
+  }, [doUpdateBuyerIdentity])
 
   useEffect(() => {
     if (doCheckout === null) {

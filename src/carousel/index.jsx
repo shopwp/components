@@ -3,9 +3,9 @@ import { jsx, css } from "@emotion/react"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import { mq } from "Common"
+import { mq } from "@shopwp/common"
 import merge from "lodash/merge"
-import { removeSkelly } from "Common"
+import { removeSkelly } from "@shopwp/common"
 import { DefaultPrevArrow, DefaultNextArrow, CustomArrow } from "./arrows"
 
 function Carousel({

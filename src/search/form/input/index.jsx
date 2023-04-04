@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useDebounce } from "use-debounce"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 import { useSearchDispatch } from "../../_state/hooks"
-import { useFirstRender } from "Hooks"
+import { useFirstRender } from "@shopwp/hooks"
 import { useItemsState, useItemsDispatch } from "../../../items/_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {

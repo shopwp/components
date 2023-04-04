@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useShopState, useShopDispatch } from "ShopState"
-import { useCartState, useCartDispatch } from "CartState"
+import { useShopState, useShopDispatch } from "@shopwp/components"
+import { useCartState, useCartDispatch } from "@shopwp/components"
 import { removeLines } from "../../api.jsx"
 
 function CartLineItemRemove({ lineItem }) {

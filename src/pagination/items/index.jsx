@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common"
+import { mq } from "@shopwp/common"
 import PaginationItemsMap from "./map"
 import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { removeSkelly } from "Common"
+import { removeSkelly } from "@shopwp/common"
 import ProductsSorting from "../../products/sorting"
 
 function PaginationItems({ children, payload }) {

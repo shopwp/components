@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
-import { buttonCSS } from "Common"
+import { usePortal } from "@shopwp/hooks"
+import { buttonCSS } from "@shopwp/common"
 import { InView } from "react-intersection-observer"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {
@@ -9,7 +9,7 @@ import {
   useRequestsDispatch,
 } from "../../../items/_state/requests/hooks"
 import Loader from "../../../loader"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function PaginationLoadMore() {
   const settings = useSettingsState()

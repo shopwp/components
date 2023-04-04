@@ -1,5 +1,5 @@
-import { objectIsEmpty } from "Common"
-import { usePortal } from "Hooks"
+import { objectIsEmpty } from "@shopwp/common"
+import { usePortal } from "@shopwp/hooks"
 import { useStorefrontState } from "../_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { SlideInFromTop } from "Common"
-import { useShopState } from "ShopState"
+import { SlideInFromTop } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 function ProductBuyButtonTextNotice({ settings }) {
   const shopState = useShopState()

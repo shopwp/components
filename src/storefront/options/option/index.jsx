@@ -1,6 +1,6 @@
 import to from "await-to-js"
 import isEmpty from "lodash/isEmpty"
-import { maybeHandleApiError } from "Api"
+import { maybeHandleApiError } from "@shopwp/api"
 
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
   import(

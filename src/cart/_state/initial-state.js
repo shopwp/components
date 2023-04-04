@@ -1,5 +1,5 @@
 import defaults from "./defaults"
-import { mergeDefaults } from "Common"
+import { mergeDefaults } from "@shopwp/common"
 
 function CartInitialState(props) {
   let settings = mergeDefaults(props.settings, defaults)

@@ -1,5 +1,5 @@
-import { FilterHook } from "Common"
-import { useShopState } from "ShopState"
+import { FilterHook } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 const SubscriptionTooltip = wp.element.lazy(() =>
   import(

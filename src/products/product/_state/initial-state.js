@@ -1,5 +1,5 @@
-import { hasLink } from "Common"
-import { isOnSale, hasManyVariants, getInitialQuantity } from "Common"
+import { hasLink } from "@shopwp/common"
+import { isOnSale, hasManyVariants, getInitialQuantity } from "@shopwp/common"
 
 function ProductInitialState(props) {
   return {

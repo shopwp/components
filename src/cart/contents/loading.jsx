@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Loader from "../../loader"
-import { IconLogo } from "Components"
-import { useShopState } from "ShopState"
+import { IconLogo } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 
 function CartLoadingContents({ isUpdating }) {
   const shopState = useShopState()

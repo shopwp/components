@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import ProductPrice from "../price"
 import ProductPriceSaleNotice from "../sale-notice"
-import { firstPriceCompareAt } from "Common"
+import { firstPriceCompareAt } from "@shopwp/common"
 
 function ProductPricesCompareAt({
   compareAt,

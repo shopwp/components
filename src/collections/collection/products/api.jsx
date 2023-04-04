@@ -2,10 +2,10 @@ import {
   fetchProductsByCollections,
   queryOptionsNoRefetch,
   maybeHandleApiError,
-} from "Api"
+} from "@shopwp/api"
 
 import { useQuery } from "@tanstack/react-query"
-import { findLastItem } from "Common"
+import { findLastItem } from "@shopwp/common"
 
 function useGetCollectionProductsQuery(
   state,

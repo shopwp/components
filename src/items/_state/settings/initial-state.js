@@ -1,5 +1,5 @@
 import defaults from "./defaults"
-import { mergeDefaults } from "Common"
+import { mergeDefaults } from "@shopwp/common"
 import isBase64 from "is-base64"
 
 function SettingsInitialState({

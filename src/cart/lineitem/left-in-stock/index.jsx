@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "Common"
-import { useShopState } from "ShopState"
+import { mq } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 
 function CartLineItemLeftInStock({ lineItem }) {
   const shopState = useShopState()

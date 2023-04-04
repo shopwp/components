@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import StorefrontFilterOptionsHeading from "../heading"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 
 const OptionCollections = wp.element.lazy(() =>
   import(

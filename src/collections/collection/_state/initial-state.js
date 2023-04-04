@@ -1,4 +1,4 @@
-import { findLastItem } from "Common"
+import { findLastItem } from "@shopwp/common"
 
 function CollectionInitialState({ settings, payload }) {
   settings.products.collection = payload.title

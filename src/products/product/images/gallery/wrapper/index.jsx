@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { ProductGallery } from "../index"
 import { ProductGalleryProvider } from "../_state/provider.jsx"
-import { FilterHook } from "Common"
+import { FilterHook } from "@shopwp/common"
 import { useProductState } from "../../../_state/hooks"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 

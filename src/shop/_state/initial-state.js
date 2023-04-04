@@ -1,4 +1,4 @@
-import { findSavedBuyerIdentity } from "Common"
+import { findSavedBuyerIdentity } from "@shopwp/common"
 
 function ShopInitialState(props) {
   var savedIdentity = findSavedBuyerIdentity()

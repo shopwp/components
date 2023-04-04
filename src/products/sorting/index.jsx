@@ -1,16 +1,16 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Selects from "../../storefront/selects"
-import { findDefaultSelectVal, updateQueryParamsWithSort } from "Common"
+import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
 import Loader from "../../loader"
 import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useItemsState } from "../../items/_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ProductsSorting() {
   const requestsState = useRequestsState()

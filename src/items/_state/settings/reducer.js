@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "Common"
+import { rSet } from "@shopwp/common"
 
 function SettingsReducer(state, action) {
   switch (action.type) {

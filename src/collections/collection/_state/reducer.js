@@ -1,4 +1,4 @@
-import { rSet } from "Common"
+import { rSet } from "@shopwp/common"
 import uniqBy from "lodash/uniqBy"
 import update from "immutability-helper"
 

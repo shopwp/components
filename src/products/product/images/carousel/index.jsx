@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Carousel from "../../../../carousel"
-import { mq } from "Common"
+import { mq } from "@shopwp/common"
 import ProductFeaturedImageVideo from "../video"
 import ProductThumbnailImages from "../thumbnails"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"

@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 import { useProductState } from "../_state/hooks"
 import ProductBuyButtonWrapper from "./wrapper"
 import ProductBuyButtonProvider from "./_state/provider"
-import { FilterHook } from "Common"
+import { FilterHook } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../notice")

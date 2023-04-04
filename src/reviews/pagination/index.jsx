@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { buttonCSS } from "Common"
+import { buttonCSS } from "@shopwp/common"
 import {
   useProductReviewsState,
   useProductReviewsDispatch,
 } from "../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function ReviewsPagination() {
   const state = useProductReviewsState()

@@ -1,7 +1,10 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
-import { findVariantFromSelectedOptions, allOptionsSelectedMatch } from "Common"
-import { buttonCSS, mq } from "Common"
+import {
+  findVariantFromSelectedOptions,
+  allOptionsSelectedMatch,
+} from "@shopwp/common"
+import { buttonCSS, mq } from "@shopwp/common"
 import {
   useProductBuyButtonState,
   useProductBuyButtonDispatch,
@@ -10,11 +13,11 @@ import Notice from "../../../../notice"
 import Link from "../../../../link"
 import Loader from "../../../../loader"
 import ProductBuyButtonLeftInStock from "../left-in-stock"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import Quantity from "../../../../quantity"
-import { getButtonText } from "Common"
+import { getButtonText } from "@shopwp/common"
 
 const { useRef, useEffect, useState } = wp.element
 
@@ -485,6 +488,7 @@ function ProductAddButton({
     display: ${shouldShowQuantity ? "flex" : "block"};
     align-items: flex-start;
     flex-wrap: wrap;
+    margin-top: 15px;
 
     .wps-quantity-container {
       margin-right: 10px;

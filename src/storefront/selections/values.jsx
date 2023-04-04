@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { IconRemove } from "Components"
-import { createSelectionsOfType, buildNewSelection } from "Common"
+import { IconRemove } from "@shopwp/components"
+import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import isString from "lodash/isString"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function StorefrontSelectionsValue({ selectionType, val }) {
   const storefrontState = useStorefrontState()

@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { usePortal } from "Hooks"
-import { FilterHook } from "Common"
-import { hasLink } from "Common"
+import { usePortal } from "@shopwp/hooks"
+import { FilterHook } from "@shopwp/common"
+import { hasLink } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useProductState } from "../_state/hooks"
 import Link from "../../../link"

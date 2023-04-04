@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useTrail, animated } from "react-spring"
-import { useShopState } from "ShopState"
-import { FilterHook } from "Common"
+import { useShopState } from "@shopwp/components"
+import { FilterHook } from "@shopwp/common"
 
 const CartLineItem = wp.element.lazy(() =>
   import(/* webpackChunkName: 'CartLineItem-public' */ "../lineitem")

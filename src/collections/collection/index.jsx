@@ -1,6 +1,6 @@
 import CollectionProvider from "./_state/provider"
-import { isShowingComponent } from "Common"
-import { itemWidthClass } from "Common"
+import { isShowingComponent } from "@shopwp/common"
+import { itemWidthClass } from "@shopwp/common"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 
 import CollectionImage from "./image"

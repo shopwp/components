@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { getItemLink } from "Common"
+import { getItemLink } from "@shopwp/common"
 import { usePayloadState } from "../items/_state/payload/hooks"
 
 function LinkNormal({

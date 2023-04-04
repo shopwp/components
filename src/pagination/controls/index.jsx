@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import PaginationLoadMore from "./load-more"
-import { containerFluidCSS } from "Common"
+import { containerFluidCSS } from "@shopwp/common"
 
 function PaginationControls() {
   const paginationControlsCSS = css`

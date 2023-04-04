@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { updateLines } from "../../api"
-import { useCartDispatch, useCartState } from "CartState"
-import { useShopState, useShopDispatch } from "ShopState"
+import { useCartDispatch, useCartState } from "@shopwp/components"
+import { useShopState, useShopDispatch } from "@shopwp/components"
 
 const Quantity = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Quantity-public' */ "../../../quantity")

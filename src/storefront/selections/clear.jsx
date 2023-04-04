@@ -6,7 +6,7 @@ import {
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
 import { useStorefrontDispatch } from "../_state/hooks"
-import { useShopState } from "ShopState"
+import { useShopState } from "@shopwp/components"
 
 function StorefrontSelectionsClear() {
   const requestsState = useRequestsState()

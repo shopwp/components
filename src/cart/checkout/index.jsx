@@ -1,7 +1,7 @@
 import ErrorFallback from "../../error-fallback"
 import { ErrorBoundary } from "react-error-boundary"
-import { useCartState } from "CartState"
-import { FilterHook } from "Common"
+import { useCartState } from "@shopwp/components"
+import { FilterHook } from "@shopwp/common"
 import CartCheckoutButton from "./button"
 
 function CartCheckout() {

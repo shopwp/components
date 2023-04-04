@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import LoaderSpinner from "react-loaders"
-import { usePortal } from "Hooks"
+import { usePortal } from "@shopwp/hooks"
 
 function Loader({ isLoading, dropzone, color, extraCSS, center = true }) {
   const LoaderPulseCSS = css`

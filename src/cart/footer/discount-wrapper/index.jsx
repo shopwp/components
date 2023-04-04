@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { addDiscount } from "../../api.jsx"
-import { useCartDispatch, useCartState } from "CartState"
-import { useShopState, useShopDispatch } from "ShopState"
+import { useCartDispatch, useCartState } from "@shopwp/components"
+import { useShopState, useShopDispatch } from "@shopwp/components"
 import CartFooterDiscount from "../discount"
 import useIsMounted from "ismounted"
 

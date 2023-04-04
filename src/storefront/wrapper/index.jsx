@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useFirstRender } from "Hooks"
+import { useFirstRender } from "@shopwp/hooks"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import { useItemsState, useItemsDispatch } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
@@ -12,7 +12,7 @@ import {
   buildQueryStringFromSelections,
   getInitialSelections,
   removeSkelly,
-} from "Common"
+} from "@shopwp/common"
 
 import forOwn from "lodash/forOwn"
 import isEmpty from "lodash/isEmpty"
