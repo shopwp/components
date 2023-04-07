@@ -42,7 +42,7 @@ function ProductVariantButtonValue({
     color: ${color};
     background-color: ${backgroundColor};
     transition: all ease 0.2s;
-	text-decoration: ${!isAvailableInShopify ? "line-through" : "none"};
+	  text-decoration: ${!isAvailableInShopify ? "line-through" : "none"};
 
     &:hover,
     &:focus {

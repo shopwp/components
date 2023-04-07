@@ -85,13 +85,12 @@ function CartNote() {
       color: #969696;
     }
   `
-
   return (
     <section className="wps-cart-notes" css={CartNotesCSS}>
       <label htmlFor="wps-input-notes">{shopState.t.l.checkoutNotes}</label>
       <textarea
         css={CartTextareaCSS}
-        placeholder={shopState.t.l.cartNotesPHContent}
+        placeholder={shopwp.general.cartNotesPlaceholder}
         id="wps-input-notes"
         className="wps-input wps-input-textarea"
         value={noteValue}

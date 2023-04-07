@@ -7,7 +7,6 @@ import { usePayloadState } from "../../items/_state/payload/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
 import { removeSkelly } from "@shopwp/common"
-import { useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
@@ -17,9 +16,11 @@ function StorefrontItems() {
   const payload = usePayloadState()
   const settings = useSettingsState()
   const requestsState = useRequestsState()
-  const shopState = useShopState()
   const { useEffect, useState } = wp.element
   const [removedSkelly, setRemovedSkelly] = useState(false)
+
+  settings.withSorting = false
+
   const noticeCSS = css`
     && {
       margin-left: 40px;
@@ -31,7 +32,6 @@ function StorefrontItems() {
     position: relative;
   `
 
-  settings.withSorting = false
   useEffect(() => {
     if (payload.length && !removedSkelly) {
       removeSkelly(document.getElementById("shopwp-storefront"))
@@ -47,7 +47,7 @@ function StorefrontItems() {
         </Pagination>
       ) : !requestsState.isBootstrapping ? (
         <Notice css={noticeCSS} status="info">
-          {shopState.t.n.noItemsLeft}
+          {settings.noResultsText}
         </Notice>
       ) : null}
     </div>,

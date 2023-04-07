@@ -34,6 +34,10 @@ function ShopReducer(state, action) {
       return rSet("t", action, state)
     }
 
+    case "SET_PRODUCTS_VISIBLE": {
+      return rSet("productsVisible", action, state)
+    }
+
     default: {
       throw new Error(`Unhandled action type: ${action.type} in ShopReducer`)
     }

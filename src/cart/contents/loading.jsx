@@ -14,7 +14,7 @@ function CartLoadingContents({ isUpdating }) {
     font-size: 22px;
     text-align: center;
     padding: 70px 0;
-    background: rgb(255 255 255 / 37%);
+    background: none;
     position: absolute;
     width: 100%;
     top: 0;

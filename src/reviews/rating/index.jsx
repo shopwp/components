@@ -22,13 +22,11 @@ function ReviewsRating({
   const shopState = useShopState()
 
   const [score, setScore] = useState(
-    calcPercentageScore(
-      reviewScore !== false && reviewScore > 0
-        ? reviewScore
-        : reviewsState.reviewsBottomLine
-        ? reviewsState.reviewsBottomLine.average_score
-        : 0
-    )
+    reviewScore !== false && reviewScore > 0
+      ? reviewScore
+      : reviewsState.reviewsBottomLine
+      ? reviewsState.reviewsBottomLine.average_score
+      : 0
   )
 
   const ReviewsRatingCSS = css`
@@ -97,8 +95,9 @@ function ReviewsRating({
         >
           <Rating
             onClick={onRating}
-            ratingValue={score}
+            initialValue={score}
             size={size}
+            allowFraction={true}
             iconsCount={5}
             transition
             readonly={type === "static" ? true : false}

@@ -41,8 +41,7 @@ function Quantity({
       text-align: center;
       font-size: 18px;
       margin-right: 0px;
-      border-top: 1px solid #606060;
-      border-bottom: 1px solid #606060;
+      box-shadow: inset 0px 1px 0px 0px #606060, inset 0px -1px 0px 0px #606060;
       max-height: ${small ? "40px" : "45px"};
       border-radius: 0;
       appearance: none;

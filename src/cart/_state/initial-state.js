@@ -2,10 +2,8 @@ import defaults from "./defaults"
 import { mergeDefaults } from "@shopwp/common"
 
 function CartInitialState(props) {
-  let settings = mergeDefaults(props.settings, defaults)
-
   return {
-    settings: settings,
+    settings: mergeDefaults(props.settings, defaults),
     isCheckingOut: false,
     isCartOpen: false,
     termsAccepted: false,
@@ -18,7 +16,6 @@ function CartInitialState(props) {
     beforeDiscountTotal: false,
     percentageOff: false,
     amountOff: false,
-    productsVisible: false,
     customAttributes: [],
     note: false,
     isRemovingDiscountCode: false,

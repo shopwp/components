@@ -167,7 +167,7 @@ function useGetItemsQuery() {
               type: "SET_NOTICE",
               payload: {
                 type: "warning",
-                message: shopState.t.n.noItemsLeft,
+                message: settings.noResultsText,
               },
             })
 
@@ -178,7 +178,7 @@ function useGetItemsQuery() {
                 type: "SET_NOTICE",
                 payload: {
                   type: "info",
-                  message: shopState.t.n.noItemsLeft,
+                  message: settings.noResultsText,
                 },
               })
 
@@ -214,6 +214,11 @@ function useGetItemsQuery() {
                 limit: settings.limit,
                 settings: settings,
               },
+            })
+
+            shopDispatch({
+              type: "SET_PRODUCTS_VISIBLE",
+              payload: true,
             })
 
             if (lastItem) {

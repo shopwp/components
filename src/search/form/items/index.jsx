@@ -7,7 +7,6 @@ import { useItemsState } from "../../../items/_state/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useShopState } from "@shopwp/components"
 
 const SearchModal = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchModal-public' */ "../modal")
@@ -23,7 +22,6 @@ function SearchItems() {
   const requestsState = useRequestsState()
   const payload = usePayloadState()
   const settings = useSettingsState()
-  const shopState = useShopState()
 
   return settings.dropzonePayload ? (
     usePortal(
@@ -31,7 +29,7 @@ function SearchItems() {
         {searchState.searchTerm && payload ? (
           payload.length === 0 && requestsState.isFetchingNew === false ? (
             itemsState.componentType !== "storefront" ? (
-              <Notice status="info">{shopState.t.n.noItemsLeft}</Notice>
+              <Notice status="info">{settings.noResultsText}</Notice>
             ) : null
           ) : (
             <Products

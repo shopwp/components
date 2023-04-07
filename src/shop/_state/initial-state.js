@@ -32,6 +32,8 @@ function ShopInitialState(props) {
     isCartOpen: false,
     cartData: false,
     isCartUpdating: true,
+    theme: shopwp.misc.theme,
+    productsVisible: false,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)

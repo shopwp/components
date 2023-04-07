@@ -24,7 +24,7 @@ function CartIconFixed() {
     } else if (
       shopwp.general.cartConditionalFixedTabLoading === "withProducts"
     ) {
-      if (cartState.productsVisible) {
+      if (shopState.productsVisible) {
         return true
       }
 
@@ -38,7 +38,6 @@ function CartIconFixed() {
       ) {
         return true
       }
-
       return false
     }
   }

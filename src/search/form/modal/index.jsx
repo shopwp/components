@@ -5,11 +5,10 @@ import Pagination from "../../../pagination"
 import Notice from "../../../notice"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useShopState } from "@shopwp/components"
 
 function SearchModal({ searchTerm }) {
   const { useEffect } = wp.element
-  const shopState = useShopState()
+
   const payload = usePayloadState()
   const settings = useSettingsState()
 
@@ -46,7 +45,7 @@ function SearchModal({ searchTerm }) {
           <Product settings={settings} />
         </Pagination>
       ) : (
-        <Notice status="info">{shopState.t.n.noItemsLeft}</Notice>
+        <Notice status="info">{settings.noResultsText}</Notice>
       )}
     </div>
   ) : null

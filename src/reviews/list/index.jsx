@@ -395,11 +395,7 @@ function ReviewsList() {
       </header>
       {reviewsState.isWritingReview && reviewsState.settings.productId ? (
         <ReviewForm
-          sku={
-            reviewsState.products.length
-              ? reviewsState.products[0].id
-              : reviewsState.settings.productId
-          }
+          sku={reviewsState.settings.productId}
           product_title={
             reviewsState.products.length
               ? reviewsState.products[0].name
