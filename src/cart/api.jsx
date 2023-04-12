@@ -191,6 +191,8 @@ async function getExistingCart(
     })
   }
 
+  cartDispatch({ type: "SET_CART_NOTE", payload: response.data.note })
+
   cartDispatch({
     type: "SET_IS_CART_EMPTY",
     payload: response.data.totalQuantity <= 0 ? true : false,
@@ -360,6 +362,8 @@ async function updateCartNote(
     type: "SET_CART_DATA",
     payload: response.data,
   })
+
+  cartDispatch({ type: "SET_CART_NOTE", payload: note })
 }
 
 async function updateIdentity(

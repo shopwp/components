@@ -2,15 +2,11 @@ import to from "await-to-js"
 import isEmpty from "lodash/isEmpty"
 import { maybeHandleApiError } from "@shopwp/api"
 
+import StorefrontFilterOptionsGroupItems from "../group-items"
+
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
   import(
     /* webpackChunkName: 'StorefrontFilterOptionsGroup-public' */ "../group"
-  )
-)
-
-const StorefrontFilterOptionsGroupItems = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'StorefrontFilterOptionsGroupItems-public' */ "../group-items"
   )
 )
 

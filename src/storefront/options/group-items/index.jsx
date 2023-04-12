@@ -56,8 +56,6 @@ const createItemData = memoize(
 function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
   const storefrontDispatch = useStorefrontDispatch()
   const storefrontState = useStorefrontState()
-  const { useState } = wp.element
-  const [initialSelections] = useState(storefrontState.selections)
   const requestsState = useRequestsState()
 
   const itemData = createItemData(
@@ -65,7 +63,7 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
     itemType,
     storefrontDispatch,
     requestsState.isFetchingNew,
-    initialSelections
+    storefrontState.selections
   )
 
   const parentRef = wp.element.useRef()

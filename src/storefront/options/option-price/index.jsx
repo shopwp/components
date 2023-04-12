@@ -1,15 +1,10 @@
 import { shouldOpenOnLoad } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
+import StorefrontFilterOptionsGroupItems from "../group-items"
 
 const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
   import(
     /* webpackChunkName: 'StorefrontFilterOptionsGroup-public' */ "../group"
-  )
-)
-
-const StorefrontFilterOptionsGroupItems = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'StorefrontFilterOptionsGroupItems-public' */ "../group-items"
   )
 )
 

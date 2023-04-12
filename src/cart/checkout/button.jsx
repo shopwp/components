@@ -20,6 +20,7 @@ function CartCheckoutButton({ onCheckout }) {
     margin-bottom: 0;
     background-color: ${cartState.isCheckingOut ||
     (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+    (!cartState.note && shopwp.general.noteRequired) ||
     cartState.isCartEmpty
       ? "#cfcfcf"
       : shopwp.general.checkoutColor};
@@ -30,6 +31,7 @@ function CartCheckoutButton({ onCheckout }) {
     &:hover {
       background-color: ${cartState.isCheckingOut ||
       (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+      (!cartState.note && shopwp.general.noteRequired) ||
       cartState.isCartEmpty
         ? "#cfcfcf"
         : shopwp.general.checkoutColor};
@@ -79,6 +81,7 @@ function CartCheckoutButton({ onCheckout }) {
       disabled={
         cartState.isCheckingOut ||
         (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+        (shopwp.general.noteRequired && !cartState.note) ||
         cartState.isCartEmpty
       }
       css={[buttonCSS, checkoutButtonCSS]}

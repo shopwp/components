@@ -264,13 +264,17 @@ function AddButton({
       return
     }
 
-    const lineItemOptions = wp.hooks.applyFilters("product.lineItemOptions", {
-      minQuantity: settings.minQuantity,
-      maxQuantity: settings.maxQuantity,
-      subscription: productBuyButtonState.subscription,
-      attributes: productBuyButtonState.attributes,
-      variantId: variant.node.id,
-    })
+    const lineItemOptions = wp.hooks.applyFilters(
+      "product.lineItemOptions",
+      {
+        minQuantity: settings.minQuantity,
+        maxQuantity: settings.maxQuantity,
+        subscription: productBuyButtonState.subscription,
+        attributes: productBuyButtonState.attributes,
+        variantId: variant.node.id,
+      },
+      variant
+    )
 
     const lines = buildLines(variant, quantity, productBuyButtonState)
 

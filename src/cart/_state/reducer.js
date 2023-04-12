@@ -14,6 +14,10 @@ function CartReducer(state, action) {
       return rSet("notice", action, state)
     }
 
+    case "SET_CART_NOTE": {
+      return rSet("note", action, state)
+    }
+
     case "SET_IS_CART_EMPTY": {
       return rSet("isCartEmpty", action, state)
     }

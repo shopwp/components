@@ -60,6 +60,10 @@ function CartNote() {
     font-weight: none;
     color: #121212;
 
+    span {
+      color: red;
+    }
+
     label {
       font-size: 15px;
       display: block;
@@ -87,7 +91,10 @@ function CartNote() {
   `
   return (
     <section className="wps-cart-notes" css={CartNotesCSS}>
-      <label htmlFor="wps-input-notes">{shopState.t.l.checkoutNotes}</label>
+      <label htmlFor="wps-input-notes">
+        {shopState.t.l.checkoutNotes}{" "}
+        {shopwp.general.noteRequired ? <span>(Required)</span> : null}
+      </label>
       <textarea
         css={CartTextareaCSS}
         placeholder={shopwp.general.cartNotesPlaceholder}

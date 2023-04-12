@@ -7,16 +7,11 @@ import { useProductState, useProductDispatch } from "../_state/hooks"
 import BuyButtonSkeleton from "../buy-button/skeleton"
 import { removeProductIdPrefix } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
+import ProductCustomTemplate from "../template"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
 )
-
-// const ProductCustomTemplate = wp.element.lazy(() =>
-//   import(/* webpackChunkName: 'ProductCustomTemplate-public' */ "../template")
-// )
-
-import ProductCustomTemplate from "../template"
 
 const ProductTitle = wp.element.lazy(() =>
   import(/* webpackChunkName: 'ProductTitle-public' */ "../title")
@@ -62,7 +57,11 @@ function ProductWrapper({ payload }) {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    max-width: ${productState.payload && !settings.isModal ? "350px" : "100%"};
+    max-width: ${productState.payload &&
+    !settings.isModal &&
+    !settings.fullWidth
+      ? "350px"
+      : "100%"};
 
     > div:nth-last-of-type(2) {
       flex: ${isAlignHeight() ? "1" : "none"};

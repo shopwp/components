@@ -10,10 +10,9 @@ const StorefrontSelectionsWrapper = wp.element.lazy(() =>
 )
 
 function StorefrontSelections() {
+  const { Suspense } = wp.element
   const storefrontState = useStorefrontState()
   const settings = useSettingsState()
-
-  const { Suspense } = wp.element
 
   return (
     <Suspense fallback={false}>
