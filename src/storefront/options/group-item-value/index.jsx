@@ -13,8 +13,14 @@ function CheckboxItem({
   const [isSelected, setIsSelected] = useState(() => {
     var stuff = initialSelections[itemType]
 
+    if (!stuff || stuff.length === 0) {
+      return false
+    }
+
     if (itemType === "collections") {
-      return
+      var found = stuff.filter((selected) => selected.label === itemValue.label)
+
+      return found.length
     }
 
     if (stuff && stuff.length && itemValue) {

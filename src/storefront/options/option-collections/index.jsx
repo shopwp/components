@@ -10,12 +10,7 @@ import { ButtonSecondary } from "@shopwp/components"
 import { useShopState } from "@shopwp/components"
 
 import StorefrontFilterOptionsGroupItems from "../group-items"
-
-const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'StorefrontFilterOptionsGroup-public' */ "../group"
-  )
-)
+import StorefrontFilterOptionsGroup from "../group"
 
 function OptionCollections({ settings }) {
   const { useState, useEffect } = wp.element
