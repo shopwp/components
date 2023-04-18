@@ -1,8 +1,8 @@
 function ProductBuyButtonInitialState(props) {
   return {
-    subscription: false, // is eventually added to lineItemOptions
+    subscription: false,
     subscriptions: false,
-    attributes: false, // is eventually added to lineItemOptions
+    attributes: false,
     selectedOptions: false,
   }
 }

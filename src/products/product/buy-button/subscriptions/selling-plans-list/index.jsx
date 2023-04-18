@@ -51,8 +51,6 @@ function SellingPlansList({ plans, sellingGroup }) {
       value={selectedOption}
       onChange={onChange}
       options={newPlans}
-      menuIsOpen={true}
-      closeMenuOnSelect={false}
       placeholder={shopState.t.l.selectDelivery}
     />
   )

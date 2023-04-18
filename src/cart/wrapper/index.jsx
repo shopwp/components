@@ -172,34 +172,6 @@ function CartWrapper() {
     updateCartNote(setCartNotes, shopState, cartDispatch, false, shopDispatch)
   }, [setCartNotes])
 
-  // TODO: Remove in 5.0
-  function getLegacyLines(lineItemsAdded) {
-    const newLines = {}
-
-    newLines.lines = lineItemsAdded.lineItems
-
-    return newLines.lines.map((line) => {
-      if (line.variantId === lineItemsAdded.lineItemOptions.variantId) {
-        if (
-          has(lineItemsAdded.lineItemOptions, "subscription") &&
-          lineItemsAdded.lineItemOptions.subscription
-        ) {
-          line.subscription = {
-            sellingPlanId:
-              lineItemsAdded.lineItemOptions.subscription.sellingPlanId,
-          }
-        }
-      }
-
-      return line
-    })
-  }
-
-  // TODO: Remove in 5.0
-  function isLegacyParams(lineItemsAdded) {
-    return has(lineItemsAdded, "lineItems")
-  }
-
   function addDefaults(lineItemsAdded) {
     return {
       lines: [],
@@ -215,11 +187,7 @@ function CartWrapper() {
       return
     }
 
-    if (isLegacyParams(lineItemsAdded)) {
-      var lines = getLegacyLines(lineItems)
-    } else {
-      var lines = lineItemsAdded.lines
-    }
+    var lines = lineItemsAdded.lines
 
     var lineItems = addDefaults(lineItemsAdded)
 

@@ -2,6 +2,7 @@
 import { jsx, css, keyframes } from "@emotion/react"
 import {
   findVariantFromSelectedOptions,
+  findVariantByVariantId,
   allOptionsSelectedMatch,
 } from "@shopwp/common"
 import { buttonCSS, mq } from "@shopwp/common"
@@ -80,13 +81,22 @@ function AddButton({
   selectedOptions,
   linkTo,
 }) {
+  const button = useRef()
+  const productBuyButtonState = useProductBuyButtonState()
+  const productBuyButtonDispatch = useProductBuyButtonDispatch()
   const productState = useProductState()
   const productDispatch = useProductDispatch()
   const settings = useSettingsState()
-
   const [shouldShake, setShouldShake] = wp.element.useState(false)
   const shopState = useShopState()
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
+
   function findVariant() {
+    if (settings.variantId) {
+      return findVariantByVariantId(productState.payload, settings.variantId)
+    }
+
     if (hasManyVariants) {
       return findVariantFromSelectedOptions(
         productState.payload,
@@ -97,41 +107,7 @@ function AddButton({
     }
   }
 
-  const [isDisabled, setIsDisabled] = useState(false)
   var variant = findVariant()
-
-  useEffect(() => {
-    var allOptionsSelected = allOptionsSelectedMatch(
-      selectedOptions,
-      productState.payload
-    )
-
-    if (!allOptionsSelected) {
-      setIsDisabled(false)
-      return
-    }
-
-    let variantNew = findVariant()
-
-    if (!variantNew) {
-      setIsDisabled(true)
-      return
-    }
-
-    if (variantNew.node.availableForSale) {
-      setShouldShake(true)
-      setIsDisabled(false)
-    } else {
-      setIsDisabled(true)
-    }
-  }, [selectedOptions])
-
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
-
-  const button = useRef()
-  const productBuyButtonState = useProductBuyButtonState()
-  const productBuyButtonDispatch = useProductBuyButtonDispatch()
-  const maxQuantity = settings.maxQuantity
 
   const NoticeCSS = css`
     margin-top: 15px;
@@ -245,6 +221,8 @@ function AddButton({
 
     e.preventDefault()
 
+    const lines = buildLines(variant, quantity, productBuyButtonState)
+
     // check if all options are selected
     // if some are not selected, highlight them / shake them
     if (!variant && hasManyVariants) {
@@ -264,20 +242,6 @@ function AddButton({
       return
     }
 
-    const lineItemOptions = wp.hooks.applyFilters(
-      "product.lineItemOptions",
-      {
-        minQuantity: settings.minQuantity,
-        maxQuantity: settings.maxQuantity,
-        subscription: productBuyButtonState.subscription,
-        attributes: productBuyButtonState.attributes,
-        variantId: variant.node.id,
-      },
-      variant
-    )
-
-    const lines = buildLines(variant, quantity, productBuyButtonState)
-
     if (
       shopwp.cart.maxQuantity &&
       shopState.cartData.totalQuantity + quantity > shopwp.cart.maxQuantity
@@ -296,12 +260,6 @@ function AddButton({
     if (isDirectCheckout) {
       var checkoutData = {
         lines: lines,
-        lineItemOptions: [
-          {
-            variantId: variant.node.id,
-            options: lineItemOptions,
-          },
-        ],
         note: false,
         discountCode: false,
         customAttributes: false,
@@ -316,14 +274,14 @@ function AddButton({
 
       wp.hooks.doAction("do.directCheckout", checkoutData)
     } else {
-      const resetAfter = settings.resetVariantsAfterAdding
-      const openCartAfterAdding = settings.openCartAfterAdding
-
-      let addToCartParams = {
-        lines: lines,
-        extras: {
-          openCartAfterAdding: settings.openCartAfterAdding,
-        },
+      if (settings.variantId) {
+        wp.hooks.doAction("do.addToCart", {
+          lines: lines,
+          extras: {
+            openCartAfterAdding: settings.openCartAfterAdding,
+          },
+        })
+        return
       }
 
       if (
@@ -340,7 +298,7 @@ function AddButton({
         return
       }
 
-      if (resetAfter) {
+      if (settings.resetVariantsAfterAdding) {
         productDispatch({ type: "SET_ADDED_VARIANT", payload: variant.node })
         productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
       }
@@ -352,9 +310,40 @@ function AddButton({
       productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
       productDispatch({ type: "SET_NOTICE", payload: false })
 
-      wp.hooks.doAction("do.addToCart", addToCartParams)
+      wp.hooks.doAction("do.addToCart", {
+        lines: lines,
+        extras: {
+          openCartAfterAdding: settings.openCartAfterAdding,
+        },
+      })
     }
   }
+
+  useEffect(() => {
+    var allOptionsSelected = allOptionsSelectedMatch(
+      selectedOptions,
+      productState.payload
+    )
+
+    if (!allOptionsSelected) {
+      setIsDisabled(false)
+      return
+    }
+
+    let variantNew = findVariant()
+
+    if (!variantNew) {
+      setIsDisabled(true)
+      return
+    }
+
+    if (variantNew.node.availableForSale) {
+      setShouldShake(true)
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [selectedOptions])
 
   return (
     <>

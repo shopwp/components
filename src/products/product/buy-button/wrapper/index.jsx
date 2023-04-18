@@ -53,6 +53,10 @@ function ProductBuyButtonWrapper() {
   )
 
   function isHidingControls() {
+    if (settings.variantId) {
+      return true
+    }
+
     if (settings.linkTo === "none") {
       return false
     }
@@ -81,7 +85,15 @@ function ProductBuyButtonWrapper() {
   }
 
   function shouldShowQuantity() {
-    return settings.hideQuantity === false && !isHidingControls()
+    if (settings.hideQuantity) {
+      return false
+    }
+
+    if (settings.variantId) {
+      return true
+    }
+
+    return !isHidingControls()
   }
 
   var allSelectableOptions = []
