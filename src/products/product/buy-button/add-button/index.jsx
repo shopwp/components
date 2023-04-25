@@ -221,8 +221,6 @@ function AddButton({
 
     e.preventDefault()
 
-    const lines = buildLines(variant, quantity, productBuyButtonState)
-
     // check if all options are selected
     // if some are not selected, highlight them / shake them
     if (!variant && hasManyVariants) {
@@ -241,6 +239,8 @@ function AddButton({
       })
       return
     }
+
+    const lines = buildLines(variant, quantity, productBuyButtonState)
 
     if (
       shopwp.cart.maxQuantity &&

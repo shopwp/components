@@ -46,6 +46,7 @@ function Quantity({
       border-radius: 0;
       appearance: none;
       padding: 0;
+      line-height: 0;
       color: #121212;
       background: white;
 
@@ -66,7 +67,7 @@ function Quantity({
 
       ${mq("small")} {
         width: 60px;
-        height: 58px !important;
+        height: 60px;
         max-height: 60px;
         font-size: 24px;
       }
