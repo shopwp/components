@@ -2,8 +2,8 @@
 import { jsx, css } from "@emotion/react"
 import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
-import isNull from "lodash/isNull"
 import Drift from "drift-zoom"
+// const Drift = () => import(/* webpackChunkName: 'Drift-public' */ "drift-zoom")
 import { useFirstRender } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
@@ -54,7 +54,7 @@ function ProductFeaturedImage() {
       return false
     }
 
-    if (isNull(settings.showZoom)) {
+    if (settings.showZoom === null) {
       return shopwp.general.productsImagesShowZoom
     }
 
@@ -182,10 +182,6 @@ function ProductFeaturedImage() {
     }
   }, [galleryState.featImageElement, settings.showZoom])
 
-  const onlyAvailableVariants = productState.payload.variants.edges.filter(
-    (v) => v.node.availableForSale
-  )
-
   return (
     <div
       className="wps-gallery-featured-wrapper"
@@ -194,51 +190,49 @@ function ProductFeaturedImage() {
       onMouseEnter={isShowingNextOnHover() ? onMouseEnter : undefined}
       onMouseLeave={isShowingNextOnHover() ? onMouseLeave : undefined}
     >
-      {galleryState.featImageIsVideo ? (
-        <ProductFeaturedImageVideo videoData={galleryState.featImage} />
-      ) : (
-        <>
-          {productState.isOnSale &&
+      <Suspense fallback={false}>
+        {galleryState.featImageIsVideo ? (
+          <ProductFeaturedImageVideo videoData={galleryState.featImage} />
+        ) : (
+          <>
+            {productState.isOnSale &&
             settings.showSaleNotice &&
-            !isOutOfStock && (
-              <Suspense fallback={false}>
-                <ProductImageOnSaleLabel
-                  text={shopState.t.l.sale}
-                  onlyAvailableVariants={onlyAvailableVariants}
-                  showSaleNoticePercentage={settings.showSaleNoticePercentage}
-                />
-              </Suspense>
-            )}
+            !isOutOfStock ? (
+              <ProductImageOnSaleLabel
+                text={shopState.t.l.sale}
+                payload={productState.payload}
+                showSaleNoticePercentage={settings.showSaleNoticePercentage}
+              />
+            ) : null}
 
-          {isOutOfStock &&
+            {isOutOfStock &&
             galleryState.featImage &&
-            settings.showOutOfStockNotice && (
-              <Suspense fallback={false}>
-                <ProductImageSoldOutLabel text={shopState.t.l.soldOut} />
-              </Suspense>
-            )}
+            settings.showOutOfStockNotice ? (
+              <ProductImageSoldOutLabel text={shopState.t.l.soldOut} />
+            ) : null}
 
-          <div
-            className="wps-product-image-wrapper"
-            css={ProductImageFeaturedWrapperCSS}
-          >
-            {galleryState.featImage ? (
-              <ProductImage
-                settings={settings}
-                isFeatured={true}
-                image={galleryState.featImage}
-              />
-            ) : (
-              <ProductImage
-                settings={settings}
-                isFeatured={true}
-                image={galleryState.featImagePlaceholder}
-                placeholder={true}
-              />
-            )}
-          </div>
-        </>
-      )}
+            <div
+              className="wps-product-image-wrapper"
+              css={ProductImageFeaturedWrapperCSS}
+            >
+              {galleryState.featImage ? (
+                <ProductImage
+                  settings={settings}
+                  isFeatured={true}
+                  image={galleryState.featImage}
+                />
+              ) : (
+                <ProductImage
+                  settings={settings}
+                  isFeatured={true}
+                  image={galleryState.featImagePlaceholder}
+                  placeholder={true}
+                />
+              )}
+            </div>
+          </>
+        )}
+      </Suspense>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import StorefrontOptionsProvider from "./_state/provider"
 import StorefrontOptionsWrapper from "./wrapper"

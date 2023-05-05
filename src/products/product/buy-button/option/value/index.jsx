@@ -3,7 +3,7 @@ import { createObj, findVariantFromVariantsList } from "@shopwp/common"
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
-import find from "lodash/find"
+import find from "lodash-es/find"
 
 function isSelectedVariantAvailableToSelect(allSelectableOptions, optionObj) {
   return allSelectableOptions.filter((selectableOption) => {

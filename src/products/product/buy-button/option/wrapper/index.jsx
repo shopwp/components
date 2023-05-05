@@ -10,7 +10,7 @@ import {
   useProductBuyButtonDispatch,
 } from "../../_state/hooks"
 
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 
 const { useContext, useEffect } = wp.element
 

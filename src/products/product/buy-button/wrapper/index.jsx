@@ -3,7 +3,7 @@ import {
   findVariantFromSelectedOptions,
   allOptionsSelectedMatch,
 } from "@shopwp/common"
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 
 import {
   useProductBuyButtonState,

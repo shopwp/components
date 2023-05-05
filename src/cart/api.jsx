@@ -267,8 +267,7 @@ async function directCheckout(
     return
   }
 
-  // All good, let's go
-  checkoutRedirect(response.data.checkoutUrl, false, "_self")
+  checkoutRedirect(response.data.checkoutUrl, false, data.settings.linkTarget)
 }
 
 async function addDiscount(cartDispatch, shopState, discount, shopDispatch) {

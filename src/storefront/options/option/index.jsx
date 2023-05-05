@@ -1,5 +1,5 @@
 import to from "await-to-js"
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 import { maybeHandleApiError } from "@shopwp/api"
 
 import StorefrontFilterOptionsGroupItems from "../group-items"

@@ -3,6 +3,7 @@ import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
 function ProductPricing() {
+  console.log("<ProductPricing />")
   const settings = useSettingsState()
 
   return usePortal(<ProductPrices />, settings.dropzoneProductPricing)

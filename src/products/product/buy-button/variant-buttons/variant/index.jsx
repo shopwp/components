@@ -38,7 +38,7 @@ function ProductVariantButtonValue({
     font-size: 16px;
     padding: 10px;
     border-radius: 5px;
-    opacity: ${opacity};
+    opacity: ${!isAvailableInShopify ? 0.5 : opacity};
     color: ${color};
     background-color: ${backgroundColor};
     transition: all ease 0.2s;

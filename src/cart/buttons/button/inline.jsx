@@ -6,6 +6,8 @@ import CartIconWrapper from "../icon"
 import CartCounter from "../counter"
 
 function CartIcon({ settings, element }) {
+  console.log("<CartIcon />")
+
   const shopDispatch = useShopDispatch()
   const shopState = useShopState()
 

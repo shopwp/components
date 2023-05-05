@@ -28,9 +28,7 @@ function ProductVariantButtonGroup({
         />
       </ProductOptionWrapper>
     </ProductOptionProvider>
-  ) : (
-    ""
-  )
+  ) : null
 }
 
 export default ProductVariantButtonGroup

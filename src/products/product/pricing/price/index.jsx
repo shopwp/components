@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react"
 
-import isEmpty from "lodash/isEmpty"
-import last from "lodash/last"
-import min from "lodash/min"
-import max from "lodash/max"
+import isEmpty from "lodash-es/isEmpty"
+import last from "lodash-es/last"
+import min from "lodash-es/min"
+import max from "lodash-es/max"
 
 import ProductPricingRange from "../range"
 import ProductPriceSingle from "../single"

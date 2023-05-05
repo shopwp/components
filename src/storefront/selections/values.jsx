@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/react"
 import { IconRemove } from "@shopwp/components"
 import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
-import isString from "lodash/isString"
 import { useShopState } from "@shopwp/components"
 
 function StorefrontSelectionsValue({ selectionType, val }) {
@@ -78,7 +77,7 @@ function StorefrontSelectionsValue({ selectionType, val }) {
     >
       {selectionType === "available_for_sale"
         ? shopState.t.l.availSale
-        : isString(val)
+        : typeof val === "string"
         ? val
         : val.label}
       <IconRemove />
@@ -90,7 +89,7 @@ function StorefrontSelectionsValues({ selectionType, vals }) {
   return vals.map((item) => {
     return item ? (
       <StorefrontSelectionsValue
-        key={isString(item) ? item : item.id}
+        key={typeof item === "string" ? item : item.id}
         selectionType={selectionType}
         val={item}
       />

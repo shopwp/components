@@ -4,7 +4,7 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { mq } from "@shopwp/common"
-import merge from "lodash/merge"
+import merge from "lodash-es/merge"
 import { removeSkelly } from "@shopwp/common"
 import { DefaultPrevArrow, DefaultNextArrow, CustomArrow } from "./arrows"
 

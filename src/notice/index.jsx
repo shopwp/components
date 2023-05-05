@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import useIsMounted from "ismounted"
-import { SlideInFromTop } from "@shopwp/common"
 import Expire from "../expire"
-import { removeSkelly } from "@shopwp/common"
+import { SlideInFromTop, removeSkelly } from "@shopwp/common"
 
 function Notice({
   children,

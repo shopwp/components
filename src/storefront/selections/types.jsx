@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 import { StorefrontSelectionsValues } from "./values"
 import { getSelectionTypes } from "@shopwp/common"
 import { useStorefrontState } from "../_state/hooks"
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 
 function StorefrontSelectionsType({ selectionType }) {
   const storefrontState = useStorefrontState()

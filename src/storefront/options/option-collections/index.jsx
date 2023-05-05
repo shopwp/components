@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import isEmpty from "lodash/isEmpty"
-import union from "lodash/union"
-import has from "lodash/has"
+import isEmpty from "lodash-es/isEmpty"
+import union from "lodash-es/union"
 import to from "await-to-js"
 import { fetchCollections, maybeHandleApiError } from "@shopwp/api"
 import { shouldOpenOnLoad } from "@shopwp/common"
@@ -92,7 +91,7 @@ function OptionCollections({ settings }) {
   async function onLoadMore() {
     var lastItem = itemsRaw[itemsRaw.length - 1]
 
-    if (lastItem && has(lastItem, "cursor")) {
+    if (lastItem && lastItem.hasOwnProperty("cursor")) {
       grabCollections(lastItem.cursor)
     }
   }

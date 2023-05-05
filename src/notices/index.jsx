@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
-import isString from "lodash/isString"
-import isObject from "lodash/isObject"
-import isArray from "lodash/isArray"
+import isObject from "lodash-es/isObject"
+import isArray from "lodash-es/isArray"
 import Notice from "../notice"
 import { useShopState } from "@shopwp/components"
 
@@ -15,7 +14,7 @@ function Notices({ notices, dropzone = false, noticeGroup = "" }) {
       return maybeError.message
     }
 
-    if (isString(maybeError)) {
+    if (typeof maybeError === "string") {
       return maybeError
     }
 

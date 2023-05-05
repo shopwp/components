@@ -1,4 +1,3 @@
-import has from "lodash/has"
 import { updatePayload } from "@shopwp/common"
 
 function PayloadReducer(currentPayload, action) {
@@ -8,7 +7,7 @@ function PayloadReducer(currentPayload, action) {
         return currentPayload
       }
 
-      if (!has(action.payload, "replace")) {
+      if (!action.payload.hasOwnProperty("replace")) {
         action.payload.replace = true
       }
 

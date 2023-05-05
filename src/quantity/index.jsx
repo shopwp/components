@@ -3,10 +3,10 @@ import { jsx, css } from "@emotion/react"
 import { containerFluidCSS, flexRowCSS, mq } from "@shopwp/common"
 import IconDecrement from "../icon-decrement"
 import IconIncrement from "../icon-increment"
-import { useDebounce } from "use-debounce"
-import { useFirstRender } from "@shopwp/hooks"
+import { useFirstRender, useDebounce } from "@shopwp/hooks"
 import { findNewPotentialTotal } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
+import QuantityButton from "./button"
 
 function Quantity({
   initialQuantity,
@@ -24,7 +24,7 @@ function Quantity({
   const { useState, useEffect } = wp.element
   const shopState = useShopState()
   const [quantity, setQuantity] = useState(initialQuantity)
-  const [debouncedQuantity] = useDebounce(parseInt(quantity), 20)
+  const debouncedQuantity = useDebounce(parseInt(quantity), 20)
   const isFirstRender = useFirstRender()
 
   useEffect(() => {
@@ -56,7 +56,6 @@ function Quantity({
         margin: 0;
       }
 
-      /* Firefox */
       &[type="number"] {
         -moz-appearance: textfield;
       }
@@ -71,36 +70,6 @@ function Quantity({
         max-height: 60px;
         font-size: 24px;
       }
-    }
-  `
-
-  const QuantityIncDecCSS = css`
-    color: #333;
-    display: block;
-    margin-top: 0;
-    position: relative;
-    padding: 0 10px;
-    font-size: 17px;
-    font-family: monospace;
-    background: white;
-    box-shadow: none;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #606060;
-    width: ${small ? "45px" : "50px"};
-    height: ${small ? "40px" : "45px"};
-    outline: none;
-    outline-offset: 0;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: #f1f1f1;
-    }
-
-    ${mq("small")} {
-      font-size: 26px;
-      width: 60px;
-      height: 60px;
     }
   `
 
@@ -286,15 +255,14 @@ function Quantity({
       css={[containerFluidCSS, quantityContainer]}
     >
       <div css={[flexRowCSS]}>
-        <button
-          className="wps-quantity-decrement"
-          css={[QuantityIncDecCSS, QuantityDecCSS]}
-          type="button"
-          role="button"
+        <QuantityButton
+          type="decrement"
           onClick={handleDecrement}
+          customCSS={QuantityDecCSS}
+          small={small}
         >
           <IconDecrement />
-        </button>
+        </QuantityButton>
 
         <input
           className="wps-quantity-input"
@@ -310,15 +278,14 @@ function Quantity({
           pattern="\\d*"
         />
 
-        <button
-          className="wps-quantity-increment"
-          css={[QuantityIncDecCSS, QuantityIncCSS]}
-          type="button"
-          role="button"
+        <QuantityButton
+          type="increment"
           onClick={handleIncrement}
+          customCSS={QuantityIncCSS}
+          small={small}
         >
           <IconIncrement />
-        </button>
+        </QuantityButton>
       </div>
     </div>
   )

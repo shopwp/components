@@ -10,8 +10,7 @@ import {
 
 import { removeSkelly, findLastItem } from "@shopwp/common"
 import { useQuery } from "@tanstack/react-query"
-import isEmpty from "lodash/isEmpty"
-import has from "lodash/has"
+import isEmpty from "lodash-es/isEmpty"
 
 import useIsMounted from "ismounted"
 import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
@@ -144,7 +143,7 @@ function useGetItemsQuery() {
           if (
             !newItems ||
             isEmpty(newItems) ||
-            (has(newItems, "edges") &&
+            (newItems.hasOwnProperty("edges") &&
               (!newItems.edges || !newItems.edges.length))
           ) {
             requestsDispatch({
@@ -194,7 +193,7 @@ function useGetItemsQuery() {
 
             // Sets the new translations if it has any
             // TODO: Move to the translator extension with a JS hook?
-            if (has(newItems, "t")) {
+            if (newItems.hasOwnProperty("t")) {
               shopDispatch({
                 type: "SET_TRANSLATIONS",
                 payload: wp.hooks.applyFilters(

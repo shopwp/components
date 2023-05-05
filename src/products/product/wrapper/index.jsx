@@ -2,11 +2,11 @@
 import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
 import { isShowingComponent } from "@shopwp/common"
-import ErrorFallback from "../../../error-fallback"
 import { useProductState, useProductDispatch } from "../_state/hooks"
-import BuyButtonSkeleton from "../buy-button/skeleton"
 import { removeProductIdPrefix } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
+import ErrorFallback from "../../../error-fallback"
+import BuyButtonSkeleton from "../buy-button/skeleton"
 import ProductCustomTemplate from "../template"
 
 const Notice = wp.element.lazy(() =>

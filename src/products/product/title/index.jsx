@@ -8,6 +8,8 @@ import { useProductState } from "../_state/hooks"
 import Link from "../../../link"
 
 function ProductTitle() {
+  console.log("<ProductTitle />")
+
   const settings = useSettingsState()
   const productState = useProductState()
 

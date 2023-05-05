@@ -2,9 +2,8 @@
 import { jsx, css } from "@emotion/react"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { useCartState, useCartDispatch } from "@shopwp/components"
-import { useDebounce } from "use-debounce"
 import { updateCartNote } from "../api.jsx"
-import { useFirstRender } from "@shopwp/hooks"
+import { useFirstRender, useDebounce } from "@shopwp/hooks"
 
 function CartNote() {
   const { useState, useRef, useEffect } = wp.element
@@ -15,7 +14,7 @@ function CartNote() {
   const inputElement = useRef()
   const [noteValue, setNoteValue] = useState(shopState.cartData.note)
 
-  const [debouncedValue] = useDebounce(
+  const debouncedValue = useDebounce(
     noteValue,
     cartState.settings.notesUpdateFrequency
   )

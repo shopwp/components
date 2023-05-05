@@ -4,12 +4,12 @@ import "tippy.js/dist/tippy.css"
 import "tippy.js/animations/shift-toward.css"
 import "tippy.js/themes/light-border.css"
 import Tippy from "@tippyjs/react"
-import { useDebounce } from "use-debounce"
+import { useDebounce } from "@shopwp/hooks"
 
 function Tooltip({ label, children, options }) {
   const { useState } = wp.element
   const [isShowingDetails, setIsShowingDetails] = useState(false)
-  const [isShowingDetailsDebounced] = useDebounce(isShowingDetails, 250)
+  const isShowingDetailsDebounced = useDebounce(isShowingDetails, 250)
 
   const TooltipCSS = css`
     width: 210px;

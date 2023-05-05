@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useDebounce } from "use-debounce"
 import { useShopState } from "@shopwp/components"
 import { useSearchDispatch } from "../../_state/hooks"
-import { useFirstRender } from "@shopwp/hooks"
+import { useFirstRender, useDebounce } from "@shopwp/hooks"
 import { useItemsState, useItemsDispatch } from "../../../items/_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {
@@ -18,7 +17,7 @@ const SearchIcon = wp.element.lazy(() =>
 function SearchInput() {
   const { useEffect, useState, Suspense } = wp.element
   const [localTerm, setLocalTerm] = useState("")
-  const [debouncedSearchTerm] = useDebounce(localTerm, 350)
+  const debouncedSearchTerm = useDebounce(localTerm, 350)
 
   const itemsState = useItemsState()
   const itemsDispatch = useItemsDispatch()

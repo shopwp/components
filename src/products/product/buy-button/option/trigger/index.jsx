@@ -3,7 +3,7 @@ import { jsx, css, keyframes } from "@emotion/react"
 import { buttonCSS, IconCSS } from "@shopwp/common"
 import { useFirstRender } from "@shopwp/hooks"
 import { ProductOptionContext } from "../_state/context"
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
 function TriggerIcon() {

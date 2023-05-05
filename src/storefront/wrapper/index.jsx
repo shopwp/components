@@ -14,8 +14,8 @@ import {
   removeSkelly,
 } from "@shopwp/common"
 
-import forOwn from "lodash/forOwn"
-import isEmpty from "lodash/isEmpty"
+import forOwn from "lodash-es/forOwn"
+import isEmpty from "lodash-es/isEmpty"
 
 const SearchWrapper = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchWrapper-public' */ "../../search/wrapper")

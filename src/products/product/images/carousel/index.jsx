@@ -50,7 +50,7 @@ function ProductCarouselImages({ images, element }) {
       text-align: center;
       background-position: 45% 50%;
       background-size: 13px;
-      padding: 70px 25px;
+      padding: 100px 25px;
       top: calc(50% - 10px);
 
       &:hover {
@@ -66,9 +66,9 @@ function ProductCarouselImages({ images, element }) {
 
     .slick-slide {
       img {
-        max-height: 350px;
-        max-width: 350px;
+        width: 100%;
         margin: 0 auto;
+        height: auto;
       }
 
       > div {

@@ -1,5 +1,5 @@
 import { rSet } from "@shopwp/common"
-import uniqBy from "lodash/uniqBy"
+import uniqBy from "lodash-es/uniqBy"
 import update from "immutability-helper"
 
 function CollectionReducer(state, action) {

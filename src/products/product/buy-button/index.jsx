@@ -13,6 +13,7 @@ const Notice = wp.element.lazy(() =>
 )
 
 function ProductBuyButton() {
+  console.log("<ProductBuyButton />")
   const productState = useProductState()
   const settings = useSettingsState()
   const shopState = useShopState()
@@ -36,8 +37,7 @@ function ProductBuyButton() {
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
 
-        {productState.payload.availableForSale ||
-        settings.showOutOfStockVariants === true ? (
+        {productState.payload.availableForSale ? (
           <ProductBuyButtonWrapper />
         ) : (
           <FilterHook name="product.unavailableHtml" args={[productState]}>
