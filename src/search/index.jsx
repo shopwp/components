@@ -2,7 +2,6 @@ import SearchWrapper from "./wrapper"
 import Items from "../items"
 
 function Search(props) {
-  console.log("<Search />")
   return (
     <Items
       {...props}

@@ -3,8 +3,6 @@ import Items from "../items"
 import StorefrontWrapper from "./wrapper"
 
 function Storefront(props) {
-  console.log("<Storefront />")
-
   return (
     <Items
       {...props}

@@ -13,7 +13,6 @@ const Notice = wp.element.lazy(() =>
 )
 
 function ProductBuyButton() {
-  console.log("<ProductBuyButton />")
   const productState = useProductState()
   const settings = useSettingsState()
   const shopState = useShopState()

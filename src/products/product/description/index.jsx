@@ -5,7 +5,6 @@ import { useProductState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
 function ProductDescription() {
-  console.log("<ProductDescription />")
   const settings = useSettingsState()
   const productState = useProductState()
 

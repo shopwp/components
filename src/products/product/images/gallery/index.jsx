@@ -6,7 +6,6 @@ import { hasLink } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 function ProductGallery({ carousel }) {
-  console.log("<ProductGallery />")
   const { useEffect, useContext } = wp.element
   const productState = useProductState()
   const [, galleryDispatch] = useContext(ProductGalleryContext)

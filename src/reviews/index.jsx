@@ -12,7 +12,6 @@ const ReviewsList = wp.element.lazy(() =>
 )
 
 function Reviews(props) {
-  console.log("<Reviews />")
   const shopState = useShopState()
   const { Suspense } = wp.element
 
