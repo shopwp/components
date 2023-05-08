@@ -2,11 +2,15 @@
 import { jsx, css } from "@emotion/react"
 import Selects from "../../../storefront/selects"
 import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
-import Loader from "../../../loader"
+
 import { useCollectionState, useCollectionDispatch } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
 import { useShopState } from "@shopwp/components"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
+)
 
 function CollectionSorting() {
   const collectionDispatch = useCollectionDispatch()

@@ -2,7 +2,11 @@
 import { jsx, css } from "@emotion/react"
 import Selects from "../../storefront/selects"
 import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
-import Loader from "../../loader"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
+)
+
 import {
   useRequestsState,
   useRequestsDispatch,

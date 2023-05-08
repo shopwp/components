@@ -4,7 +4,7 @@ import Thumbnails from "./mapped"
 import { doFeaturedSizing } from "@shopwp/common"
 import { mq } from "@shopwp/common"
 import isEmpty from "lodash-es/isEmpty"
-import to from "await-to-js"
+import { to } from "@shopwp/common"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 

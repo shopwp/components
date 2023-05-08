@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import isEmpty from "lodash-es/isEmpty"
 import union from "lodash-es/union"
-import to from "await-to-js"
+import { to } from "@shopwp/common"
 import { fetchCollections, maybeHandleApiError } from "@shopwp/api"
 import { shouldOpenOnLoad } from "@shopwp/common"
 import { ButtonSecondary } from "@shopwp/components"

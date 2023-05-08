@@ -2,8 +2,12 @@
 import { jsx, css } from "@emotion/react"
 import ReviewRating from "../rating"
 import { buttonCSS } from "@shopwp/common"
-import Loader from "../../loader"
-import to from "await-to-js"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
+)
+
+import { to } from "@shopwp/common"
 import { createYotpoReview, maybeHandleApiError } from "@shopwp/api"
 import { useProductReviewsState } from "../_state/hooks"
 import Notice from "../../notice"

@@ -1,4 +1,4 @@
-import to from "await-to-js"
+import { to } from "@shopwp/common"
 import {
   getCart,
   createCart,

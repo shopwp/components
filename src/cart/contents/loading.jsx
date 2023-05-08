@@ -1,8 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Loader from "../../loader"
 import { IconLogo } from "@shopwp/components"
 import { useShopState } from "@shopwp/components"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
+)
 
 function CartLoadingContents({ isUpdating }) {
   const shopState = useShopState()

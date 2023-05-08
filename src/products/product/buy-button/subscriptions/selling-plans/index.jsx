@@ -17,7 +17,7 @@ import { getFirstSellingPlanData } from "@shopwp/common"
 
 import useIsMounted from "ismounted"
 import SubscriptionSkeleton from "../skeleton"
-import to from "await-to-js"
+import { to } from "@shopwp/common"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../../../notice")

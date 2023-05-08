@@ -8,8 +8,11 @@ import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../../items/_state/requests/hooks"
-import Loader from "../../../loader"
 import { useShopState } from "@shopwp/components"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
+)
 
 function PaginationLoadMore() {
   const settings = useSettingsState()

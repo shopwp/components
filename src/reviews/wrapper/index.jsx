@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import to from "await-to-js"
+import { to } from "@shopwp/common"
 import {
   getYotpoReviewsByProductId,
   getYotpoReviews,

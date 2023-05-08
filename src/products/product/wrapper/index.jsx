@@ -7,7 +7,10 @@ import { removeProductIdPrefix } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import ErrorFallback from "../../../error-fallback"
 import BuyButtonSkeleton from "../buy-button/skeleton"
-import ProductCustomTemplate from "../template"
+
+const ProductCustomTemplate = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ProductCustomTemplate-public' */ "../template")
+)
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
