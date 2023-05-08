@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
-import { useSearchDispatch } from "../../_state/hooks"
 import { useFirstRender, useDebounce } from "@shopwp/hooks"
-import { useItemsState, useItemsDispatch } from "../../../items/_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {
   useRequestsState,
@@ -14,24 +12,16 @@ const SearchIcon = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchIcon-public' */ "../../icon")
 )
 
-function SearchInput() {
+function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
   const { useEffect, useState, Suspense } = wp.element
   const [localTerm, setLocalTerm] = useState("")
   const debouncedSearchTerm = useDebounce(localTerm, 350)
 
-  const itemsState = useItemsState()
-  const itemsDispatch = useItemsDispatch()
-
   const isFirstRender = useFirstRender()
-  const searchDispatch = useSearchDispatch()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const settings = useSettingsState()
   const shopState = useShopState()
-
-  function setSearchTerm(value) {
-    setLocalTerm(value)
-  }
 
   // TODO: Remove this somehow
   function setNativeInput() {
@@ -51,11 +41,11 @@ function SearchInput() {
       return
     }
 
-    if (itemsState.hasStorefrontSelections) {
-      setSearchTerm("")
+    if (hasStorefrontSelections) {
+      setLocalTerm("")
       setNativeInput()
     }
-  }, [itemsState.hasStorefrontSelections])
+  }, [hasStorefrontSelections])
 
   useEffect(() => {
     if (isFirstRender) {
@@ -98,19 +88,19 @@ function SearchInput() {
       },
     })
 
-    if (newQ === "") {
-      itemsDispatch({
-        type: "SET_SEARCH_QUERY",
-        payload: false,
-      })
-    } else {
-      itemsDispatch({
-        type: "SET_SEARCH_QUERY",
-        payload: newQ,
-      })
-    }
+    // if (newQ === "") {
+    //   itemsDispatch({
+    //     type: "SET_SEARCH_QUERY",
+    //     payload: false,
+    //   })
+    // } else {
+    //   itemsDispatch({
+    //     type: "SET_SEARCH_QUERY",
+    //     payload: newQ,
+    //   })
+    // }
 
-    searchDispatch({ type: "SET_SEARCH_TERM", payload: debouncedSearchTerm })
+    setSearchTerm(debouncedSearchTerm)
 
     if (!debouncedSearchTerm) {
       return
@@ -157,6 +147,10 @@ function SearchInput() {
     position: relative;
   `
 
+  function onChange(e) {
+    setLocalTerm(e.target.value)
+  }
+
   return (
     <Suspense fallback={false}>
       <div className="wps-search-input-wrapper" css={searchInputWrapperCSS}>
@@ -170,7 +164,7 @@ function SearchInput() {
           placeholder={settings.searchPlaceholderText}
           aria-label={settings.searchPlaceholderText}
           css={searchInputCSS}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={onChange}
         />
         {!localTerm ? <SearchIcon /> : null}
 

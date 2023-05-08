@@ -4,7 +4,11 @@ import { usePortal } from "@shopwp/hooks"
 import SearchInput from "./input"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 
-function SearchForm({ componentType = "storefront" }) {
+function SearchForm({
+  componentType = "storefront",
+  hasStorefrontSelections,
+  setSearchTerm,
+}) {
   const settings = useSettingsState()
 
   const searchWrapperCSS = css`
@@ -39,7 +43,10 @@ function SearchForm({ componentType = "storefront" }) {
       onSubmit={onSubmit}
     >
       <div className="wps-search-wrapper" css={searchInputWrapperCSS}>
-        <SearchInput />
+        <SearchInput
+          hasStorefrontSelections={hasStorefrontSelections}
+          setSearchTerm={setSearchTerm}
+        />
       </div>
     </form>,
     settings.dropzoneForm

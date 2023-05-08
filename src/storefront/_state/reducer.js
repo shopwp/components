@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function StorefrontReducer(state, action) {
   switch (action.type) {
@@ -109,12 +109,18 @@ function StorefrontReducer(state, action) {
       }
     }
 
+    case "SET_SEARCH_QUERY": {
+      return rSet("searchQuery", action, state)
+    }
+
+    case "SET_HAS_STOREFRONT_SELECTIONS": {
+      return rSet("hasStorefrontSelections", action, state)
+    }
+
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in StorefrontReducer`
-      )
+      rErr(action, "Storefront")
     }
   }
 }
 
-export { StorefrontReducer }
+export default StorefrontReducer

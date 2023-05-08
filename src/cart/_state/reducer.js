@@ -1,4 +1,4 @@
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function CartReducer(state, action) {
   switch (action.type) {
@@ -59,7 +59,7 @@ function CartReducer(state, action) {
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action.type} in CartReducer`)
+      rErr(action, "Cart")
     }
   }
 }

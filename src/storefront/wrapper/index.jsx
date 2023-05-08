@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { useFirstRender } from "@shopwp/hooks"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
-import { useItemsState, useItemsDispatch } from "../../items/_state/hooks"
+import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import {
   useRequestsState,
@@ -45,12 +45,11 @@ function StorefrontWrapper() {
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
-  const itemsDispatch = useItemsDispatch()
   const storefrontState = useStorefrontState()
   const storefrontDispatch = useStorefrontDispatch()
 
   useEffect(() => {
-    if (itemsState.searchQuery) {
+    if (storefrontState.searchQuery) {
       storefrontDispatch({ type: "CLEAR_SELECTIONS" })
     } else {
       if (isEmpty(storefrontState.selections)) {
@@ -64,7 +63,7 @@ function StorefrontWrapper() {
         })
       }
     }
-  }, [itemsState.searchQuery])
+  }, [storefrontState.searchQuery])
 
   function setInitialSelections() {
     var initialSelections = getInitialSelections(settings)
@@ -96,17 +95,23 @@ function StorefrontWrapper() {
     }
 
     if (isEmpty(storefrontState.selections)) {
-      itemsDispatch({ type: "SET_HAS_STOREFRONT_SELECTIONS", payload: false })
+      storefrontDispatch({
+        type: "SET_HAS_STOREFRONT_SELECTIONS",
+        payload: false,
+      })
     } else {
-      itemsDispatch({ type: "SET_HAS_STOREFRONT_SELECTIONS", payload: true })
+      storefrontDispatch({
+        type: "SET_HAS_STOREFRONT_SELECTIONS",
+        payload: true,
+      })
     }
 
-    if (itemsState.searchQuery && isEmpty(storefrontState.selections)) {
+    if (storefrontState.searchQuery && isEmpty(storefrontState.selections)) {
       requestsDispatch({
         type: "SET_QUERY_PARAMS",
         payload: {
           ...requestsState.queryParams,
-          query: itemsState.searchQuery,
+          query: storefrontState.searchQuery,
         },
       })
 
@@ -174,13 +179,17 @@ function StorefrontWrapper() {
 
   return (
     <Suspense fallback={false}>
-      {settings.showSearch ? <SearchWrapper /> : null}
+      {settings.showSearch ? (
+        <SearchWrapper
+          hasStorefrontSelections={storefrontState.hasStorefrontSelections}
+        />
+      ) : null}
       {settings.dropzoneSelections ? <StorefrontSelections /> : null}
       {settings.showPagination ? <StorefrontPageSize /> : null}
 
       <StorefrontOptions settings={settings} />
 
-      {!itemsState.searchQuery ? <StorefrontItems /> : null}
+      {!storefrontState.searchQuery ? <StorefrontItems /> : null}
     </Suspense>
   )
 }

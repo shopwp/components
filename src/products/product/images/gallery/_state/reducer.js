@@ -1,4 +1,4 @@
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function ProductGalleryReducer(state, action) {
   switch (action.type) {
@@ -15,9 +15,7 @@ function ProductGalleryReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in ProductGalleryReducer`
-      )
+      rErr(action, "ProductGallery")
     }
   }
 }

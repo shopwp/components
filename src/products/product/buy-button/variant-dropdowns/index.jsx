@@ -1,11 +1,16 @@
 import ProductOption from "../option"
 
+const ProductOptionDropdown = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ProductOptionDropdown-public' */ "../option/dropdown"
+  )
+)
+
 function ProductVariantDropdowns({
   options,
   selectedOptions,
   missingSelections,
   variants,
-  allSelectableOptions,
 }) {
   return (
     <div
@@ -21,8 +26,13 @@ function ProductVariantDropdowns({
               missingSelections={missingSelections}
               variants={variants}
               totalOptions={options.length}
-              allSelectableOptions={allSelectableOptions}
-            />
+            >
+              <ProductOptionDropdown
+                selectedOptions={selectedOptions}
+                missingSelections={missingSelections}
+                option={option}
+              />
+            </ProductOption>
           ))
         : null}
     </div>

@@ -1,6 +1,8 @@
-import { ProductOptionContext } from "../_state/context"
 import { createObj, findVariantFromVariantsList } from "@shopwp/common"
-import { useProductBuyButtonDispatch } from "../../_state/hooks"
+import {
+  useProductBuyButtonState,
+  useProductBuyButtonDispatch,
+} from "../../_state/hooks"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
 import find from "lodash-es/find"
@@ -38,7 +40,7 @@ function isVariantAvailableInShopify(allSelectableOptions, optionObj) {
 
 function isVariantAvailableToSelect(
   selectedOptions,
-  productOptionState,
+  isOptionSelected,
   optionNameValue,
   variants,
   isAvailableInShopify,
@@ -54,7 +56,8 @@ function isVariantAvailableToSelect(
 	variants in that row are also available to select -- unless the variant is out of stock
 
 	*/
-  if (productOptionState.isOptionSelected) {
+
+  if (isOptionSelected) {
     if (!isAvailableInShopify) {
       return false
     }
@@ -87,31 +90,26 @@ function isVariantAvailableToSelect(
 function ProductOptionValue({
   optionObj,
   selectedOptions,
-  variants = false,
-  totalOptions = false,
   children,
-  allSelectableOptions,
+  setIsDropdownOpen = null,
 }) {
-  const { useContext } = wp.element
-  const [productOptionState, productOptionDispatch] =
-    useContext(ProductOptionContext)
   const optionNameValue = createObj(optionObj.name, optionObj.value)
-
+  const productBuyButtonState = useProductBuyButtonState()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
   const settings = useSettingsState()
 
   // Whether the variant is actually in stock
   const isAvailableInShopify = isVariantAvailableInShopify(
-    allSelectableOptions,
+    productBuyButtonState.allSelectableOptions,
     optionObj
   )
 
   // Whether the variant combination is available depending on what the user is choosing
   const isAvailableToSelect = isVariantAvailableToSelect(
     selectedOptions,
-    productOptionState,
+    productBuyButtonState.isOptionSelected,
     optionNameValue,
-    variants,
+    productBuyButtonState.variants,
     isAvailableInShopify,
     settings
   )
@@ -122,25 +120,31 @@ function ProductOptionValue({
       payload: optionNameValue,
     })
 
-    productOptionDispatch({
+    productBuyButtonDispatch({
       type: "SET_SELECTED_OPTION",
       payload: optionNameValue,
     })
 
-    productOptionDispatch({
-      type: "TOGGLE_DROPDOWN",
-      payload: false,
-    })
+    if (setIsDropdownOpen !== null) {
+      setIsDropdownOpen(false)
+    }
 
-    productOptionDispatch({
-      type: "SET_IS_OPTION_SELECTED",
-      payload: true,
-    })
+    if (selectedOptions && selectedOptions.hasOwnProperty(optionObj.name)) {
+      productBuyButtonDispatch({
+        type: "SET_IS_OPTION_SELECTED",
+        payload: true,
+      })
+    } else {
+      productBuyButtonDispatch({
+        type: "SET_IS_OPTION_SELECTED",
+        payload: false,
+      })
+    }
 
     wp.hooks.doAction(
       "on.variantsSelection",
       optionNameValue,
-      productOptionState
+      productBuyButtonState
     )
   }
 
@@ -149,8 +153,8 @@ function ProductOptionValue({
     optionObj: optionObj,
     isAvailableToSelect: isAvailableToSelect,
     selectedOptions: selectedOptions,
-    variants: variants,
-    totalOptions: totalOptions,
+    variants: productBuyButtonState.variants,
+    totalOptions: productBuyButtonState.totalOptions,
     isAvailableInShopify: isAvailableInShopify,
   })
 }

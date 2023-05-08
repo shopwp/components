@@ -96,16 +96,6 @@ function ProductBuyButtonWrapper() {
     return !isHidingControls()
   }
 
-  var allSelectableOptions = []
-
-  productState.payload.variants.edges.forEach((element) => {
-    allSelectableOptions.push({
-      availableForSale: element.node.availableForSale,
-      id: element.node.id,
-      selectedOptions: element.node.selectedOptions,
-    })
-  })
-
   var availableOptions = onlyAvailableOptionsFromVariants(
     productState.payload.variants,
     settings.showOutOfStockVariants
@@ -175,13 +165,11 @@ function ProductBuyButtonWrapper() {
     <Suspense fallback="Loading buy button ...">
       {shouldShowOptions() && (
         <ProductOptions
-          allSelectableOptions={allSelectableOptions}
           missingSelections={productState.missingSelections}
           variantStyle={settings.variantStyle}
           selectedOptions={productBuyButtonState.selectedOptions}
           hasSelections={!isEmpty(productBuyButtonState.selectedOptions)}
           availableOptions={availableOptions}
-          variants={productState.payload.variants}
           productDispatch={productDispatch}
           isDirectCheckoutOut={productState.isDirectCheckingOut}
         />

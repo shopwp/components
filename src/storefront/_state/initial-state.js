@@ -26,6 +26,8 @@ function StorefrontInitialState(props) {
     hasResults: false,
     isLoading: false,
     hasSelections: hasDefaultSelections(props.settings),
+    hasStorefrontSelections: false,
+    searchQuery: false,
   }
 }
 

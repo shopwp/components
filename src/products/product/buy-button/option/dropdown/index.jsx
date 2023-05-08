@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { ProductOptionContext } from "../_state/context"
+import { useProductBuyButtonState } from "../../_state/hooks"
 import { mq } from "@shopwp/common"
 
 import "tippy.js/dist/tippy.css"
@@ -10,14 +10,11 @@ import Tippy from "@tippyjs/react"
 import ProductOptionTrigger from "../trigger"
 import ProductVariantsDropdownContent from "../dropdown-content"
 
-function ProductOptionDropdown({
-  selectedOptions,
-  missingSelections,
-  allSelectableOptions,
-}) {
-  const { useContext } = wp.element
-  const [productOptionState] = useContext(ProductOptionContext)
-
+function ProductOptionDropdown({ option, selectedOptions, missingSelections }) {
+  const { useRef, useState } = wp.element
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const productBuyButtonState = useProductBuyButtonState()
+  const dropdownElement = useRef()
   const ProductOptionDropdownCSS = css`
     position: relative;
     text-align: center;
@@ -87,11 +84,11 @@ function ProductOptionDropdown({
       <div
         className="wps-btn-dropdown"
         css={ProductOptionDropdownCSS}
-        data-wps-is-selected={productOptionState.isOptionSelected}
-        ref={productOptionState.dropdownElement}
+        data-wps-is-selected={productBuyButtonState.isOptionSelected}
+        ref={dropdownElement}
       >
         <Tippy
-          visible={productOptionState.isDropdownOpen}
+          visible={isDropdownOpen}
           placement="bottom"
           allowHTML={true}
           appendTo="parent"
@@ -104,11 +101,11 @@ function ProductOptionDropdown({
           offset={[0, 0]}
           content={
             <ProductVariantsDropdownContent
-              dropdownElement={productOptionState.dropdownElement}
-              isDropdownOpen={productOptionState.isDropdownOpen}
-              option={productOptionState.option}
+              dropdownElement={dropdownElement}
+              isDropdownOpen={isDropdownOpen}
+              option={option}
               selectedOptions={selectedOptions}
-              allSelectableOptions={allSelectableOptions}
+              setIsDropdownOpen={setIsDropdownOpen}
             />
           }
         >
@@ -116,6 +113,9 @@ function ProductOptionDropdown({
             <ProductOptionTrigger
               missingSelections={missingSelections}
               selectedOptions={selectedOptions}
+              option={option}
+              isDropdownOpen={isDropdownOpen}
+              setIsDropdownOpen={setIsDropdownOpen}
             />
           </span>
         </Tippy>

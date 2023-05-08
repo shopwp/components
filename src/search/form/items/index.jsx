@@ -2,7 +2,6 @@
 import { jsx, css } from "@emotion/react"
 import Products from "../../../products"
 import { usePortal } from "@shopwp/hooks"
-import { useSearchState } from "../../_state/hooks"
 import { useItemsState } from "../../../items/_state/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
@@ -16,8 +15,7 @@ const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
 )
 
-function SearchItems() {
-  const searchState = useSearchState()
+function SearchItems({ searchTerm }) {
   const itemsState = useItemsState()
   const requestsState = useRequestsState()
   const payload = usePayloadState()
@@ -26,7 +24,7 @@ function SearchItems() {
   return settings.dropzonePayload ? (
     usePortal(
       <>
-        {searchState.searchTerm && payload ? (
+        {searchTerm && payload ? (
           payload.length === 0 && requestsState.isFetchingNew === false ? (
             itemsState.componentType !== "storefront" ? (
               <Notice status="info">{settings.noResultsText}</Notice>
@@ -43,7 +41,7 @@ function SearchItems() {
       settings.dropzonePayload
     )
   ) : (
-    <SearchModal searchTerm={searchState.searchTerm} />
+    <SearchModal searchTerm={searchTerm} />
   )
 }
 

@@ -1,4 +1,4 @@
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function ProductReviewsReducer(state, action) {
   switch (action.type) {
@@ -31,9 +31,7 @@ function ProductReviewsReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in ProductReviewsReducer`
-      )
+      rErr(action, "ProductReviews")
     }
   }
 }

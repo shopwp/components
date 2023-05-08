@@ -2,43 +2,30 @@
 import { jsx, css, keyframes } from "@emotion/react"
 import { buttonCSS, IconCSS } from "@shopwp/common"
 import { useFirstRender } from "@shopwp/hooks"
-import { ProductOptionContext } from "../_state/context"
 import isEmpty from "lodash-es/isEmpty"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
-function TriggerIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 30 30"
-      style={{
-        maxWidth: "19px",
-        position: "absolute",
-        right: "16px",
-        top: "calc(50% - 9px)",
-      }}
-    >
-      <path fill="#fff" d="M15 17.8L3.2 6 .7 8.7 15 23 29.3 8.7 26.8 6z" />
-    </svg>
-  )
-}
+import { useProductBuyButtonState } from "../../_state/hooks"
 
-function ProductOptionTrigger({ missingSelections, selectedOptions }) {
-  const { useContext } = wp.element
+const TriggerIcon = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'TriggerIcon-public' */ "./icon")
+)
 
+function ProductOptionTrigger({
+  option,
+  missingSelections,
+  selectedOptions,
+  isDropdownOpen,
+  setIsDropdownOpen,
+}) {
   const settings = useSettingsState()
-  const [productOptionState, productOptionDispatch] =
-    useContext(ProductOptionContext)
+  const productBuyButtonState = useProductBuyButtonState()
 
   const isFirstRender = useFirstRender()
 
   function onClick() {
-    wp.hooks.doAction("on.variantDropdownToggle", productOptionState)
-
-    productOptionDispatch({
-      type: "TOGGLE_DROPDOWN",
-      payload: !productOptionState.isDropdownOpen,
-    })
+    wp.hooks.doAction("on.variantDropdownToggle", productBuyButtonState)
+    setIsDropdownOpen(!isDropdownOpen)
   }
 
   function getOptionName(selectedOption, option) {
@@ -46,23 +33,22 @@ function ProductOptionTrigger({ missingSelections, selectedOptions }) {
   }
 
   function getOptionValue() {
-    return getOptionName(
-      productOptionState.selectedOption,
-      productOptionState.option
-    )
+    return getOptionName(productBuyButtonState.selectedOptions, option)
   }
 
   function optionNameWithSelect() {
-    return productOptionState.option.name + ": " + getOptionValue()
+    return option.name + ": " + getOptionValue()
   }
 
   function displayOptionName() {
-    return productOptionState.isOptionSelected && !isEmpty(selectedOptions)
-      ? optionNameWithSelect()
-      : productOptionState.option.name
+    if (selectedOptions.hasOwnProperty(option.name)) {
+      return optionNameWithSelect()
+    }
+
+    return option.name
   }
 
-  const asdasd = keyframes`
+  const dropdownCSS = keyframes`
 		0%,
 		100% {
 			transform: translateX(0);
@@ -91,10 +77,10 @@ function ProductOptionTrigger({ missingSelections, selectedOptions }) {
   const variantDropdownCSS = css`
     && {
       animation: ${missingSelections &&
-      !productOptionState.isOptionSelected &&
+      !productBuyButtonState.isOptionSelected &&
       !isFirstRender
         ? css`
-            ${asdasd} 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both
+            ${dropdownCSS} 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both
           `
         : "none"};
       background-color: ${settings.variantDropdownButtonColor
@@ -140,7 +126,7 @@ function ProductOptionTrigger({ missingSelections, selectedOptions }) {
       {wp.hooks.applyFilters(
         "product.optionName",
         displayOptionName(),
-        productOptionState
+        productBuyButtonState
       )}
       <TriggerIcon />
     </button>

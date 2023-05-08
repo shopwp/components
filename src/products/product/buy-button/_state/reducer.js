@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function ProductBuyButtonReducer(state, action) {
   switch (action.type) {
@@ -13,6 +13,14 @@ function ProductBuyButtonReducer(state, action) {
 
     case "SET_NOTICE": {
       return rSet("notice", action, state)
+    }
+
+    case "SET_SELECTED_OPTION": {
+      return rSet("selectedOption", action, state)
+    }
+
+    case "SET_IS_OPTION_SELECTED": {
+      return rSet("isOptionSelected", action, state)
     }
 
     case "UPDATE_SELECTED_OPTIONS": {
@@ -34,9 +42,7 @@ function ProductBuyButtonReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in ProductBuyButtonReducer`
-      )
+      rErr(action, "ProductBuyButton")
     }
   }
 }

@@ -11,7 +11,6 @@ function ProductOptions({
   missingSelections,
   selectedOptions,
   variants,
-  allSelectableOptions,
   hasSelections,
   isDirectCheckoutOut,
 }) {
@@ -32,7 +31,6 @@ function ProductOptions({
           missingSelections={missingSelections}
           selectedOptions={selectedOptions}
           variants={variants}
-          allSelectableOptions={allSelectableOptions}
         />
       ) : variantStyle === "buttons" ? (
         <ProductVariantButtons
@@ -40,7 +38,6 @@ function ProductOptions({
           missingSelections={missingSelections}
           selectedOptions={selectedOptions}
           variants={variants}
-          allSelectableOptions={allSelectableOptions}
         />
       ) : (
         <ProductVariantDropdowns
@@ -48,7 +45,6 @@ function ProductOptions({
           missingSelections={missingSelections}
           selectedOptions={selectedOptions}
           variants={variants}
-          allSelectableOptions={allSelectableOptions}
         />
       )}
     </div>

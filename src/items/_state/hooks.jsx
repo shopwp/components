@@ -1,4 +1,4 @@
-import { ItemsStateContext, ItemsDispatchContext } from "./context"
+import { ItemsStateContext } from "./context"
 
 function useItemsState() {
   const context = wp.element.useContext(ItemsStateContext)
@@ -10,14 +10,4 @@ function useItemsState() {
   return context
 }
 
-function useItemsDispatch() {
-  const context = wp.element.useContext(ItemsDispatchContext)
-
-  if (!context) {
-    throw new Error("useItemsDispatch must be used within the ItemsProvider")
-  }
-
-  return context
-}
-
-export { useItemsState, useItemsDispatch }
+export { useItemsState }

@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
 
-function ProductVariantMissingSelection({ productOptionState }) {
+function ProductVariantMissingSelection({ option, productBuyButtonState }) {
   const shopState = useShopState()
   const selectStyles = css`
     margin-top: 6px;
@@ -13,9 +13,8 @@ function ProductVariantMissingSelection({ productOptionState }) {
     <p css={selectStyles}>
       {wp.hooks.applyFilters(
         "product.missingSelectionText",
-        shopState.t.l.selectA +
-          String(productOptionState.option.name).toLowerCase(),
-        productOptionState
+        shopState.t.l.selectA + String(option.name).toLowerCase(),
+        productBuyButtonState
       )}
     </p>
   )

@@ -11,9 +11,6 @@ function ItemsInitialState({
     element: element,
     loader: loader,
     skeletonType: skeletonType,
-    hasStorefrontSelections: false,
-    notice: false,
-    searchQuery: false,
   }
 }
 

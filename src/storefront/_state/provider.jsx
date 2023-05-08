@@ -1,4 +1,4 @@
-import { StorefrontReducer } from "./reducer"
+import StorefrontReducer from "./reducer"
 import { StorefrontInitialState } from "./initial-state"
 import { StorefrontStateContext, StorefrontDispatchContext } from "./context"
 

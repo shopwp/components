@@ -1,6 +1,5 @@
 import isEmpty from "lodash-es/isEmpty"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
-import StorefrontOptionsProvider from "./_state/provider"
 import StorefrontOptionsWrapper from "./wrapper"
 import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
 
@@ -50,12 +49,10 @@ function StorefrontOptions({ settings }) {
   }, [storefrontState.lastSelected])
 
   return (
-    <StorefrontOptionsProvider>
-      <StorefrontOptionsWrapper
-        settings={settings}
-        dropzoneHeading={settings.dropzoneHeading}
-      />
-    </StorefrontOptionsProvider>
+    <StorefrontOptionsWrapper
+      settings={settings}
+      dropzoneHeading={settings.dropzoneHeading}
+    />
   )
 }
 

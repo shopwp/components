@@ -1,4 +1,4 @@
-import { updatePayload } from "@shopwp/common"
+import { rErr, updatePayload } from "@shopwp/common"
 
 function PayloadReducer(currentPayload, action) {
   switch (action.type) {
@@ -26,7 +26,7 @@ function PayloadReducer(currentPayload, action) {
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action.type} in PayloadReducer`)
+      rErr(action, "Payload")
     }
   }
 }

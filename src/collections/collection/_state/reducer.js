@@ -1,6 +1,6 @@
-import { rSet } from "@shopwp/common"
 import uniqBy from "lodash-es/uniqBy"
 import update from "immutability-helper"
+import { rSet, rErr } from "@shopwp/common"
 
 function CollectionReducer(state, action) {
   switch (action.type) {
@@ -63,9 +63,7 @@ function CollectionReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in CollectionReducer`
-      )
+      rErr(action, "Collection")
     }
   }
 }

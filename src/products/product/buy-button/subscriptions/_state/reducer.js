@@ -1,4 +1,4 @@
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function SubscriptionsBuyButtonReducer(state, action) {
   switch (action.type) {
@@ -19,9 +19,7 @@ function SubscriptionsBuyButtonReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in SubscriptionsBuyButtonReducer`
-      )
+      rErr(action, "SubscriptionsBuyButton")
     }
   }
 }

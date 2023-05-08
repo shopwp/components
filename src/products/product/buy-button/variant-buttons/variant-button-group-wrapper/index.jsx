@@ -1,18 +1,18 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { ProductOptionContext } from "../../option/_state/context"
 import ProductVariantsButtons from "../variants"
 import ProductVariantMissingSelection from "../missing-selection"
 import { FilterHook } from "@shopwp/common"
+import { useProductBuyButtonState } from "../../_state/hooks"
 
 function ProductVariantButtonGroupWrapper({
   option,
   missingSelections,
   selectedOptions,
-  allSelectableOptions,
 }) {
-  const { useRef, useContext } = wp.element
-  const [productOptionState] = useContext(ProductOptionContext)
+  const { useRef } = wp.element
+
+  const productBuyButtonState = useProductBuyButtonState()
   const variantGroup = useRef()
 
   const labelStyles = css`
@@ -31,13 +31,17 @@ function ProductVariantButtonGroupWrapper({
     <div className="wpshopify-variant-buttons-group" css={groupStyles}>
       <FilterHook
         name="product.labelHtml"
-        args={[option, productOptionState, allSelectableOptions]}
+        args={[
+          option,
+          productBuyButtonState,
+          productBuyButtonState.allSelectableOptions,
+        ]}
       >
         <label css={labelStyles}>
           {wp.hooks.applyFilters(
             "product.optionName",
             option.name,
-            productOptionState
+            productBuyButtonState
           )}
         </label>
       </FilterHook>
@@ -46,14 +50,12 @@ function ProductVariantButtonGroupWrapper({
         <ProductVariantsButtons
           option={option}
           selectedOptions={selectedOptions}
-          variants={productOptionState.variants}
-          totalOptions={productOptionState.totalOptions}
-          allSelectableOptions={allSelectableOptions}
         />
       </div>
-      {missingSelections && !productOptionState.isOptionSelected ? (
+      {missingSelections && !productBuyButtonState.isOptionSelected ? (
         <ProductVariantMissingSelection
-          productOptionState={productOptionState}
+          option={option}
+          productBuyButtonState={productBuyButtonState}
         />
       ) : null}
     </div>

@@ -1,29 +1,36 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-
-import ProductVariantButtonGroup from "./variant-button-group"
+import ProductOption from "../option"
+import ProductVariantButtonGroupWrapper from "./variant-button-group-wrapper"
 
 function ProductVariantButtons({
   options,
   missingSelections,
   selectedOptions,
   variants,
-  allSelectableOptions,
 }) {
   return options ? (
     <div className="wpshopify-products-variant-buttons">
       {options.map(
         (option) =>
           option && (
-            <ProductVariantButtonGroup
+            <ProductOption
               key={option.name}
               option={option}
-              missingSelections={missingSelections}
               selectedOptions={selectedOptions}
+              missingSelections={missingSelections}
               variants={variants}
               totalOptions={options.length}
-              allSelectableOptions={allSelectableOptions}
-            />
+            >
+              <ProductVariantButtonGroupWrapper
+                key={option.name}
+                option={option}
+                missingSelections={missingSelections}
+                selectedOptions={selectedOptions}
+                variants={variants}
+                totalOptions={options.length}
+              />
+            </ProductOption>
           )
       )}
     </div>

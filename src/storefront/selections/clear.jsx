@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useItemsDispatch } from "../../items/_state/hooks"
 import {
   useRequestsState,
   useRequestsDispatch,
@@ -11,7 +10,6 @@ import { useShopState } from "@shopwp/components"
 function StorefrontSelectionsClear() {
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
-  const itemsDispatch = useItemsDispatch()
   const storefrontDispatch = useStorefrontDispatch()
   const shopState = useShopState()
 
@@ -30,8 +28,11 @@ function StorefrontSelectionsClear() {
       payload: true,
     })
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
-    itemsDispatch({ type: "SET_HAS_STOREFRONT_SELECTIONS", payload: false })
-    itemsDispatch({ type: "SET_SEARCH_QUERY", payload: false })
+    storefrontDispatch({
+      type: "SET_HAS_STOREFRONT_SELECTIONS",
+      payload: false,
+    })
+    storefrontDispatch({ type: "SET_SEARCH_QUERY", payload: false })
   }
 
   const clearAllCSS = css`

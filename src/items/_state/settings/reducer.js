@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function SettingsReducer(state, action) {
   switch (action.type) {
@@ -12,9 +12,7 @@ function SettingsReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in SettingsReducer`
-      )
+      rErr(action, "Settings")
     }
   }
 }

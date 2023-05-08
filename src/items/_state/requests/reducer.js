@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function RequestsReducer(state, action) {
   switch (action.type) {
@@ -64,9 +64,7 @@ function RequestsReducer(state, action) {
     }
 
     default: {
-      throw new Error(
-        `Unhandled action type: ${action.type} in RequestsReducer`
-      )
+      rErr(action, "Requests")
     }
   }
 }

@@ -2,7 +2,7 @@ import { useGetItemsQuery, useGetTemplateQuery } from "./item/api"
 import { useSettingsState, useSettingsDispatch } from "./_state/settings/hooks"
 import { useRequestsState, useRequestsDispatch } from "./_state/requests/hooks"
 import { useItemsState } from "./_state/hooks"
-import { useShopState, useShopDispatch } from "@shopwp/components"
+import { useShopState } from "@shopwp/components"
 import { useFirstRender, useAction, usePortal } from "@shopwp/hooks"
 import { isTheSameObject } from "@shopwp/common"
 import Item from "./item"
@@ -10,11 +10,12 @@ import ItemsSkeleton from "./skeleton"
 import isBase64 from "is-base64"
 
 function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
-  const { useEffect } = wp.element
+  const { useState, useEffect } = wp.element
 
+  const [notice, setNotice] = useState(false)
   const itemsState = useItemsState()
-  const getTemplateQuery = useGetTemplateQuery()
-  const getItemsQuery = useGetItemsQuery()
+  const getTemplateQuery = useGetTemplateQuery(setNotice)
+  const getItemsQuery = useGetItemsQuery(setNotice)
   const settingsState = useSettingsState()
   const settingsDispatch = useSettingsDispatch()
   const isFirstRender = useFirstRender()
@@ -22,7 +23,6 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
   const requestsDispatch = useRequestsDispatch()
 
   const shopState = useShopState()
-  const shopDispatch = useShopDispatch()
   const doShopHydrate = useAction("do.shopHydrate", null)
 
   useEffect(() => {
@@ -157,7 +157,7 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
       {requestsState.isBootstrapping && itemsState.skeletonType ? (
         <ItemsSkeleton skeletonType={itemsState.skeletonType} />
       ) : (
-        <Item>{children}</Item>
+        <Item notice={notice}>{children}</Item>
       )}
     </>,
     element

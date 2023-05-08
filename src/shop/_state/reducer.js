@@ -1,4 +1,4 @@
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 import update from "immutability-helper"
 
 function ShopReducer(state, action) {
@@ -39,7 +39,7 @@ function ShopReducer(state, action) {
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action.type} in ShopReducer`)
+      rErr(action, "Shop")
     }
   }
 }

@@ -1,5 +1,5 @@
 import update from "immutability-helper"
-import { rSet } from "@shopwp/common"
+import { rSet, rErr } from "@shopwp/common"
 
 function ProductReducer(state, action) {
   switch (action.type) {
@@ -65,9 +65,9 @@ function ProductReducer(state, action) {
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action.type} in ProductReducer`)
+      rErr(action, "Product")
     }
   }
 }
 
-export { ProductReducer }
+export default ProductReducer

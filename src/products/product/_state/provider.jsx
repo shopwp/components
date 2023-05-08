@@ -1,4 +1,4 @@
-import { ProductReducer } from "./reducer"
+import ProductReducer from "./reducer"
 import { ProductInitialState } from "./initial-state"
 import { ProductStateContext, ProductDispatchContext } from "./context"
 

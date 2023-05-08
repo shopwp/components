@@ -1,18 +1,13 @@
 import ItemsReducer from "./reducer"
 import ItemsInitialState from "./initial-state"
-import { ItemsStateContext, ItemsDispatchContext } from "./context"
+import { ItemsStateContext } from "./context"
 
 function ItemsProvider(props) {
-  const [state, dispatch] = wp.element.useReducer(
-    ItemsReducer,
-    ItemsInitialState(props)
-  )
+  const [state] = wp.element.useReducer(ItemsReducer, ItemsInitialState(props))
 
   return (
     <ItemsStateContext.Provider value={state}>
-      <ItemsDispatchContext.Provider value={dispatch}>
-        {props.children}
-      </ItemsDispatchContext.Provider>
+      {props.children}
     </ItemsStateContext.Provider>
   )
 }

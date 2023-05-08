@@ -6,16 +6,16 @@ const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
 )
 
-function Item({ children }) {
+function Item({ children, notice }) {
   const { Suspense } = wp.element
   const itemsState = useItemsState()
 
-  return itemsState.notice &&
+  return notice &&
     itemsState.componentType !== "search" &&
     itemsState.componentType !== "storefront" ? (
     <Suspense fallback={false}>
-      <Notice status={itemsState.notice.type} element={itemsState.element}>
-        {itemsState.notice.message}
+      <Notice status={notice.type} element={itemsState.element}>
+        {notice.message}
       </Notice>
     </Suspense>
   ) : (

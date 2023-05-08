@@ -28,7 +28,7 @@ function ProductBuyButton() {
   `
 
   return usePortal(
-    <ProductBuyButtonProvider>
+    <ProductBuyButtonProvider payload={productState.payload}>
       <div
         css={buyButtonWrapperCSS}
         className="wps-component-products-buy-button"

@@ -16,17 +16,16 @@ import useIsMounted from "ismounted"
 import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
 import { useSettingsState, useSettingsDispatch } from "../_state/settings/hooks"
 import { usePayloadDispatch } from "../_state/payload/hooks"
-import { useItemsState, useItemsDispatch } from "../_state/hooks"
+import { useItemsState } from "../_state/hooks"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import isBase64 from "is-base64"
 
-function useGetItemsQuery() {
+function useGetItemsQuery(setNotice) {
   const requestsState = useRequestsState()
   const settings = useSettingsState()
   const requestsDispatch = useRequestsDispatch()
   const payloadDispatch = usePayloadDispatch()
-  const { element, notice } = useItemsState()
-  const itemsDispatch = useItemsDispatch()
+  const { element } = useItemsState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const isMounted = useIsMounted()
@@ -84,17 +83,14 @@ function useGetItemsQuery() {
 
           removeSkelly(element)
 
-          itemsDispatch({
-            type: "SET_NOTICE",
-            payload: {
-              type: "error",
-              message: error.message,
-            },
+          setNotice({
+            type: "error",
+            message: error.message,
           })
         }
       },
       onSuccess: (newItems) => {
-        var error = maybeHandleApiError(false, newItems, itemsDispatch)
+        var error = maybeHandleApiError(false, newItems, setNotice)
 
         requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
 
@@ -126,12 +122,9 @@ function useGetItemsQuery() {
             },
           })
 
-          itemsDispatch({
-            type: "SET_NOTICE",
-            payload: {
-              type: "error",
-              message: error,
-            },
+          setNotice({
+            type: "error",
+            message: error,
           })
 
           removeSkelly(element)
@@ -162,23 +155,17 @@ function useGetItemsQuery() {
               },
             })
 
-            itemsDispatch({
-              type: "SET_NOTICE",
-              payload: {
-                type: "warning",
-                message: settings.noResultsText,
-              },
+            setNotice({
+              type: "warning",
+              message: settings.noResultsText,
             })
 
             removeSkelly(element)
           } else {
             if (!newItems.edges) {
-              itemsDispatch({
-                type: "SET_NOTICE",
-                payload: {
-                  type: "info",
-                  message: settings.noResultsText,
-                },
+              setNotice({
+                type: "info",
+                message: settings.noResultsText,
               })
 
               return
@@ -260,12 +247,11 @@ function useGetItemsQuery() {
   )
 }
 
-function useGetTemplateQuery() {
+function useGetTemplateQuery(setNotice) {
   const requestsDispatch = useRequestsDispatch()
   const shopState = useShopState()
   const settingsState = useSettingsState()
   const settingsDispatch = useSettingsDispatch()
-  const itemsDispatch = useItemsDispatch()
 
   return useQuery(
     ["templates"],
@@ -275,12 +261,9 @@ function useGetTemplateQuery() {
     {
       enabled: !!settingsState.htmlTemplate && !settingsState.htmlTemplateData,
       onError: (error) => {
-        itemsDispatch({
-          type: "SET_NOTICE",
-          payload: {
-            type: "error",
-            message: error,
-          },
+        setNotice({
+          type: "error",
+          message: error,
         })
 
         requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
@@ -289,12 +272,9 @@ function useGetTemplateQuery() {
         requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
 
         if (template.success === false) {
-          itemsDispatch({
-            type: "SET_NOTICE",
-            payload: {
-              type: "error",
-              message: template.data,
-            },
+          setNotice({
+            type: "error",
+            message: template.data,
           })
         } else {
           if (isBase64(template.data)) {

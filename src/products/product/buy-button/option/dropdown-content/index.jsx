@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { ProductOptionContext } from "../_state/context"
 import { useOnClickOutside } from "@shopwp/hooks"
 import ProductOptionValue from "../value"
 import ProductVariantDropdownValue from "../dropdown-value"
@@ -8,18 +7,14 @@ import ProductVariantDropdownValue from "../dropdown-value"
 function ProductVariantsDropdownContent({
   dropdownElement,
   isDropdownOpen,
+  setIsDropdownOpen,
   selectedOptions,
   option,
-  allSelectableOptions,
 }) {
-  const { useContext } = wp.element
-  const [productOptionState, productOptionDispatch] =
-    useContext(ProductOptionContext)
-
   useOnClickOutside(
     dropdownElement,
     () => {
-      productOptionDispatch({ type: "TOGGLE_DROPDOWN", payload: false })
+      setIsDropdownOpen(false)
     },
     isDropdownOpen
   )
@@ -41,17 +36,18 @@ function ProductVariantsDropdownContent({
   `
   return (
     <ul className="wps-modal wps-variants" css={modalCSS}>
-      {option.values.map((optionObj) => (
-        <ProductOptionValue
-          key={optionObj.name + optionObj.value}
-          optionObj={optionObj}
-          selectedOptions={selectedOptions}
-          variants={productOptionState.variants}
-          allSelectableOptions={allSelectableOptions}
-        >
-          <ProductVariantDropdownValue />
-        </ProductOptionValue>
-      ))}
+      {option
+        ? option.values.map((optionObj) => (
+            <ProductOptionValue
+              key={optionObj.name + optionObj.value}
+              optionObj={optionObj}
+              selectedOptions={selectedOptions}
+              setIsDropdownOpen={setIsDropdownOpen}
+            >
+              <ProductVariantDropdownValue />
+            </ProductOptionValue>
+          ))
+        : null}
     </ul>
   )
 }
