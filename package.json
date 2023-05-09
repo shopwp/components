@@ -1,7 +1,7 @@
 {
   "name": "@shopwp/components",
   "sideEffects": false,
-  "version": "7.1.7",
+  "version": "7.1.8",
   "description": "React component library for ShopWP.",
   "main": "index.js",
   "scripts": {

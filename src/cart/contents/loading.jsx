@@ -9,6 +9,7 @@ const Loader = wp.element.lazy(() =>
 
 function CartLoadingContents({ isUpdating }) {
   const shopState = useShopState()
+  const { Suspense } = wp.element
 
   const updatingOverlayTextCSS = css`
     opacity: ${isUpdating ? 1 : 0};
@@ -43,13 +44,15 @@ function CartLoadingContents({ isUpdating }) {
   `
 
   return (
-    <div css={[updatingOverlayTextCSS]}>
-      <IconLogo color="#000" />
+    <Suspense fallback="Loading...">
+      <div css={[updatingOverlayTextCSS]}>
+        <IconLogo color="#000" />
 
-      {shopState.t.l.updatingCart}
+        {shopState.t.l.updatingCart}
 
-      <Loader color="#000" center={true} />
-    </div>
+        <Loader color="#000" center={true} />
+      </div>
+    </Suspense>
   )
 }
 
