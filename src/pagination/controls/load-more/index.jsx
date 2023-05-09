@@ -10,9 +10,7 @@ import {
 } from "../../../items/_state/requests/hooks"
 import { useShopState } from "@shopwp/components"
 
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
-)
+import Loader from "../../../loader"
 
 function PaginationLoadMore() {
   const settings = useSettingsState()
@@ -30,7 +28,9 @@ function PaginationLoadMore() {
     }
   }
 
-  function onClick() {
+  function onClick(e) {
+    e.preventDefault()
+
     requestsDispatch({
       type: "SET_IS_REPLACING",
       payload: false,

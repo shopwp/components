@@ -57,7 +57,7 @@ function PaginationItems({ children, payload }) {
     }
   `
 
-  return payload && payload.length ? (
+  return (
     <section className="wps-items-wrapper" css={PaginationItemsContainerCSS}>
       <ProductsSorting />
       <section className="wps-items wps-items-list" css={PaginationItemsCSS}>
@@ -71,7 +71,7 @@ function PaginationItems({ children, payload }) {
         </PaginationItemsMap>
       </section>
     </section>
-  ) : null
+  )
 }
 
 export default PaginationItems
