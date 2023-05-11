@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { has } from "lodash"
 import { useCartState, useCartDispatch } from "@shopwp/components"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { useAction, useFirstRender } from "@shopwp/hooks"

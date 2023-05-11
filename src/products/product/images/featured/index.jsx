@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/react"
 import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
 import Drift from "drift-zoom"
-// const Drift = () => import(/* webpackChunkName: 'Drift-public' */ "drift-zoom")
 import { useFirstRender } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"

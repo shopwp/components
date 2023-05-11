@@ -40,12 +40,6 @@ function CartContents() {
       top: 30%;
     }
 
-    .wps-cart-lineitem {
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 20px;
-      margin-bottom: 20px;
-    }
-
     > div:last-child {
       border-bottom: none;
       padding-bottom: 0;

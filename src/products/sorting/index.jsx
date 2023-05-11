@@ -1,11 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Selects from "../../storefront/selects"
 import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
-
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
-)
 
 import {
   useRequestsState,
@@ -16,7 +11,16 @@ import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useItemsState } from "../../items/_state/hooks"
 import { useShopState } from "@shopwp/components"
 
+const Select = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Select-public' */ "../../select")
+)
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
+)
+
 function ProductsSorting() {
+  const { Suspense } = wp.element
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const settings = useSettingsState()
@@ -25,6 +29,7 @@ function ProductsSorting() {
 
   const sortingWrapperCSS = css`
     width: 100%;
+    max-width: 270px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -140,27 +145,29 @@ function ProductsSorting() {
   return (settings.withSorting && !requestsState.isBootstrapping) ||
     (settings.showSorting && itemsState.componentType === "storefront")
     ? usePortal(
-        <div css={sortingWrapperCSS}>
-          {requestsState.isFetchingNew ? <Loader color="#000" /> : null}
-          <Selects
-            labelText={shopState.t.l.sort}
-            selectId="swp-products-sorting"
-            options={
-              requestsState.queryType !== "products"
-                ? collectionOptions
-                : productOptions
-            }
-            customOnChange={customOnChange}
-            defaultValue={findDefaultSelectVal(
-              requestsState.queryType !== "products"
-                ? collectionOptions
-                : productOptions,
-              settings.sortBy,
-              settings.reverse
-            )}
-            isLoading={requestsState.isFetchingNew}
-          />
-        </div>,
+        <Suspense fallback="Loading ...">
+          <div css={sortingWrapperCSS}>
+            <Select
+              items={
+                requestsState.queryType !== "products"
+                  ? collectionOptions
+                  : productOptions
+              }
+              onChange={customOnChange}
+              label={shopState.t.l.sort}
+              selectedOption={findDefaultSelectVal(
+                requestsState.queryType !== "products"
+                  ? collectionOptions
+                  : productOptions,
+                settings.sortBy,
+                settings.reverse
+              )}
+              id="swp-products-sorting"
+              isBusy={requestsState.isFetchingNew}
+              inline={true}
+            />
+          </div>
+        </Suspense>,
         settings.dropzoneSorting
       )
     : null

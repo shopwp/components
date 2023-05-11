@@ -16,8 +16,6 @@ function ProductBuyButtonInitialState(props) {
     subscriptions: false,
     attributes: false,
     selectedOptions: false,
-    isOptionSelected: false,
-    selectedOption: {},
     variants: props.payload ? props.payload.variants : false,
     totalOptions: allSelectableOptions.length,
     allSelectableOptions: allSelectableOptions,

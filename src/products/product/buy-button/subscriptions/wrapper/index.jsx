@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-
 import SubscriptionDetails from "../details"
 
 const SellingGroups = wp.element.lazy(() =>

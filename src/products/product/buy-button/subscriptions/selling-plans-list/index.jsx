@@ -1,11 +1,12 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-import Select from "react-select"
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
 
+const Select = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
+)
+
 function SellingPlansList({ plans, sellingGroup }) {
-  const { useState } = wp.element
+  const { useState, Suspense } = wp.element
   const buyButtonDispatch = useProductBuyButtonDispatch()
   const shopState = useShopState()
 
@@ -32,27 +33,15 @@ function SellingPlansList({ plans, sellingGroup }) {
     })
   }
 
-  const SellingPlansListCSS = css`
-    max-width: 90%;
-    margin: 0 auto 15px auto;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    div:hover {
-      cursor: pointer;
-    }
-  `
-
   return (
-    <Select
-      css={SellingPlansListCSS}
-      value={selectedOption}
-      onChange={onChange}
-      options={newPlans}
-      placeholder={shopState.t.l.selectDelivery}
-    />
+    <Suspense fallback="Loading ...">
+      <Select
+        items={newPlans}
+        onChange={onChange}
+        label={shopState.t.l.selectDelivery}
+        selectedOption={selectedOption}
+      />
+    </Suspense>
   )
 }
 

@@ -1,124 +1,80 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useProductBuyButtonState } from "../../_state/hooks"
-import { mq } from "@shopwp/common"
+import {
+  useProductBuyButtonState,
+  useProductBuyButtonDispatch,
+} from "../../_state/hooks"
+import { onVariantSelection } from "@shopwp/common"
+import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
-import "tippy.js/dist/tippy.css"
-import "tippy.js/animations/shift-away.css"
-import Tippy from "@tippyjs/react"
+const Select = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
+)
 
-import ProductOptionTrigger from "../trigger"
-import ProductVariantsDropdownContent from "../dropdown-content"
-
-function ProductOptionDropdown({ option, selectedOptions, missingSelections }) {
-  const { useRef, useState } = wp.element
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+function ProductOptionDropdown({
+  option,
+  selectedOptions,
+  missingSelections,
+  selectFirstVariant,
+}) {
+  const { useRef, Suspense } = wp.element
   const productBuyButtonState = useProductBuyButtonState()
+  const productBuyButtonDispatch = useProductBuyButtonDispatch()
   const dropdownElement = useRef()
-  const ProductOptionDropdownCSS = css`
-    position: relative;
-    text-align: center;
-    margin: 0 0 10px 0;
-    padding: 0;
-    width: 100%;
+  const settings = useSettingsState()
 
-    [data-tippy-root] {
-      width: 100% !important;
-      max-width: 100%;
+  const items = option.values.map((opt) => {
+    return {
+      label: opt.value,
+      value: opt,
+    }
+  })
 
-      *:focus {
-        outline: none;
+  function onSelection(stuff) {
+    onVariantSelection({
+      option: stuff.value,
+      productBuyButtonState: productBuyButtonState,
+      productBuyButtonDispatch: productBuyButtonDispatch,
+    })
+  }
+
+  if (selectFirstVariant) {
+    if (productBuyButtonState.selectedOptions && option) {
+      var selectedOption = {
+        label: productBuyButtonState.selectedOptions[option.name],
+        value: {
+          name: option.name,
+          value: productBuyButtonState.selectedOptions[option.name],
+        },
       }
-
-      .tippy-box {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
+    } else {
+      var selectedOption = false
     }
-
-    .tippy-box {
-      box-shadow: 0 28px 30px rgba(0, 0, 0, 0.11);
-      padding: 0;
-      max-width: 100% !important;
-      margin: 0 auto;
-      margin-top: -2px;
-      background: white;
-      border: 1px solid #313131;
-      left: 0;
-    }
-
-    .tippy-content {
-      padding: 0;
-    }
-
-    span[aria-expanded="true"] {
-      display: block;
-    }
-
-    &[data-wps-is-selected="false"]
-      .wps-product-variant[data-wps-is-selectable="false"] {
-      display: none;
-    }
-
-    [aria-expanded="true"] .wps-modal-trigger {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    [aria-expanded="true"] + [data-tippy-root] .tippy-box[data-animation] {
-      opacity: 1 !important;
-    }
-
-    ${mq("medium")} {
-      width: 100%;
-      flex: 1;
-      max-width: 100%;
-      padding-right: 0;
-    }
-  `
+  } else {
+    var selectedOption = false
+  }
 
   return (
     <div className="wps-btn-dropdown-wrapper">
       <div
         className="wps-btn-dropdown"
-        css={ProductOptionDropdownCSS}
         data-wps-is-selected={productBuyButtonState.isOptionSelected}
         ref={dropdownElement}
       >
-        <Tippy
-          visible={isDropdownOpen}
-          placement="bottom"
-          allowHTML={true}
-          appendTo="parent"
-          arrow={false}
-          animation="shift-away"
-          theme="light"
-          interactive={true}
-          inertia={true}
-          delay={[0, 0]}
-          offset={[0, 0]}
-          content={
-            <ProductVariantsDropdownContent
-              dropdownElement={dropdownElement}
-              isDropdownOpen={isDropdownOpen}
-              option={option}
-              selectedOptions={selectedOptions}
-              setIsDropdownOpen={setIsDropdownOpen}
-            />
-          }
-        >
-          <span>
-            <ProductOptionTrigger
-              missingSelections={missingSelections}
-              selectedOptions={selectedOptions}
-              option={option}
-              isDropdownOpen={isDropdownOpen}
-              setIsDropdownOpen={setIsDropdownOpen}
-            />
-          </span>
-        </Tippy>
+        <Suspense fallback="Loading ...">
+          <Select
+            items={items}
+            onChange={onSelection}
+            label={option.name}
+            missingSelections={missingSelections}
+            isVariant={true}
+            allSelectableOptions={productBuyButtonState.allSelectableOptions}
+            selectedOption={selectedOption}
+            selectedOptions={selectedOptions}
+            variants={productBuyButtonState.variants}
+            settings={settings}
+          />
+        </Suspense>
       </div>
     </div>
   )

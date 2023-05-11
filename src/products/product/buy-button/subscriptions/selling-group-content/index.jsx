@@ -63,7 +63,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
   const SellingGroupLabelCSS = css`
     display: flex;
     transition: all ease 0.18s;
-    padding: 15px 10px;
+    padding: 15px 0px;
 
     *,
     *:before,
@@ -101,7 +101,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
       border: 0.1em solid ${isSelected ? "blue" : "black"};
       position: absolute;
       top: 27px;
-      left: 20px;
+      left: 15px;
       transform: translate(0, -50%);
       display: grid;
       place-items: center;
@@ -109,7 +109,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
     }
 
     .shopwp-radio-text {
-      padding-left: 35px;
+      padding-left: 30px;
       margin: 0;
       color: ${isSelected ? "blue" : "black"};
       display: flex;

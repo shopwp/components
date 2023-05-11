@@ -63,10 +63,6 @@ function CartFooter() {
       margin: 0;
     }
 
-    .wps-total-prefix {
-      color: #121212;
-    }
-
     .wps-notices-cart {
       margin-bottom: 13px;
       max-width: 100%;

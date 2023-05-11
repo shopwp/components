@@ -2,8 +2,12 @@ import { useProductState, useProductDispatch } from "../../_state/hooks"
 import {
   createSelectedOptionsObject,
   findVariantFromVariantId,
+  createObj,
 } from "@shopwp/common"
-import { useProductBuyButtonDispatch } from "../_state/hooks"
+import {
+  useProductBuyButtonState,
+  useProductBuyButtonDispatch,
+} from "../_state/hooks"
 
 import isEmpty from "lodash-es/isEmpty"
 
@@ -15,10 +19,11 @@ function createSelected(options) {
   return obj
 }
 
-function ProductOption({ children, selectedOptions }) {
+function ProductOption({ children, selectedOptions, option }) {
   const { useEffect } = wp.element
   const productState = useProductState()
   const productDispatch = useProductDispatch()
+  const productBuyButtonState = useProductBuyButtonState()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
 
   // Allows for selecting first variant
@@ -50,16 +55,6 @@ function ProductOption({ children, selectedOptions }) {
         type: "UPDATE_SELECTED_OPTIONS",
         payload: selectedVariant,
       })
-
-      productBuyButtonDispatch({
-        type: "SET_SELECTED_OPTION",
-        payload: selectedVariant,
-      })
-
-      productBuyButtonDispatch({
-        type: "SET_IS_OPTION_SELECTED",
-        payload: true,
-      })
     } else if (productState.preSelectVariant) {
       var foundVariant = findVariantFromVariantId(
         productState.preSelectVariant,
@@ -81,37 +76,12 @@ function ProductOption({ children, selectedOptions }) {
             type: "UPDATE_SELECTED_OPTIONS",
             payload: selectedOption,
           })
-
-          productBuyButtonDispatch({
-            type: "SET_SELECTED_OPTION",
-            payload: selectedOption,
-          })
-
-          productBuyButtonDispatch({
-            type: "SET_IS_OPTION_SELECTED",
-            payload: true,
-          })
         })
 
         wp.hooks.doAction("on.beforeAddToCart", productState)
       }
     }
   }, [])
-
-  // Resets the selected options state
-  useEffect(() => {
-    if (isEmpty(selectedOptions)) {
-      productBuyButtonDispatch({
-        type: "SET_IS_OPTION_SELECTED",
-        payload: false,
-      })
-
-      productBuyButtonDispatch({
-        type: "SET_SELECTED_OPTION",
-        payload: {},
-      })
-    }
-  }, [selectedOptions, productBuyButtonDispatch])
 
   return children
 }

@@ -13,6 +13,7 @@ function ProductOptions({
   variants,
   hasSelections,
   isDirectCheckoutOut,
+  selectFirstVariant,
 }) {
   const ProductOptionsCSS = css`
     position: relative;
@@ -31,6 +32,7 @@ function ProductOptions({
           missingSelections={missingSelections}
           selectedOptions={selectedOptions}
           variants={variants}
+          selectFirstVariant={selectFirstVariant}
         />
       ) : variantStyle === "buttons" ? (
         <ProductVariantButtons
@@ -45,6 +47,7 @@ function ProductOptions({
           missingSelections={missingSelections}
           selectedOptions={selectedOptions}
           variants={variants}
+          selectFirstVariant={selectFirstVariant}
         />
       )}
     </div>

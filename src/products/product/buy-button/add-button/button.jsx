@@ -22,9 +22,7 @@ const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../../notice")
 )
 
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../../../loader")
-)
+import Loader from "../../../../loader"
 
 function findSingleVariantFromPayload(payload) {
   if (!payload.variants.edges.length) {
@@ -172,7 +170,7 @@ function AddButton({
 		min-width: 160px;
     min-height: 45px;
 		animation: ${
-      shouldShake
+      shouldShake && !isCheckingOut
         ? css`
             ${headShake} 0.9s ease-in-out
           `

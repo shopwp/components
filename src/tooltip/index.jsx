@@ -1,99 +1,82 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import "tippy.js/dist/tippy.css"
-import "tippy.js/animations/shift-toward.css"
-import "tippy.js/themes/light-border.css"
-import Tippy from "@tippyjs/react"
-import { useDebounce } from "@shopwp/hooks"
+import { SlideInFromTop } from "@shopwp/common"
 
-function Tooltip({ label, children, options }) {
+function Tooltip({ children, label }) {
   const { useState } = wp.element
-  const [isShowingDetails, setIsShowingDetails] = useState(false)
-  const isShowingDetailsDebounced = useDebounce(isShowingDetails, 250)
 
-  const TooltipCSS = css`
-    width: 210px;
-    padding: 2px 0 2px 0;
-    margin: 0;
+  const [isShowing, setIsShowing] = useState(false)
+
+  const tooltipIconCSS = css`
+    width: 13px;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    right: -4px;
+  `
+
+  const tooltipCSS = css`
+    position: relative;
+    padding: 10px 0;
+    margin-top: -10px;
 
     &:hover {
       cursor: help;
     }
-
-    .tippy-content {
-      padding: 15px 20px 10px 20px;
-
-      strong + p {
-        margin-top: 5px;
-      }
-    }
   `
-  const TooltipInnerCSS = css`
-    flex: 1;
+
+  const tooltipLabelCSS = css`
     display: flex;
-    width: 100%;
+    font-size: 15px;
+    display: inline-block;
   `
 
-  const iconCSS = css`
-    width: 15px;
-    height: 15px;
-    margin: 0 0 0 7px;
-  `
+  const tooltipContentCSS = css`
+    position: absolute;
+    left: 0;
+    background: white;
+    z-index: 3;
+    padding: 15px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.66) 0px 0px 9px -6px;
 
-  const textCSS = css`
-    && {
+    &:hover {
+      cursor: text;
+    }
+
+    p {
       margin: 0;
       font-size: 15px;
-      line-height: 1;
     }
   `
 
-  function onMouseLeave() {
-    setIsShowingDetails(false)
+  function onMouseEnter() {
+    setIsShowing(true)
   }
 
-  function onMouseEnter() {
-    setIsShowingDetails(true)
+  function onMouseLeave() {
+    setIsShowing(false)
   }
 
   return (
-    <div
-      css={TooltipCSS}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <Tippy
-        interactive={true}
-        visible={isShowingDetailsDebounced}
-        placement={options.placement}
-        appendTo="parent"
-        allowHTML={true}
-        animation="shift-toward"
-        theme="light-border"
-        inertia={false}
-        delay={50}
-        content={children}
-      >
-        <div css={TooltipInnerCSS}>
-          <p css={textCSS}>{label}</p>
+    <div css={tooltipCSS} onMouseLeave={onMouseLeave}>
+      <label css={tooltipLabelCSS} onMouseEnter={onMouseEnter}>
+        {label}{" "}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          css={tooltipIconCSS}
+        >
+          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+        </svg>
+      </label>
 
-          <svg
-            css={iconCSS}
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="info-circle"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <path
-              fill="currentColor"
-              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-            ></path>
-          </svg>
-        </div>
-      </Tippy>
+      {isShowing ? (
+        <SlideInFromTop>
+          <div css={tooltipContentCSS}>{children}</div>
+        </SlideInFromTop>
+      ) : null}
     </div>
   )
 }

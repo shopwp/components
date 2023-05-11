@@ -52,7 +52,8 @@ function ProductVariantButtonGroupWrapper({
           selectedOptions={selectedOptions}
         />
       </div>
-      {missingSelections && !productBuyButtonState.isOptionSelected ? (
+      {missingSelections &&
+      !productBuyButtonState.selectedOptions.hasOwnProperty(option.name) ? (
         <ProductVariantMissingSelection
           option={option}
           productBuyButtonState={productBuyButtonState}

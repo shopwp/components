@@ -172,6 +172,7 @@ function ProductBuyButtonWrapper() {
           availableOptions={availableOptions}
           productDispatch={productDispatch}
           isDirectCheckoutOut={productState.isDirectCheckingOut}
+          selectFirstVariant={productState.selectFirstVariant}
         />
       )}
 

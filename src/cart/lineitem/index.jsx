@@ -98,6 +98,10 @@ function CartLineItem({ lineItem }) {
     display: flex;
     flex-direction: column;
 
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
     .wps-cart-lineitem-img-link {
       align-self: flex-start;
       transition: opacity 0.2s ease;

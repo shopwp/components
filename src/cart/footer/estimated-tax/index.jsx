@@ -4,12 +4,6 @@ import { Price } from "@shopwp/components"
 import { mq } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
-const CartFooterEstimatedTaxTooltip = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'CartFooterEstimatedTaxTooltip-public' */ "../../../tooltip"
-  )
-)
-
 function CartFooterEstimatedTax({ discountApplied }) {
   const shopState = useShopState()
 
@@ -34,17 +28,13 @@ function CartFooterEstimatedTax({ discountApplied }) {
 
   const TaxLabelCSS = css`
     font-size: 15px;
+    display: flex;
   `
 
   return (
     <div css={TaxRowCSS} className="wps-tax-row">
       <div className="wps-total-prefix" css={TaxLabelCSS}>
-        <CartFooterEstimatedTaxTooltip
-          label={shopState.t.l.estTax}
-          options={{ placement: "top" }}
-        >
-          <p>{shopState.t.n.totalTax}</p>
-        </CartFooterEstimatedTaxTooltip>
+        <p>{shopState.t.l.estTax}</p>
       </div>
       <div className="wps-total-amount" css={TaxAmountCSS}>
         <Price

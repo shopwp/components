@@ -6,15 +6,21 @@ import {
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
 import { findDefaultSelectVal } from "@shopwp/common"
-import Selects from "../selects"
 import { useShopState } from "@shopwp/components"
 
+const Select = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Select-public' */ "../../select")
+)
+
 function StorefrontPageSize() {
+  const { Suspense } = wp.element
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const shopState = useShopState()
   const options = settings.sortingOptionsPageSize
+
+  const defaultVal = findDefaultSelectVal(options, settings.pageSize)
 
   function customOnChange(data) {
     requestsDispatch({
@@ -39,15 +45,18 @@ function StorefrontPageSize() {
   }
 
   return (
-    <Selects
-      dropzone={settings.dropzonePageSize}
-      labelText={shopState.t.l.pageSize}
-      selectId="swp-pagesize"
-      options={options}
-      isLoading={requestsState.isFetchingNew}
-      customOnChange={customOnChange}
-      defaultValue={findDefaultSelectVal(options, settings.pageSize)}
-    />
+    <Suspense fallback="Loading ...">
+      <Select
+        items={options}
+        onChange={customOnChange}
+        label={shopState.t.l.pageSize}
+        selectedOption={defaultVal}
+        id="swp-pagesize"
+        isBusy={requestsState.isFetchingNew}
+        dropzone={settings.dropzonePageSize}
+        inline={true}
+      />
+    </Suspense>
   )
 }
 

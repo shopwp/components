@@ -1,27 +1,15 @@
 import { FilterHook } from "@shopwp/common"
-import { useShopState } from "@shopwp/components"
-
-const SubscriptionTooltip = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'SubscriptionTooltip-public' */ "../../../../../tooltip"
-  )
-)
+import { useShopState, Tooltip } from "@shopwp/components"
 
 function SubscriptionDetails() {
   const shopState = useShopState()
 
   return (
-    <SubscriptionTooltip
-      label={shopState.t.l.subDetails}
-      options={{ placement: "right" }}
-    >
-      <FilterHook name="product.subscriptionsInfoHTML">
-        <>
-          <strong>{shopState.t.l.subDetailsHeading}</strong>
-          <p>{shopState.t.n.subDetailsContent}</p>
-        </>
-      </FilterHook>
-    </SubscriptionTooltip>
+    <FilterHook name="product.subscriptionsInfoHTML">
+      <Tooltip label={shopState.t.l.subDetailsHeading}>
+        <p>{shopState.t.n.subDetailsContent}</p>
+      </Tooltip>
+    </FilterHook>
   )
 }
 

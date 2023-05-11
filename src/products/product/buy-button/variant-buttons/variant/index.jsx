@@ -22,7 +22,6 @@ function ProductVariantButtonValue({
   const border = isSelected ? "#415aff" : "#606060"
   const color = isSelected ? "white" : "black"
   const backgroundColor = isSelected ? "#415aff" : "transparent"
-  const opacity = isAvailableToSelect ? 1 : 0.4
 
   if (settings.showPriceUnderVariantButton && totalOptions === 1) {
     var variantObject = findVariantFromOptionObject(optionObj, variants)
@@ -38,11 +37,11 @@ function ProductVariantButtonValue({
     font-size: 16px;
     padding: 10px;
     border-radius: 5px;
-    opacity: ${!isAvailableInShopify ? 0.5 : opacity};
+    opacity: ${isAvailableToSelect ? 1 : 0.5};
     color: ${color};
     background-color: ${backgroundColor};
     transition: all ease 0.2s;
-	  text-decoration: ${!isAvailableInShopify ? "line-through" : "none"};
+	  text-decoration: ${!isAvailableToSelect ? "line-through" : "none"};
 
     &:hover,
     &:focus {
@@ -56,7 +55,7 @@ function ProductVariantButtonValue({
           ? "#e9e9e9"
           : backgroundColor
       };
-      text-decoration: ${!isAvailableInShopify ? "line-through" : "none"};
+      text-decoration: ${!isAvailableToSelect ? "line-through" : "none"};
     }`
 
   function maybeColorSwatches(optionObj, defaultCustomStyles) {

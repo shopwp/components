@@ -13,11 +13,12 @@ function CartLineItems() {
 
   const trail = useTrail(shopState.cartData.lines.edges.length, {
     from: {
-      x: 150,
+      y: -50,
     },
     to: {
-      x: 0,
+      y: 0,
     },
+    config: { tension: 120, friction: 20 },
   })
 
   const CartLineItemsCSS = css`

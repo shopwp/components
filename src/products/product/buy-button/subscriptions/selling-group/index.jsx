@@ -13,7 +13,7 @@ function SellingGroup({ sellingGroup, selectedSubscriptionId }) {
   const isSelected = selectedSubscriptionId === sellingGroup.id
 
   const SellingGroupCSS = css`
-    padding: 0;
+    padding: 0 10px;
     display: block;
     background-color: ${isSelected ? "#f1f4fe" : "#f6f6f6"};
     margin-bottom: 10px;

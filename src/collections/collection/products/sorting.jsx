@@ -1,18 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import Selects from "../../../storefront/selects"
 import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
-
 import { useCollectionState, useCollectionDispatch } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
 import { useShopState } from "@shopwp/components"
 
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
+const Select = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Select-public' */ "../../../select")
 )
 
 function CollectionSorting() {
+  const { Suspense } = wp.element
   const collectionDispatch = useCollectionDispatch()
   const collectionState = useCollectionState()
   const settings = useSettingsState()
@@ -98,19 +97,20 @@ function CollectionSorting() {
 
   return (
     <div css={CollectionsSortingWrapperCSS}>
-      {requestsState.isFetchingNew && <Loader color="#000" />}
-      <Selects
-        labelText={shopState.t.l.sort}
-        selectId="swp-collections-sorting"
-        options={options}
-        customOnChange={customOnChange}
-        defaultValue={findDefaultSelectVal(
-          options,
-          settings.sortBy,
-          settings.reverse
-        )}
-        isLoading={requestsState.isFetchingNew}
-      />
+      <Suspense fallback="Loading ...">
+        <Select
+          items={options}
+          onChange={customOnChange}
+          label={shopState.t.l.sort}
+          selectedOption={findDefaultSelectVal(
+            options,
+            settings.sortBy,
+            settings.reverse
+          )}
+          id="swp-collections-sorting"
+          isBusy={requestsState.isFetchingNew}
+        />
+      </Suspense>
     </div>
   )
 }

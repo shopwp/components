@@ -15,14 +15,6 @@ function ProductBuyButtonReducer(state, action) {
       return rSet("notice", action, state)
     }
 
-    case "SET_SELECTED_OPTION": {
-      return rSet("selectedOption", action, state)
-    }
-
-    case "SET_IS_OPTION_SELECTED": {
-      return rSet("isOptionSelected", action, state)
-    }
-
     case "UPDATE_SELECTED_OPTIONS": {
       if (state.selectedOptions === false || action.payload === false) {
         return {
