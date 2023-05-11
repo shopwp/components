@@ -29,8 +29,6 @@ function PaginationLoadMore() {
   }
 
   function onClick(e) {
-    e.preventDefault()
-
     requestsDispatch({
       type: "SET_IS_REPLACING",
       payload: false,
