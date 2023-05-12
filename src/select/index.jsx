@@ -229,6 +229,7 @@ function Select({
       margin: 0;
       z-index: 99999999999;
       padding: 0;
+      opacity: 1;
       border: ${isOpen && !isBusy ? "1px solid rgb(221, 221, 221)" : 0};
       border-radius: 5px;
       border-top-right-radius: 0;
