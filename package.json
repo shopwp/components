@@ -1,7 +1,7 @@
 {
   "name": "@shopwp/components",
   "sideEffects": false,
-  "version": "7.1.11",
+  "version": "7.1.12",
   "description": "React component library for ShopWP.",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "downshift": "^7.6.0",
-    "drift-zoom": "^1.5.1",
     "react-error-boundary": "^4.0.3",
     "react-gravatar": "^2.6.3",
     "react-jsx-parser": "^1.29.0",

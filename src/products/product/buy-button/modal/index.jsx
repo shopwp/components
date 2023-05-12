@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/react"
+import { jsx, css, Global } from "@emotion/react"
 import Products from "../../../index"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useSettings } from "@shopwp/hooks"
@@ -95,21 +95,83 @@ function ProductModal() {
   }
 
   return (
-    <Modal
-      closeTimeoutMS={50}
-      isOpen={productState.isModalOpen}
-      onRequestClose={onModalClose}
-      contentLabel="Example Modal"
-      style={customStyles}
-      bodyOpenClassName="wps-modal-open"
-      appElement={itemsState.element}
-    >
-      <ProductModalContent
-        payload={productState.payload}
-        settings={pSettings}
-        id={productState.id}
+    <>
+      <Global
+        styles={css`
+          .shopwp.wps-modal-open {
+            overflow: hidden;
+          }
+
+          .wps-modal-row {
+            @media (max-width: 800px) {
+              flex-direction: column;
+
+              > div {
+                flex: 1;
+                width: 100% !important;
+              }
+            }
+
+            @media (max-width: 500px) {
+              > div {
+                padding: 0 !important;
+              }
+            }
+          }
+
+          .ReactModal__Overlay {
+            opacity: 0;
+            transition: all 0.1s ease;
+          }
+
+          .ReactModal__Content {
+            transform: translate(-50%, 0px);
+            opacity: 0;
+            transition: all 0.2s ease;
+
+            @media (max-width: 1100px) {
+              width: 85% !important;
+            }
+
+            @media (max-width: 500px) {
+              padding: 20px 5px !important;
+              width: 95% !important;
+              transform: translate(-50%, 80px) !important;
+            }
+          }
+
+          .ReactModal__Content--after-open {
+            opacity: 1;
+            transform: translate(-50%, 40px);
+          }
+
+          .ReactModal__Content--after-open.ReactModal__Content--before-close,
+          .ReactModal__Content--before-close {
+            opacity: 0;
+          }
+
+          .ReactModal__Overlay.ReactModal__Overlay--after-open {
+            opacity: 1;
+            z-index: 999;
+          }
+        `}
       />
-    </Modal>
+      <Modal
+        closeTimeoutMS={50}
+        isOpen={productState.isModalOpen}
+        onRequestClose={onModalClose}
+        contentLabel="Example Modal"
+        style={customStyles}
+        bodyOpenClassName="wps-modal-open"
+        appElement={itemsState.element}
+      >
+        <ProductModalContent
+          payload={productState.payload}
+          settings={pSettings}
+          id={productState.id}
+        />
+      </Modal>
+    </>
   )
 }
 

@@ -2,11 +2,10 @@
 import { jsx, css } from "@emotion/react"
 import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
-import Drift from "drift-zoom"
-import { useFirstRender } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
+import { createZoomImageMove } from "@zoom-image/core"
 
 const ProductImageSoldOutLabel = wp.element.lazy(() =>
   import(
@@ -24,29 +23,14 @@ const ProductFeaturedImageVideo = wp.element.lazy(() =>
   import(/* webpackChunkName: 'ProductFeaturedImageVideo-public' */ "../video")
 )
 
-function destroyDrift(drift) {
-  drift.destroy()
-  window.Drift = null
-  drift = null
-}
-
 function ProductFeaturedImage() {
   const { useEffect, useContext, useRef, useState, Suspense } = wp.element
   const paneElement = useRef()
-  const isFirstRender = useFirstRender()
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const [originalFeatImg] = useState(galleryState.featImage)
   const settings = useSettingsState()
   const productState = useProductState()
   const shopState = useShopState()
-
-  function driftOptions() {
-    return {
-      ...settings.imageZoomOptions,
-      inlineContainer: paneElement.current,
-      paneContainer: paneElement.current,
-    }
-  }
 
   function showZoom() {
     if (settings.linkTo !== "none") {
@@ -112,6 +96,8 @@ function ProductFeaturedImage() {
 
   const paneElementCSS = css`
     position: relative;
+    cursor: crosshair;
+    overflow: hidden;
   `
 
   function getImageWidth() {
@@ -143,6 +129,10 @@ function ProductFeaturedImage() {
       width: 100%;
       max-width: ${getImageWidth()};
     }
+
+    + div {
+      background-size: cover !important;
+    }
   `
 
   const isOutOfStock = productState.payload.availableForSale === false
@@ -168,18 +158,22 @@ function ProductFeaturedImage() {
   }
 
   useEffect(() => {
-    if (isFirstRender) {
-      return
-    }
-
     if (hasFeatImage() && showZoom()) {
-      var drift = new Drift(galleryState.featImageElement, driftOptions())
+      const { cleanup } = createZoomImageMove(paneElement.current, {
+        zoomImageSource: galleryState.featImage.originalSrc,
+        zoomFactor: 3,
+        ...settings.imageZoomOptions,
+      })
 
       return () => {
-        destroyDrift(drift)
+        cleanup()
       }
     }
-  }, [galleryState.featImageElement, settings.showZoom])
+  }, [
+    galleryState.featImage.originalSrc,
+    paneElement.current,
+    settings.showZoom,
+  ])
 
   return (
     <div
