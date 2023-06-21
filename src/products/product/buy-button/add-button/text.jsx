@@ -17,9 +17,11 @@ function AddButtonText({
   const addedTest = useRef()
   const shopState = useShopState()
 
-  function getText() {
-    if (added) {
-      var text = shopState.t.l.added
+  const [text, setText] = useState("")
+
+  function getText(addedForce = false) {
+    if (added || addedForce) {
+      var text = settings.afterAddedText
     } else {
       var text = getButtonText(
         settings,
@@ -37,15 +39,15 @@ function AddButtonText({
     )
   }
 
-  const [text, setText] = useState(getText())
-
   useEffect(() => {
     if (addedToCart) {
       setAdded(true)
+      setText(getText(true))
 
       setTimeout(function () {
         if (addedTest.current) {
           setAdded(false)
+          setText(getText())
         }
       }, 3000)
     }
@@ -53,7 +55,7 @@ function AddButtonText({
 
   useEffect(() => {
     setText(getText())
-  }, [shopState.t])
+  }, [shopState.t, settings])
 
   const AddButtonTextCSS = css`
     display: block;

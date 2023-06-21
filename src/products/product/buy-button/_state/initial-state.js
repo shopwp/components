@@ -17,7 +17,7 @@ function ProductBuyButtonInitialState(props) {
     attributes: false,
     selectedOptions: false,
     variants: props.payload ? props.payload.variants : false,
-    totalOptions: allSelectableOptions.length,
+    totalOptions: props.payload.options.length,
     allSelectableOptions: allSelectableOptions,
   }
 }

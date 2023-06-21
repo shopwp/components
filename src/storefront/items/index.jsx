@@ -6,7 +6,6 @@ import Pagination from "../../pagination"
 import { usePayloadState } from "../../items/_state/payload/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { removeSkelly } from "@shopwp/common"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
@@ -16,10 +15,6 @@ function StorefrontItems() {
   const payload = usePayloadState()
   const settings = useSettingsState()
   const requestsState = useRequestsState()
-  const { useEffect, useState } = wp.element
-  const [removedSkelly, setRemovedSkelly] = useState(false)
-
-  settings.withSorting = false
 
   const noticeCSS = css`
     && {
@@ -30,14 +25,8 @@ function StorefrontItems() {
 
   const storefrontItemsWrapperCSS = css`
     position: relative;
+    flex: 1;
   `
-
-  useEffect(() => {
-    if (payload.length && !removedSkelly) {
-      removeSkelly(document.getElementById("shopwp-storefront"))
-      setRemovedSkelly(true)
-    }
-  }, [payload])
 
   return usePortal(
     <div css={storefrontItemsWrapperCSS}>

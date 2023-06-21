@@ -15,7 +15,7 @@ const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
 )
 
-function SearchItems({ searchTerm }) {
+function SearchItems({ searchTerm, withStorefront = false }) {
   const itemsState = useItemsState()
   const requestsState = useRequestsState()
   const payload = usePayloadState()
@@ -40,9 +40,9 @@ function SearchItems({ searchTerm }) {
       </>,
       settings.dropzonePayload
     )
-  ) : (
+  ) : !withStorefront ? (
     <SearchModal searchTerm={searchTerm} />
-  )
+  ) : null
 }
 
 export default SearchItems

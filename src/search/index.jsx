@@ -7,9 +7,10 @@ function Search(props) {
       {...props}
       queryType="products"
       componentType="search"
+      skeletonType="shopwp/search"
       customPagination={true}
     >
-      <SearchWrapper />
+      <SearchWrapper withStorefront={false} />
     </Items>
   )
 }

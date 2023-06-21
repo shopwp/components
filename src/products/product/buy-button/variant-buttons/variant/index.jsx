@@ -36,7 +36,7 @@ function ProductVariantButtonValue({
     border: 1px solid ${border};
     font-size: 16px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: ${settings.globalBorderRadius};
     opacity: ${isAvailableToSelect ? 1 : 0.5};
     color: ${color};
     background-color: ${backgroundColor};

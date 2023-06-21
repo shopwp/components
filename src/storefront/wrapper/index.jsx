@@ -11,7 +11,7 @@ import {
 import {
   buildQueryStringFromSelections,
   getInitialSelections,
-  removeSkelly,
+  flexRowCSS,
 } from "@shopwp/common"
 
 import forOwn from "lodash-es/forOwn"
@@ -27,10 +27,6 @@ const StorefrontSelections = wp.element.lazy(() =>
 
 const StorefrontOptions = wp.element.lazy(() =>
   import(/* webpackChunkName: 'StorefrontOptions-public' */ "../options")
-)
-
-const StorefrontPageSize = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'StorefrontPageSize-public' */ "../page-size")
 )
 
 const StorefrontItems = wp.element.lazy(() =>
@@ -86,11 +82,6 @@ function StorefrontWrapper() {
   useEffect(() => {
     if (isFirstRender) {
       setInitialSelections()
-
-      if (itemsState.element) {
-        removeSkelly(itemsState.element)
-      }
-
       return
     }
 
@@ -128,7 +119,6 @@ function StorefrontWrapper() {
         type: "SET_QUERY_TYPE",
         payload: "collectionProducts",
       })
-
       requestsDispatch({
         type: "RESET_QUERY_PARAMS",
       })
@@ -144,7 +134,6 @@ function StorefrontWrapper() {
       }
     } else {
       requestsDispatch({ type: "SET_QUERY_TYPE", payload: "products" })
-
       requestsDispatch({
         type: "SET_QUERY_PARAMS",
         payload: {
@@ -177,19 +166,44 @@ function StorefrontWrapper() {
     })
   }, [storefrontState.selections])
 
+  const StorefrontCSS = css`
+    max-width: 1500px;
+    width: 100%;
+    padding-top: 0;
+    margin: 0 auto;
+  `
+
+  const SelectorsCSS = css`
+    display: flex;
+    min-height: 52px;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 -10px 0;
+    justify-content: space-between;
+  `
+
   return (
     <Suspense fallback={false}>
-      {settings.showSearch ? (
-        <SearchWrapper
-          hasStorefrontSelections={storefrontState.hasStorefrontSelections}
-        />
-      ) : null}
-      {settings.dropzoneSelections ? <StorefrontSelections /> : null}
-      {settings.showPagination ? <StorefrontPageSize /> : null}
+      <section id="shopwp-storefront" css={StorefrontCSS}>
+        <div css={flexRowCSS}>
+          {settings.withSearch ? (
+            <SearchWrapper
+              hasStorefrontSelections={storefrontState.hasStorefrontSelections}
+              withStorefront={true}
+            />
+          ) : null}
+        </div>
 
-      <StorefrontOptions settings={settings} />
+        <div css={[flexRowCSS, SelectorsCSS]}>
+          {settings.showSelections ? <StorefrontSelections /> : null}
+        </div>
 
-      {!storefrontState.searchQuery ? <StorefrontItems /> : null}
+        <div css={flexRowCSS}>
+          <StorefrontOptions settings={settings} />
+
+          {!storefrontState.searchQuery ? <StorefrontItems /> : null}
+        </div>
+      </section>
     </Suspense>
   )
 }

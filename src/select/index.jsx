@@ -100,25 +100,52 @@ function Select({
       border: 1px solid
         ${settings && settings.variantDropdownButtonColor
           ? settings.variantDropdownButtonColor
-          : "#7b7a7a"};
-      border-radius: 5px;
+          : "#acacac"};
+      border-radius: ${settings.globalBorderRadius};
       box-shadow: ${isOpen && !isBusy
         ? "rgb(38, 132, 255) 0px 0px 0px 1px"
         : "none"};
       transition: all 100ms ease 0s;
-      min-width: 160px;
       width: 100%;
+      box-sizing: border-box;
       position: relative;
       display: flex;
-      min-height: 42px;
-      border-bottom-right-radius: ${isOpen ? "0" : "5px"};
-      border-bottom-left-radius: ${isOpen ? "0" : "5px"};
+      border-bottom-right-radius: ${isOpen ? "0" : settings.globalBorderRadius};
+      border-bottom-left-radius: ${isOpen ? "0" : settings.globalBorderRadius};
 
       background-color: ${settings && settings.variantDropdownButtonColor
         ? settings.variantDropdownButtonColor
         : "white"};
-      color: ${settings && settings.variantDropdownTextColor
-        ? settings.variantDropdownTextColor
+
+      &:hover {
+        cursor: pointer;
+        border: 1px solid #000;
+      }
+
+      svg {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        width: ${settings.variantDropdownTypeFontSize
+          ? settings.variantDropdownTypeFontSize
+          : "15px;"};
+        height: ${settings.variantDropdownTypeFontSize
+          ? settings.variantDropdownTypeFontSize
+          : "15px;"};
+
+        path {
+          fill: ${settings && settings.variantLabelTextColor
+            ? settings.variantLabelTextColor
+            : "#414040"};
+        }
+      }
+    `
+
+    const DropdownLabel = css`
+      display: flex;
+
+      color: ${settings && settings.variantLabelTextColor
+        ? settings.variantLabelTextColor
         : "black"};
       font-family: ${settings && settings.variantDropdownTypeFontFamily
         ? settings.variantDropdownTypeFontFamily
@@ -145,23 +172,8 @@ function Select({
         ? settings.variantDropdownTypeTextTransform
         : "initial"};
 
-      &:hover {
-        cursor: pointer;
-        border: 1px solid #000;
-      }
-
-      svg {
-        position: absolute;
-        top: 12px;
-        right: 15px;
-        width: 15px;
-        height: 15px;
-
-        path {
-          fill: ${settings && settings.variantDropdownTextColor
-            ? settings.variantDropdownTextColor
-            : "#414040"};
-        }
+      span {
+        margin-left: 7px;
       }
     `
 
@@ -203,20 +215,14 @@ function Select({
             ${animeCSS} 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both
           `
         : "none"};
-
-      label {
-        padding: 0px 5px 0px 5px;
-        margin-bottom: 0;
-        display: block;
-        font-size: 15px;
-      }
     `
 
     const DropdownMenuWrapCSS = css`
       position: relative;
       width: 100%;
       min-width: 200px;
-      max-width: 460px;
+      max-width: 100%;
+      z-index: 99999999999;
     `
 
     const DropdownMenuCSS = css`
@@ -231,12 +237,15 @@ function Select({
       padding: 0;
       opacity: 1;
       border: ${isOpen && !isBusy ? "1px solid rgb(221, 221, 221)" : 0};
-      border-radius: 5px;
+      border-radius: ${settings.globalBorderRadius};
       border-top-right-radius: 0;
       border-top-left-radius: 0;
       border-top: 0;
       box-shadow: rgba(0, 0, 0, 0.66) 0px 0px 9px -6px;
 
+      li {
+        font-size: ${settings.variantDropdownTypeFontSize};
+      }
       > li:last-of-type {
         padding-bottom: 7px;
       }
@@ -248,11 +257,6 @@ function Select({
       align-items: ${inline ? "center" : "flex-start"};
     `
 
-    const DropdownSelectionCSS = css`
-      font-size: 15px;
-      font-weight: bold;
-    `
-
     return usePortal(
       <div css={DropdownWrapperCSS} id={id}>
         <div css={DropdownInnerCSS}>
@@ -260,16 +264,14 @@ function Select({
             {isBusy ? (
               <Loader color="#000" />
             ) : (
-              <>
+              <div css={DropdownLabel}>
                 <label {...getLabelProps()}>
                   {label}
                   {selected ? ":" : null}
                 </label>
 
-                {selected ? (
-                  <span css={DropdownSelectionCSS}>{selected.label}</span>
-                ) : null}
-              </>
+                {selected ? <span>{selected.label}</span> : null}
+              </div>
             )}
 
             {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}

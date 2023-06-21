@@ -50,7 +50,7 @@ function CartFooterDiscountWrapper() {
       font-size: 15px;
       padding: 10px;
       margin-right: 10px;
-      border-radius: 5px;
+      border-radius: ${shopwp.general.globalBorderRadius};
       border: 1px solid #7e7e7e;
       outline: none;
       color: #121212;
@@ -74,7 +74,7 @@ function CartFooterDiscountWrapper() {
   const discountFormButtonCSS = css`
     width: 100px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     border: 1px solid #7e7e7e;
     appearance: none;
     color: black;

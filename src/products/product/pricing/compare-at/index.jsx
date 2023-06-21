@@ -9,15 +9,12 @@ function ProductPricesCompareAt({
   selectedVariant,
   showPriceRange,
   prices,
+  settings,
 }) {
   const ProductPricesCompareAtWrapperCSS = css`
     display: flex;
     align-items: center;
     margin: ${selectedVariant ? "6px 0 0 0" : "10px 0 0 0"};
-
-    .wps-product-individual-price {
-      font-size: 15px;
-    }
 
     &:empty {
       display: none;
@@ -48,7 +45,10 @@ function ProductPricesCompareAt({
           className="wps-product-prices-compare-at"
           css={ProductPricesCompareAtWrapperCSS}
         >
-          <ProductPriceSaleNotice>
+          <ProductPriceSaleNotice
+            fontSize={settings.pricingCompareAtTypeFontSize}
+            color={settings.pricingCompareAtTypeSaleTextColor}
+          >
             <ProductPrice
               prices={prices}
               selectedVariant={selectedVariant}

@@ -2,14 +2,8 @@ import { useProductState, useProductDispatch } from "../../_state/hooks"
 import {
   createSelectedOptionsObject,
   findVariantFromVariantId,
-  createObj,
 } from "@shopwp/common"
-import {
-  useProductBuyButtonState,
-  useProductBuyButtonDispatch,
-} from "../_state/hooks"
-
-import isEmpty from "lodash-es/isEmpty"
+import { useProductBuyButtonDispatch } from "../_state/hooks"
 
 function createSelected(options) {
   const obj = {}
@@ -19,11 +13,10 @@ function createSelected(options) {
   return obj
 }
 
-function ProductOption({ children, selectedOptions, option }) {
+function ProductOption({ children }) {
   const { useEffect } = wp.element
   const productState = useProductState()
   const productDispatch = useProductDispatch()
-  const productBuyButtonState = useProductBuyButtonState()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
 
   // Allows for selecting first variant

@@ -1,5 +1,5 @@
 import ProductPriceSingle from "../../single"
-import { ProductPricingSeparator } from "../../separator"
+import ProductPricingSeparator from "../../separator"
 
 function ProductPricingRangeGroup({
   firstPrice,
@@ -7,7 +7,7 @@ function ProductPricingRangeGroup({
   compareAt,
   showPriceRange,
   pricingColor,
-  pricingFontSize,
+  settings,
 }) {
   return (
     <>
@@ -16,15 +16,15 @@ function ProductPricingRangeGroup({
         compareAt={compareAt}
         showPriceRange={showPriceRange}
         pricingColor={pricingColor}
-        pricingFontSize={pricingFontSize}
+        settings={settings}
       />
-      <ProductPricingSeparator compareAt={compareAt} />
+      <ProductPricingSeparator settings={settings} compareAt={compareAt} />
       <ProductPriceSingle
         price={lastPrice}
         compareAt={compareAt}
         showPriceRange={showPriceRange}
         pricingColor={pricingColor}
-        pricingFontSize={pricingFontSize}
+        settings={settings}
       />
     </>
   )

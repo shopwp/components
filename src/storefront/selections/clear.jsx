@@ -5,19 +5,18 @@ import {
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
 import { useStorefrontDispatch } from "../_state/hooks"
-import { useShopState } from "@shopwp/components"
+import { useSettingsState } from "../../items/_state/settings/hooks"
 
 function StorefrontSelectionsClear() {
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const storefrontDispatch = useStorefrontDispatch()
-  const shopState = useShopState()
+  const settings = useSettingsState()
 
   function clearAllSelections() {
     storefrontDispatch({ type: "CLEAR_SELECTIONS" })
 
     requestsDispatch({ type: "SET_QUERY_TYPE", payload: "products" })
-
     requestsDispatch({
       type: "SET_QUERY_PARAMS",
       payload: requestsState.originalParams,
@@ -55,9 +54,9 @@ function StorefrontSelectionsClear() {
       onClick={clearAllSelections}
       css={clearAllCSS}
     >
-      {shopState.t.l.clearAll}
+      {settings.clearFilterSelectionsText}
     </div>
   )
 }
 
-export { StorefrontSelectionsClear }
+export default StorefrontSelectionsClear

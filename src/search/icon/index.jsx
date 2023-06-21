@@ -4,8 +4,8 @@ import { jsx, css } from "@emotion/react"
 function SearchIcon() {
   const SearchIconCSS = css`
     position: absolute;
-    right: 1em;
-    top: 1.1em;
+    right: 17px;
+    top: 14px;
 
     path {
       color: #bebebe;

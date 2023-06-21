@@ -9,11 +9,22 @@ const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../link")
 )
 
-function TitleContent({ payload }) {
+function TitleContent({ payload, settings }) {
   const CustomHeading = `h${shopwp.misc.isSingularCollections ? "1" : "2"}`
 
   const CollectionTitleCSS = css`
-    margin-top: 0;
+    && {
+      font-family: ${settings.collectionsTitleTypeFontFamily
+        ? settings.collectionsTitleTypeFontFamily
+        : "inherit"};
+      font-size: ${settings.collectionsTitleTypeFontSize
+        ? settings.collectionsTitleTypeFontSize
+        : settings.collectionsTitleSize};
+
+      color: ${settings.collectionsTitleColor};
+      white-space: normal;
+      margin: 0;
+    }
   `
 
   return (
@@ -35,20 +46,20 @@ function CollectionTitle() {
       className="wps-component wps-component-collection-title"
       aria-label="Collection Title"
     >
-      {hasLink(settings) && !settings.isSingular ? (
+      {hasLink(settings) && !settings.collectionsIsSingular ? (
         <Link
           type="collections"
-          linkTo={settings.linkTo}
-          target={settings.linkTarget}
+          linkTo={settings.collectionsLinkTo}
+          target={settings.collectionsLinkTarget}
           payload={collectionState.payload}
         >
-          <TitleContent payload={collectionState.payload} />
+          <TitleContent payload={collectionState.payload} settings={settings} />
         </Link>
       ) : (
-        <TitleContent payload={collectionState.payload} />
+        <TitleContent payload={collectionState.payload} settings={settings} />
       )}
     </div>,
-    settings.dropzoneCollectionTitle
+    settings.collectionsDropzoneCollectionTitle
   )
 }
 

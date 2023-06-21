@@ -28,6 +28,11 @@ function ProductThumbnailImage({
   `
 
   useEffect(() => {
+    if (!galleryState.featImage) {
+      setIsActive(false)
+      return
+    }
+
     if (!checkIsActive(galleryState.featImage.originalSrc)) {
       setIsActive(false)
     } else {

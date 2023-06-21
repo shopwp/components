@@ -4,15 +4,17 @@ import { usePortal } from "@shopwp/hooks"
 import { addCustomSizingToImageUrl } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import { useCollectionState } from "../_state/hooks"
+import Img from "../../../products/product/images/image/img"
 
 const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../link")
 )
 
 function CollectionImage() {
-  const { useState, useEffect } = wp.element
+  const { useEffect, useRef, useState } = wp.element
   const collectionState = useCollectionState()
   const settings = useSettingsState()
+  const imageRef = useRef()
 
   const [imageSrc, setImageSrc] = useState(() => {
     return collectionState.payload.image
@@ -25,28 +27,28 @@ function CollectionImage() {
       return
     }
 
-    if (settings.imagesSizingToggle) {
+    if (settings.collectionsImagesSizingToggle) {
       setImageSrc(
         addCustomSizingToImageUrl({
           src: collectionState.payload.image.originalSrc,
           width:
-            settings.imagesSizingWidth === 0
+            settings.collectionsImagesSizingWidth === 0
               ? "auto"
-              : settings.imagesSizingWidth,
+              : settings.collectionsImagesSizingWidth,
           height:
-            settings.imagesSizingHeight === 0
+            settings.collectionsImagesSizingHeight === 0
               ? "auto"
-              : settings.imagesSizingHeight,
-          crop: settings.imagesSizingCrop,
-          scale: settings.imagesSizingScale,
+              : settings.collectionsImagesSizingHeight,
+          crop: settings.collectionsImagesSizingCrop,
+          scale: settings.collectionsImagesSizingScale,
         })
       )
     }
-  }, [])
+  }, [settings])
 
   const CollectionImageWrapperCSS = css`
     margin-bottom: 20px;
-    max-width: 400px;
+    max-width: 100%;
   `
 
   const CollectionImageCSS = css`
@@ -62,26 +64,21 @@ function CollectionImage() {
       >
         <Link
           type="collections"
-          linkTo={settings.linkTo}
-          target={settings.linkTarget}
+          linkTo={settings.collectionsLinkTo}
+          target={settings.collectionsLinkTarget}
           payload={collectionState.payload}
         >
-          <img
-            itemProp="image"
+          <Img
+            imageRef={imageRef}
+            image={collectionState.payload.image}
             src={imageSrc}
-            className="wps-product-image"
-            css={CollectionImageCSS}
-            alt={
-              collectionState.payload.image
-                ? collectionState.payload.image.altText
-                : ""
-            }
-            loading="lazy"
+            isFeatured={true}
+            linkTo={settings.collectionsLinkTo}
           />
         </Link>
       </div>
     ) : null,
-    settings.dropzoneCollectionImage
+    settings.collectionsDropzoneCollectionImage
   )
 }
 

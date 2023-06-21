@@ -4,20 +4,8 @@ import SettingsProvider from "./_state/settings/provider"
 import ItemsProvider from "./_state/provider"
 import ItemsWrapper from "./wrapper"
 import Pagination from "../pagination"
-import { addSkeletonLoader } from "@shopwp/common"
 
 function Items(props) {
-  const { useEffect } = wp.element
-
-  useEffect(() => {
-    if (!props || !props.element) {
-      return
-    }
-    if (!props.element.firstChild) {
-      addSkeletonLoader(props.element)
-    }
-  }, [])
-
   return (
     <RequestsProvider {...props}>
       <PayloadProvider {...props}>

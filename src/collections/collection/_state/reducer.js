@@ -4,16 +4,6 @@ import { rSet, rErr } from "@shopwp/common"
 
 function CollectionReducer(state, action) {
   switch (action.type) {
-    case "SET_PRODUCT_OPTIONS": {
-      if (!action.payload) {
-        return {
-          ...state,
-        }
-      }
-
-      return rSet("productOptions", action, state)
-    }
-
     case "SET_PRODUCTS": {
       if (action.payload.replace) {
         var newProducts = update(state.products, {
@@ -46,8 +36,8 @@ function CollectionReducer(state, action) {
       return rSet("isLoading", action, state)
     }
 
-    case "SET_PRODUCT_QUERY_PARAMS": {
-      return rSet("productQueryParams", action, state)
+    case "SET_QUERY_PARAMS": {
+      return rSet("queryParams", action, state)
     }
 
     case "SET_CURSOR": {

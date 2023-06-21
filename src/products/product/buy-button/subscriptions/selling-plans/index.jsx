@@ -64,7 +64,16 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
       payload: false,
     })
 
-    if (maybeHandleApiError(error, resp, dispatch)) {
+    var maybeApiError = maybeHandleApiError(error, resp)
+
+    if (maybeApiError) {
+      dispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message: maybeApiError,
+        },
+      })
       return
     }
 

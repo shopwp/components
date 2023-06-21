@@ -16,7 +16,7 @@ function CartLineItemVariantTitle({ lineItem }) {
     max-width: 190px;
     white-space: break-spaces;
     text-align: left;
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     color: black;
     background: #f9f9f9;
     padding: 2px 6px;

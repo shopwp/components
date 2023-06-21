@@ -5,14 +5,14 @@ import SearchInput from "./input"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 
 function SearchForm({
-  componentType = "storefront",
   hasStorefrontSelections,
   setSearchTerm,
+  withStorefront,
 }) {
   const settings = useSettingsState()
 
   const searchWrapperCSS = css`
-    max-width: ${componentType ? "100%" : settings.containerWidth};
+    max-width: 100%;
     margin: 0 auto;
 
     .is-loading {
@@ -29,7 +29,7 @@ function SearchForm({
 
   const searchInputWrapperCSS = css`
     display: flex;
-    margin-bottom: ${componentType === "storefront" ? "1em" : "2em"};
+    margin-bottom: 20px;
   `
 
   function onSubmit(e) {
@@ -46,6 +46,7 @@ function SearchForm({
         <SearchInput
           hasStorefrontSelections={hasStorefrontSelections}
           setSearchTerm={setSearchTerm}
+          withStorefront={withStorefront}
         />
       </div>
     </form>,

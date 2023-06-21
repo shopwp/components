@@ -19,9 +19,7 @@ function ProductTitle() {
       font-weight: ${settings.titleTypeFontWeight
         ? settings.titleTypeFontWeight
         : "initial"};
-      font-size: ${settings.titleTypeFontSize
-        ? settings.titleTypeFontSize
-        : settings.titleSize};
+      font-size: ${settings.titleTypeFontSize};
       letter-spacing: ${settings.titleTypeLetterSpacing
         ? settings.titleTypeLetterSpacing
         : "initial"};

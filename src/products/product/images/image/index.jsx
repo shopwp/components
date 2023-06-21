@@ -90,7 +90,7 @@ function ProductImage({
         <Img
           imageRef={imageRef}
           image={image}
-          productImageSrc={productImageSrc}
+          src={productImageSrc}
           galleryState={galleryState}
           isFeatured={isFeatured}
           linkTo={settings.linkTo}
@@ -101,7 +101,7 @@ function ProductImage({
       <Img
         imageRef={imageRef}
         image={image}
-        productImageSrc={productImageSrc}
+        src={productImageSrc}
         galleryState={galleryState}
         isFeatured={isFeatured}
         linkTo={settings.linkTo}

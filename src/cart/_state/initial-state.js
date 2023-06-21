@@ -12,15 +12,11 @@ function CartInitialState(props) {
     notice: false,
     discountCode: "",
     total: 0,
-    buildNewCheckout: false,
-    beforeDiscountTotal: false,
     percentageOff: false,
     amountOff: false,
     customAttributes: [],
     note: false,
-    isRemovingDiscountCode: false,
     isAddingDiscountCode: false,
-    isAddingLineItems: false,
   }
 }
 

@@ -56,7 +56,7 @@ function ReviewForm(props) {
   const ReviewInputCSS = css`
     padding: 10px;
     font-size: 16px;
-    border-radius: 7px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     border: 1px solid #a5a5a5;
     font-family: helvetica, sans-serif;
 

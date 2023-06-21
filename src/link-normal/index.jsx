@@ -34,14 +34,16 @@ function LinkNormal({
     return "_blank"
   }
 
+  var link = wp.hooks.applyFilters(
+    "misc.linkHref",
+    manualLink ? encodeURI(manualLink) : getItemLink(payload, type, linkTo),
+    linkTo,
+    payload
+  )
+
   return (
     <a
-      href={wp.hooks.applyFilters(
-        "misc.linkHref",
-        manualLink ? encodeURI(manualLink) : getItemLink(payload, type, linkTo),
-        linkTo,
-        payload
-      )}
+      href={link}
       className={className}
       css={linkCSS}
       aria-label="Product Link"

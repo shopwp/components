@@ -69,6 +69,7 @@ function ProductAddButton({
             dispatch={productDispatch}
             onChange={onQuantityChange}
             quantityStep={settings.quantityStep}
+            fontSize={settings.addToCartButtonTypeFontSize}
             maxQuantity={
               settings.maxQuantity
                 ? settings.maxQuantity

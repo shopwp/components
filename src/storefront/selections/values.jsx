@@ -4,13 +4,18 @@ import { IconRemove } from "@shopwp/components"
 import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import { useShopState } from "@shopwp/components"
+import { useRequestsState } from "../../items/_state/requests/hooks"
 
 function StorefrontSelectionsValue({ selectionType, val }) {
   const storefrontState = useStorefrontState()
   const storefrontDispatch = useStorefrontDispatch()
   const shopState = useShopState()
+  const requestsState = useRequestsState()
 
   function onClick(e) {
+    if (requestsState.isFetchingNew) {
+      return
+    }
     const newList = buildNewSelection(
       val,
       selectionType,
@@ -33,7 +38,7 @@ function StorefrontSelectionsValue({ selectionType, val }) {
 
   const selectionValueCSS = css`
     margin-right: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     text-transform: capitalize;
     padding: 5px 9px 5px 12px;
     background: transparent;
@@ -42,11 +47,12 @@ function StorefrontSelectionsValue({ selectionType, val }) {
     display: flex;
     align-items: center;
     border: 1px solid silver;
-    border-radius: 4px;
+    border-radius: ${shopwp.general.globalBorderRadius};
+    opacity: ${requestsState.isFetchingNew ? "0.6" : 1};
 
     &:hover {
-      cursor: pointer;
-      opacity: 0.8;
+      cursor: ${requestsState.isFetchingNew ? "not-allowed" : "pointer"};
+      opacity: ${requestsState.isFetchingNew ? "0.6" : "0.8"};
     }
 
     .wps-icon {

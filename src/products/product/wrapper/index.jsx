@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
-import { isShowingComponent } from "@shopwp/common"
 import { useProductState, useProductDispatch } from "../_state/hooks"
 import { removeProductIdPrefix } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
@@ -63,7 +62,7 @@ function ProductWrapper({ payload }) {
     max-width: ${productState.payload &&
     !settings.isModal &&
     !settings.fullWidth
-      ? "350px"
+      ? "600px"
       : "100%"};
 
     > div:nth-last-of-type(2) {
@@ -103,31 +102,37 @@ function ProductWrapper({ payload }) {
         <>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {isShowingComponent(settings, "images") ? (
+              {settings.excludes &&
+              settings.excludes.includes("images") ? null : (
                 <ProductImages />
-              ) : null}
+              )}
             </Suspense>
           </ErrorBoundary>
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {isShowingComponent(settings, "title") ? <ProductTitle /> : null}
+              {settings.excludes &&
+              settings.excludes.includes("title") ? null : (
+                <ProductTitle />
+              )}
             </Suspense>
           </ErrorBoundary>
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {isShowingComponent(settings, "pricing") ? (
+              {settings.excludes &&
+              settings.excludes.includes("pricing") ? null : (
                 <ProductPricing />
-              ) : null}
+              )}
             </Suspense>
           </ErrorBoundary>
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {isShowingComponent(settings, "description") ? (
+              {settings.excludes &&
+              settings.excludes.includes("description") ? null : (
                 <ProductDescription />
-              ) : null}
+              )}
             </Suspense>
           </ErrorBoundary>
 
@@ -149,9 +154,10 @@ function ProductWrapper({ payload }) {
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={<BuyButtonSkeleton />}>
-              {isShowingComponent(settings, "buy-button") ? (
+              {settings.excludes &&
+              settings.excludes.includes("buy-button") ? null : (
                 <ProductBuyButton />
-              ) : null}
+              )}
             </Suspense>
           </ErrorBoundary>
         </>

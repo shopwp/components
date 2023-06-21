@@ -228,7 +228,7 @@ function CartLineItem({ lineItem }) {
                 lineItem.merchandise.availableForSale &&
                 cartState.settings.leftInStockThreshold >=
                   lineItem.merchandise.quantityAvailable ? (
-                  <CartLineItemLeftInStock lineItem={lineItem} />
+                  <CartLineItemLeftInStock />
                 ) : null}
               </div>
 

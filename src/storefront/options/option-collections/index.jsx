@@ -49,7 +49,7 @@ function OptionCollections({ settings }) {
 
     setIsLoadingItems(false)
 
-    var errorMessage = maybeHandleApiError(err, resp, false)
+    var errorMessage = maybeHandleApiError(err, resp)
 
     if (errorMessage) {
       setError(errorMessage)
@@ -102,7 +102,7 @@ function OptionCollections({ settings }) {
 
   const LoadMoreCSS = css`
     margin: 10px 0 15px 17px;
-    border-radius: 4px;
+    border-radius: ${shopwp.general.globalBorderRadius};
   `
 
   return (
@@ -114,7 +114,7 @@ function OptionCollections({ settings }) {
       groupType="collections"
       areFilterOptionsEmpty={isEmpty(filterableValues)}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
-      heading={shopState.t.l.collections}
+      heading={settings.collectionsHeading}
       items={
         <>
           <StorefrontFilterOptionsGroupItems

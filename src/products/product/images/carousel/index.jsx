@@ -4,12 +4,11 @@ import Carousel from "../../../../carousel"
 import { mq } from "@shopwp/common"
 import ProductFeaturedImageVideo from "../video"
 import ProductThumbnailImages from "../thumbnails"
-import { useSettingsState } from "../../../../items/_state/settings/hooks"
+import ProductImage from "../image"
 
-function ProductCarouselImages({ images, element }) {
+function ProductCarouselImages({ images, settings }) {
   const { useState } = wp.element
   const [customChange, setCustomChange] = useState(false)
-  const settings = useSettingsState()
 
   const ProductCarouselImagesCSS = css`
     margin-bottom: 30px;
@@ -65,14 +64,8 @@ function ProductCarouselImages({ images, element }) {
     }
 
     .slick-slide {
-      img {
-        width: 100%;
-        margin: 0 auto;
-        height: auto;
-      }
-
       > div {
-        margin: 0;
+        margin: 10px;
       }
     }
   `
@@ -86,13 +79,12 @@ function ProductCarouselImages({ images, element }) {
       <Carousel
         settings={settings}
         customSettings={{
-          slidesToScroll: 1,
-          slidesToShow: 1,
+          slidesToScroll: settings.carouselSlidesToScroll,
+          slidesToShow: settings.carouselSlidesToShow,
           adaptiveHeight: true,
           dots: settings.imageCarouselThumbs ? false : settings.carouselDots,
         }}
         extraCSS={ProductCarouselSliderCSS}
-        element={element}
         customChange={customChange}
       >
         {images.map((image) => (
@@ -104,11 +96,7 @@ function ProductCarouselImages({ images, element }) {
             }
           >
             {image.node.mediaContentType === "IMAGE" ? (
-              <img
-                key={image.node.image.id}
-                src={image.node.image.originalSrc}
-                alt={image.node.image.altText}
-              />
+              <ProductImage image={image.node.image} isFeatured={true} />
             ) : (
               <ProductFeaturedImageVideo
                 key={image.node.previewImage.id}

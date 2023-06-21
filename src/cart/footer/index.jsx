@@ -32,7 +32,7 @@ function CartFooterSkeleton() {
       width: 100%;
       height: 50px;
       background: #e7e7e7;
-      border-radius: 10px;
+      border-radius: ${shopwp.general.globalBorderRadius};
       margin-top: 8px;
     }
   `

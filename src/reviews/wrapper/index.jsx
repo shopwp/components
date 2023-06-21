@@ -7,7 +7,6 @@ import {
   maybeHandleApiError,
 } from "@shopwp/api"
 import ReviewsSkeleton from "../skeleton"
-import { removeSkelly } from "@shopwp/common"
 import {
   useProductReviewsState,
   useProductReviewsDispatch,
@@ -16,7 +15,7 @@ import {
 import Notice from "../../notice"
 
 function ProductReviewsWrapper({ children }) {
-  const { useEffect, useState, Suspense } = wp.element
+  const { useEffect, useState } = wp.element
   const [isFetchingReviews, setIsFetchingReviews] = useState(true)
   const dispatch = useProductReviewsDispatch()
   const state = useProductReviewsState()
@@ -31,9 +30,9 @@ function ProductReviewsWrapper({ children }) {
   async function getAllReviews() {
     const [error, resp] = await to(getYotpoReviews())
 
-    removeSkelly(state.element)
+    var maybeApiError = maybeHandleApiError(error, resp)
 
-    if (maybeHandleApiError(error, resp, dispatch)) {
+    if (maybeApiError) {
       setIsFetchingReviews(false)
       return
     }
@@ -72,9 +71,9 @@ function ProductReviewsWrapper({ children }) {
       })
     )
 
-    removeSkelly(state.element)
+    var maybeApiError = maybeHandleApiError(error, resp)
 
-    if (maybeHandleApiError(error, resp, dispatch)) {
+    if (maybeApiError) {
       setIsFetchingReviews(false)
       return
     }
@@ -127,7 +126,6 @@ function ProductReviewsWrapper({ children }) {
   useEffect(() => {
     if (!state.hasApiConnection || !shopwp.misc.hasYotpo) {
       setIsFetchingReviews(false)
-      removeSkelly(state.element)
       return
     }
 

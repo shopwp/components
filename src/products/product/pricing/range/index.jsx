@@ -10,7 +10,7 @@ function ProductPricingRange({
   compareAt,
   showPriceRange,
   pricingColor,
-  pricingFontSize,
+  settings,
 }) {
   const showPriceRangeStyles = css`
     margin-top: 0;
@@ -19,6 +19,7 @@ function ProductPricingRange({
     align-items: baseline;
     height: 100%;
     line-height: 1;
+    align-items: center;
   `
 
   return (
@@ -29,7 +30,7 @@ function ProductPricingRange({
           price={firstPrice}
           compareAt={compareAt}
           pricingColor={pricingColor}
-          pricingFontSize={pricingFontSize}
+          settings={settings}
         />
       ) : (
         <ProductPricingRangeGroup
@@ -38,7 +39,7 @@ function ProductPricingRange({
           compareAt={compareAt}
           showPriceRange={showPriceRange}
           pricingColor={pricingColor}
-          pricingFontSize={pricingFontSize}
+          settings={settings}
         />
       )}
     </span>

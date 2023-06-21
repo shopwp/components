@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react"
 import CollectionProvider from "./_state/provider"
-import { isShowingComponent } from "@shopwp/common"
 import { itemWidthClass } from "@shopwp/common"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 
@@ -11,17 +12,37 @@ import CollectionProducts from "./products"
 function Collection(props) {
   const settings = useSettingsState()
 
+  const CollectionCSS = css`
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+  `
+
   return (
-    <div className={`${itemWidthClass(settings.itemsPerRow)} wps-item`}>
+    <div
+      className={`${itemWidthClass(settings.collectionsItemsPerRow)} wps-item`}
+      css={CollectionCSS}
+    >
       <CollectionProvider {...props}>
-        {isShowingComponent(settings, "image") ? <CollectionImage /> : null}
-        {isShowingComponent(settings, "title") ? <CollectionTitle /> : null}
-        {isShowingComponent(settings, "description") ? (
+        {settings.collectionsExcludes &&
+        settings.collectionsExcludes.includes("image") ? null : (
+          <CollectionImage />
+        )}
+        {settings.collectionsExcludes &&
+        settings.collectionsExcludes.includes("title") ? null : (
+          <CollectionTitle />
+        )}
+        {settings.collectionsExcludes &&
+        settings.collectionsExcludes.includes("description") ? null : (
           <CollectionDescription />
-        ) : null}
-        {isShowingComponent(settings, "products") ? (
-          <CollectionProducts />
-        ) : null}
+        )}
+        {settings.collectionsExcludes &&
+        settings.collectionsExcludes.includes("products") ? null : (
+          <CollectionProducts settings={settings} />
+        )}
       </CollectionProvider>
     </div>
   )

@@ -13,11 +13,8 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const cartDispatch = useCartDispatch()
-  const quantityAvailable = lineItem.merchandise.quantityAvailable
   const maxQuantity = cartState.settings.lineitemsMaxQuantity
     ? cartState.settings.lineitemsMaxQuantity
-    : quantityAvailable
-    ? quantityAvailable
     : false
 
   const minQuantity = cartState.settings.lineitemsMinQuantity

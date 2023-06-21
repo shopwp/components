@@ -12,7 +12,11 @@ const SearchIcon = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchIcon-public' */ "../../icon")
 )
 
-function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
+function SearchInput({
+  hasStorefrontSelections,
+  setSearchTerm,
+  withStorefront,
+}) {
   const { useEffect, useState, Suspense } = wp.element
   const [localTerm, setLocalTerm] = useState("")
   const debouncedSearchTerm = useDebounce(localTerm, 350)
@@ -59,15 +63,7 @@ function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
     }
 
     if (debouncedSearchTerm) {
-      if (settings.searchExactMatch) {
-        var newQ = searchBy + ':"' + debouncedSearchTerm + '"'
-      } else {
-        var newQ = searchBy + ":" + debouncedSearchTerm
-      }
-
-      if (settings.searchBy === "title" && !settings.searchExactMatch) {
-        newQ += "*"
-      }
+      var newQ = searchBy + ":" + debouncedSearchTerm
     } else {
       var newQ = ""
     }
@@ -87,18 +83,6 @@ function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
         query: newQ,
       },
     })
-
-    // if (newQ === "") {
-    //   itemsDispatch({
-    //     type: "SET_SEARCH_QUERY",
-    //     payload: false,
-    //   })
-    // } else {
-    //   itemsDispatch({
-    //     type: "SET_SEARCH_QUERY",
-    //     payload: newQ,
-    //   })
-    // }
 
     setSearchTerm(debouncedSearchTerm)
 
@@ -121,24 +105,28 @@ function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
 
   const spinnerCSS = css`
     position: absolute;
-    top: 14px;
-    right: 30px;
+    top: 10px;
+    right: 50px;
     font-size: 15px;
   `
 
   const searchInputCSS = css`
-    padding: 1em;
-    font-size: 1em;
-    border: none;
-    border: 1px solid #ddd;
-    outline: none;
-    width: 100%;
-    -webkit-appearance: none;
+    && {
+      padding: 15px;
+      font-size: 1em;
+      border: none;
+      border: 1px solid #acacac;
+      outline: none;
+      width: 100%;
+      height: 45px;
+      border-radius: 8px;
+      -webkit-appearance: none;
 
-    &::-webkit-search-cancel-button {
-      display: ${requestsState.isFetchingNew ? "none" : "block"};
-      &:hover {
-        cursor: pointer;
+      &::-webkit-search-cancel-button {
+        display: ${requestsState.isFetchingNew ? "none" : "block"};
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   `
@@ -149,6 +137,17 @@ function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
 
   function onChange(e) {
     setLocalTerm(e.target.value)
+  }
+
+  function onBlur() {
+    if (shopwp.misc.isAdmin) {
+      return
+    }
+    if (!withStorefront) {
+      setLocalTerm("")
+      setNativeInput()
+      setSearchTerm("")
+    }
   }
 
   return (
@@ -165,6 +164,7 @@ function SearchInput({ hasStorefrontSelections, setSearchTerm }) {
           aria-label={settings.searchPlaceholderText}
           css={searchInputCSS}
           onChange={onChange}
+          onBlur={onBlur}
         />
         {!localTerm ? <SearchIcon /> : null}
 

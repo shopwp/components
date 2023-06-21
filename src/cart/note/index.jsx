@@ -79,7 +79,7 @@ function CartNote() {
     border-color: #7e7e7e;
     appearance: none;
     font-family: inherit;
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     min-height: 100px;
     background: transparent;
 

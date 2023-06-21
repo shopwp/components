@@ -53,7 +53,7 @@ function ProductGallery({ carousel }) {
         <ProductFeaturedImage />
       ) : hasManyImages() ? (
         settings.showImagesCarousel ? (
-          carousel && carousel
+          carousel
         ) : (
           <>
             <ProductFeaturedImage />

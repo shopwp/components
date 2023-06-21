@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 import { mq } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
-function CartLineItemLeftInStock({ lineItem }) {
+function CartLineItemLeftInStock() {
   const shopState = useShopState()
 
   const CartLineItemLeftInStockCSS = css`

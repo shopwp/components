@@ -70,7 +70,8 @@ function CartIconFixed() {
     top: calc(50% - 80px);
     right: 0;
     z-index: 99999;
-    border-radius: 6px 0 0 6px;
+    border-radius: ${shopwp.general.globalBorderRadius} 0 0
+      ${shopwp.general.globalBorderRadius};
     display: flex;
     flex-direction: column;
     align-items: center;

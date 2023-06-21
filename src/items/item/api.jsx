@@ -8,7 +8,7 @@ import {
   maybeHandleApiError,
 } from "@shopwp/api"
 
-import { removeSkelly, findLastItem } from "@shopwp/common"
+import { findLastItem } from "@shopwp/common"
 import { useQuery } from "@tanstack/react-query"
 import isEmpty from "lodash-es/isEmpty"
 
@@ -16,7 +16,6 @@ import useIsMounted from "ismounted"
 import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
 import { useSettingsState, useSettingsDispatch } from "../_state/settings/hooks"
 import { usePayloadDispatch } from "../_state/payload/hooks"
-import { useItemsState } from "../_state/hooks"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import isBase64 from "is-base64"
 
@@ -25,7 +24,6 @@ function useGetItemsQuery(setNotice) {
   const settings = useSettingsState()
   const requestsDispatch = useRequestsDispatch()
   const payloadDispatch = usePayloadDispatch()
-  const { element } = useItemsState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const isMounted = useIsMounted()
@@ -58,8 +56,7 @@ function useGetItemsQuery(setNotice) {
           requestsState.queryParams,
           shopState,
           requestsState.cursor,
-          requestsState.withProducts,
-          requestsState.productQueryParams
+          requestsState.withProducts
         )
       } else {
         return fetchProducts(
@@ -74,14 +71,13 @@ function useGetItemsQuery(setNotice) {
       retry: false,
       suspense: false,
       onError: (error) => {
+        wp.hooks.doAction("on.afterPayloadUpdate", error)
         if (isMounted.current) {
           requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
           requestsDispatch({
             type: "SET_IS_FETCHING_NEW",
             payload: false,
           })
-
-          removeSkelly(element)
 
           setNotice({
             type: "error",
@@ -90,7 +86,7 @@ function useGetItemsQuery(setNotice) {
         }
       },
       onSuccess: (newItems) => {
-        var error = maybeHandleApiError(false, newItems, setNotice)
+        var error = maybeHandleApiError(false, newItems)
 
         requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
 
@@ -105,6 +101,8 @@ function useGetItemsQuery(setNotice) {
           var totalShown = requestsState.totalShown
         }
 
+        wp.hooks.doAction("on.afterPayloadUpdate", newItems)
+
         if (error) {
           requestsDispatch({
             type: "UPDATE_TOTAL_SHOWN",
@@ -115,7 +113,7 @@ function useGetItemsQuery(setNotice) {
             type: "UPDATE_PAYLOAD",
             payload: {
               items: [],
-              replace: requestsState.isReplacing,
+              replace: true,
               totalShown: totalShown,
               limit: settings.limit,
               settings: settings,
@@ -126,8 +124,6 @@ function useGetItemsQuery(setNotice) {
             type: "error",
             message: error,
           })
-
-          removeSkelly(element)
 
           return
         }
@@ -148,7 +144,7 @@ function useGetItemsQuery(setNotice) {
               type: "UPDATE_PAYLOAD",
               payload: {
                 items: [],
-                replace: requestsState.isReplacing,
+                replace: true,
                 totalShown: totalShown,
                 limit: settings.limit,
                 settings: settings,
@@ -159,8 +155,6 @@ function useGetItemsQuery(setNotice) {
               type: "warning",
               message: settings.noResultsText,
             })
-
-            removeSkelly(element)
           } else {
             if (!newItems.edges) {
               setNotice({
@@ -170,6 +164,8 @@ function useGetItemsQuery(setNotice) {
 
               return
             }
+
+            setNotice(false)
 
             var lastItem = findLastItem(newItems)
 

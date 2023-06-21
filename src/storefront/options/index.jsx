@@ -48,12 +48,7 @@ function StorefrontOptions({ settings }) {
     }
   }, [storefrontState.lastSelected])
 
-  return (
-    <StorefrontOptionsWrapper
-      settings={settings}
-      dropzoneHeading={settings.dropzoneHeading}
-    />
-  )
+  return <StorefrontOptionsWrapper settings={settings} />
 }
 
 export default StorefrontOptions

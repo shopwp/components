@@ -37,7 +37,7 @@ function ReviewsList() {
   const ReviewsListWrapCSS = css`
     display: flex;
     flex-direction: column;
-    max-width: 1100px;
+    max-width: 1200px;
   `
 
   const ReviewsListHeaderCSS = css`

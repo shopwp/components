@@ -11,7 +11,8 @@ function PaginationControlsWrapper() {
 
   const hidingPagination = isHidingPagination(
     settings,
-    requestsState.hasNextPage
+    requestsState.hasNextPage,
+    requestsState.queryType
   )
 
   return hidingPagination === false ? <PaginationControls /> : null

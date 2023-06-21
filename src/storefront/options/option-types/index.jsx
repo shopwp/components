@@ -9,7 +9,7 @@ const StorefrontFilterOptionsGroupOption = wp.element.lazy(() =>
 )
 
 function OptionTypes({ settings }) {
-  const shouldOpen = shouldOpenOnLoad(settings, "productTypes")
+  const shouldOpen = shouldOpenOnLoad(settings, "types")
   const shopState = useShopState()
 
   return (
@@ -19,7 +19,7 @@ function OptionTypes({ settings }) {
       queryFn={getAllTypes}
       groupType="types"
       filterName="storefront.availableTypes"
-      heading={shopState.t.l.types}
+      heading={settings.typesHeading}
     />
   )
 }

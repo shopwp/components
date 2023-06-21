@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/react"
 
 function Img(props) {
   function isSelectedImage() {
-    if (props.isFeatured) {
+    if (props.isFeatured || !props.galleryState.featImage) {
       return
     }
 
@@ -68,7 +68,7 @@ function Img(props) {
         css={isSelectedImage() ? featThumbStyles : thumbnailStyles}
         ref={props.imageRef}
         itemProp="image"
-        src={props.productImageSrc}
+        src={props.src}
         className="wps-product-image"
         loading="lazy"
         alt={props.image.altText ? props.image.altText : ""}

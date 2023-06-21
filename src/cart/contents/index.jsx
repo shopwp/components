@@ -24,6 +24,7 @@ function CartContents() {
     font-weight: normal;
     margin: 0;
     text-align: center;
+    text-transform: capitalize;
   `
 
   const CartContentsCSS = css`

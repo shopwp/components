@@ -2,12 +2,15 @@
 import { jsx, css } from "@emotion/react"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { usePortal } from "@shopwp/hooks"
+import { mergeDefaults } from "@shopwp/common"
 import CartIconWrapper from "../icon"
 import CartCounter from "../counter"
 
 function CartIcon({ settings, element }) {
   const shopDispatch = useShopDispatch()
   const shopState = useShopState()
+
+  settings = mergeDefaults(settings, shopwp.cart)
 
   function onClick(e) {
     shopDispatch({ type: "TOGGLE_CART", payload: true })
@@ -63,7 +66,7 @@ function CartIcon({ settings, element }) {
       onClick={onClick}
       css={[cartIconCSS, cartIconInlineCSS]}
     >
-      {settings.showCounter ? (
+      {settings.showCounter || settings.showCounter === "undefined" ? (
         <CartCounter
           settings={settings}
           totalLineItems={

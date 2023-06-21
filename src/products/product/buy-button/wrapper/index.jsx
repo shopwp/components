@@ -2,7 +2,9 @@ import { onlyAvailableOptionsFromVariants } from "@shopwp/common"
 import {
   findVariantFromSelectedOptions,
   allOptionsSelectedMatch,
+  FilterHook,
 } from "@shopwp/common"
+
 import isEmpty from "lodash-es/isEmpty"
 
 import {
@@ -48,7 +50,7 @@ function ProductBuyButtonWrapper() {
 
   const selectVariant = useAction("do.selectVariant")
 
-  const [showSubscriptions] = useState(
+  const [showSubscriptions, setShowSubscriptions] = useState(
     shouldShowSubscriptions(productState.payload, settings)
   )
 
@@ -155,10 +157,15 @@ function ProductBuyButtonWrapper() {
         })
       }
     }
+
+    setShowSubscriptions(
+      shouldShowSubscriptions(productState.payload, settings)
+    )
   }, [
     productBuyButtonState.selectedOptions,
     productDispatch,
     productState.payload,
+    settings.subscriptions,
   ])
 
   return (
@@ -182,6 +189,8 @@ function ProductBuyButtonWrapper() {
           settings={settings}
         />
       ) : null}
+
+      <FilterHook name="before.productActionButton" args={[productState]} />
 
       <ProductAddButton
         shouldShowQuantity={shouldShowQuantity()}

@@ -144,7 +144,7 @@ function AddButton({
       settings.addToCartButtonTypeFontSize
         ? settings.addToCartButtonTypeFontSize
         : "initial"
-    };
+    } !important;
 		letter-spacing: ${
       settings.addToCartButtonTypeLetterSpacing
         ? settings.addToCartButtonTypeLetterSpacing
@@ -154,7 +154,7 @@ function AddButton({
       settings.addToCartButtonTypeLineHeight
         ? settings.addToCartButtonTypeLineHeight
         : 1
-    };
+    } !important;
 		text-decoration: ${
       settings.addToCartButtonTypeTextDecoration
         ? settings.addToCartButtonTypeTextDecoration
@@ -166,9 +166,13 @@ function AddButton({
         : "initial"
     };
 		overflow-y: hidden;
-		flex: 1;
-		min-width: 160px;
     min-height: 45px;
+    width: 100%;
+    max-width: auto;
+    min-width: auto;
+    flex: 1;
+    border-radius: ${settings.globalBorderRadius};
+
 		animation: ${
       shouldShake && !isCheckingOut
         ? css`
@@ -288,15 +292,17 @@ function AddButton({
         return
       }
 
+      productDispatch({ type: "SET_ADDED_VARIANT", payload: variant.node })
+
       if (settings.resetVariantsAfterAdding) {
-        productDispatch({ type: "SET_ADDED_VARIANT", payload: variant.node })
         productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
+
+        productBuyButtonDispatch({
+          type: "UPDATE_SELECTED_OPTIONS",
+          payload: false,
+        })
       }
 
-      productBuyButtonDispatch({
-        type: "UPDATE_SELECTED_OPTIONS",
-        payload: false,
-      })
       productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
       productDispatch({ type: "SET_NOTICE", payload: false })
 

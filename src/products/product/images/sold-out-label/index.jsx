@@ -7,7 +7,7 @@ function ProductImageSoldOutLabel({ text }) {
     background: #da641c;
     color: white;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 12px;
     padding: 4px 10px;
   `
 

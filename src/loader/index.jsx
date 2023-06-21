@@ -48,7 +48,7 @@ function Loader({ isLoading, dropzone, color, extraCSS, center = true }) {
     }
 
     .loader-inner {
-      text-align: ${center ? "center" : "left"};
+      line-height: 1;
     }
   `
 

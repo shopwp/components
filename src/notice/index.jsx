@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import useIsMounted from "ismounted"
 import Expire from "../expire"
-import { SlideInFromTop, removeSkelly } from "@shopwp/common"
+import { SlideInFromTop } from "@shopwp/common"
 
 function Notice({
   children,
@@ -11,6 +11,7 @@ function Notice({
   onRender = false,
   html = false,
   element = false,
+  isFetchingNew = false,
 }) {
   const isMounted = useIsMounted()
   const { useEffect } = wp.element
@@ -34,13 +35,10 @@ function Notice({
         ? "#cd423b"
         : "#4db54f"};
     font-size: 15px;
+    opacity: ${isFetchingNew ? 0.6 : 1};
   `
 
   useEffect(() => {
-    if (element && status === "error") {
-      removeSkelly(element)
-    }
-
     if (onRender) {
       onRender()
     }

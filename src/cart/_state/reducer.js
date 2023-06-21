@@ -22,28 +22,12 @@ function CartReducer(state, action) {
       return rSet("isCartEmpty", action, state)
     }
 
-    case "SET_CART_TOTAL": {
-      return rSet("total", action, state)
-    }
-
-    case "SET_BEFORE_DISCOUNT_TOTAL": {
-      return rSet("beforeDiscountTotal", action, state)
-    }
-
     case "SET_DISCOUNT_CODE": {
       return rSet("discountCode", action, state)
     }
 
-    case "SET_IS_REMOVING_DISCOUNT_CODE": {
-      return rSet("isRemovingDiscountCode", action, state)
-    }
-
     case "SET_IS_ADDING_DISCOUNT_CODE": {
       return rSet("isAddingDiscountCode", action, state)
-    }
-
-    case "SET_BUILD_NEW_CHECKOUT": {
-      return rSet("buildNewCheckout", action, state)
     }
 
     case "SET_PERCENTAGE_OFF": {
@@ -52,10 +36,6 @@ function CartReducer(state, action) {
 
     case "SET_AMOUNT_OFF": {
       return rSet("amountOff", action, state)
-    }
-
-    case "SET_IS_ADDING_LINEITEMS": {
-      return rSet("isAddingLineItems", action, state)
     }
 
     default: {

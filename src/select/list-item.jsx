@@ -30,7 +30,6 @@ function SelectItem({
       ? "none"
       : "line-through"};
 
-    min-height: 42px;
     display: flex;
     flex-direction: column;
     align-items: center;

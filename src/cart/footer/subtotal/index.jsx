@@ -38,9 +38,6 @@ function CartFooterSubtotal() {
         {shopState.t.l.subtotal}
       </p>
       <p className="wps-total-amount" css={CartFooterSubtotalCSS}>
-        {cartState.percentageOff && cartState.discountCode && (
-          <SavingsInline amount={cartState.percentageOff} type="percentage" />
-        )}
         {cartState.amountOff && cartState.discountCode && (
           <SavingsInline amount={cartState.amountOff} type="fixed" />
         )}

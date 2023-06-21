@@ -1,5 +1,5 @@
 function PayloadInitialState(props) {
-  return []
+  return props.payload ? props.payload : []
 }
 
 export default PayloadInitialState

@@ -52,7 +52,16 @@ async function updateLines(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(updateError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(updateError, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
     return
   }
 
@@ -80,7 +89,17 @@ async function removeLines(lineItemIds, shopState, cartDispatch, shopDispatch) {
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(error, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(error, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
+
     return
   }
 
@@ -102,7 +121,17 @@ async function addLines(data, cartDispatch, shopDispatch) {
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(addError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(addError, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
+
     return
   }
 
@@ -132,7 +161,16 @@ async function updateAttrs(data, shopState, cartDispatch, shopDispatch) {
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(addError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(addError, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
     return
   }
 
@@ -167,7 +205,10 @@ async function getExistingCart(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(getCartError, response)) {
+  var maybeApiError = maybeHandleApiError(getCartError, response)
+
+  if (maybeApiError) {
+    console.warn("ShopWP Error: ", maybeApiError)
     localStorage.removeItem("shopwp-cart-id")
 
     if (!response || response.data.includes("No cart data found")) {
@@ -222,7 +263,10 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(createCartError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(createCartError, response)
+
+  if (maybeApiError) {
+    console.warn("ShopWP Error: ", maybeApiError)
     shopDispatch({
       type: "SET_CART_DATA",
       payload: false,
@@ -261,7 +305,9 @@ async function directCheckout(
     )
   )
 
-  if (maybeHandleApiError(directCheckoutError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(directCheckoutError, response)
+
+  if (maybeApiError) {
     cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
     shopDispatch({ type: "TOGGLE_CART", payload: true })
     return
@@ -301,7 +347,16 @@ async function addDiscount(cartDispatch, shopState, discount, shopDispatch) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
   cartDispatch({ type: "SET_IS_ADDING_DISCOUNT_CODE", payload: false })
 
-  if (maybeHandleApiError(errorDiscount, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(errorDiscount, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
     return
   }
 
@@ -347,7 +402,16 @@ async function updateCartNote(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(noteError, response, cartDispatch)) {
+  var maybeApiError = maybeHandleApiError(noteError, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
     return
   }
 
@@ -387,7 +451,16 @@ async function updateIdentity(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  if (maybeHandleApiError(error, response)) {
+  var maybeApiError = maybeHandleApiError(error, response)
+
+  if (maybeApiError) {
+    cartDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: maybeApiError,
+      },
+    })
     return
   }
 

@@ -24,16 +24,15 @@ function SearchModal({ searchTerm }) {
 
   const SearchModalCSS = css`
     position: absolute;
-    top: 52px;
+    box-sizing: border-box;
+    top: 50px;
     left: 0;
     width: 100%;
     background: white;
     padding: ${searchTerm ? "30px 20px" : "0"};
     box-shadow: ${searchTerm ? "0 0 21px -13px rgb(0 0 0 / 42%)" : "none"};
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-radius: 8px;
     border: ${searchTerm ? "1px solid #ddd" : "none"};
-    border-top: 0;
     max-height: 400px;
     overflow-y: scroll;
   `

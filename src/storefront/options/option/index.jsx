@@ -40,7 +40,7 @@ function StorefrontFilterOptionsGroupOption({
 
     setIsLoadingItems(false)
 
-    const errorMessage = maybeHandleApiError(err, resp, false)
+    const errorMessage = maybeHandleApiError(err, resp)
 
     if (errorMessage) {
       setError(errorMessage)

@@ -10,7 +10,7 @@ function ReviewComment({ review }) {
       rgba(247, 247, 247, 1) 100%
     );
     padding: 10px 20px 12px 20px;
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     margin-left: 40px;
     margin-bottom: 0;
     font-size: 14px;

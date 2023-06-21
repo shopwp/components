@@ -56,6 +56,7 @@ function ProductPrices() {
         <ProductPricesSubscription
           subscriptionInfo={productState.selectedSubscriptionInfo}
           selectedVariant={productState.selectedVariant}
+          settings={settings}
         />
       ) : settings.showCompareAt ? (
         <Suspense fallback={false}>
@@ -64,6 +65,7 @@ function ProductPrices() {
             showPriceRange={settings.showPriceRange}
             compareAt={settings.showCompareAt}
             prices={prices}
+            settings={settings}
           />
         </Suspense>
       ) : (

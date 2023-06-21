@@ -19,7 +19,7 @@ function OptionTags({ settings }) {
       queryFn={getAllTags}
       groupType="tags"
       filterName="storefront.availableTags"
-      heading={shopState.t.l.tags}
+      heading={settings.tagsHeading}
     />
   )
 }

@@ -17,7 +17,7 @@ function SellingGroup({ sellingGroup, selectedSubscriptionId }) {
     display: block;
     background-color: ${isSelected ? "#f1f4fe" : "#f6f6f6"};
     margin-bottom: 10px;
-    border-radius: 6px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     border: 1px dashed ${isSelected ? "blue" : "black"};
     transition: all ease 0.15s;
     position: relative;

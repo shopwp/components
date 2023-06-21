@@ -20,8 +20,6 @@ function PayloadReducer(currentPayload, action) {
         action.payload.settings
       )
 
-      wp.hooks.doAction("on.afterPayloadUpdate", newPayload)
-
       return newPayload
     }
 

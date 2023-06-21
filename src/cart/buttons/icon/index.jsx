@@ -4,7 +4,7 @@ import { IconCSS } from "@shopwp/common"
 
 function CartIconWrapper({ settings, fixed = false }) {
   const pathCSS = css`
-    fill: ${settings.iconColor};
+    fill: ${fixed ? settings.iconColor : settings.inlineIconColor};
     margin: 0;
     width: 28px;
     max-width: 28px;

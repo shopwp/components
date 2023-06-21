@@ -116,33 +116,8 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
   const priceWrapperCSS = css`
     line-height: 1;
     margin: 0 15px 0 0;
-    display: block;
-
-    font-family: ${settings.pricingTypeFontFamily
-      ? settings.pricingTypeFontFamily
-      : settings.pricingFont
-      ? settings.pricingFont
-      : "inherit"};
-    font-weight: ${settings.pricingTypeFontWeight
-      ? settings.pricingTypeFontWeight
-      : settings.pricingFontWeight
-      ? settings.pricingFontWeight
-      : "initial"};
-    font-size: ${settings.pricingTypeFontSize
-      ? settings.pricingTypeFontSize
-      : "initial"};
-    letter-spacing: ${settings.pricingTypeLetterSpacing
-      ? settings.pricingTypeLetterSpacing
-      : "initial"};
-    line-height: ${settings.pricingTypeLineHeight
-      ? settings.pricingTypeLineHeight
-      : "initial"};
-    text-decoration: ${settings.pricingTypeTextDecoration
-      ? settings.pricingTypeTextDecoration
-      : "initial"};
-    text-transform: ${settings.pricingTypeTextTransform
-      ? settings.pricingTypeTextTransform
-      : "initial"};
+    display: flex;
+    align-items: baseline;
   `
 
   return !isRegAndCompareSame() ? (
@@ -162,7 +137,7 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
           compareAt={compareAt}
           showPriceRange={showPriceRange}
           pricingColor={settings.pricingColor}
-          pricingFontSize={settings.pricingTypeFontSize}
+          settings={settings}
         />
       ) : selectedVariant ? (
         <SlideInFromRight>
@@ -172,7 +147,7 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
             compareAt={compareAt}
             showPriceRange={showPriceRange}
             pricingColor={settings.pricingColor}
-            pricingFontSize={settings.pricingTypeFontSize}
+            settings={settings}
           />
         </SlideInFromRight>
       ) : (
@@ -182,7 +157,7 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
           compareAt={compareAt}
           showPriceRange={showPriceRange}
           pricingColor={settings.pricingColor}
-          pricingFontSize={settings.pricingTypeFontSize}
+          settings={settings}
         />
       )}
     </span>

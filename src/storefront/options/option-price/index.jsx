@@ -26,7 +26,7 @@ function OptionPrice({ settings }) {
       groupType="price"
       areFilterOptionsEmpty={false}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
-      heading={shopState.t.l.price}
+      heading={settings.priceHeading}
       items={
         <StorefrontFilterOptionsGroupItems
           filterOptions={wp.hooks.applyFilters(

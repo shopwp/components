@@ -42,7 +42,7 @@ function CartLineItemImage({ lineItem, settings }) {
     width: 55px;
     height: 55px;
     margin-right: 5px;
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

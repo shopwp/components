@@ -6,7 +6,7 @@ const Carousel = wp.element.lazy(() =>
 
 function PaginationItemsMap({ children, payload, settings, element, id }) {
   return settings.carousel && payload.length > settings.carouselSlidesToShow ? (
-    <Carousel settings={settings} element={element}>
+    <Carousel settings={settings}>
       {payload.map((item) => {
         let hasOwn = item.hasOwnProperty("node")
         return wp.element.cloneElement(children, {

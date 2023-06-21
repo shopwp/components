@@ -1,22 +1,28 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react'
+import { jsx, css } from "@emotion/react"
 
-function ProductPricingSeparator({ compareAt }) {
-	const ProductPricingSeparatorCSS = css`
-		margin: ${compareAt ? '0 0 0 5px' : '0 5px'};
-		display: inline-block;
-		color: ${compareAt ? '#848484' : '#121212'};
-		position: ${compareAt ? 'static' : 'relative'};
-		top: ${compareAt ? 0 : '-2px'};
-	`
+function ProductPricingSeparator({ compareAt, settings }) {
+  const ProductPricingSeparatorCSS = css`
+    margin: 0 3px;
+    display: inline-block;
+    position: relative;
+    font-size: 0.7em;
+    top: 1px;
+    line-height: 0;
+    height: 2px;
+    font-size: 0.7em;
+    width: 17px;
+    background: ${compareAt
+      ? settings.pricingCompareAtTypeFontColor
+      : settings.pricingColor};
+  `
 
-	return (
-		<div
-			css={ProductPricingSeparatorCSS}
-			className='wps-product-from-price-separator'>
-			–
-		</div>
-	)
+  return (
+    <div
+      css={ProductPricingSeparatorCSS}
+      className="wps-product-from-price-separator"
+    ></div>
+  )
 }
 
-export { ProductPricingSeparator }
+export default ProductPricingSeparator

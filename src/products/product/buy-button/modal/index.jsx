@@ -8,7 +8,9 @@ import { useItemsState } from "../../../../items/_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 if (shopwp.misc.isAdmin) {
-  Modal.setAppElement("#editor")
+  Modal.setAppElement("#wpwrap")
+} else {
+  Modal.setAppElement("#shopwp-root")
 }
 
 function htmlTemp(payload, settings) {
@@ -69,7 +71,7 @@ function ProductModal() {
       background: "rgb(138 138 138 / 70%)",
     },
     content: {
-      maxWidth: shopwp.misc.isAdmin ? "80%" : "1100px",
+      maxWidth: shopwp.misc.isAdmin ? "80%" : "1200px",
       width: "960px",
       margin: "0 auto",
       borderRadius: "10px",
@@ -129,7 +131,7 @@ function ProductModal() {
             opacity: 0;
             transition: all 0.2s ease;
 
-            @media (max-width: 1100px) {
+            @media (max-width: 1200px) {
               width: 85% !important;
             }
 
@@ -163,7 +165,6 @@ function ProductModal() {
         contentLabel="Example Modal"
         style={customStyles}
         bodyOpenClassName="wps-modal-open"
-        appElement={itemsState.element}
       >
         <ProductModalContent
           payload={productState.payload}

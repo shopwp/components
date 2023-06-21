@@ -1,12 +1,13 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/react"
+import { jsx, css, Global } from "@emotion/react"
 import { mq } from "@shopwp/common"
 import PaginationItemsMap from "./map"
 import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { removeSkelly } from "@shopwp/common"
+import { flexRowCSS } from "@shopwp/common"
 import ProductsSorting from "../../products/sorting"
+import ProductsPageSize from "../../products/page-size"
 
 function PaginationItems({ children, payload }) {
   const itemsState = useItemsState()
@@ -15,7 +16,6 @@ function PaginationItems({ children, payload }) {
   const { useEffect } = wp.element
 
   useEffect(() => {
-    removeSkelly(itemsState.element)
     wp.hooks.doAction("on.itemsLoad", payload, settings)
   }, [])
 
@@ -25,12 +25,16 @@ function PaginationItems({ children, payload }) {
       ? "block"
       : "grid"};
     grid-template-columns: repeat(
-      ${payload.length <= 1 ? 1 : settings.itemsPerRow},
+      ${payload.length <= 1
+        ? 1
+        : itemsState.componentType === "collections"
+        ? settings.collectionsItemsPerRow
+        : settings.itemsPerRow},
       1fr
     );
-    grid-column-gap: ${settings.gridColumnGap
-      ? settings.gridColumnGap
-      : "20px"};
+    grid-column-gap: ${itemsState.componentType === "collections"
+      ? settings.collectionsGridColumnGap
+      : settings.gridColumnGap};
     grid-row-gap: ${settings.isSingleComponent ? "0px" : "40px"};
     padding: 0;
     transition: opacity 0.3s ease;
@@ -57,9 +61,26 @@ function PaginationItems({ children, payload }) {
     }
   `
 
+  const PaginationButtonsCSS = css`
+    justify-content: flex-end;
+  `
+
   return (
     <section className="wps-items-wrapper" css={PaginationItemsContainerCSS}>
-      <ProductsSorting />
+      <Global
+        styles={css`
+          .wps-item:empty {
+            display: none;
+          }
+        `}
+      />
+      {itemsState.componentType !== "collections" ? (
+        <div css={[flexRowCSS, PaginationButtonsCSS]}>
+          {settings.withSorting ? <ProductsSorting /> : null}
+          {settings.withPageSize ? <ProductsPageSize /> : null}
+        </div>
+      ) : null}
+
       <section className="wps-items wps-items-list" css={PaginationItemsCSS}>
         <PaginationItemsMap
           payload={payload}

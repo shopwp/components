@@ -8,6 +8,7 @@ function Storefront(props) {
       {...props}
       queryType="products"
       componentType="storefront"
+      skeletonType="shopwp/storefront"
       customPagination={true}
     >
       <StorefrontProvider {...props}>

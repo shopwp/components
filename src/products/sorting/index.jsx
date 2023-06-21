@@ -8,15 +8,10 @@ import {
 } from "../../items/_state/requests/hooks"
 import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
-import { useItemsState } from "../../items/_state/hooks"
 import { useShopState } from "@shopwp/components"
 
 const Select = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
-)
-
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
 )
 
 function ProductsSorting() {
@@ -24,7 +19,6 @@ function ProductsSorting() {
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const settings = useSettingsState()
-  const itemsState = useItemsState()
   const shopState = useShopState()
 
   const sortingWrapperCSS = css`
@@ -117,7 +111,6 @@ function ProductsSorting() {
 
   function customOnChange(data) {
     const params = updateQueryParamsWithSort(data.value)
-
     requestsDispatch({
       type: "SET_QUERY_PARAMS",
       payload: {
@@ -142,8 +135,7 @@ function ProductsSorting() {
     })
   }
 
-  return (settings.withSorting && !requestsState.isBootstrapping) ||
-    (settings.showSorting && itemsState.componentType === "storefront")
+  return settings.withSorting && !requestsState.isBootstrapping
     ? usePortal(
         <Suspense fallback="Loading ...">
           <div css={sortingWrapperCSS}>
@@ -154,7 +146,7 @@ function ProductsSorting() {
                   : productOptions
               }
               onChange={customOnChange}
-              label={shopState.t.l.sort}
+              label={settings.sortByLabelText}
               selectedOption={findDefaultSelectVal(
                 requestsState.queryType !== "products"
                   ? collectionOptions

@@ -38,7 +38,7 @@ function Tooltip({ children, label }) {
     z-index: 3;
     padding: 15px;
     border: 1px solid rgb(221, 221, 221);
-    border-radius: 5px;
+    border-radius: ${shopwp.general.globalBorderRadius};
     box-shadow: rgba(0, 0, 0, 0.66) 0px 0px 9px -6px;
 
     &:hover {

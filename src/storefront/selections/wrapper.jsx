@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { StorefrontSelectionsClear } from "./clear"
+import StorefrontSelectionsClear from "./clear"
 import { StorefrontSelectionsTypes } from "./types"
 
 function StorefrontSelectionsWrapper({ selections }) {

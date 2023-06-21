@@ -20,6 +20,7 @@ function Quantity({
   lineItem = false,
   setNotice = false,
   globalMaxQuantity = false,
+  fontSize = false,
 }) {
   const { useState, useEffect } = wp.element
   const shopState = useShopState()
@@ -32,17 +33,33 @@ function Quantity({
     setQuantity(initialQuantity)
   }, [initialQuantity])
 
+  if (fontSize) {
+    var relativeFontSize = parseInt(fontSize.split("px")[0])
+    var finalStuff = relativeFontSize * 2.4
+    var quantStuff = relativeFontSize * 2
+    var customQuantitySize = quantStuff.toString() + "px"
+    var customButtonSize = finalStuff.toString() + "px"
+    var quantFontSize = fontSize
+  } else {
+    var customQuantitySize = small ? "40px" : "45px"
+    var customButtonSize = small ? "40px" : "45px"
+    var quantFontSize = "18px"
+  }
+
   const quantityInputCSS = css`
     && {
       margin: 0;
-      width: ${small ? "40px" : "45px"};
-      height: ${small ? "40px" : "45px"};
+      width: ${customQuantitySize};
+      height: ${customButtonSize};
+      min-height: 45px;
+      max-height: ${customButtonSize};
+      max-width: 45px;
+      min-width: 40px;
       border: none;
       text-align: center;
-      font-size: 18px;
+      font-size: ${quantFontSize};
       margin-right: 0px;
       box-shadow: inset 0px 1px 0px 0px #606060, inset 0px -1px 0px 0px #606060;
-      max-height: ${small ? "40px" : "45px"};
       border-radius: 0;
       appearance: none;
       padding: 0;
@@ -65,16 +82,18 @@ function Quantity({
       }
 
       ${mq("small")} {
-        width: 60px;
-        height: 60px;
-        max-height: 60px;
+        width: 50px;
+        height: 50px;
+        max-width: 50px;
+        max-height: 50px;
         font-size: 24px;
       }
     }
   `
 
   const QuantityIncCSS = css`
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 ${shopwp.general.globalBorderRadius}
+      ${shopwp.general.globalBorderRadius} 0;
 
     &:hover {
       cursor: pointer;
@@ -83,7 +102,8 @@ function Quantity({
   `
 
   const QuantityDecCSS = css`
-    border-radius: 5px 0 0 5px;
+    border-radius: ${shopwp.general.globalBorderRadius} 0 0
+      ${shopwp.general.globalBorderRadius};
 
     &:hover {
       cursor: ${isUpdating ? "not-allowed" : "pointer"};
@@ -180,6 +200,7 @@ function Quantity({
     if (isUpdating) {
       return
     }
+
     dispatch({
       type: "SET_NOTICE",
       payload: false,
@@ -260,6 +281,7 @@ function Quantity({
           onClick={handleDecrement}
           customCSS={QuantityDecCSS}
           small={small}
+          customButtonSize={customButtonSize}
         >
           <IconDecrement />
         </QuantityButton>
@@ -283,6 +305,7 @@ function Quantity({
           onClick={handleIncrement}
           customCSS={QuantityIncCSS}
           small={small}
+          customButtonSize={customButtonSize}
         >
           <IconIncrement />
         </QuantityButton>

@@ -7,6 +7,12 @@ import ListMeta from "./meta"
 import ReviewComment from "./comment"
 import { mq, fadeIn } from "@shopwp/common"
 
+const ReviewVerifiedBuyer = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'ReviewsReviewVerifiedBuyer-admin' */ "./verified-buyer"
+  )
+)
+
 function ReviewListItem({ review, size, index, reviewsState }) {
   const ReviewListItemCSS = css`
     display: flex;

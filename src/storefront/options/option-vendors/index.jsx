@@ -19,7 +19,7 @@ function OptionVendors({ settings }) {
       queryFn={getAllVendors}
       groupType="vendors"
       filterName="storefront.availableVendors"
-      heading={shopState.t.l.vendors}
+      heading={settings.vendorsHeading}
     />
   )
 }

@@ -12,13 +12,30 @@ const Select = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
 )
 
-function StorefrontPageSize() {
+function ProductsPageSize() {
   const { Suspense } = wp.element
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
   const shopState = useShopState()
-  const options = settings.sortingOptionsPageSize
+  const options = [
+    {
+      label: "10",
+      value: 10,
+    },
+    {
+      label: "25",
+      value: 25,
+    },
+    {
+      label: "50",
+      value: 50,
+    },
+    {
+      label: "100",
+      value: 100,
+    },
+  ]
 
   const defaultVal = findDefaultSelectVal(options, settings.pageSize)
 
@@ -44,20 +61,26 @@ function StorefrontPageSize() {
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
   }
 
+  const ProductsPageSizeCSS = css`
+    margin-left: 15px;
+  `
+
   return (
-    <Suspense fallback="Loading ...">
-      <Select
-        items={options}
-        onChange={customOnChange}
-        label={shopState.t.l.pageSize}
-        selectedOption={defaultVal}
-        id="swp-pagesize"
-        isBusy={requestsState.isFetchingNew}
-        dropzone={settings.dropzonePageSize}
-        inline={true}
-      />
-    </Suspense>
+    <div id="shopwp-storefront-page-size" css={ProductsPageSizeCSS}>
+      <Suspense fallback="Loading ...">
+        <Select
+          items={options}
+          onChange={customOnChange}
+          label={settings.pageSizeLabelText}
+          selectedOption={defaultVal}
+          id="swp-pagesize"
+          isBusy={requestsState.isFetchingNew}
+          dropzone={settings.dropzonePageSize}
+          inline={true}
+        />
+      </Suspense>
+    </div>
   )
 }
 
-export default StorefrontPageSize
+export default ProductsPageSize

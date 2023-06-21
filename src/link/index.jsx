@@ -12,7 +12,7 @@ function Link({
   payload = false,
 }) {
   function renderLink() {
-    if (disableLink) {
+    if (disableLink || shopwp.misc.isAdmin) {
       return children
     }
 

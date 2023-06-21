@@ -1,19 +1,18 @@
 import Products from "../../../products"
 import { useCollectionState } from "../_state/hooks"
+import { usePortal } from "@shopwp/hooks"
 
-function CollectionProducts() {
+function CollectionProducts({ settings }) {
   const collectionState = useCollectionState()
 
-  return (
+  return usePortal(
     <Products
-      settings={collectionState.productOptions.settings}
-      element={collectionState.productOptions.element}
-      queryType={collectionState.productOptions.queryType}
-      id={collectionState.productOptions.id}
-      isLoading={collectionState.isFetchingNew}
-      queryParams={collectionState.productQueryParams}
+      settings={collectionState.productsSettings}
+      queryType="collectionProducts"
+      id={collectionState.id}
       skeletonType="products"
-    />
+    />,
+    settings.dropzoneProductProducts
   )
 }
 

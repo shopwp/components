@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { mq } from "@shopwp/common"
 import merge from "lodash-es/merge"
-import { removeSkelly } from "@shopwp/common"
 import { DefaultPrevArrow, DefaultNextArrow, CustomArrow } from "./arrows"
 
 function Carousel({
@@ -13,12 +12,15 @@ function Carousel({
   settings,
   customSettings,
   extraCSS,
-  element,
   customChange = false,
 }) {
   var sliderRef = false
 
-  const { useEffect } = wp.element
+  const { useEffect, useState } = wp.element
+
+  const [carouselSettings, setCarouselSettings] = useState(
+    combineSettings(settings, customSettings)
+  )
 
   const CarouselCSS = css`
     max-width: 100%;
@@ -102,58 +104,58 @@ function Carousel({
     if (customChange !== false) {
       sliderRef.slickGoTo(customChange)
     }
-  }, [customChange])
 
-  var defaults = {
-    dots: settings.carouselDots,
-    infinite: settings.carouselInfinite,
-    speed: settings.carouselSpeed,
-    slidesToShow: settings.carouselSlidesToShow,
-    slidesToScroll: settings.carouselSlidesToScroll,
-    nextArrow:
-      settings.carouselNextArrow === false ? (
-        <DefaultNextArrow />
-      ) : (
-        <CustomArrow arrowSrc={settings.carouselNextArrow} />
-      ),
-    prevArrow:
-      settings.carouselPrevArrow === false ? (
-        <DefaultPrevArrow />
-      ) : (
-        <CustomArrow arrowSrc={settings.carouselPrevArrow} />
-      ),
-    responsive: [
-      {
-        breakpoint: 1000,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+    var combined = combineSettings(settings, customSettings)
+
+    setCarouselSettings(combined)
+  }, [customChange, settings])
+
+  function combineSettings(settings, customSettings) {
+    var defaults = {
+      dots: settings.carouselDots,
+      infinite: settings.carouselInfinite,
+      speed: settings.carouselSpeed,
+      slidesToShow: settings.carouselSlidesToShow,
+      slidesToScroll: settings.carouselSlidesToScroll,
+      nextArrow:
+        settings.carouselNextArrow === false ? (
+          <DefaultNextArrow />
+        ) : (
+          <CustomArrow arrowSrc={settings.carouselNextArrow} />
+        ),
+      prevArrow:
+        settings.carouselPrevArrow === false ? (
+          <DefaultPrevArrow />
+        ) : (
+          <CustomArrow arrowSrc={settings.carouselPrevArrow} />
+        ),
+      responsive: [
+        {
+          breakpoint: 1000,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+          },
         },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
         },
-      },
-    ],
-    onInit: function () {
-      removeSkelly(element)
-    },
+      ],
+    }
+
+    var combinedSettings = merge(defaults, customSettings)
+
+    return wp.hooks.applyFilters("misc.carouselSettings", combinedSettings)
   }
-
-  var combinedSettings = merge(defaults, customSettings)
-
-  const settingsFinal = wp.hooks.applyFilters(
-    "misc.carouselSettings",
-    combinedSettings
-  )
 
   return (
     <Slider
+      {...carouselSettings}
       ref={(slider) => (sliderRef = slider)}
-      {...settingsFinal}
       css={[CarouselCSS, extraCSS]}
     >
       {children}

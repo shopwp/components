@@ -1,21 +1,12 @@
 import { findLastItem } from "@shopwp/common"
 
-function CollectionInitialState({ settings, payload }) {
-  settings.products.collection = payload.title
-  settings.products.query = settings.query
-  settings.products.dropzoneSorting = settings.dropzoneCollectionProductsSorting
-  settings.dropzoneSorting = settings.dropzoneCollectionProductsSorting
+function CollectionInitialState(props) {
+  props.settings.collection = props.payload.title
+  props.settings.queryType = "collectionProducts"
+  props.settings.collectionsQueryType = "collections"
 
-  const productSettings = {
-    ...shopwp.products,
-    ...settings.products,
-  }
-
-  productSettings.collection = payload.title
-  productSettings.queryType = "collectionProducts"
-
-  if (payload.products) {
-    var lastProduct = findLastItem(payload.products)
+  if (props.payload.products) {
+    var lastProduct = findLastItem(props.payload.products)
 
     if (lastProduct) {
       var cursor = lastProduct.cursor
@@ -26,34 +17,68 @@ function CollectionInitialState({ settings, payload }) {
     var cursor = false
   }
 
+  /*
+  
+  Only needed when displaying products on a CDP created via layout builder
+  
+  */
+  function getProductsSettingsFromComment() {
+    var element = document.querySelector(".wp-block-column")
+
+    if (!element) {
+      return false
+    }
+
+    var foundComment = false
+
+    for (var i = 0; i < element.childNodes.length; i++) {
+      if (element.childNodes[i].nodeType == 8) {
+        if (element.childNodes[i].data.includes("wp:shopwp/products")) {
+          foundComment = element.childNodes[i].data
+          break
+        }
+      }
+    }
+
+    if (foundComment) {
+      var splitOne = foundComment.split('","clientId')
+
+      if (splitOne.length) {
+        var splitTwo = splitOne[0].split('"')
+
+        if (splitTwo.length) {
+          var finallyFound = splitTwo[splitTwo.length - 1]
+
+          return JSON.parse(atob(finallyFound))
+        }
+      }
+    }
+
+    return foundComment
+  }
+
+  var productSettings = getProductsSettingsFromComment()
+
+  if (productSettings) {
+    var finalProductSettings = {
+      ...shopwp.products,
+      ...productSettings,
+    }
+  } else {
+    var finalProductSettings = props.settings
+  }
+
   return {
-    settings: settings,
-    payload: payload,
+    id: props.payload.id,
+    settings: props.settings,
+    payload: props.payload,
     hasNextPage: false,
     shouldReplace: false,
-    productsHasNextPage: payload.products
-      ? payload.products.pageInfo.hasNextPage
+    productsHasNextPage: props.payload.products
+      ? props.payload.products.pageInfo.hasNextPage
       : false,
-    products: payload.products ? payload.products.edges : [],
-    productOptions: {
-      id: payload.id + "-products",
-      settings: productSettings,
-      element: settings.dropzoneCollectionProducts,
-      sortingElement: settings.dropzoneCollectionProductsSorting,
-      queryType: "collectionProducts",
-    },
-    productQueryParams: {
-      query: settings.products.query,
-      sortKey: settings.products.sortBy
-        ? settings.products.sortBy
-        : "COLLECTION_DEFAULT",
-      reverse:
-        settings.products.reverse === undefined
-          ? false
-          : settings.products.reverse,
-      first: settings.products.pageSize,
-      collection_titles: settings.products.collection,
-    },
+    products: props.payload.products ? props.payload.products.edges : [],
+    productsSettings: finalProductSettings,
     cursor: cursor,
     notice: false,
     isFetchingNew: false,

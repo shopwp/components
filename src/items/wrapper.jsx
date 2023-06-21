@@ -154,10 +154,12 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
 
   return usePortal(
     <>
-      {requestsState.isBootstrapping && itemsState.skeletonType ? (
+      {requestsState.isBootstrapping ? (
         <ItemsSkeleton skeletonType={itemsState.skeletonType} />
       ) : (
-        <Item notice={notice}>{children}</Item>
+        <Item notice={notice} isFetchingNew={requestsState.isFetchingNew}>
+          {children}
+        </Item>
       )}
     </>,
     element

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { StorefrontFilter } from "../../filter"
+import StorefrontFilter from "../../filter"
 import { useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>

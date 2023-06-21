@@ -25,7 +25,7 @@ const OptionPrice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'OptionPrice-public' */ "../option-price")
 )
 
-function StorefrontOptionsWrapper({ settings, dropzoneHeading }) {
+function StorefrontOptionsWrapper({ settings }) {
   const StorefrontSidebarCSS = css`
     margin-bottom: 200px;
 
@@ -81,25 +81,36 @@ function StorefrontOptionsWrapper({ settings, dropzoneHeading }) {
     }
   `
 
+  const StorefrontOptionsCSS = css`
+    position: sticky;
+    top: 80px;
+  `
+
+  const StorefrontOptionsWrapperCSS = css`
+    position: relative;
+    width: 300px;
+    margin-right: 30px;
+  `
+
   return usePortal(
-    <>
-      {settings.showOptionsHeading && (
-        <StorefrontFilterOptionsHeading dropzone={dropzoneHeading} />
-      )}
-      <aside className="wps-storefront-sidebar" css={StorefrontSidebarCSS}>
-        {settings.showCollections && <OptionCollections settings={settings} />}
-
-        {settings.showPrice && <OptionPrice settings={settings} />}
-
-        {settings.showTags && <OptionTags settings={settings} />}
-
-        {settings.showVendors && <OptionVendors settings={settings} />}
-
-        {settings.showTypes && <OptionTypes settings={settings} />}
-      </aside>
-    </>,
+    <div css={StorefrontOptionsWrapperCSS}>
+      <div id="shopwp-storefront-options" css={StorefrontOptionsCSS}>
+        {settings.showOptionsHeading ? (
+          <StorefrontFilterOptionsHeading settings={settings} />
+        ) : null}
+        <aside className="wps-storefront-sidebar" css={StorefrontSidebarCSS}>
+          {settings.showTags ? <OptionTags settings={settings} /> : null}
+          {settings.showVendors ? <OptionVendors settings={settings} /> : null}
+          {settings.showTypes ? <OptionTypes settings={settings} /> : null}
+          {settings.showCollections ? (
+            <OptionCollections settings={settings} />
+          ) : null}
+          {settings.showPrice ? <OptionPrice settings={settings} /> : null}
+        </aside>
+      </div>
+    </div>,
     settings.dropzoneOptions
   )
 }
 
-export default wp.element.memo(StorefrontOptionsWrapper)
+export default StorefrontOptionsWrapper

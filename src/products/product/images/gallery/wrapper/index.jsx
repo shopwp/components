@@ -12,7 +12,7 @@ const ProductCarouselImages = wp.element.lazy(() =>
   )
 )
 
-function ProductGalleryWrapper({ element }) {
+function ProductGalleryWrapper() {
   const productState = useProductState()
   const settings = useSettingsState()
 
@@ -32,14 +32,12 @@ function ProductGalleryWrapper({ element }) {
           <ProductGallery
             carousel={
               <ProductCarouselImages
-                payload={productState.payload}
                 settings={settings}
                 images={
                   productState.payload.media
                     ? productState.payload.media.edges
                     : false
                 }
-                element={element}
               />
             }
           />
