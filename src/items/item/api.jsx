@@ -103,6 +103,21 @@ function useGetItemsQuery(setNotice) {
 
         wp.hooks.doAction("on.afterPayloadUpdate", newItems)
 
+        const limit =
+          requestsState.queryType === "collections"
+            ? settings.collectionsLimit
+            : settings.limit
+
+        const pageSize =
+          requestsState.queryType === "collections"
+            ? settings.collectionsPageSize
+            : settings.pageSize
+
+        const pagination =
+          requestsState.queryType === "collections"
+            ? settings.collectionsPagination
+            : settings.pagination
+
         if (error) {
           requestsDispatch({
             type: "UPDATE_TOTAL_SHOWN",
@@ -115,7 +130,9 @@ function useGetItemsQuery(setNotice) {
               items: [],
               replace: true,
               totalShown: totalShown,
-              limit: settings.limit,
+              limit: limit,
+              pageSize: pageSize,
+              pagination: pagination,
               settings: settings,
             },
           })
@@ -146,7 +163,9 @@ function useGetItemsQuery(setNotice) {
                 items: [],
                 replace: true,
                 totalShown: totalShown,
-                limit: settings.limit,
+                limit: limit,
+                pageSize: pageSize,
+                pagination: pagination,
                 settings: settings,
               },
             })
@@ -193,7 +212,9 @@ function useGetItemsQuery(setNotice) {
                 items: newItems.edges,
                 replace: requestsState.isReplacing,
                 totalShown: totalShown,
-                limit: settings.limit,
+                limit: limit,
+                pageSize: pageSize,
+                pagination: pagination,
                 settings: settings,
               },
             })
@@ -210,8 +231,8 @@ function useGetItemsQuery(setNotice) {
               })
             }
 
-            if (settings.limit) {
-              if (totalShown >= settings.limit) {
+            if (limit) {
+              if (totalShown >= limit) {
                 requestsDispatch({
                   type: "SET_HAS_NEXT_PAGE",
                   payload: false,

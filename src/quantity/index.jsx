@@ -182,14 +182,18 @@ function Quantity({
 
     maybeShowInventoryNotice(quantity)
 
-    if (!quantityStep) {
-      var newQuantity = quantity - 1
+    if (minQuantity && quantity <= minQuantity) {
+      var newQuantity = minQuantity
     } else {
-      var newQuantity = quantity - quantityStep
-    }
+      if (!quantityStep) {
+        var newQuantity = quantity - 1
+      } else {
+        var newQuantity = quantity - quantityStep
+      }
 
-    if (!lineItem && newQuantity < 1) {
-      newQuantity = 1
+      if (!lineItem && newQuantity < 1) {
+        newQuantity = 1
+      }
     }
 
     maybeShowInventoryNotice(newQuantity)

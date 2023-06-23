@@ -146,7 +146,7 @@ function Select({
 
       color: ${settings && settings.variantLabelTextColor
         ? settings.variantLabelTextColor
-        : "black"};
+        : "white"};
       font-family: ${settings && settings.variantDropdownTypeFontFamily
         ? settings.variantDropdownTypeFontFamily
         : "inherit"};

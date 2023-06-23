@@ -17,7 +17,8 @@ function PayloadReducer(currentPayload, action) {
         action.payload.replace,
         action.payload.totalShown,
         action.payload.limit,
-        action.payload.settings
+        action.payload.pageSize,
+        action.payload.pagination
       )
 
       return newPayload
