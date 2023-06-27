@@ -2,7 +2,6 @@
 import { jsx, css } from "@emotion/react"
 import { useFirstRender } from "@shopwp/hooks"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
-import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import {
   useRequestsState,
@@ -37,7 +36,6 @@ function StorefrontWrapper() {
   const { useEffect, Suspense } = wp.element
   const isFirstRender = useFirstRender()
 
-  const itemsState = useItemsState()
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()

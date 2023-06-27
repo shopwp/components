@@ -98,7 +98,9 @@ function Select({
     const DropdownCSS = css`
       padding: 10px 45px 10px 10px;
       border: 1px solid
-        ${settings && settings.variantDropdownButtonColor
+        ${settings &&
+        settings.variantDropdownButtonColor &&
+        settings.variantDropdownButtonColor !== "white"
           ? settings.variantDropdownButtonColor
           : "#acacac"};
       border-radius: ${settings.globalBorderRadius};
@@ -146,7 +148,7 @@ function Select({
 
       color: ${settings && settings.variantLabelTextColor
         ? settings.variantLabelTextColor
-        : "white"};
+        : "black"};
       font-family: ${settings && settings.variantDropdownTypeFontFamily
         ? settings.variantDropdownTypeFontFamily
         : "inherit"};

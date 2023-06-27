@@ -1,11 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import {
-  containerFluidCSS,
-  flexRowCSS,
-  flexColSmallCSS,
-  mq,
-} from "@shopwp/common"
+import { containerFluidCSS, flexRowCSS, mq } from "@shopwp/common"
 import { FilterHook, shouldShowSaleNotice } from "@shopwp/common"
 import { useCartState } from "@shopwp/components"
 import { useShopState } from "@shopwp/components"
@@ -208,9 +203,7 @@ function CartLineItem({ lineItem }) {
               className="wps-cart-lineitem-quantity-wrapper"
               css={containerFluidCSS}
             >
-              <div
-                css={[flexRowCSS, flexColSmallCSS, lineItemQuantityWrapperCSS]}
-              >
+              <div css={[flexRowCSS, lineItemQuantityWrapperCSS]}>
                 <CartLineItemQuantity
                   lineItem={lineItem}
                   setNotice={setNotice}

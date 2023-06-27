@@ -2,6 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import StorefrontFilterOptionsHeading from "../heading"
 import { usePortal } from "@shopwp/hooks"
+import { mq } from "@shopwp/common"
 
 const OptionCollections = wp.element.lazy(() =>
   import(
@@ -79,17 +80,30 @@ function StorefrontOptionsWrapper({ settings }) {
         line-height: 1;
       }
     }
+
+    ${mq("medium")} {
+      margin-bottom: 50px;
+    }
   `
 
   const StorefrontOptionsCSS = css`
     position: sticky;
     top: 80px;
+
+    ${mq("medium")} {
+      position: static;
+      top: 0;
+    }
   `
 
   const StorefrontOptionsWrapperCSS = css`
     position: relative;
     width: 300px;
     margin-right: 30px;
+
+    ${mq("medium")} {
+      width: 100%;
+    }
   `
 
   return usePortal(

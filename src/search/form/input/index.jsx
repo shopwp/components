@@ -140,7 +140,7 @@ function SearchInput({
   }
 
   function onBlur() {
-    if (shopwp.misc.isAdmin) {
+    if (shopwp.misc.isAdmin || settings.dropzonePayload) {
       return
     }
     if (!withStorefront) {

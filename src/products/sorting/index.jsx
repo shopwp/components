@@ -9,6 +9,7 @@ import {
 import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useShopState } from "@shopwp/components"
+import { mq } from "@shopwp/common"
 
 const Select = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
@@ -33,44 +34,52 @@ function ProductsSorting() {
     #swp-collections-sorting *:hover {
       cursor: pointer;
     }
+
+    ${mq("medium")} {
+      max-width: 100%;
+      margin-bottom: 0;
+    }
   `
 
-  const collectionOptions = [
-    {
-      label: shopState.t.l.titleDes,
-      value: "TITLE",
-    },
-    {
-      label: shopState.t.l.titleAsc,
-      value: "TITLE-REVERSE",
-    },
-    {
-      label: shopState.t.l.priceLowToHigh,
-      value: "PRICE",
-    },
-    {
-      label: shopState.t.l.priceHighToLow,
-      value: "PRICE-REVERSE",
-    },
-    {
-      label: shopState.t.l.bestSelling,
-      value: "BEST_SELLING",
-    },
-    {
-      label: shopState.t.l.recentlyAdded,
-      value: "CREATED",
-    },
-    {
-      label: shopState.t.l.collectionDefault,
-      value: "COLLECTION_DEFAULT",
-    },
-    {
-      label: shopState.t.l.collectionManual,
-      value: "MANUAL",
-    },
-  ]
+  const collectionOptions = wp.hooks.applyFilters(
+    "collections.sortingOptions",
+    [
+      {
+        label: shopState.t.l.titleDes,
+        value: "TITLE",
+      },
+      {
+        label: shopState.t.l.titleAsc,
+        value: "TITLE-REVERSE",
+      },
+      {
+        label: shopState.t.l.priceLowToHigh,
+        value: "PRICE",
+      },
+      {
+        label: shopState.t.l.priceHighToLow,
+        value: "PRICE-REVERSE",
+      },
+      {
+        label: shopState.t.l.bestSelling,
+        value: "BEST_SELLING",
+      },
+      {
+        label: shopState.t.l.recentlyAdded,
+        value: "CREATED",
+      },
+      {
+        label: shopState.t.l.collectionDefault,
+        value: "COLLECTION_DEFAULT",
+      },
+      {
+        label: shopState.t.l.collectionManual,
+        value: "MANUAL",
+      },
+    ]
+  )
 
-  const productOptions = [
+  const productOptions = wp.hooks.applyFilters("product.sortingOptions", [
     {
       label: shopState.t.l.titleDes,
       value: "TITLE",
@@ -107,7 +116,7 @@ function ProductsSorting() {
       label: shopState.t.l.productVendor,
       value: "VENDOR",
     },
-  ]
+  ])
 
   function customOnChange(data) {
     const params = updateQueryParamsWithSort(data.value)
@@ -157,6 +166,7 @@ function ProductsSorting() {
               id="swp-products-sorting"
               isBusy={requestsState.isFetchingNew}
               inline={true}
+              settings={settings}
             />
           </div>
         </Suspense>,

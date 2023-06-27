@@ -21,6 +21,7 @@ function ProductBuyButton() {
     display: flex;
     flex-direction: column;
     margin-bottom: ${settings.isSingleComponent ? "0px" : "15px"};
+    margin-top: 40px;
   `
 
   const unavailableNoticeCSS = css`

@@ -5,8 +5,7 @@ import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
-import { findDefaultSelectVal } from "@shopwp/common"
-import { useShopState } from "@shopwp/components"
+import { mq, findDefaultSelectVal } from "@shopwp/common"
 
 const Select = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
@@ -17,7 +16,6 @@ function ProductsPageSize() {
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
-  const shopState = useShopState()
   const options = [
     {
       label: "10",
@@ -63,6 +61,10 @@ function ProductsPageSize() {
 
   const ProductsPageSizeCSS = css`
     margin-left: 15px;
+
+    ${mq("medium")} {
+      margin-left: 0;
+    }
   `
 
   return (
@@ -77,6 +79,7 @@ function ProductsPageSize() {
           isBusy={requestsState.isFetchingNew}
           dropzone={settings.dropzonePageSize}
           inline={true}
+          settings={settings}
         />
       </Suspense>
     </div>
