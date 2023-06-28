@@ -5,7 +5,7 @@ import PaginationItemsMap from "./map"
 import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { flexRowCSS, maybeRemoveElementorSkeletons } from "@shopwp/common"
+import { flexRowCSS, addFinishedLoadingClass } from "@shopwp/common"
 import ProductsSorting from "../../products/sorting"
 import ProductsPageSize from "../../products/page-size"
 
@@ -17,7 +17,8 @@ function PaginationItems({ children, payload }) {
 
   useEffect(() => {
     wp.hooks.doAction("on.itemsLoad", payload, settings)
-    maybeRemoveElementorSkeletons()
+
+    addFinishedLoadingClass()
   }, [])
 
   const PaginationItemsCSS = css`

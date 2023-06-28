@@ -16,6 +16,10 @@ function CartLineItemPriceSaleNoticeText() {
     margin-bottom: -6px;
     margin-top: -6px;
 
+    ${mq("medium")} {
+      margin-bottom: 5px;
+    }
+
     ${mq("small")} {
       text-align: left;
       margin-top: 0px;

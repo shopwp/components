@@ -146,6 +146,10 @@ function ItemsSkeleton({ skeletonType }) {
         flex-direction: column;
       }
 
+      .shopwp-skeleton-products {
+        width: 100%;
+      }
+
       .shopwp-skeleton-product,
       .shopwp-skeleton-gallery,
       .shopwp-skeleton-component {

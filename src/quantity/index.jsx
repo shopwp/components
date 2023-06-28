@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, mq } from "@shopwp/common"
+import { containerFluidCSS, flexRowNoBreakCSS, mq } from "@shopwp/common"
 import IconDecrement from "../icon-decrement"
 import IconIncrement from "../icon-increment"
 import { useFirstRender, useDebounce } from "@shopwp/hooks"
@@ -279,7 +279,7 @@ function Quantity({
       className="wps-quantity-container"
       css={[containerFluidCSS, quantityContainer]}
     >
-      <div css={[flexRowCSS]}>
+      <div css={[flexRowNoBreakCSS]}>
         <QuantityButton
           type="decrement"
           onClick={handleDecrement}
