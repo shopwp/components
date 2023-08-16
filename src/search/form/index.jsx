@@ -6,6 +6,7 @@ import { useSettingsState } from "../../items/_state/settings/hooks"
 
 function SearchForm({
   hasStorefrontSelections,
+  searchTerm,
   setSearchTerm,
   withStorefront,
 }) {
@@ -45,6 +46,7 @@ function SearchForm({
       <div className="wps-search-wrapper" css={searchInputWrapperCSS}>
         <SearchInput
           hasStorefrontSelections={hasStorefrontSelections}
+          searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           withStorefront={withStorefront}
         />

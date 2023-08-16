@@ -17,10 +17,17 @@ function SearchWrapper({ withStorefront = false, hasStorefrontSelections }) {
       <div css={SearchCSS}>
         <SearchForm
           hasStorefrontSelections={hasStorefrontSelections}
+          searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           withStorefront={withStorefront}
         />
-        <SearchItems searchTerm={searchTerm} withStorefront={withStorefront} />
+        {searchTerm ? (
+          <SearchItems
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            withStorefront={withStorefront}
+          />
+        ) : null}
       </div>
     </Suspense>
   )

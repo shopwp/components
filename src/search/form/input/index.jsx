@@ -14,6 +14,7 @@ const SearchIcon = wp.element.lazy(() =>
 
 function SearchInput({
   hasStorefrontSelections,
+  searchTerm,
   setSearchTerm,
   withStorefront,
 }) {
@@ -39,6 +40,16 @@ function SearchInput({
     // This will trigger a new render wor the component
     input.dispatchEvent(new Event("change", { bubbles: true }))
   }
+
+  useEffect(() => {
+    if (isFirstRender) {
+      return
+    }
+    if (!searchTerm) {
+      setLocalTerm("")
+      setNativeInput()
+    }
+  }, [searchTerm])
 
   useEffect(() => {
     if (isFirstRender) {
@@ -137,16 +148,31 @@ function SearchInput({
 
   function onChange(e) {
     setLocalTerm(e.target.value)
+
+    // This resets the storefront layout when search is cleared out
+    if (!e.target.value && withStorefront) {
+      requestsDispatch({
+        type: "SET_QUERY_PARAMS",
+        payload: requestsState.originalParams,
+      })
+
+      requestsDispatch({
+        type: "SET_CURSOR",
+        payload: false,
+      })
+
+      requestsDispatch({
+        type: "SET_IS_REPLACING",
+        payload: true,
+      })
+
+      requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
+    }
   }
 
   function onBlur() {
     if (shopwp.misc.isAdmin || settings.dropzonePayload) {
       return
-    }
-    if (!withStorefront) {
-      setLocalTerm("")
-      setNativeInput()
-      setSearchTerm("")
     }
   }
 

@@ -5,7 +5,7 @@ import PaginationItemsMap from "./map"
 import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { flexRowCSS, addFinishedLoadingClass } from "@shopwp/common"
+import { flexRowCSS } from "@shopwp/common"
 import ProductsSorting from "../../products/sorting"
 import ProductsPageSize from "../../products/page-size"
 
@@ -13,13 +13,6 @@ function PaginationItems({ children, payload }) {
   const itemsState = useItemsState()
   const settings = useSettingsState()
   const requestsState = useRequestsState()
-  const { useEffect } = wp.element
-
-  useEffect(() => {
-    wp.hooks.doAction("on.itemsLoad", payload, settings)
-
-    addFinishedLoadingClass()
-  }, [])
 
   const PaginationItemsCSS = css`
     display: ${settings.carousel &&
