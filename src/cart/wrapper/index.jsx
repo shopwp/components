@@ -1,11 +1,18 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useCartState, useCartDispatch } from "@shopwp/components"
-import { useShopState, useShopDispatch } from "@shopwp/components"
+import {
+  useShopState,
+  useShopDispatch,
+  useCartState,
+  useCartDispatch,
+} from "@shopwp/components"
 import { useAction, useFirstRender } from "@shopwp/hooks"
-import { checkoutRedirect } from "@shopwp/common"
-import { mq } from "@shopwp/common"
-import { SlideInFromRightCart } from "@shopwp/common"
+import {
+  mq,
+  SlideInFromRightCart,
+  checkoutRedirect,
+  getURLParam,
+} from "@shopwp/common"
 
 import {
   addLines,
@@ -77,6 +84,23 @@ function CartWrapper() {
       createNewCart(cartState, shopState, cartDispatch, shopDispatch)
     }
   }, [])
+
+  /*
+	
+	After cart has loaded
+	
+	*/
+  useEffect(() => {
+    if (!shopState.cartData.id) {
+      return
+    }
+
+    var discountCodeFromURL = getURLParam("discount")
+
+    if (discountCodeFromURL) {
+      addDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
+    }
+  }, [shopState.cartData.id])
 
   useEffect(() => {
     if (isFirstRender) {
