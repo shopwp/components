@@ -281,6 +281,9 @@ function CartWrapper() {
     <SlideInFromRightCart
       isOpen={shopState.isCartOpen}
       customStyles={cartContainerCSS}
+      className={
+        shopState.isCartOpen ? "shopwp-cart-is-open" : "shopwp-cart-is-closed"
+      }
     >
       <div ref={cartElement} className="wps-cart shopwp-cart" css={cartCSS}>
         <CartLoadingContents isUpdating={shopState.isCartUpdating} />

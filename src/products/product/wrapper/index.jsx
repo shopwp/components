@@ -86,7 +86,7 @@ function ProductWrapper({ payload }) {
       itemScope
       css={ProductWrapperCSS}
       className="wps-item"
-      aria-label="Product"
+      aria-label={productState.payload.title}
       data-product-id={productState.payload ? productId : false}
       data-wpshopify-is-available-for-sale={
         productState.payload ? productState.payload.availableForSale : false

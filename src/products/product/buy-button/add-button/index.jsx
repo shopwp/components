@@ -61,7 +61,7 @@ function ProductAddButton({
   return (
     <div
       className="wps-component wps-component-products-add-button wps-btn-wrapper"
-      aria-label="Product Add Button"
+      aria-label={productState.payload.title + " add button"}
     >
       <div css={AddButtonWrapperCSS}>
         {shouldShowQuantity ? (

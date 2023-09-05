@@ -74,7 +74,7 @@ function AddButtonText({
     <span
       css={AddButtonTextCSS}
       ref={addedTest}
-      aria-label="Product Add to Cart Text"
+      aria-label={productState.payload.title + " add to cart text"}
     >
       {text}
     </span>

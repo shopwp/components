@@ -154,7 +154,7 @@ function ProductModal() {
 
           .ReactModal__Overlay.ReactModal__Overlay--after-open {
             opacity: 1;
-            z-index: 999;
+            z-index: 999999999;
           }
         `}
       />
@@ -182,10 +182,11 @@ function ProductModalCloseIcon() {
   const ProductModalCloseIconCSS = css`
     position: absolute;
     top: ${shopwp.misc.isAdmin ? "-32px" : "-18px"};
-    width: ${shopwp.misc.isAdmin ? "25px" : "70px"};
-    height: ${shopwp.misc.isAdmin ? "25px" : "70px"};
+    width: ${shopwp.misc.isAdmin ? "25px" : "60px"};
+    height: ${shopwp.misc.isAdmin ? "25px" : "60px"};
+    box-sizing: border-box;
     padding: 15px;
-    right: ${shopwp.misc.isAdmin ? "-54px" : "-70px"};
+    right: ${shopwp.misc.isAdmin ? "-54px" : "-60px"};
     z-index: 99999999;
     opacity: 1;
     transition: opacity 0.2s ease;
@@ -232,7 +233,11 @@ function ProductModalContent({ payload, settings, id }) {
   `
 
   return (
-    <div className="wps-modal" aria-label="Product Modal" css={ProductModalCSS}>
+    <div
+      className="wps-modal"
+      aria-label={payload.title + " product modal"}
+      css={ProductModalCSS}
+    >
       <ProductModalCloseIcon />
       <div className="wps-modal-inner" css={ProductModalContentInnerCSS}>
         <Products

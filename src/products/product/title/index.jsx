@@ -49,7 +49,7 @@ function ProductTitle() {
   return usePortal(
     <div
       className="wps-component wps-component-products-title"
-      aria-label="Product Title"
+      aria-label={productState.payload.title + " product title"}
       data-wps-component-order="0"
       css={titleStylesWrapper}
     >
@@ -58,6 +58,7 @@ function ProductTitle() {
           type="products"
           target={settings.linkTarget}
           linkTo={settings.linkTo}
+          linkTitle={productState.payload.title}
           payload={productState.payload}
         >
           <Title styles={titleStyles} classList={settings.titleClassName} />

@@ -71,8 +71,12 @@ function PaginationItems({ children, payload }) {
       />
       {itemsState.componentType !== "collections" ? (
         <div css={[flexRowCSS, PaginationButtonsCSS]}>
-          {settings.withSorting ? <ProductsSorting /> : null}
-          {settings.withPageSize ? <ProductsPageSize /> : null}
+          {settings.withSorting && !settings.isModal ? (
+            <ProductsSorting />
+          ) : null}
+          {settings.withPageSize && !settings.isModal ? (
+            <ProductsPageSize />
+          ) : null}
         </div>
       ) : null}
 

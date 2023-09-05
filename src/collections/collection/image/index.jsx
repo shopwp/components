@@ -59,12 +59,13 @@ function CollectionImage() {
     imageSrc ? (
       <div
         className="wps-component wps-component-collection-image"
-        aria-label="Collection Image"
+        aria-label={collectionState.payload.title + " collection image"}
         css={CollectionImageWrapperCSS}
       >
         <Link
           type="collections"
           linkTo={settings.collectionsLinkTo}
+          linkTitle={collectionState.payload.title}
           target={settings.collectionsLinkTarget}
           payload={collectionState.payload}
         >

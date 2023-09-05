@@ -8,10 +8,6 @@ function SettingsInitialState({
 }) {
   settings = mergeDefaults(settings, defaults[componentType])
 
-  if (settings.linkTo === "modal") {
-    settings.carousel = false
-  }
-
   if (isBase64(settings.htmlTemplateData)) {
     var htmlTemplateData = atob(settings.htmlTemplateData)
   } else {

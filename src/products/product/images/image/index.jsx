@@ -79,6 +79,7 @@ function ProductImage({
    the image tag into a reusable component. Probably something to do with ref forwarding.
 
    */
+
   return productImageSrc ? (
     hasLink(settings) && isFeatured ? (
       <Link
@@ -86,6 +87,7 @@ function ProductImage({
         linkTo={settings.linkTo}
         target={settings.linkTarget}
         payload={productState.payload}
+        linkTitle={productState.payload.title}
       >
         <Img
           imageRef={imageRef}

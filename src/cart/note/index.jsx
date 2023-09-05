@@ -82,6 +82,7 @@ function CartNote() {
     border-radius: ${shopwp.general.globalBorderRadius};
     min-height: 100px;
     background: transparent;
+    box-sizing: border-box;
 
     ::placeholder,
     ::-webkit-input-placeholder {

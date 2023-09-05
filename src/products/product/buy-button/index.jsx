@@ -33,7 +33,7 @@ function ProductBuyButton() {
       <div
         css={buyButtonWrapperCSS}
         className="wps-component-products-buy-button"
-        aria-label="Product Buy Button"
+        aria-label={productState.payload.title + " buy button"}
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
 

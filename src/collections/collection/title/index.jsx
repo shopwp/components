@@ -44,12 +44,13 @@ function CollectionTitle() {
   return usePortal(
     <div
       className="wps-component wps-component-collection-title"
-      aria-label="Collection Title"
+      aria-label={collectionState.payload.title + " collection title"}
     >
       {hasLink(settings) && !settings.collectionsIsSingular ? (
         <Link
           type="collections"
           linkTo={settings.collectionsLinkTo}
+          linkTitle={collectionState.payload.title}
           target={settings.collectionsLinkTarget}
           payload={collectionState.payload}
         >

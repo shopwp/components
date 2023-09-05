@@ -70,6 +70,7 @@ function CartLineItemTitle({ lineItem, settings }) {
       classNames="wps-cart-lineitem-title-link"
       target={settings.lineitemsLinkTarget}
       manualLink={manualLink}
+      linkTitle={lineItem.merchandise.product.title}
     >
       <div css={CartLineItemTitleWrapperCSS}>
         <span

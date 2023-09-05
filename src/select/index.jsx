@@ -10,6 +10,25 @@ const Loader = wp.element.lazy(() =>
 
 import SelectItem from "./list-item"
 
+var isOutOfViewport = function (elem) {
+  // Get element's bounding
+  var bounding = elem.getBoundingClientRect()
+
+  // Check if it's out of the viewport on each side
+  var out = {}
+  out.top = bounding.top < 0
+  out.left = bounding.left < 0
+  out.bottom =
+    bounding.bottom >
+    (window.innerHeight || document.documentElement.clientHeight)
+  out.right =
+    bounding.right > (window.innerWidth || document.documentElement.clientWidth)
+  out.any = out.top || out.left || out.bottom || out.right
+  out.all = out.top && out.left && out.bottom && out.right
+
+  return out
+}
+
 function Select({
   items,
   onChange,
@@ -26,7 +45,7 @@ function Select({
   variants = false,
   settings = false,
 }) {
-  const { useState, useEffect } = wp.element
+  const { useState, useEffect, useRef } = wp.element
   const [selected, setSelected] = useState(selectedOption)
 
   function itemToString(item) {
@@ -73,6 +92,9 @@ function Select({
       },
     })
 
+    const dropdownMenuRef = useRef()
+    const [needsSpace, setNeedsSpace] = useState(false)
+
     useEffect(() => {
       if (selectedOptions === null) {
         return
@@ -94,6 +116,22 @@ function Select({
 
       setSelected(selectedOption)
     }, [selectedOption])
+
+    useEffect(() => {
+      if (!isOpen) {
+        return
+      }
+
+      var viewportPos = isOutOfViewport(dropdownMenuRef.current)
+
+      if (dropdownMenuRef.current) {
+        if (viewportPos && viewportPos.any) {
+          setNeedsSpace(true)
+        } else {
+          setNeedsSpace(false)
+        }
+      }
+    }, [isOpen])
 
     const DropdownCSS = css`
       padding: 10px 45px 10px 10px;
@@ -229,8 +267,9 @@ function Select({
 
     const DropdownMenuCSS = css`
       position: absolute;
-      top: ${inline ? "0" : "0"};
+      bottom: ${needsSpace ? "45px" : "auto"};
       left: 0;
+      top: auto;
       width: 100%;
       background: white;
       list-style: none;
@@ -283,7 +322,7 @@ function Select({
         <div css={DropdownMenuWrapCSS} {...getMenuProps()}>
           {isOpen && !isBusy ? (
             <SlideInFromTop>
-              <ul css={DropdownMenuCSS}>
+              <ul css={DropdownMenuCSS} ref={dropdownMenuRef}>
                 {items.map((item, index) => (
                   <SelectItem
                     key={`${item.value}${index}`}
