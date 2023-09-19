@@ -5,15 +5,20 @@ function Link({
   type,
   classNames = "",
   target,
+  from = false,
   children,
-  linkTo = "none",
+  linkTo = shopwp.general.productsLinkTo,
   manualLink,
   disableLink,
   linkTitle,
   payload = false,
 }) {
   function renderLink() {
-    if (disableLink || shopwp.misc.isAdmin) {
+    if (
+      disableLink ||
+      shopwp.misc.isAdmin ||
+      (shopwp.general.productsLinkTo !== "wordpress" && from === "cart")
+    ) {
       return children
     }
 

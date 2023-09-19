@@ -126,7 +126,7 @@ function SearchInput({
       padding: 15px;
       font-size: 1em;
       border: none;
-      border: 1px solid #acacac;
+      border: 1px solid #606060;
       outline: none;
       width: 100%;
       height: 45px;

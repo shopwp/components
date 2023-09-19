@@ -11,7 +11,7 @@ import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useShopState } from "@shopwp/components"
 import { mq } from "@shopwp/common"
 
-const Select = wp.element.lazy(() =>
+const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
 )
 
@@ -23,63 +23,63 @@ function ProductsSorting() {
   const shopState = useShopState()
 
   const sortingWrapperCSS = css`
-    width: 100%;
-    max-width: 270px;
+    width: auto;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     margin-bottom: 20px;
     align-items: baseline;
-
-    #swp-collections-sorting *:hover {
-      cursor: pointer;
-    }
+    margin-left: 10px;
 
     ${mq("medium")} {
-      max-width: 100%;
-      margin-bottom: 0;
+      width: 100%;
+      margin-left: 0;
     }
   `
 
-  const collectionOptions = wp.hooks.applyFilters(
-    "collections.sortingOptions",
-    [
-      {
-        label: shopState.t.l.titleDes,
-        value: "TITLE",
-      },
-      {
-        label: shopState.t.l.titleAsc,
-        value: "TITLE-REVERSE",
-      },
-      {
-        label: shopState.t.l.priceLowToHigh,
-        value: "PRICE",
-      },
-      {
-        label: shopState.t.l.priceHighToLow,
-        value: "PRICE-REVERSE",
-      },
-      {
-        label: shopState.t.l.bestSelling,
-        value: "BEST_SELLING",
-      },
-      {
-        label: shopState.t.l.recentlyAdded,
-        value: "CREATED",
-      },
-      {
-        label: shopState.t.l.collectionDefault,
-        value: "COLLECTION_DEFAULT",
-      },
-      {
-        label: shopState.t.l.collectionManual,
-        value: "MANUAL",
-      },
-    ]
-  )
+  var collectionOptions = wp.hooks.applyFilters("collections.sortingOptions", [
+    {
+      label: shopState.t.l.titleDes,
+      value: "TITLE",
+    },
+    {
+      label: shopState.t.l.titleAsc,
+      value: "TITLE-REVERSE",
+    },
+    {
+      label: shopState.t.l.priceLowToHigh,
+      value: "PRICE",
+    },
+    {
+      label: shopState.t.l.priceHighToLow,
+      value: "PRICE-REVERSE",
+    },
+    {
+      label: shopState.t.l.bestSelling,
+      value: "BEST_SELLING",
+    },
+    {
+      label: shopState.t.l.recentlyAdded,
+      value: "CREATED",
+    },
+    {
+      label: shopState.t.l.collectionDefault,
+      value: "COLLECTION_DEFAULT",
+    },
+    {
+      label: shopState.t.l.collectionManual,
+      value: "MANUAL",
+    },
+  ])
 
-  const productOptions = wp.hooks.applyFilters("product.sortingOptions", [
+  var collectionOptionsNew = collectionOptions.map((o) => {
+    return {
+      label: o.value,
+      value: o.label,
+    }
+  })
+
+  var productOptions = wp.hooks.applyFilters("product.sortingOptions", [
     {
       label: shopState.t.l.titleDes,
       value: "TITLE",
@@ -118,8 +118,16 @@ function ProductsSorting() {
     },
   ])
 
+  var productOptionsNew = productOptions.map((o) => {
+    return {
+      label: o.value,
+      value: o.label,
+    }
+  })
+
   function customOnChange(data) {
-    const params = updateQueryParamsWithSort(data.value)
+    const params = updateQueryParamsWithSort(data.label)
+
     requestsDispatch({
       type: "SET_QUERY_PARAMS",
       payload: {
@@ -147,26 +155,24 @@ function ProductsSorting() {
   return settings.withSorting && !requestsState.isBootstrapping
     ? usePortal(
         <Suspense fallback="Loading ...">
-          <div css={sortingWrapperCSS}>
-            <Select
+          <div id="shopwp-storefront-sorting" css={sortingWrapperCSS}>
+            <Dropdown
               items={
                 requestsState.queryType !== "products"
-                  ? collectionOptions
-                  : productOptions
+                  ? collectionOptionsNew
+                  : productOptionsNew
               }
               onChange={customOnChange}
               label={settings.sortByLabelText}
               selectedOption={findDefaultSelectVal(
                 requestsState.queryType !== "products"
-                  ? collectionOptions
-                  : productOptions,
+                  ? collectionOptionsNew
+                  : productOptionsNew,
                 settings.sortBy,
                 settings.reverse
               )}
-              id="swp-products-sorting"
               isBusy={requestsState.isFetchingNew}
               inline={true}
-              settings={settings}
             />
           </div>
         </Suspense>,

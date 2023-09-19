@@ -16,7 +16,9 @@ function CartHeader({ settings }) {
 
   const CartHeaderRow = css`
     display: flex;
+    position: relative;
   `
+
   return (
     <section
       className="wps-cart-header"

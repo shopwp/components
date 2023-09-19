@@ -1,5 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
+
+import { MenuItem } from "@szhsin/react-menu"
 import {
   createObj,
   isVariantAvailableInShopify,
@@ -8,8 +10,6 @@ import {
 
 function SelectItem({
   item,
-  index,
-  getItemProps,
   selected,
   isVariant = false,
   allSelectableOptions = false,
@@ -23,7 +23,7 @@ function SelectItem({
   const DropdownMenuItemCSS = css`
     text-align: center;
     margin-bottom: 0;
-    padding: 7px 10px;
+    padding: 0;
     border-bottom: 1px solid #ddd;
     opacity: ${isAvailableToSelect || selected ? 1 : 0.4};
     text-decoration: ${isAvailableToSelect || selected
@@ -36,12 +36,23 @@ function SelectItem({
     justify-content: center;
 
     &[data-is-selected="true"] {
-      background-color: #2b51d2;
-      color: white;
+      background-color: rgb(233, 233, 233);
+      color: black;
 
       &:hover {
-        background-color: #2b51d2;
+        background-color: rgb(233, 233, 233);
+
+        li {
+          background-color: rgb(233, 233, 233);
+        }
       }
+    }
+
+    .szh-menu__item {
+      padding: 0.4rem 1.5rem;
+      width: 100%;
+      display: block;
+      font-size: 16px;
     }
 
     &:hover,
@@ -56,8 +67,9 @@ function SelectItem({
       return
     }
 
-    const optionNameValue = createObj(item.value.name, item.value.value)
-    const isOptionSelected = selectedOptions.hasOwnProperty(item.value.name)
+    const optionNameValue = createObj(item.label, item.value)
+
+    const isOptionSelected = selectedOptions.hasOwnProperty(item.label)
 
     // Whether the variant is actually in stock
     const isAvailableInShopify = isVariantAvailableInShopify(
@@ -76,16 +88,17 @@ function SelectItem({
     )
 
     setIsAvailableToSelect(isAvailableToSelect)
-  }, [selected])
+  }, [selected, selectedOptions, variants])
 
   return (
-    <li
+    <div
       css={DropdownMenuItemCSS}
-      data-is-selected={selected ? selected.label === item.label : false}
-      {...getItemProps({ item, index })}
+      data-is-selected={selected ? selected.value === item.value : false}
     >
-      <span>{item.label}</span>
-    </li>
+      <MenuItem value={item.value} label={item.label}>
+        {item.value}
+      </MenuItem>
+    </div>
   )
 }
 

@@ -5,14 +5,14 @@ const CartContents = wp.element.lazy(() =>
   import(/* webpackChunkName: 'CartContents-public' */ "../contents")
 )
 
-function CartContainer({ settings, isCartOpen }) {
+function CartContainer({ settings }) {
   const { Suspense } = wp.element
 
   return (
     <>
       <CartHeader settings={settings} />
       <Suspense fallback={false}>
-        {isCartOpen ? <CartContents /> : null}
+        <CartContents />
       </Suspense>
       <CartFooter />
     </>

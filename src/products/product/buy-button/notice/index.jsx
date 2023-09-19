@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { SlideInFromTop } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
 function ProductBuyButtonTextNotice({ settings }) {
@@ -14,6 +13,7 @@ function ProductBuyButtonTextNotice({ settings }) {
     width: calc(100% - 30px);
     font-weight: normal;
     display: block;
+    line-height: 1;
   `
 
   if (settings.leftInStockText === "Only %s left!") {
@@ -23,11 +23,9 @@ function ProductBuyButtonTextNotice({ settings }) {
   }
 
   return (
-    <SlideInFromTop>
-      <span className="wps-notice-text" css={[textNoticeCSS]}>
-        {leftInStockText}
-      </span>
-    </SlideInFromTop>
+    <span className="wps-notice-text" css={[textNoticeCSS]}>
+      {leftInStockText}
+    </span>
   )
 }
 

@@ -58,6 +58,7 @@ function CartLineItemImage({ lineItem, settings }) {
     <Link
       payload={lineItem.merchandise}
       type="products"
+      from="cart"
       classNames="wps-cart-lineitem-img-link"
       target={settings.lineitemsLinkTarget}
       manualLink={manualLink}

@@ -21,7 +21,8 @@ function CartCheckoutButton({ onCheckout }) {
     background-color: ${cartState.isCheckingOut ||
     (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
     (!cartState.note && shopwp.general.noteRequired) ||
-    cartState.isCartEmpty
+    !shopState.cartData ||
+    !shopState.cartData.lines.edges.length
       ? "#cfcfcf"
       : shopwp.general.checkoutColor};
     padding: 16px 0 20px 0;
@@ -32,7 +33,8 @@ function CartCheckoutButton({ onCheckout }) {
       background-color: ${cartState.isCheckingOut ||
       (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
       (!cartState.note && shopwp.general.noteRequired) ||
-      cartState.isCartEmpty
+      !shopState.cartData ||
+      !shopState.cartData.lines.edges.length
         ? "#cfcfcf"
         : shopwp.general.checkoutColor};
     }
@@ -82,7 +84,8 @@ function CartCheckoutButton({ onCheckout }) {
         cartState.isCheckingOut ||
         (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
         (shopwp.general.noteRequired && !cartState.note) ||
-        cartState.isCartEmpty
+        !shopState.cartData ||
+        !shopState.cartData.lines.edges.length
       }
       css={[buttonCSS, checkoutButtonCSS]}
     >

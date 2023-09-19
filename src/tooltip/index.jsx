@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { SlideInFromTop } from "@shopwp/common"
 
 function Tooltip({ children, label }) {
   const { useState } = wp.element
@@ -72,11 +71,7 @@ function Tooltip({ children, label }) {
         </svg>
       </label>
 
-      {isShowing ? (
-        <SlideInFromTop>
-          <div css={tooltipContentCSS}>{children}</div>
-        </SlideInFromTop>
-      ) : null}
+      {isShowing ? <div css={tooltipContentCSS}>{children}</div> : null}
     </div>
   )
 }

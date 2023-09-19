@@ -6,6 +6,7 @@ import {
   queryOptionsNoRefetch,
   queryOptionsWithRefetch,
   maybeHandleApiError,
+  maybeAlterErrorMessage,
 } from "@shopwp/api"
 
 import { findLastItem } from "@shopwp/common"
@@ -72,6 +73,7 @@ function useGetItemsQuery(setNotice) {
       suspense: false,
       onError: (error) => {
         wp.hooks.doAction("on.afterPayloadUpdate", error)
+
         if (isMounted.current) {
           requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
           requestsDispatch({
@@ -81,7 +83,7 @@ function useGetItemsQuery(setNotice) {
 
           setNotice({
             type: "error",
-            message: error.message,
+            message: maybeAlterErrorMessage(error.message, shopState),
           })
         }
       },
@@ -139,7 +141,7 @@ function useGetItemsQuery(setNotice) {
 
           setNotice({
             type: "error",
-            message: error,
+            message: maybeAlterErrorMessage(error, shopState),
           })
 
           return
@@ -280,7 +282,7 @@ function useGetTemplateQuery(setNotice) {
       onError: (error) => {
         setNotice({
           type: "error",
-          message: error,
+          message: maybeAlterErrorMessage(error, shopState),
         })
 
         requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
@@ -291,7 +293,7 @@ function useGetTemplateQuery(setNotice) {
         if (template.success === false) {
           setNotice({
             type: "error",
-            message: template.data,
+            message: maybeAlterErrorMessage(template.data, shopState),
           })
         } else {
           if (isBase64(template.data)) {

@@ -7,7 +7,7 @@ import {
 } from "../../items/_state/requests/hooks"
 import { mq, findDefaultSelectVal } from "@shopwp/common"
 
-const Select = wp.element.lazy(() =>
+const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
 )
 
@@ -59,27 +59,32 @@ function ProductsPageSize() {
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
   }
 
-  const ProductsPageSizeCSS = css`
-    margin-left: 15px;
+  const pageSizeWrapperCSS = css`
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    align-items: baseline;
+    margin-left: 10px;
 
     ${mq("medium")} {
+      width: 100%;
       margin-left: 0;
     }
   `
 
   return (
-    <div id="shopwp-storefront-page-size" css={ProductsPageSizeCSS}>
+    <div id="shopwp-storefront-page-size" css={pageSizeWrapperCSS}>
       <Suspense fallback="Loading ...">
-        <Select
+        <Dropdown
           items={options}
           onChange={customOnChange}
           label={settings.pageSizeLabelText}
           selectedOption={defaultVal}
-          id="swp-pagesize"
           isBusy={requestsState.isFetchingNew}
           dropzone={settings.dropzonePageSize}
           inline={true}
-          settings={settings}
         />
       </Suspense>
     </div>

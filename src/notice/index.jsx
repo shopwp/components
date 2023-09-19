@@ -2,7 +2,6 @@
 import { jsx, css } from "@emotion/react"
 import useIsMounted from "ismounted"
 import Expire from "../expire"
-import { SlideInFromTop } from "@shopwp/common"
 
 function Notice({
   children,
@@ -34,7 +33,7 @@ function Notice({
         : status === "error"
         ? "#cd423b"
         : "#4db54f"};
-    font-size: 15px;
+    font-size: 14px;
     opacity: ${isFetchingNew ? 0.6 : 1};
   `
 
@@ -45,7 +44,7 @@ function Notice({
   }, [])
 
   return (
-    <SlideInFromTop>
+    <>
       {status === "success" && isMounted.current ? (
         <Expire delay={5000}>
           <p css={[noticeStyles, extraCSS]}>{children}</p>
@@ -60,7 +59,7 @@ function Notice({
       ) : (
         <p css={[noticeStyles, extraCSS]}>{children}</p>
       )}
-    </SlideInFromTop>
+    </>
   )
 }
 

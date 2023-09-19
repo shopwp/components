@@ -1,7 +1,7 @@
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
 
-const Select = wp.element.lazy(() =>
+const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
 )
 
@@ -13,20 +13,24 @@ function SellingPlansList({ plans, sellingGroup }) {
   const newPlans = plans.map((plan) => {
     return {
       label: plan.selling_plan_name,
-      value: plan.selling_plan_id,
+      value: plan.selling_plan_name,
     }
   })
 
   const [selectedOption, setSelectedOption] = useState(newPlans[0])
 
   function onChange(value) {
+    var found = plans.filter((p) => p.selling_plan_name === value.value)
+
+    var selectedSubscription = found[0]
+
     setSelectedOption(value)
 
     buyButtonDispatch({
       type: "SET_SUBSCRIPTION",
       payload: {
-        sellingPlanId: value.value,
-        sellingPlanName: value.label,
+        sellingPlanId: selectedSubscription.id,
+        sellingPlanName: selectedSubscription.selling_plan_name,
         discountAmount: sellingGroup.include.product.discount_amount,
         discountType: sellingGroup.include.product.discount_type,
       },
@@ -35,7 +39,7 @@ function SellingPlansList({ plans, sellingGroup }) {
 
   return (
     <Suspense fallback="Loading ...">
-      <Select
+      <Dropdown
         items={newPlans}
         onChange={onChange}
         label={shopState.t.l.selectDelivery}

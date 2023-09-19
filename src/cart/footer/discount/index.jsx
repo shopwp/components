@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
 
-function CartFooterDiscount({ discountCode, changeDiscount }) {
+function CartFooterDiscount({ discount, changeDiscount }) {
   const shopState = useShopState()
 
   const discountCodeWrapperCSS = css`
@@ -18,10 +18,11 @@ function CartFooterDiscount({ discountCode, changeDiscount }) {
   const discountLabelCSS = css`
     && {
       flex: 1;
-      font-size: 15px;
+      font-size: 14px;
       position: relative;
       top: 2px;
       margin-right: 15px;
+      color: #089614;
     }
   `
 
@@ -50,7 +51,7 @@ function CartFooterDiscount({ discountCode, changeDiscount }) {
   `
 
   async function onRemoval() {
-    changeDiscount("")
+    changeDiscount(discount.code, true) // True means remove discount
   }
 
   return (
@@ -64,7 +65,7 @@ function CartFooterDiscount({ discountCode, changeDiscount }) {
         css={discountCodeCSS}
         onClick={onRemoval}
       >
-        {discountCode}
+        {discount.code}
 
         <svg
           css={discountCodeIconCSS}

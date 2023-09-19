@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import CartLineItems from "../lineitems"
-import { useCartState } from "@shopwp/components"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { IconLogo } from "@shopwp/components"
 import { useCartToggle } from "@shopwp/hooks"
 
 function CartContents() {
-  const cartState = useCartState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
 
@@ -20,16 +18,23 @@ function CartContents() {
     position: absolute;
     margin: 0;
     width: 100%;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: normal;
     margin: 0;
     text-align: center;
-    text-transform: capitalize;
+    position: relative;
+    top: -5px;
   `
 
   const CartContentsCSS = css`
     overflow: auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: ${shopState.cartData &&
+    shopState.cartData.lines.edges.length
+      ? "flex-start"
+      : "center"};
     flex: 1;
     transition: all 0.2s ease;
     opacity: ${shopState.isCartUpdating ? "0.3" : "1"};
@@ -64,18 +69,21 @@ function CartContents() {
   return (
     <section
       className="wps-cart-contents"
-      data-is-cart-empty={cartState.isCartEmpty}
+      data-is-cart-empty={
+        shopState.cartData && shopState.cartData.lines.edges.length
+      }
       css={CartContentsCSS}
     >
-      {cartState.isCartEmpty && !shopState.isCartUpdating ? (
+      {!shopState.cartData ||
+      (!shopState.cartData.lines.edges.length && !shopState.isCartUpdating) ? (
         <h2 css={CartTitleCSS}>
           <IconLogo color="#dedede" />
 
           {shopState.t.l.yourCartEmpty}
         </h2>
-      ) : shopState.cartData.lines && shopState.cartData.lines.edges.length ? (
+      ) : (
         <CartLineItems />
-      ) : null}
+      )}
     </section>
   )
 }

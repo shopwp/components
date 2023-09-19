@@ -42,6 +42,7 @@ function CartLineItemPrice({
   regPrice,
   salePrice,
   subscriptionDiscount,
+  discounts,
 }) {
   const CartLineItemPriceCSS = css`
     flex: 1;

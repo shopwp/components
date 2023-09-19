@@ -100,7 +100,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
       border-radius: 50%;
       border: 0.1em solid ${isSelected ? "blue" : "black"};
       position: absolute;
-      top: 27px;
+      top: 26px;
       left: 15px;
       transform: translate(0, -50%);
       display: grid;
@@ -127,20 +127,28 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
       margin: 0 0 0 10px;
       display: inline-block;
       line-height: initial;
+      font-size: 16px;
+    }
+  `
+
+  const FinalPriceCSS = css`
+    && {
+      font-weight: bold;
     }
   `
 
   const RegFullPriceCSS = css`
     text-decoration: line-through;
+    font-weight: normal;
   `
 
   const SaveInlineCSS = css`
     display: inline-block;
-    margin-left: 4px;
-    margin-top: 1px;
+    margin-left: 5px;
+    margin-top: 0px;
     margin-bottom: 0;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: normal;
   `
 
   const SubscriptionLabelTextCSS = css`
@@ -148,6 +156,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
       line-height: initial;
       display: inline-block;
       margin: 0;
+      font-size: 16px;
     }
   `
 
@@ -171,7 +180,7 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
 
           {sellingGroup ? (
             <>
-              <p css={PriceCSS}>
+              <p css={[PriceCSS, FinalPriceCSS]}>
                 <Price price={discountPrice ? discountPrice : regularPrice} />
               </p>
 

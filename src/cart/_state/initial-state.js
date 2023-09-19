@@ -7,7 +7,6 @@ function CartInitialState(props) {
     isCheckingOut: false,
     isCartOpen: false,
     termsAccepted: false,
-    isCartEmpty: true,
     buttons: props.element,
     notice: false,
     discountCode: "",

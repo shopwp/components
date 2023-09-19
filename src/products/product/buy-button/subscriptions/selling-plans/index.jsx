@@ -12,6 +12,7 @@ import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import {
   getRechargeSellingGroupsFromProductId,
   maybeHandleApiError,
+  maybeAlterErrorMessage,
 } from "@shopwp/api"
 import { getFirstSellingPlanData } from "@shopwp/common"
 
@@ -65,13 +66,14 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
     })
 
     var maybeApiError = maybeHandleApiError(error, resp)
+    var finalErrorMessage = maybeAlterErrorMessage(maybeApiError, shopState)
 
     if (maybeApiError) {
       dispatch({
         type: "SET_NOTICE",
         payload: {
           type: "error",
-          message: maybeApiError,
+          message: finalErrorMessage,
         },
       })
       return

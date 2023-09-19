@@ -1,5 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
+import { ErrorBoundary } from "react-error-boundary"
+import ErrorFallback from "../../error-fallback"
 import {
   useShopState,
   useShopDispatch,
@@ -7,12 +9,7 @@ import {
   useCartDispatch,
 } from "@shopwp/components"
 import { useAction, useFirstRender } from "@shopwp/hooks"
-import {
-  mq,
-  SlideInFromRightCart,
-  checkoutRedirect,
-  getURLParam,
-} from "@shopwp/common"
+import { mq, checkoutRedirect, getURLParam } from "@shopwp/common"
 
 import {
   addLines,
@@ -21,7 +18,7 @@ import {
   getExistingCart,
   createNewCart,
   directCheckout,
-  addDiscount,
+  updateDiscount,
   updateCartNote,
   updateIdentity,
 } from "../api.jsx"
@@ -90,6 +87,7 @@ function CartWrapper() {
 	After cart has loaded
 	
 	*/
+
   useEffect(() => {
     if (!shopState.cartData.id) {
       return
@@ -98,9 +96,9 @@ function CartWrapper() {
     var discountCodeFromURL = getURLParam("discount")
 
     if (discountCodeFromURL) {
-      addDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
+      updateDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
     }
-  }, [shopState.cartData.id])
+  }, [shopState.cartData])
 
   useEffect(() => {
     if (isFirstRender) {
@@ -168,7 +166,7 @@ function CartWrapper() {
       return
     }
 
-    addDiscount(cartDispatch, shopState, discountCode, shopDispatch)
+    updateDiscount(cartDispatch, shopState, discountCode, shopDispatch)
   }, [discountCode])
 
   useEffect(() => {
@@ -262,6 +260,13 @@ function CartWrapper() {
   `
 
   const cartContainerCSS = css`
+    position: relative;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+  `
+
+  const cartInnerCSS = css`
     width: 400px;
     position: fixed;
     height: 100%;
@@ -271,6 +276,8 @@ function CartWrapper() {
     background: white;
     box-shadow: rgb(0 0 0 / 10%) -17px 0px 35px;
     z-index: 99999999999999;
+    transition: all 0.4s ease;
+    transform: translateX(${shopState.isCartOpen ? "0%" : "120%"});
 
     ${mq("xsmall")} {
       width: 100%;
@@ -278,22 +285,24 @@ function CartWrapper() {
   `
 
   return (
-    <SlideInFromRightCart
-      isOpen={shopState.isCartOpen}
-      customStyles={cartContainerCSS}
+    <div
+      css={cartContainerCSS}
       className={
         shopState.isCartOpen ? "shopwp-cart-is-open" : "shopwp-cart-is-closed"
       }
     >
-      <div ref={cartElement} className="wps-cart shopwp-cart" css={cartCSS}>
-        <CartLoadingContents isUpdating={shopState.isCartUpdating} />
+      <div css={cartInnerCSS}>
+        <div ref={cartElement} className="wps-cart shopwp-cart" css={cartCSS}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <CartLoadingContents isUpdating={shopState.isCartUpdating} />
 
-        <CartContainer
-          isCartOpen={shopState.isCartOpen}
-          settings={cartState.settings}
-        />
+            {shopState.cartData ? (
+              <CartContainer settings={cartState.settings} />
+            ) : null}
+          </ErrorBoundary>
+        </div>
       </div>
-    </SlideInFromRightCart>
+    </div>
   )
 }
 

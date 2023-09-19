@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { addDiscount } from "../../api.jsx"
+import { updateDiscount } from "../../api.jsx"
 import { useCartDispatch, useCartState } from "@shopwp/components"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import CartFooterDiscount from "../discount"
@@ -21,19 +21,14 @@ function CartFooterDiscountWrapper() {
 
   const discountInputRef = useRef(false)
 
-  const [discountCode, setDiscountCode] = useState(cartState.discountCode)
-
-  useEffect(() => {
-    if (isMounted.current) {
-      setDiscountCode(cartState.discountCode ? cartState.discountCode : "")
-    }
-  }, [cartState.discountCode])
+  const [discountCode, setDiscountCode] = useState("")
 
   const discountCSS = css`
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     margin: 0;
+    flex-direction: column;
   `
 
   const discountFormCSS = css`
@@ -106,9 +101,18 @@ function CartFooterDiscountWrapper() {
     }
   `
 
-  function changeDiscount(discount) {
+  function changeDiscount(discount, shouldRemove = false) {
     if (!cartState.isAddingDiscountCode) {
-      addDiscount(cartDispatch, shopState, discount, shopDispatch)
+      updateDiscount(
+        cartDispatch,
+        shopState,
+        discount,
+        shopDispatch,
+        () => {
+          setDiscountCode("")
+        },
+        shouldRemove
+      )
     }
   }
 
@@ -128,37 +132,49 @@ function CartFooterDiscountWrapper() {
 
   return (
     <div css={discountCSS} className="wps-discount-row">
-      {!cartState.discountCode ? (
-        <div css={discountFormCSS}>
-          <input
-            type="text"
-            placeholder={shopState.t.l.discountCode}
-            ref={discountInputRef}
-            css={discountFormInputCSS}
-            disabled={shopState.isCartUpdating || cartState.isCartEmpty}
-            onKeyDown={onKeyDown}
-            onChange={onChange}
-            value={discountCode}
-          />
-          <button
-            css={discountFormButtonCSS}
-            onClick={onAddDiscount}
-            disabled={
-              shopState.isCartUpdating || cartState.isCartEmpty || !discountCode
-            }
-          >
-            {!cartState.isAddingDiscountCode && (
-              <span>{shopState.t.l.apply}</span>
-            )}
-            {cartState.isAddingDiscountCode && <Loader />}
-          </button>
-        </div>
-      ) : shopState.cartData.discountCodes.length ? (
-        <CartFooterDiscount
-          discountCode={shopState.cartData.discountCodes[0].code}
-          changeDiscount={changeDiscount}
+      <div css={discountFormCSS}>
+        <input
+          type="text"
+          placeholder="Enter discount code"
+          ref={discountInputRef}
+          css={discountFormInputCSS}
+          disabled={
+            shopState.isCartUpdating ||
+            !shopState.cartData ||
+            !shopState.cartData.lines.edges.length
+          }
+          onKeyDown={onKeyDown}
+          onChange={onChange}
+          value={discountCode}
         />
-      ) : null}
+        <button
+          css={discountFormButtonCSS}
+          onClick={onAddDiscount}
+          disabled={
+            shopState.isCartUpdating ||
+            !shopState.cartData ||
+            !shopState.cartData.lines.edges.length ||
+            !discountCode
+          }
+        >
+          {!cartState.isAddingDiscountCode && (
+            <span>{shopState.t.l.apply}</span>
+          )}
+          {cartState.isAddingDiscountCode && <Loader />}
+        </button>
+      </div>
+
+      {shopState.cartData.discountCodes.length
+        ? shopState.cartData.discountCodes.map((discount) =>
+            discount.applicable ? (
+              <CartFooterDiscount
+                discount={discount}
+                changeDiscount={changeDiscount}
+                key={discount.code}
+              />
+            ) : null
+          )
+        : null}
     </div>
   )
 }

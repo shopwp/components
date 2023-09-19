@@ -43,21 +43,25 @@ function StorefrontWrapper() {
   const storefrontDispatch = useStorefrontDispatch()
 
   useEffect(() => {
-    if (storefrontState.searchQuery) {
+    if (storefrontState.hasSelections === false) {
       storefrontDispatch({ type: "CLEAR_SELECTIONS" })
-    } else {
-      if (isEmpty(storefrontState.selections)) {
-        requestsDispatch({
-          type: "RESET_QUERY_PARAMS",
-        })
-
-        requestsDispatch({
-          type: "SET_IS_FETCHING_NEW",
-          payload: true,
-        })
-      }
     }
-  }, [storefrontState.searchQuery])
+
+    // if (storefrontState.searchQuery) {
+
+    // } else {
+    //   if (isEmpty(storefrontState.selections)) {
+    //     requestsDispatch({
+    //       type: "RESET_QUERY_PARAMS",
+    //     })
+
+    //     // requestsDispatch({
+    //     //   type: "SET_IS_FETCHING_NEW",
+    //     //   payload: true,
+    //     // })
+    //   }
+    // }
+  }, [storefrontState.hasSelections])
 
   function setInitialSelections() {
     var initialSelections = getInitialSelections(settings)

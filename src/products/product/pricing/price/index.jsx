@@ -8,7 +8,6 @@ import max from "lodash-es/max"
 
 import ProductPricingRange from "../range"
 import ProductPriceSingle from "../single"
-import { SlideInFromRight } from "@shopwp/common"
 import { firstPriceCompareAt } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
@@ -122,9 +121,6 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
 
   return !isRegAndCompareSame() ? (
     <span
-      itemScope
-      itemProp="offers"
-      itemType="https://schema.org/Offer"
       className="wps-products-price wps-product-pricing wps-products-price-one"
       data-show-price-range={showPriceRange}
       css={priceWrapperCSS}
@@ -140,16 +136,14 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
           settings={settings}
         />
       ) : selectedVariant ? (
-        <SlideInFromRight>
-          <ProductPriceSingle
-            ref={singlePriceElement}
-            price={compareAt ? comparePrice : regPrice}
-            compareAt={compareAt}
-            showPriceRange={showPriceRange}
-            pricingColor={settings.pricingColor}
-            settings={settings}
-          />
-        </SlideInFromRight>
+        <ProductPriceSingle
+          ref={singlePriceElement}
+          price={compareAt ? comparePrice : regPrice}
+          compareAt={compareAt}
+          showPriceRange={showPriceRange}
+          pricingColor={settings.pricingColor}
+          settings={settings}
+        />
       ) : (
         <ProductPriceSingle
           ref={singlePriceElement}

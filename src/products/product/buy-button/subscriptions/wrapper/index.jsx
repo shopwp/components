@@ -9,7 +9,7 @@ const SellingGroups = wp.element.lazy(() =>
 function SubscriptionsBuyButtonWrapper() {
   const { Suspense } = wp.element
   const SubscriptionBuyButtonCSS = css`
-    margin: 0px 0 25px 0;
+    margin: 15px 0 10px 0;
     display: flex;
     flex-direction: column;
   `

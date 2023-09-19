@@ -18,10 +18,6 @@ function CartReducer(state, action) {
       return rSet("note", action, state)
     }
 
-    case "SET_IS_CART_EMPTY": {
-      return rSet("isCartEmpty", action, state)
-    }
-
     case "SET_DISCOUNT_CODE": {
       return rSet("discountCode", action, state)
     }

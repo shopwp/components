@@ -1,9 +1,13 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { containerFluidCSS, flexRowCSS, mq } from "@shopwp/common"
-import { FilterHook, shouldShowSaleNotice } from "@shopwp/common"
-import { useCartState } from "@shopwp/components"
-import { useShopState } from "@shopwp/components"
+import {
+  FilterHook,
+  shouldShowSaleNotice,
+  containerFluidCSS,
+  flexRowCSS,
+  mq,
+} from "@shopwp/common"
+import { useCartState, useShopState } from "@shopwp/components"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
@@ -56,11 +60,38 @@ function CartLineItem({ lineItem }) {
   const cartState = useCartState()
   const [isUpdating] = useState(() => false)
   const [notice, setNotice] = useState(false)
-  const lineItemTotal = lineItem.cost.totalAmount.amount
+
   const [subscriptionDiscount, setSubscriptionDiscount] = useState(false)
   const shopState = useShopState()
   const lineItemElement = useRef()
   const showingSaleNotice = shouldShowSaleNotice(lineItem)
+
+  function findLineItemPrice() {
+    if (
+      !shopState.cartData.discountAllocations ||
+      shopState.cartData.discountAllocations.length === 0
+    ) {
+      return lineItem.cost.totalAmount.amount
+    }
+
+    var regPrice = parseFloat(lineItem.cost.totalAmount.amount)
+
+    var finalDiscountAmount = shopState.cartData.discountAllocations.reduce(
+      (accumulator, currentValue) =>
+        accumulator + parseFloat(currentValue.discountedAmount.amount),
+      0
+    )
+
+    var adjusted = regPrice - finalDiscountAmount
+
+    if (adjusted < 0) {
+      return 0
+    }
+
+    return adjusted
+  }
+
+  const lineItemTotal = findLineItemPrice()
 
   const regPrice = calcPrice(
     lineItem.quantity,
@@ -214,6 +245,7 @@ function CartLineItem({ lineItem }) {
                   salePrice={salePrice}
                   regPrice={regPrice}
                   subscriptionDiscount={subscriptionDiscount}
+                  discounts={shopState.cartData.discountAllocations}
                 />
 
                 {cartState.settings.showInventoryLevels &&

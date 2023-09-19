@@ -62,7 +62,7 @@ function ProductWrapper({ payload }) {
     max-width: ${productState.payload &&
     !settings.isModal &&
     !settings.fullWidth
-      ? "600px"
+      ? "380px"
       : "100%"};
 
     > div:nth-last-of-type(2) {
@@ -82,8 +82,10 @@ function ProductWrapper({ payload }) {
 
   return (
     <div
-      itemType="https://schema.org/Product"
-      itemScope
+      itemType={
+        shopwp.misc.isSingularProducts ? "" : "https://schema.org/Product"
+      }
+      itemScope={shopwp.misc.isSingularProducts ? false : true}
       css={ProductWrapperCSS}
       className="wps-item"
       aria-label={productState.payload.title}
@@ -93,6 +95,11 @@ function ProductWrapper({ payload }) {
       }
       data-wpshopify-is-on-sale={productState.isOnSale}
     >
+      <meta itemProp="productID" content={productState.payload.id} />
+      {productState.payload.vendor ? (
+        <meta itemProp="brand" content={productState.payload.vendor} />
+      ) : null}
+
       {settings.htmlTemplateData ? (
         <ProductCustomTemplate
           payload={productState.payload}
@@ -162,13 +169,11 @@ function ProductWrapper({ payload }) {
           </ErrorBoundary>
         </>
       )}
-
       {productState.isModalOpen && productState.payload ? (
         <Suspense fallback={false}>
           <ProductModal />
         </Suspense>
       ) : null}
-
       {productState.notice ? (
         <Notice status="warning">{productState.notice.message}</Notice>
       ) : null}

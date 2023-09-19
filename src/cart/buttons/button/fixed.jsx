@@ -15,7 +15,7 @@ function CartIconFixed() {
   }
 
   function shouldShowCartButton() {
-    if (!shopwp.general.showFixedCartTab) {
+    if (!shopwp.general.showFixedCartTab || !shopState.cartData) {
       return false
     }
 

@@ -67,6 +67,7 @@ function CartLineItemTitle({ lineItem, settings }) {
     <Link
       payload={lineItem.merchandise}
       type="products"
+      from="cart"
       classNames="wps-cart-lineitem-title-link"
       target={settings.lineitemsLinkTarget}
       manualLink={manualLink}

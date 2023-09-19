@@ -1,3 +1,5 @@
+import { decode } from "@shopwp/common"
+
 function RequestsInitialState({
   queryParams = false,
   settings = false,
@@ -38,6 +40,24 @@ function RequestsInitialState({
   } else {
     queryType = settings?.collection ? "collectionProducts" : queryType
     var collection_titles = settings?.collection ? settings.collection : false
+
+    if (collection_titles.length) {
+      if (Array.isArray(collection_titles)) {
+        collection_titles = collection_titles.map((title) => {
+          if (!title) {
+            return false
+          }
+
+          var decoded = decode(title)
+
+          if (!decoded || decoded === "false") {
+            return false
+          }
+
+          return decoded
+        })
+      }
+    }
 
     var query = queryParams?.query
       ? queryParams.query

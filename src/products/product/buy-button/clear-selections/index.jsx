@@ -17,7 +17,9 @@ function ClearSelections() {
     right: 0;
     font-size: 14px;
     text-decoration: underline;
-    top: ${settings.variantStyle === "dropdown" ? "-50px" : "-25px"};
+    margin: 0;
+    z-index: 2;
+    top: ${settings.variantStyle === "dropdown" ? "0px" : "-25px"};
     padding: 5px 0;
     animation: ${fadeIn} 0.2s ease;
     animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);

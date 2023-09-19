@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useProductState } from "../../_state/hooks"
+import { useShopState } from "../../../../shop/_state/hooks"
 import ProductPrice from "../price"
 import { FilterHook, getPrices } from "@shopwp/common"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
+import min from "lodash-es/min"
+import max from "lodash-es/max"
 
 const ProductPricesCompareAt = wp.element.lazy(() =>
   import(
@@ -20,6 +23,7 @@ const ProductPricesSubscription = wp.element.lazy(() =>
 function ProductPrices() {
   const settings = useSettingsState()
   const productState = useProductState()
+  const shopState = useShopState()
   const { Suspense } = wp.element
 
   const prices = getPrices(productState.payload)
@@ -31,7 +35,7 @@ function ProductPrices() {
     position: relative;
     margin-bottom: ${settings.isSingleComponent || settings.type === "search"
       ? "0px"
-      : "35px"};
+      : "20px"};
 
     + .wps-buy-button-wrapper > .wps-product-quantity-wrapper {
       margin-top: 1.7em;
@@ -39,8 +43,8 @@ function ProductPrices() {
 
     + .shopwp-reviews-wrapper,
     + .wps-component-products-reviews {
-      margin-top: -12px;
-      margin-bottom: 22px;
+      margin-top: 0;
+      margin-bottom: 15px;
     }
   `
 
@@ -49,7 +53,30 @@ function ProductPrices() {
       className="wps-component-products-pricing"
       aria-label="Product Pricing"
       css={ProductPricesCompareAtCSS}
+      itemScope
+      itemProp="offers"
+      itemType="https://schema.org/Offer"
     >
+      {settings.showPriceRange ? (
+        <>
+          <meta itemProp="minPrice" content={min(prices.regPrices)} />
+          <meta itemProp="maxPrice" content={max(prices.regPrices)} />
+        </>
+      ) : null}
+
+      <meta
+        itemProp="availability"
+        href="https://schema.org/InStock"
+        content={
+          productState.payload.availableForSale ? "In stock" : "Out of stock"
+        }
+      />
+      <meta itemProp="price" content={prices.regPrices[0]} />
+      <meta
+        itemProp="priceCurrency"
+        content={shopState.buyerIdentity.currency}
+      />
+
       <FilterHook name="before.productPricing" args={[productState]} />
 
       {productState.selectedSubscriptionInfo && productState.selectedVariant ? (

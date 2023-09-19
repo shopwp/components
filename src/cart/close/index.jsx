@@ -12,24 +12,24 @@ function CartClose() {
   }
 
   const CartCloseButtonCSS = css`
-    margin: -5px -26px 0 0;
+    margin: 0;
     line-height: 1;
     color: #313131;
     border: none;
     background: transparent;
     transition: transform 100ms ease;
     cursor: pointer;
-    padding: 0px 30px 0px 30px;
+    padding: 10px 30px;
     font-weight: normal;
     font-size: 36px;
     text-align: center;
     white-space: normal;
     outline: none;
     outline-offset: 0;
-
-    ${mq("small")} {
-      margin: -10px -26px 0 0;
-    }
+    top: -15px;
+    right: -15px;
+    position: absolute;
+    z-index: 1;
 
     &:hover {
       opacity: 0.5;
@@ -47,13 +47,14 @@ function CartClose() {
     }
 
     span {
-      width: 30px;
-      height: 30px;
+      position: relative;
+      top: 0;
+      right: -12px;
       line-height: 1;
       font-size: 30px;
 
       ${mq("small")} {
-        font-size: 47px;
+        font-size: 30px;
       }
     }
   `
