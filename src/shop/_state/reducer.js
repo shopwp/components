@@ -38,6 +38,10 @@ function ShopReducer(state, action) {
       return rSet("productsVisible", action, state)
     }
 
+    case "SET_TRACKING_PARAMS": {
+      return rSet("trackingParams", action, state)
+    }
+
     default: {
       rErr(action, "Shop")
     }

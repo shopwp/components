@@ -58,10 +58,11 @@ function CartCheckoutButton({ onCheckout }) {
 
     wp.hooks.doAction("on.checkout", shopState)
 
-    checkoutRedirect(
-      shopState.cartData.checkoutUrl,
-      function (checkoutUrl, target) {
-        if (target && target === "_blank") {
+    checkoutRedirect({
+      checkoutUrl: shopState.cartData.checkoutUrl,
+      trackingParams: shopState.trackingParams,
+      callback: function (checkoutUrl, options) {
+        if (options.target && options.target === "_blank") {
           cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
         } else {
           if (
@@ -72,8 +73,8 @@ function CartCheckoutButton({ onCheckout }) {
             cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
           }
         }
-      }
-    )
+      },
+    })
   }
 
   return (

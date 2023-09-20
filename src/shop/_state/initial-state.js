@@ -34,6 +34,7 @@ function ShopInitialState(props) {
     isCartUpdating: shopwp.misc.isAdmin ? false : true,
     theme: shopwp.misc.theme,
     productsVisible: false,
+    trackingParams: false,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)

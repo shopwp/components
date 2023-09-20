@@ -293,7 +293,17 @@ async function directCheckout(
     return
   }
 
-  checkoutRedirect(response.data.checkoutUrl, false, data.settings.linkTarget)
+  if (data.settings && data.settings.linkTarget) {
+    var linkTarget = data.settings.linkTarget
+  } else {
+    var linkTarget = false
+  }
+
+  checkoutRedirect({
+    checkoutUrl: response.data.checkoutUrl,
+    trackingParams: shopState.trackingParams,
+    target: linkTarget,
+  })
 }
 
 function combineDiscounts(shopState, discountToAdd) {

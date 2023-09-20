@@ -9,7 +9,12 @@ import {
   useCartDispatch,
 } from "@shopwp/components"
 import { useAction, useFirstRender } from "@shopwp/hooks"
-import { mq, checkoutRedirect, getURLParam } from "@shopwp/common"
+import {
+  mq,
+  checkoutRedirect,
+  getURLParam,
+  findTrackingParams,
+} from "@shopwp/common"
 
 import {
   addLines,
@@ -80,6 +85,12 @@ function CartWrapper() {
     } else {
       createNewCart(cartState, shopState, cartDispatch, shopDispatch)
     }
+
+    var utmParams = findTrackingParams()
+
+    if (utmParams.length) {
+      shopDispatch({ type: "SET_TRACKING_PARAMS", payload: utmParams })
+    }
   }, [])
 
   /*
@@ -124,7 +135,10 @@ function CartWrapper() {
       return
     }
 
-    checkoutRedirect(shopState.cartData.checkoutUrl)
+    checkoutRedirect({
+      checkoutUrl: shopState.cartData.checkoutUrl,
+      trackingParams: shopState.trackingParams,
+    })
   }, [doCheckout])
 
   useEffect(() => {
