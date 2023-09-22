@@ -10,7 +10,6 @@ import {
 } from "@shopwp/components"
 import { useAction, useFirstRender } from "@shopwp/hooks"
 import {
-  mq,
   checkoutRedirect,
   getURLParam,
   findTrackingParams,
@@ -29,7 +28,12 @@ import {
 } from "../api.jsx"
 
 import CartContainer from "../container"
-import CartLoadingContents from "../contents/loading"
+
+const CartLoadingContents = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'CartLoadingContents-public' */ "../contents/loading"
+  )
+)
 
 function CartWrapper() {
   const { useRef, useState, useEffect } = wp.element
@@ -100,6 +104,10 @@ function CartWrapper() {
 	*/
 
   useEffect(() => {
+    if (!shopState.cartData) {
+      return
+    }
+
     if (!shopState.cartData.id) {
       return
     }
@@ -253,62 +261,31 @@ function CartWrapper() {
     addLines(dataToAdd, cartDispatch, shopDispatch)
   }, [lineItemsAdded])
 
-  const cartCSS = css`
-    height: 100%;
-    display: flex;
-    padding: 18px;
-    flex-direction: column;
-    justify-content: flex-start;
-    transition: transform 320ms ease;
-    box-sizing: border-box;
-
-    ${mq("xsmall")} {
-      width: 100%;
-    }
-
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  `
-
-  const cartContainerCSS = css`
-    position: relative;
-    height: 100%;
-    right: 0px;
-    top: 0px;
-  `
-
-  const cartInnerCSS = css`
-    width: 400px;
-    position: fixed;
-    height: 100%;
-    right: 0px;
-    top: 0px;
-    margin-top: 0px;
-    background: white;
-    box-shadow: rgb(0 0 0 / 10%) -17px 0px 35px;
-    z-index: 99999999999999;
-    transition: all 0.4s ease;
-    transform: translateX(${shopState.isCartOpen ? "0%" : "120%"});
-
-    ${mq("xsmall")} {
-      width: 100%;
-    }
-  `
+  const cartCSS = css``
+  const cartContainerCSS = css``
+  const cartInnerCSS = css``
 
   return (
     <div
       css={cartContainerCSS}
-      className={
+      className={`shopwp-cart ${
         shopState.isCartOpen ? "shopwp-cart-is-open" : "shopwp-cart-is-closed"
-      }
+      }${shopState.isCartUpdating ? " shopwp-cart-is-updating" : ""}${
+        shopState.cartData &&
+        shopState.cartData.lines &&
+        shopState.cartData.lines.edges.length
+          ? " shopwp-cart-is-not-empty"
+          : " shopwp-cart-is-empty"
+      }`}
     >
-      <div css={cartInnerCSS}>
-        <div ref={cartElement} className="wps-cart shopwp-cart" css={cartCSS}>
+      <div className="shopwp-cart-inner" css={cartInnerCSS}>
+        <div
+          ref={cartElement}
+          className="shopwp-cart-container wps-cart"
+          css={cartCSS}
+        >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <CartLoadingContents isUpdating={shopState.isCartUpdating} />
+            {shopState.isCartUpdating ? <CartLoadingContents /> : null}
 
             {shopState.cartData ? (
               <CartContainer settings={cartState.settings} />

@@ -8,32 +8,17 @@ function CartTitle() {
   const cartState = useCartState()
   const shopState = useShopState()
 
-  const CartTitleWrap = css`
-    flex: 1;
-  `
-
-  const cartTitleCSS = css`
-    color: #333;
-    display: inline-block;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 1.5;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin: 0;
-
-    &:before,
-    &:after {
-      display: none;
-    }
-  `
+  const CartTitleWrap = css``
+  const cartTitleCSS = css``
 
   return (
-    <div className="wps-cart-title-wrap" css={CartTitleWrap}>
+    <div
+      className="shopwp-cart-title-wrapper wps-cart-title-wrap"
+      css={CartTitleWrap}
+    >
       <FilterHook name="before.cartTitle" args={[cartState]} />
 
-      <h2 className="wps-cart-title" css={cartTitleCSS}>
+      <h2 className="shopwp-cart-title wps-cart-title" css={cartTitleCSS}>
         {shopState.t.l.cartTitle}
       </h2>
 

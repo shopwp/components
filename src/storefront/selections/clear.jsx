@@ -15,8 +15,13 @@ function StorefrontSelectionsClear() {
 
   function clearAllSelections() {
     storefrontDispatch({ type: "CLEAR_SELECTIONS" })
+    requestsDispatch({
+      type: "SET_CURSOR",
+      payload: false,
+    })
 
     requestsDispatch({ type: "SET_QUERY_TYPE", payload: "products" })
+
     requestsDispatch({
       type: "SET_QUERY_PARAMS",
       payload: requestsState.originalParams,

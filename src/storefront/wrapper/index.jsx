@@ -46,21 +46,6 @@ function StorefrontWrapper() {
     if (storefrontState.hasSelections === false) {
       storefrontDispatch({ type: "CLEAR_SELECTIONS" })
     }
-
-    // if (storefrontState.searchQuery) {
-
-    // } else {
-    //   if (isEmpty(storefrontState.selections)) {
-    //     requestsDispatch({
-    //       type: "RESET_QUERY_PARAMS",
-    //     })
-
-    //     // requestsDispatch({
-    //     //   type: "SET_IS_FETCHING_NEW",
-    //     //   payload: true,
-    //     // })
-    //   }
-    // }
   }, [storefrontState.hasSelections])
 
   function setInitialSelections() {
@@ -97,6 +82,14 @@ function StorefrontWrapper() {
         type: "SET_HAS_STOREFRONT_SELECTIONS",
         payload: true,
       })
+    }
+
+    if (
+      storefrontState.hasSelections === false &&
+      storefrontState.hasStorefrontSelections === false &&
+      storefrontState.hasResults === false
+    ) {
+      return
     }
 
     if (storefrontState.searchQuery && isEmpty(storefrontState.selections)) {
@@ -136,6 +129,7 @@ function StorefrontWrapper() {
       }
     } else {
       requestsDispatch({ type: "SET_QUERY_TYPE", payload: "products" })
+
       requestsDispatch({
         type: "SET_QUERY_PARAMS",
         payload: {
