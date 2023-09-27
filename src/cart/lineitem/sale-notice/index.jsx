@@ -4,21 +4,12 @@ import { Price } from "@shopwp/components"
 import CartLineItemPriceSaleNoticeText from "./notice"
 
 function CartLineItemPriceSaleNotice({ salePrice }) {
-  const SalePriceCSS = css`
-    display: inline-block;
-    padding: 0;
-    font-weight: normal;
-    margin: 0;
-    font-size: 14px;
-    color: #313131;
-    text-decoration: line-through;
-    margin-right: 7px;
-  `
+  const SalePriceCSS = css``
 
   return (
     <>
       <CartLineItemPriceSaleNoticeText />
-      <div css={SalePriceCSS}>
+      <div className="swp-cart-sale-price" css={SalePriceCSS}>
         <Price price={salePrice} />
       </div>
     </>

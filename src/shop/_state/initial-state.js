@@ -30,6 +30,7 @@ function ShopInitialState(props) {
     buyerIdentity: buyerIdentity,
     jwt: props.jwt ? props.jwt : false,
     isCartOpen: false,
+    isCartReady: false,
     cartData: false,
     isCartUpdating: shopwp.misc.isAdmin ? false : true,
     theme: shopwp.misc.theme,

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "@shopwp/common"
 import { Price } from "@shopwp/components"
 import CartLineItemPriceSaleNotice from "../sale-notice"
 
@@ -8,28 +7,15 @@ function CartLineItemPriceSubscriptionDiscountNotice({
   subscriptionDiscount,
   price,
 }) {
-  const DiscountSubCSS = css`
-    margin-top: 0;
-    margin-bottom: 4px;
-    font-size: 14px;
-    font-style: italic;
-  `
-
-  const DiscountSubPriceCSS = css`
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-right: 7px;
-    font-size: 14px;
-    color: #313131;
-    text-decoration: line-through;
-    width: 65%;
-    text-align: right;
-  `
+  const DiscountSubCSS = css``
+  const DiscountSubPriceCSS = css``
 
   return (
     <>
-      <p css={DiscountSubCSS}>You're saving {subscriptionDiscount}% </p>
-      <p css={DiscountSubPriceCSS}>
+      <p className="swp-discount-label" css={DiscountSubCSS}>
+        You're saving {subscriptionDiscount}%{" "}
+      </p>
+      <p className="swp-discount-price" css={DiscountSubPriceCSS}>
         <Price price={price} />
       </p>
     </>
@@ -42,35 +28,12 @@ function CartLineItemPrice({
   regPrice,
   salePrice,
   subscriptionDiscount,
-  discounts,
 }) {
-  const CartLineItemPriceCSS = css`
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-end;
-
-    + .wps-cart-lineitem-left-in-stock {
-      top: 45px;
-    }
-
-    ${mq("small")} {
-      align-items: baseline;
-      flex-direction: row;
-      justify-content: flex-start;
-      margin-top: 10px;
-
-      + .wps-cart-lineitem-left-in-stock {
-        top: 75px;
-      }
-    }
-  `
+  const CartLineItemPriceCSS = css``
 
   return (
     <div
-      className="wps-cart-lineitem-price-total-wrapper"
+      className="swp-cart-lineitem-price-total-wrapper wps-cart-lineitem-price-total-wrapper"
       css={CartLineItemPriceCSS}
     >
       {subscriptionDiscount ? (
@@ -84,35 +47,17 @@ function CartLineItemPrice({
         <CartLineItemPriceSaleNotice salePrice={salePrice} />
       )}
 
-      <LineItemPriceSingle
-        regPrice={lineItemTotal}
-        showingSaleNotice={showingSaleNotice}
-      />
+      <LineItemPriceSingle regPrice={lineItemTotal} />
     </div>
   )
 }
 
-function LineItemPriceSingle({ regPrice, showingSaleNotice }) {
-  const lineItemPriceCSS = css`
-    margin-top: 0;
-    font-size: ${showingSaleNotice ? "16px" : "14px"};
-    margin-top: ${showingSaleNotice ? "-2px" : "0"};
-    color: #121212;
-    font-weight: bold;
-    width: auto;
-    text-align: right;
-
-    ${mq("small")} {
-      text-align: left;
-      font-size: 17px;
-      margin-left: 0;
-      left: 0;
-    }
-  `
+function LineItemPriceSingle({ regPrice }) {
+  const lineItemPriceCSS = css``
 
   return (
     <div
-      className="wps-cart-lineitem-price wps-cart-lineitem-price-total"
+      className="swp-cart-lineitem-price wps-cart-lineitem-price wps-cart-lineitem-price-total"
       css={lineItemPriceCSS}
     >
       <Price price={regPrice} />

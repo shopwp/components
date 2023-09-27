@@ -15,7 +15,7 @@ function CartClose() {
   return (
     <button
       css={CartCloseButtonCSS}
-      className="shopwp-cart-close-button wps-btn-close wps-modal-close-trigger"
+      className="swp-cart-close-button wps-btn-close wps-modal-close-trigger"
       title={shopState.t.l.closeCart}
       onClick={onClose}
     >

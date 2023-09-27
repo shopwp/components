@@ -15,7 +15,7 @@ function CartLoadingContents() {
 
   return (
     <Suspense fallback="Loading...">
-      <div className="shopwp-cart-overlay" css={[updatingOverlayTextCSS]}>
+      <div className="swp-cart-overlay" css={[updatingOverlayTextCSS]}>
         <IconLogo color="#000" />
 
         {shopState.t.l.updatingCart}

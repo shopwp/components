@@ -51,6 +51,17 @@ function ProductGallery({ carousel }) {
     <>
       {isFeaturedOnly() ? (
         <ProductFeaturedImage />
+      ) : settings.showAllImages ? (
+        <div className="swp-all-images">
+          {productState.payload.images.edges.map((img) => (
+            <img
+              className="swp-image"
+              key={img.node.originalSrc}
+              src={img.node.originalSrc}
+              alt={img.node.altText}
+            />
+          ))}
+        </div>
       ) : hasManyImages() ? (
         settings.showImagesCarousel ? (
           carousel

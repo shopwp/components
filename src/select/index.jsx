@@ -63,82 +63,84 @@ function Dropdown({
   }, [selectedOptions])
 
   const DropdownButtonCSS = css`
-    padding: 10px 45px 10px 10px;
-    display: block;
-    width: 100%;
-    min-width: 200px;
-    text-align: left;
-    background: white;
-    position: relative;
+    && {
+      padding: 10px 45px 10px 10px;
+      display: block;
+      width: 100%;
+      min-width: 200px;
+      text-align: left;
+      background: white;
+      position: relative;
 
-    box-shadow: ${missingSelections && !selected
-      ? "0px 0px 0px 1px red"
-      : selected && !inline
-      ? "0px 0px 0px 1px #44d444"
-      : "none"};
+      box-shadow: ${missingSelections && !selected
+        ? "0px 0px 0px 1px red"
+        : selected && !inline
+        ? "0px 0px 0px 1px #44d444"
+        : "none"};
 
-    border: 1px solid
-      ${settings &&
-      settings.variantDropdownButtonColor &&
-      settings.variantDropdownButtonColor !== "white" &&
-      settings.variantDropdownButtonColor !== "#ffffff"
+      border: 1px solid
+        ${settings &&
+        settings.variantDropdownButtonColor &&
+        settings.variantDropdownButtonColor !== "white" &&
+        settings.variantDropdownButtonColor !== "#ffffff"
+          ? settings.variantDropdownButtonColor
+          : "#606060"};
+      border-radius: ${settings.globalBorderRadius};
+      transition: all 100ms ease 0s;
+
+      background-color: ${settings && settings.variantDropdownButtonColor
         ? settings.variantDropdownButtonColor
-        : "#606060"};
-    border-radius: ${settings.globalBorderRadius};
-    transition: all 100ms ease 0s;
+        : "white"};
 
-    background-color: ${settings && settings.variantDropdownButtonColor
-      ? settings.variantDropdownButtonColor
-      : "white"};
-
-    color: ${settings && settings.variantDropdownButtonTextColor
-      ? settings.variantDropdownButtonTextColor
-      : "black"};
-    font-family: ${settings && settings.variantDropdownTypeFontFamily
-      ? settings.variantDropdownTypeFontFamily
-      : "inherit"};
-    font-weight: ${settings && settings.variantDropdownTypeFontWeight
-      ? settings.variantDropdownTypeFontWeight
-      : "initial"};
-    font-style: ${settings && settings.variantDropdownTypeFontStyle
-      ? settings.variantDropdownTypeFontStyle
-      : "initial"};
-    font-size: ${settings && settings.variantDropdownTypeFontSize
-      ? settings.variantDropdownTypeFontSize
-      : "initial"};
-    letter-spacing: ${settings && settings.variantDropdownTypeLetterSpacing
-      ? settings.variantDropdownTypeLetterSpacing
-      : "initial"};
-    line-height: ${settings && settings.variantDropdownTypeLineHeight
-      ? settings.variantDropdownTypeLineHeight
-      : "initial"};
-    text-decoration: ${settings && settings.variantDropdownTypeTextDecoration
-      ? settings.variantDropdownTypeTextDecoration
-      : "initial"};
-    text-transform: ${settings && settings.variantDropdownTypeTextTransform
-      ? settings.variantDropdownTypeTextTransform
-      : "initial"};
-
-    svg {
-      position: absolute;
-      top: 12px;
-      right: 15px;
-      width: ${settings.variantDropdownTypeFontSize
+      color: ${settings && settings.variantDropdownButtonTextColor
+        ? settings.variantDropdownButtonTextColor
+        : "black"};
+      font-family: ${settings && settings.variantDropdownTypeFontFamily
+        ? settings.variantDropdownTypeFontFamily
+        : "inherit"};
+      font-weight: ${settings && settings.variantDropdownTypeFontWeight
+        ? settings.variantDropdownTypeFontWeight
+        : "initial"};
+      font-style: ${settings && settings.variantDropdownTypeFontStyle
+        ? settings.variantDropdownTypeFontStyle
+        : "initial"};
+      font-size: ${settings && settings.variantDropdownTypeFontSize
         ? settings.variantDropdownTypeFontSize
-        : "15px;"};
-      height: ${settings.variantDropdownTypeFontSize
-        ? settings.variantDropdownTypeFontSize
-        : "15px;"};
+        : "initial"};
+      letter-spacing: ${settings && settings.variantDropdownTypeLetterSpacing
+        ? settings.variantDropdownTypeLetterSpacing
+        : "initial"};
+      line-height: ${settings && settings.variantDropdownTypeLineHeight
+        ? settings.variantDropdownTypeLineHeight
+        : "initial"};
+      text-decoration: ${settings && settings.variantDropdownTypeTextDecoration
+        ? settings.variantDropdownTypeTextDecoration
+        : "initial"};
+      text-transform: ${settings && settings.variantDropdownTypeTextTransform
+        ? settings.variantDropdownTypeTextTransform
+        : "initial"};
 
-      path {
-        fill: ${settings && settings.variantDropdownButtonTextColor
-          ? settings.variantDropdownButtonTextColor
-          : "white"};
+      svg {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        width: ${settings.variantDropdownTypeFontSize
+          ? settings.variantDropdownTypeFontSize
+          : "15px;"};
+        height: ${settings.variantDropdownTypeFontSize
+          ? settings.variantDropdownTypeFontSize
+          : "15px;"};
+
+        path {
+          fill: ${settings && settings.variantDropdownButtonTextColor
+            ? settings.variantDropdownButtonTextColor
+            : "white"};
+        }
       }
-    }
 
-    &:hover {
-      cursor: pointer;
+      &:hover {
+        cursor: pointer;
+      }
     }
   `
 

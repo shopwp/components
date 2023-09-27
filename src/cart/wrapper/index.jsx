@@ -55,7 +55,6 @@ function CartWrapper() {
   const doToggleCartTerms = useAction("do.toggleCartTerms", null)
   const doCheckout = useAction("do.checkout", null)
   const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity", null)
-
   const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
 
   function openCart() {
@@ -75,6 +74,26 @@ function CartWrapper() {
       })
     }
   }
+
+  function maybeApplyDiscountFromURL() {
+    const discountCodeFromURL = getURLParam("discount")
+
+    if (discountCodeFromURL) {
+      updateDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
+    }
+  }
+
+  /*
+  
+  When cart is ready
+  
+  */
+  useEffect(() => {
+    if (shopState.isCartReady) {
+      wp.hooks.doAction("on.cartLoad", cartState, shopState)
+      maybeApplyDiscountFromURL()
+    }
+  }, [shopState.isCartReady])
 
   /*
 	
@@ -96,28 +115,6 @@ function CartWrapper() {
       shopDispatch({ type: "SET_TRACKING_PARAMS", payload: utmParams })
     }
   }, [])
-
-  /*
-	
-	After cart has loaded
-	
-	*/
-
-  useEffect(() => {
-    if (!shopState.cartData) {
-      return
-    }
-
-    if (!shopState.cartData.id) {
-      return
-    }
-
-    var discountCodeFromURL = getURLParam("discount")
-
-    if (discountCodeFromURL) {
-      updateDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
-    }
-  }, [shopState.cartData])
 
   useEffect(() => {
     if (isFirstRender) {
@@ -268,20 +265,20 @@ function CartWrapper() {
   return (
     <div
       css={cartContainerCSS}
-      className={`shopwp-cart ${
-        shopState.isCartOpen ? "shopwp-cart-is-open" : "shopwp-cart-is-closed"
-      }${shopState.isCartUpdating ? " shopwp-cart-is-updating" : ""}${
+      className={`swp-cart ${
+        shopState.isCartOpen ? "swp-cart-is-open" : "swp-cart-is-closed"
+      }${shopState.isCartUpdating ? " swp-cart-is-updating" : ""}${
         shopState.cartData &&
         shopState.cartData.lines &&
         shopState.cartData.lines.edges.length
-          ? " shopwp-cart-is-not-empty"
-          : " shopwp-cart-is-empty"
+          ? " swp-cart-is-not-empty"
+          : " swp-cart-is-empty"
       }`}
     >
-      <div className="shopwp-cart-inner" css={cartInnerCSS}>
+      <div className="swp-cart-inner" css={cartInnerCSS}>
         <div
           ref={cartElement}
-          className="shopwp-cart-container wps-cart"
+          className="swp-cart-container wps-cart"
           css={cartCSS}
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>

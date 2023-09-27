@@ -12,7 +12,7 @@ function Item({ children, notice, isFetchingNew }) {
 
   return (
     <>
-      {notice ? (
+      {notice && itemsState.componentType !== "search" ? (
         <Suspense fallback={false}>
           <Notice
             status={notice.type}

@@ -13,12 +13,12 @@ function CartTitle() {
 
   return (
     <div
-      className="shopwp-cart-title-wrapper wps-cart-title-wrap"
+      className="swp-cart-title-wrapper wps-cart-title-wrap"
       css={CartTitleWrap}
     >
       <FilterHook name="before.cartTitle" args={[cartState]} />
 
-      <h2 className="shopwp-cart-title wps-cart-title" css={cartTitleCSS}>
+      <h2 className="swp-cart-title wps-cart-title" css={cartTitleCSS}>
         {shopState.t.l.cartTitle}
       </h2>
 

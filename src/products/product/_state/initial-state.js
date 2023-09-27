@@ -1,7 +1,17 @@
-import { hasLink } from "@shopwp/common"
+import { hasLink, getURLParam } from "@shopwp/common"
 import { isOnSale, hasManyVariants, getInitialQuantity } from "@shopwp/common"
 
 function ProductInitialState(props) {
+  const variantIdFromURL = getURLParam("variant")
+
+  const preselectVariant = wp.hooks.applyFilters(
+    "product.preSelectVariantById",
+    variantIdFromURL
+      ? "gid://shopify/ProductVariant/" + variantIdFromURL
+      : false,
+    props.payload
+  )
+
   return {
     element: props.element,
     selectedVariant: false,
@@ -18,11 +28,7 @@ function ProductInitialState(props) {
     quantity: getInitialQuantity(props.settings),
     isModalOpen: false,
     selectFirstVariant: props.settings.selectFirstVariant,
-    preSelectVariant: wp.hooks.applyFilters(
-      "product.preSelectVariantById",
-      false,
-      props.payload
-    ),
+    preSelectVariant: preselectVariant,
     defaultGalleryCarouselSettings: {
       carouselPrevArrow: props.settings.carouselPrevArrow,
       carouselNextArrow: props.settings.carouselNextArrow,

@@ -217,9 +217,11 @@ async function getExistingCart(
     })
   }
 
+  shopDispatch({
+    type: "SET_IS_CART_READY",
+    payload: true,
+  })
   cartDispatch({ type: "SET_CART_NOTE", payload: response.data.note })
-
-  wp.hooks.doAction("on.cartLoad", cartState)
 }
 
 async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
@@ -239,8 +241,6 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
     )
   )
 
-  wp.hooks.doAction("on.cartLoad", cartState)
-
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
   var maybeApiError = maybeHandleApiError(createCartError, response)
@@ -259,6 +259,11 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
 
     localStorage.setItem("shopwp-cart-id", response.data.id)
   }
+
+  shopDispatch({
+    type: "SET_IS_CART_READY",
+    payload: true,
+  })
 }
 
 async function directCheckout(

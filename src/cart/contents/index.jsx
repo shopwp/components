@@ -16,7 +16,7 @@ function CartContents() {
 
   return (
     <section
-      className="shopwp-cart-contents wps-cart-contents"
+      className="swp-cart-contents wps-cart-contents"
       data-is-cart-empty={
         shopState.cartData && shopState.cartData.lines.edges.length
       }
@@ -24,7 +24,7 @@ function CartContents() {
     >
       {!shopState.cartData ||
       (!shopState.cartData.lines.edges.length && !shopState.isCartUpdating) ? (
-        <h2 className="shopwp-cart-title-text" css={CartTitleCSS}>
+        <h2 className="swp-cart-title-text" css={CartTitleCSS}>
           <IconLogo color="#dedede" />
 
           {shopState.t.l.yourCartEmpty}

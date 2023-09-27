@@ -11,12 +11,7 @@ const SearchModal = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchModal-public' */ "../modal")
 )
 
-const Notice = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
-)
-
 function SearchItems({ searchTerm, setSearchTerm, withStorefront = false }) {
-  const itemsState = useItemsState()
   const requestsState = useRequestsState()
   const payload = usePayloadState()
   const settings = useSettingsState()
@@ -24,17 +19,13 @@ function SearchItems({ searchTerm, setSearchTerm, withStorefront = false }) {
   return settings.dropzonePayload ? (
     usePortal(
       <>
-        {payload.length === 0 && requestsState.isFetchingNew === false ? (
-          itemsState.componentType !== "storefront" ? (
-            <Notice status="info">{settings.noResultsText}</Notice>
-          ) : null
-        ) : (
+        {payload.length ? (
           <Products
             settings={settings}
             payload={payload}
             queryParams={requestsState.queryParams}
           />
-        )}
+        ) : null}
       </>,
       settings.dropzonePayload
     )

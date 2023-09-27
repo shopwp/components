@@ -49,12 +49,6 @@ const CartLineItemLeftInStock = wp.element.lazy(() =>
   )
 )
 
-const CartLineItemOutOfStock = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'CartLineItemOutOfStock-public' */ "./out-of-stock"
-  )
-)
-
 function CartLineItem({ lineItem }) {
   const { useState, useRef } = wp.element
   const cartState = useCartState()
@@ -226,9 +220,9 @@ function CartLineItem({ lineItem }) {
           {hasRealVariant() && <CartLineItemVariantTitle lineItem={lineItem} />}
 
           {!lineItem.merchandise.availableForSale ? (
-            <CartLineItemOutOfStock
-              noticeUnavailableText={cartState.settings.noticeUnavailableText}
-            />
+            <Notice status="warning">
+              {cartState.settings.noticeUnavailableText}
+            </Notice>
           ) : (
             <div
               className="wps-cart-lineitem-quantity-wrapper"

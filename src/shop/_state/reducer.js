@@ -18,6 +18,10 @@ function ShopReducer(state, action) {
       return updatedShopState
     }
 
+    case "SET_IS_CART_READY": {
+      return rSet("isCartReady", action, state)
+    }
+
     case "SET_IS_CART_UPDATING": {
       return rSet("isCartUpdating", action, state)
     }
