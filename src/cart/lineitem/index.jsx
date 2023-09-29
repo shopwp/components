@@ -4,8 +4,6 @@ import {
   FilterHook,
   shouldShowSaleNotice,
   containerFluidCSS,
-  flexRowCSS,
-  mq,
 } from "@shopwp/common"
 import { useCartState, useShopState } from "@shopwp/components"
 
@@ -111,86 +109,27 @@ function CartLineItem({ lineItem }) {
     return lineItem.merchandise.title !== shopState.t.l.defaultTitle
   }
 
-  const lineItemStyles = css`
-    margin-top: 0;
-    min-height: 100px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-
-    .wps-cart-lineitem-img-link {
-      align-self: flex-start;
-      transition: opacity 0.2s ease;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-
-    [class*="noticeStyles"] {
-      font-size: 13px;
-      margin-top: 10px;
-    }
-  `
-
-  const lineItemInner = css`
-    margin: 0;
-    display: flex;
-  `
-
-  const lineItemTitle = css`
-    color: #313131;
-    text-decoration: none;
-    font-size: 16px;
-    position: relative;
-    margin: 0;
-
-    &[data-wps-is-empty="true"] {
-      margin-bottom: 1em;
-    }
-
-    &:hover {
-      color: #313131;
-    }
-  `
-
-  const cartLineItemContentCSS = css`
-    margin-top: 0;
-    flex: 1;
-    padding-left: 10px;
-    padding-bottom: 5px;
-
-    ${mq("small")} {
-      padding-bottom: 15px;
-
-      .col-8 {
-        flex: 0 0 100%;
-        max-width: 100%;
-      }
-    }
-  `
-
-  const lineItemQuantityWrapperCSS = css`
-    position: relative;
-    flex-wrap: wrap;
-  `
+  const lineItemStyles = css``
+  const lineItemInner = css``
+  const lineItemTitle = css``
+  const cartLineItemContentCSS = css``
+  const lineItemQuantityWrapperCSS = css``
 
   return (
     <div
-      className="wps-cart-lineitem"
+      className="swp-cart-lineitem wps-cart-lineitem"
       data-wps-is-updating={isUpdating}
       data-wps-is-available={lineItem.merchandise.availableForSale}
       ref={lineItemElement}
       css={lineItemStyles}
     >
-      <div css={lineItemInner}>
+      <div className="swp-cart-lineitem-inner" css={lineItemInner}>
         <CartLineItemImage lineItem={lineItem} settings={cartState.settings} />
 
-        <div className="wps-cart-lineitem-content" css={cartLineItemContentCSS}>
+        <div
+          className="swp-cart-lineitem-content wps-cart-lineitem-content"
+          css={cartLineItemContentCSS}
+        >
           <FilterHook
             name="before.lineItemTitle"
             args={[cartState, lineItem]}
@@ -198,14 +137,14 @@ function CartLineItem({ lineItem }) {
 
           <div
             css={lineItemTitle}
-            className="wps-cart-lineitem-title"
+            className="swp-cart-lineitem-title-wrap wps-cart-lineitem-title"
             data-wps-is-empty={hasRealVariant() ? "false" : "true"}
           >
             <div
               className="wps-cart-lineitem-title-wrapper"
               css={containerFluidCSS}
             >
-              <div css={flexRowCSS}>
+              <div className="swp-l-row">
                 <CartLineItemTitle
                   lineItem={lineItem}
                   settings={cartState.settings}
@@ -228,7 +167,10 @@ function CartLineItem({ lineItem }) {
               className="wps-cart-lineitem-quantity-wrapper"
               css={containerFluidCSS}
             >
-              <div css={[flexRowCSS, lineItemQuantityWrapperCSS]}>
+              <div
+                className="swp-l-row swp-cart-lineitem-quantity-inner"
+                css={lineItemQuantityWrapperCSS}
+              >
                 <CartLineItemQuantity
                   lineItem={lineItem}
                   setNotice={setNotice}

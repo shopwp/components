@@ -53,44 +53,11 @@ function CartNote() {
     setNoteValue(e.target.value)
   }
 
-  const CartNotesCSS = css`
-    margin-bottom: 0.5em;
-    padding: 0;
-    font-weight: none;
-    color: #121212;
+  const CartNotesCSS = css``
+  const CartTextareaCSS = css``
 
-    span {
-      color: red;
-    }
-
-    label {
-      font-size: 15px;
-      display: block;
-      margin-bottom: 5px;
-    }
-  `
-
-  const CartTextareaCSS = css`
-    width: 100%;
-    color: #121212;
-    display: block;
-    font-size: 15px;
-    padding: 10px;
-    border-color: #7e7e7e;
-    appearance: none;
-    font-family: inherit;
-    border-radius: ${shopwp.general.globalBorderRadius};
-    min-height: 100px;
-    background: transparent;
-    box-sizing: border-box;
-
-    ::placeholder,
-    ::-webkit-input-placeholder {
-      color: #969696;
-    }
-  `
   return (
-    <section className="wps-cart-notes" css={CartNotesCSS}>
+    <section className="swp-cart-notes wps-cart-notes" css={CartNotesCSS}>
       <label htmlFor="wps-input-notes">
         {shopState.t.l.checkoutNotes}{" "}
         {shopwp.general.noteRequired ? <span>(Required)</span> : null}
@@ -99,7 +66,7 @@ function CartNote() {
         css={CartTextareaCSS}
         placeholder={shopwp.general.cartNotesPlaceholder}
         id="wps-input-notes"
-        className="wps-input wps-input-textarea"
+        className="wps-input swp-input-textarea wps-input-textarea"
         value={noteValue}
         onChange={onChange}
         ref={inputElement}

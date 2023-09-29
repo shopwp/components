@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-import { mq } from "@shopwp/common"
 import { addCustomSizingToImageUrl } from "@shopwp/common"
 
 const Link = wp.element.lazy(() =>
@@ -37,23 +34,6 @@ function CartLineItemImage({ lineItem, settings }) {
     )
   }
 
-  const lineItemImgCSS = css`
-    background-image: url(${actualImageUrl(lineItem)});
-    width: 55px;
-    height: 55px;
-    margin-right: 5px;
-    border-radius: ${shopwp.general.globalBorderRadius};
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color: #e5e5e5;
-
-    ${mq("small")} {
-      width: 60px;
-      height: 60px;
-    }
-  `
-
   return (
     <Link
       payload={lineItem.merchandise}
@@ -65,7 +45,11 @@ function CartLineItemImage({ lineItem, settings }) {
       disableLink={disableLink}
       linkTitle={lineItem.merchandise.product.title}
     >
-      <div className="wps-cart-lineitem-img" css={[lineItemImgCSS]} />
+      <img
+        className="swp-cart-img wps-cart-lineitem-img"
+        src={actualImageUrl(lineItem)}
+        alt={"Product thumbnail for " + lineItem.merchandise.product.title}
+      />
     </Link>
   )
 }

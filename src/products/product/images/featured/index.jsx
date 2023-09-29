@@ -5,7 +5,6 @@ import ProductImage from "../image"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
-import { fadeIn } from "@shopwp/common"
 import Drift from "drift-zoom"
 
 const ProductImageSoldOutLabel = wp.element.lazy(() =>

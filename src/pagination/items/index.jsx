@@ -5,7 +5,6 @@ import PaginationItemsMap from "./map"
 import { useItemsState } from "../../items/_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
-import { flexRowCSS } from "@shopwp/common"
 import ProductsSorting from "../../products/sorting"
 import ProductsPageSize from "../../products/page-size"
 
@@ -56,9 +55,7 @@ function PaginationItems({ children, payload }) {
     }
   `
 
-  const PaginationButtonsCSS = css`
-    justify-content: flex-end;
-  `
+  const PaginationButtonsCSS = css``
 
   return (
     <section className="wps-items-wrapper" css={PaginationItemsContainerCSS}>
@@ -70,7 +67,7 @@ function PaginationItems({ children, payload }) {
         `}
       />
       {itemsState.componentType !== "collections" ? (
-        <div css={[flexRowCSS, PaginationButtonsCSS]}>
+        <div className="swp-l-row swp-l-row-end" css={PaginationButtonsCSS}>
           {settings.withSorting && !settings.isModal ? (
             <ProductsSorting />
           ) : null}

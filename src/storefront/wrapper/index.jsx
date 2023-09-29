@@ -10,7 +10,6 @@ import {
 import {
   buildQueryStringFromSelections,
   getInitialSelections,
-  flexRowCSS,
 } from "@shopwp/common"
 
 import forOwn from "lodash-es/forOwn"
@@ -170,18 +169,16 @@ function StorefrontWrapper() {
   `
 
   const SelectorsCSS = css`
-    display: flex;
     min-height: 52px;
     width: 100%;
     padding: 0;
     margin: 0 0 -10px 0;
-    justify-content: space-between;
   `
 
   return (
     <Suspense fallback={false}>
       <section id="shopwp-storefront" css={StorefrontCSS}>
-        <div css={flexRowCSS}>
+        <div className="swp-l-row">
           {settings.withSearch ? (
             <SearchWrapper
               hasStorefrontSelections={storefrontState.hasStorefrontSelections}
@@ -190,11 +187,11 @@ function StorefrontWrapper() {
           ) : null}
         </div>
 
-        <div css={[flexRowCSS, SelectorsCSS]}>
+        <div className="swp-l-row swp-l-row-between" css={SelectorsCSS}>
           {settings.showSelections ? <StorefrontSelections /> : null}
         </div>
 
-        <div css={flexRowCSS}>
+        <div className="swp-l-row">
           <StorefrontOptions settings={settings} />
 
           {!storefrontState.searchQuery ? <StorefrontItems /> : null}

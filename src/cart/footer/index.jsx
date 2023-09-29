@@ -24,20 +24,9 @@ const Notice = wp.element.lazy(() =>
 )
 
 function CartFooterSkeleton() {
-  const CartFooterSkeletonCSS = css`
-    display: flex;
-    flex-direction: column;
-
-    > div {
-      width: 100%;
-      height: 50px;
-      background: #e7e7e7;
-      border-radius: ${shopwp.general.globalBorderRadius};
-      margin-top: 8px;
-    }
-  `
+  const CartFooterSkeletonCSS = css``
   return (
-    <div css={CartFooterSkeletonCSS}>
+    <div className="swp-cart-footer-skeleton" css={CartFooterSkeletonCSS}>
       <div></div>
       <div></div>
     </div>
@@ -49,28 +38,10 @@ function CartFooter() {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
-  const CartFooterCSS = css`
-    padding: 1em 0 0 0;
-    margin: auto 0 0 0;
-    border-top: 1px solid #ddd;
-    font-size: 26px;
-    color: #121212;
-    transition: all 0.2s ease;
-    opacity: ${shopState.isCartUpdating ? "0.3" : "1"};
-    filter: ${shopState.isCartUpdating ? "blur(2px)" : "none"};
-
-    p {
-      margin: 0;
-    }
-
-    .wps-notices-cart {
-      margin-bottom: 13px;
-      max-width: 100%;
-    }
-  `
+  const CartFooterCSS = css``
 
   return (
-    <section className="wps-cart-footer" css={CartFooterCSS}>
+    <section className="swp-cart-footer wps-cart-footer" css={CartFooterCSS}>
       <Suspense fallback={<CartFooterSkeleton />}>
         {shopwp.general.enableCartNotes ? <CartNote /> : null}
         {shopwp.general.enableCartTerms ? (
