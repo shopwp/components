@@ -5,63 +5,26 @@ import { useShopState } from "@shopwp/components"
 function CartFooterDiscount({ discount, changeDiscount }) {
   const shopState = useShopState()
 
-  const discountCodeWrapperCSS = css`
-    display: flex;
-    align-items: baseline;
-    width: 100%;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 12px;
-  `
-
-  const discountLabelCSS = css`
-    && {
-      flex: 1;
-      font-size: 14px;
-      position: relative;
-      top: 2px;
-      margin-right: 15px;
-      color: #089614;
-    }
-  `
-
-  const discountCodeCSS = css`
-    font-size: 15px;
-    font-family: monospace;
-    text-transform: uppercase;
-    background: #ffd864;
-    padding: 3px 30px 3px 10px;
-    position: relative;
-    transition: background ease 0.2s;
-    outline: 2px dashed #d9833a;
-    line-height: 1.1;
-
-    &:hover {
-      cursor: pointer;
-      background: #f1c952;
-    }
-  `
-
-  const discountCodeIconCSS = css`
-    position: absolute;
-    right: 11px;
-    top: 4px;
-    max-width: 9px;
-  `
+  const discountCodeWrapperCSS = css``
+  const discountLabelCSS = css``
+  const discountCodeCSS = css``
+  const discountCodeIconCSS = css``
 
   async function onRemoval() {
     changeDiscount(discount.code, true) // True means remove discount
   }
 
   return (
-    <div css={discountCodeWrapperCSS}>
-      <p css={discountLabelCSS} className="wps-cart-discount-label">
+    <div className="swp-cart-discount-wrapper" css={discountCodeWrapperCSS}>
+      <p
+        css={discountLabelCSS}
+        className="swp-cart-discount-label wps-cart-discount-label"
+      >
         {shopState.t.n.discountApplied}
       </p>
 
       <p
-        className="wps-cart-discount-code"
+        className="swp-cart-discount-code wps-cart-discount-code"
         css={discountCodeCSS}
         onClick={onRemoval}
       >
@@ -73,7 +36,7 @@ function CartFooterDiscount({ discount, changeDiscount }) {
           focusable="false"
           data-prefix="far"
           data-icon="times"
-          className="svg-inline--fa fa-times fa-w-10"
+          className="swp-cart-discount-icon svg-inline--fa fa-times fa-w-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 320 512"
         >

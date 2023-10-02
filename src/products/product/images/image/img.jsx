@@ -57,7 +57,7 @@ function Img(props) {
     position: absolute;
     width: 12px;
     fill: white;
-    top: calc(50% - 14px);
+    top: calc(50% - 10px);
     z-index: 9999;
     left: calc(50% - 6px);
   `

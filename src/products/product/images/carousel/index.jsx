@@ -10,10 +10,6 @@ function ProductCarouselImages({ images, settings }) {
   const { useState } = wp.element
   const [customChange, setCustomChange] = useState(false)
 
-  const ProductCarouselImagesCSS = css`
-    margin-bottom: 30px;
-  `
-
   const ProductCarouselSliderCSS = css`
     .slick-list {
       ${mq("large")} {
@@ -47,14 +43,14 @@ function ProductCarouselImages({ images, settings }) {
       opacity: 1;
       background-repeat: no-repeat;
       text-align: center;
-      background-position: 45% 50%;
+      background-position: 45% 56%;
       background-size: 13px;
-      padding: 100px 25px;
+      padding: 50px 25px;
       top: calc(50% - 10px);
 
       &:hover {
         background-repeat: no-repeat;
-        background-position: 45% 50%;
+        background-position: 45% 56%;
         background-size: 13px;
       }
 
@@ -75,7 +71,7 @@ function ProductCarouselImages({ images, settings }) {
   }
 
   return (
-    <div css={ProductCarouselImagesCSS}>
+    <>
       <Carousel
         settings={settings}
         customSettings={{
@@ -109,7 +105,7 @@ function ProductCarouselImages({ images, settings }) {
       {settings.imageCarouselThumbs ? (
         <ProductThumbnailImages customOnClick={customOnClick} />
       ) : null}
-    </div>
+    </>
   )
 }
 

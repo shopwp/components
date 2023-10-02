@@ -24,16 +24,24 @@ function Carousel({
 
   const CarouselCSS = css`
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
 
     .slick-next,
     .slick-prev {
-      top: calc(50% - 30px);
+      top: ${settings.showThumbsCarousel
+        ? "calc(50% - 5px)"
+        : "calc(50% - 28px)"};
       width: 55px;
       height: 55px;
       background-size: contain;
       background-position: 50% 50%;
       background-repeat: no-repeat;
+
+      svg {
+        width: 55px;
+        height: 55px;
+        padding: ${settings.showThumbsCarousel ? "15px" : "0"};
+      }
 
       &:hover,
       &:focus {
@@ -47,12 +55,16 @@ function Carousel({
       }
     }
 
+    .slick-list {
+      padding-top: ${settings.showThumbsCarousel ? "10px" : "0"};
+    }
+
     .slick-prev {
-      left: -55px;
+      left: ${settings.showThumbsCarousel ? "-45px" : "-55px"};
     }
 
     .slick-next {
-      right: -55px;
+      right: ${settings.showThumbsCarousel ? "-40px" : "-55px"};
     }
 
     .slick-slide > div {
@@ -62,6 +74,7 @@ function Carousel({
     .slick-dots {
       margin: 0;
       padding: 0;
+      bottom: -20px;
 
       li button:before {
         width: 10px;
@@ -76,17 +89,17 @@ function Carousel({
       width: 100% !important;
 
       .slick-prev {
-        left: 0;
+        left: ${settings.showThumbsCarousel ? "-35px" : "0"};
         z-index: 999;
       }
 
       .slick-next {
-        right: 0;
+        right: ${settings.showThumbsCarousel ? "-35px" : "0"};
         z-index: 999;
       }
 
       .slick-list {
-        width: 75%;
+        width: ${settings.showThumbsCarousel ? "100%" : "75%"};
         margin: 0 auto;
       }
     }
@@ -94,8 +107,8 @@ function Carousel({
     ${mq("medium")} {
       .slick-prev,
       .slick-next {
-        width: 35px;
-        height: 35px;
+        width: ${settings.showThumbsCarousel ? "55px" : "35px"};
+        height: ${settings.showThumbsCarousel ? "55px" : "35px"};
       }
     }
   `

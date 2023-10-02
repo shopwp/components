@@ -11,13 +11,12 @@ import {
 
 import { findLastItem } from "@shopwp/common"
 import { useQuery } from "@tanstack/react-query"
-import isEmpty from "lodash-es/isEmpty"
-
-import useIsMounted from "ismounted"
 import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
 import { useSettingsState, useSettingsDispatch } from "../_state/settings/hooks"
 import { usePayloadDispatch } from "../_state/payload/hooks"
 import { useShopState, useShopDispatch } from "@shopwp/components"
+import isEmpty from "lodash-es/isEmpty"
+import useIsMounted from "ismounted"
 import isBase64 from "is-base64"
 
 function useGetItemsQuery(setNotice) {

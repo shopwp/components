@@ -19,12 +19,12 @@ function ProductThumbnailImages({ customOnClick }) {
   )
 
   const thumbnailsWrapperCSS = css`
-    display: grid;
+    display: ${settings.showThumbsCarousel ? "flex" : "grid"};
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 15px;
     grid-row-gap: 0px;
-    margin-top: 12px;
+    margin-top: 8px;
     max-width: 410px;
 
     ${mq("small")} {
@@ -80,7 +80,11 @@ function ProductThumbnailImages({ customOnClick }) {
       css={thumbnailsWrapperCSS}
       onMouseEnter={preloadStatus === "idle" ? onMouseEnter : undefined}
     >
-      <Thumbnails thumbnails={thumbnails} customOnClick={customOnClick} />
+      <Thumbnails
+        thumbnails={thumbnails}
+        customOnClick={customOnClick}
+        settings={settings}
+      />
     </div>
   ) : null
 }

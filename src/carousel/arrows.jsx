@@ -13,7 +13,6 @@ function DefaultNextArrow(props) {
         aria-hidden="true"
         focusable="false"
         role="button"
-        style={{ width: "55px", height: "55px" }}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 192 512"
       >
@@ -37,7 +36,6 @@ function DefaultPrevArrow(props) {
       <svg
         aria-hidden="true"
         focusable="false"
-        style={{ width: "55px", height: "55px" }}
         role="button"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 192 512"
