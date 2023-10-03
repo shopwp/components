@@ -80,6 +80,7 @@ function Carousel({
         width: 10px;
         height: 10px;
         font-size: 10px;
+        left: calc(50% - 5px);
       }
     }
 

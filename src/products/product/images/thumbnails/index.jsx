@@ -24,14 +24,17 @@ function ProductThumbnailImages({ customOnClick }) {
     grid-template-rows: 1fr;
     grid-column-gap: 15px;
     grid-row-gap: 0px;
-    margin-top: 8px;
-    max-width: 410px;
+    margin-top: ${!settings.showThumbsCarousel
+      ? "11px"
+      : productState.payload.media.edges.length <= 5
+      ? "11px"
+      : "3px"};
+    max-width: 400px;
 
     ${mq("small")} {
       display: flex;
       flex-wrap: wrap;
       gap: 0px 12px;
-      max-width: 100%;
 
       > div {
         width: 57px;

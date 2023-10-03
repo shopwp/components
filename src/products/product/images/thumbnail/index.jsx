@@ -18,6 +18,7 @@ function ProductThumbnailImage({
   const ThumbnailCSS = css`
     transition: outline 0.2s ease;
     position: relative;
+    max-width: 68px;
 
     &:hover {
       img {

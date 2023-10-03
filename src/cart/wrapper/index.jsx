@@ -273,6 +273,14 @@ function CartWrapper() {
         shopState.cartData.lines.edges.length
           ? " swp-cart-is-not-empty"
           : " swp-cart-is-empty"
+      }${
+        cartState.isCheckingOut ||
+        (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+        (!cartState.note && shopwp.general.noteRequired) ||
+        !shopState.cartData ||
+        !shopState.cartData.lines.edges.length
+          ? " swp-cart-is-not-ready-to-checkout"
+          : " swp-cart-is-ready-to-checkout"
       }`}
     >
       <div className="swp-cart-inner" css={cartInnerCSS}>

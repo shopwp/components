@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useCartState, useCartDispatch } from "@shopwp/components"
-import { buttonCSS, mq } from "@shopwp/common"
+import { buttonCSS } from "@shopwp/common"
 import { checkoutRedirect } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
@@ -14,43 +14,7 @@ function CartCheckoutButton({ onCheckout }) {
   const cartDispatch = useCartDispatch()
   const shopState = useShopState()
 
-  const checkoutButtonCSS = css`
-    font-size: 22px;
-    margin-top: 0.5em;
-    margin-bottom: 0;
-    background-color: ${cartState.isCheckingOut ||
-    (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
-    (!cartState.note && shopwp.general.noteRequired) ||
-    !shopState.cartData ||
-    !shopState.cartData.lines.edges.length
-      ? "#cfcfcf"
-      : shopwp.general.checkoutColor};
-    padding: 16px 0 20px 0;
-    transition: none;
-    position: static;
-
-    &:hover {
-      background-color: ${cartState.isCheckingOut ||
-      (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
-      (!cartState.note && shopwp.general.noteRequired) ||
-      !shopState.cartData ||
-      !shopState.cartData.lines.edges.length
-        ? "#cfcfcf"
-        : shopwp.general.checkoutColor};
-    }
-
-    &:disabled {
-      &:hover {
-        cursor: not-allowed;
-        color: #fff;
-        background-color: #cfcfcf;
-      }
-    }
-
-    ${mq("small")} {
-      font-size: 22px;
-    }
-  `
+  const checkoutButtonCSS = css``
 
   function onCheckout() {
     cartDispatch({ type: "SET_NOTICE", payload: false })
@@ -79,7 +43,7 @@ function CartCheckoutButton({ onCheckout }) {
 
   return (
     <button
-      className="wps-btn-checkout"
+      className="swp-btn-checkout wps-btn-checkout"
       onClick={onCheckout}
       disabled={
         cartState.isCheckingOut ||

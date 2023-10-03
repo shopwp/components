@@ -13,7 +13,7 @@ function Thumbnails({ thumbnails, customOnClick, settings }) {
     return media.data
   }
 
-  return settings.showThumbsCarousel ? (
+  return settings.showThumbsCarousel && thumbnails.edges.length > 5 ? (
     <Carousel
       settings={settings}
       customSettings={{
