@@ -2,18 +2,11 @@
 import { jsx, css } from "@emotion/react"
 
 function ProductImageSoldOutLabel({ text }) {
-  const ProductImageSoldOutLabelCSS = css`
-    position: absolute;
-    background: #da641c;
-    color: white;
-    text-transform: uppercase;
-    font-size: 12px;
-    padding: 4px 10px;
-  `
+  const ProductImageSoldOutLabelCSS = css``
 
   return (
     <span
-      className="wps-product-image-sold-out-label"
+      className="swp-sold-out-label wps-product-image-sold-out-label"
       css={ProductImageSoldOutLabelCSS}
     >
       {text}

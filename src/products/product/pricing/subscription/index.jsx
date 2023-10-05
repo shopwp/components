@@ -10,6 +10,11 @@ function ProductPricesSubscription({
   const ProductPricesSubscriptionCSS = css`
     display: flex;
     flex-direction: row;
+    line-height: 1;
+
+    .swp-price {
+      margin-right: 5px;
+    }
   `
 
   return (

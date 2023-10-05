@@ -47,7 +47,7 @@ function Dropdown({
   const [selected, setSelected] = useState(selectedOption)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedText, setSelectedText] = useState(
-    selectedOption ? selectedOption.label : "Select " + label
+    selectedOption ? selectedOption.label : label
   )
   const settings = useSettingsState()
 
@@ -58,7 +58,7 @@ function Dropdown({
 
     if (!selectedOptions) {
       setSelected(null)
-      setSelectedText("Select " + label)
+      setSelectedText(label)
     }
   }, [selectedOptions])
 
@@ -71,13 +71,6 @@ function Dropdown({
       text-align: left;
       background: white;
       position: relative;
-
-      box-shadow: ${missingSelections && !selected
-        ? "0px 0px 0px 1px red"
-        : selected && !inline
-        ? "0px 0px 0px 1px #44d444"
-        : "none"};
-
       border: 1px solid
         ${settings &&
         settings.variantDropdownButtonColor &&
@@ -138,15 +131,26 @@ function Dropdown({
         }
       }
 
+      span {
+        transition: all 0.2s ease;
+      }
+
       &:hover {
         cursor: pointer;
+
+        span {
+          opacity: 0.7;
+        }
       }
     }
   `
 
   const DropdownLabel = css`
-    margin-top: 10px;
+    margin: 0 0 10px 0;
     position: relative;
+    animation: ${missingSelections && !selected
+      ? "swpShake 0.9s ease-in-out"
+      : "none"};
 
     ${mq("small")} {
       flex: 1;
@@ -217,8 +221,7 @@ function Dropdown({
   }
 
   return usePortal(
-    <div css={DropdownLabel}>
-      <label>{label}</label>
+    <div className="swp-dropdown-label" css={DropdownLabel}>
       {isBusy ? (
         <Loader
           color={
@@ -235,7 +238,8 @@ function Dropdown({
         onMenuChange={onMenuChange}
         menuButton={
           <MenuButton css={DropdownButtonCSS}>
-            {selectedText} {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
+            <span>{selectedText}</span>{" "}
+            {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
           </MenuButton>
         }
         transition

@@ -2,16 +2,16 @@
 import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
 
-function ProductPriceSaleNotice({ children, fontSize, color }) {
+function ProductPriceSaleNotice({ fontSize, color }) {
   const shopState = useShopState()
 
   const ProductPriceSaleNoticeCSS = css`
     && {
       color: ${color};
-      margin: 0 10px 0 0;
+      margin: 0 10px 0 -8px;
       position: relative;
       top: 0;
-      font-size: ${fontSize};
+      font-size: ${fontSize ? fontSize : "initial"};
       line-height: 1;
       font-style: normal;
     }
@@ -25,7 +25,6 @@ function ProductPriceSaleNotice({ children, fontSize, color }) {
       >
         {shopState.t.l.sale}
       </small>
-      {children}
     </>
   )
 }

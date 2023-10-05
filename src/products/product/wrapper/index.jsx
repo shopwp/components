@@ -59,11 +59,14 @@ function ProductWrapper({ payload }) {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    width: 100%;
     max-width: ${productState.payload &&
     !settings.isModal &&
     !settings.fullWidth
       ? "380px"
       : "100%"};
+
+      
 
     > div:nth-last-of-type(2) {
       flex: ${isAlignHeight() ? "1" : "none"};

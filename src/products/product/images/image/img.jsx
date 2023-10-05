@@ -28,18 +28,27 @@ function Img(props) {
     }
   }
 
-  const featThumbStyles = css`
-    outline: 1px dashed #000000;
-    outline-offset: 3px;
-    transition: transform 100ms ease;
-    max-width: 100%;
-  `
+  const featThumbStyles = css``
 
   const thumbnailStyles = css`
     display: block;
     margin-bottom: ${props.isFeatured ? "0px" : "10px"};
     max-width: 100%;
     filter: ${props.isVideo ? "brightness(0.5)" : "none"};
+
+    @keyframes a {
+      0% {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    + img {
+      animation: a 0.3s ease-out;
+    }
+
     &:focus,
     &:active {
       outline: ${props.isFeatured ? "none" : "1px dashed #000000"};
@@ -53,15 +62,6 @@ function Img(props) {
     }
   `
 
-  const videoIcon = css`
-    position: absolute;
-    width: 12px;
-    fill: white;
-    top: calc(50% - 10px);
-    z-index: 9999;
-    left: calc(50% - 6px);
-  `
-
   return (
     <>
       <img
@@ -69,14 +69,17 @@ function Img(props) {
         ref={props.imageRef}
         itemProp="image"
         src={props.src}
-        className="wps-product-image"
+        className={
+          (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
+          " wps-product-image"
+        }
         loading="lazy"
         alt={props.image.altText ? props.image.altText : ""}
         data-zoom={props.image.originalSrc}
       />
       {props.isVideo ? (
         <svg
-          css={videoIcon}
+          className="swp-video-icon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
         >

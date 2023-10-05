@@ -12,18 +12,11 @@ function ProductImageOnSaleLabel({ text, showSaleNoticePercentage, payload }) {
   )
   const salePercentage = findLargestSalePercentage(onlyAvailableVariants)
 
-  const ProductImageOnSaleLabelCSS = css`
-    position: absolute;
-    background: #b62907;
-    color: white;
-    text-transform: uppercase;
-    font-size: 12px;
-    padding: 4px 10px;
-  `
+  const ProductImageOnSaleLabelCSS = css``
 
   return (
     <span
-      className="wps-product-image-on-sale-label"
+      className="swp-on-sale-label wps-product-image-on-sale-label"
       css={ProductImageOnSaleLabelCSS}
     >
       {text}

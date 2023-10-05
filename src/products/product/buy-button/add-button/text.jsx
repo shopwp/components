@@ -63,15 +63,12 @@ function AddButtonText({
     padding: 0;
     width: 100%;
     color: ${addToCartButtonTextColor ? addToCartButtonTextColor : "inherit"};
-    transition: all 0.3s ease;
-
-    &:hover {
-      cursor: ${isDisabled ? "not-allowed" : "pointer"};
-    }
+    transition: all 0.2s ease;
   `
 
   return (
     <span
+      className="swp-add-to-cart-text"
       css={AddButtonTextCSS}
       ref={addedTest}
       aria-label={productState.payload.title + " add to cart text"}

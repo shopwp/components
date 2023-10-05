@@ -55,7 +55,7 @@ function ProductOptionDropdown({
   }
 
   return (
-    <div className="wps-btn-dropdown-wrapper">
+    <div className="swp-btn-dropdown-wrapper wps-btn-dropdown-wrapper">
       <div
         className="wps-btn-dropdown"
         data-wps-is-selected={productBuyButtonState.isOptionSelected}

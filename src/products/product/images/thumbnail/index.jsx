@@ -15,18 +15,7 @@ function ProductThumbnailImage({
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const [isActive, setIsActive] = useState(() => false)
 
-  const ThumbnailCSS = css`
-    transition: outline 0.2s ease;
-    position: relative;
-    max-width: 68px;
-
-    &:hover {
-      img {
-        outline: 1px dashed #000000;
-        outline-offset: 3px;
-      }
-    }
-  `
+  const ThumbnailCSS = css``
 
   useEffect(() => {
     if (!galleryState.featImage) {
@@ -64,7 +53,7 @@ function ProductThumbnailImage({
   return (
     <div
       css={ThumbnailCSS}
-      className="wps-component wps-component-products-images-thumbnail"
+      className="wps-component swp-product-thumbnail wps-component-products-images-thumbnail"
       aria-label="Product Images Thumbnail"
       onClick={onClick}
       data-wps-is-active={isActive}

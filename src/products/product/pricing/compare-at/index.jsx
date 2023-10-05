@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import ProductPrice from "../price"
-import ProductPriceSaleNotice from "../sale-notice"
 import { firstPriceCompareAt } from "@shopwp/common"
+import ProductPriceSaleNotice from "../sale-notice"
 
 function ProductPricesCompareAt({
   compareAt,
@@ -14,7 +14,7 @@ function ProductPricesCompareAt({
   const ProductPricesCompareAtWrapperCSS = css`
     display: flex;
     align-items: center;
-    margin: ${selectedVariant ? "6px 0 0 0" : "10px 0 0 0"};
+    margin: ${selectedVariant ? "0 0 0 10px" : "0 0 0 10px"};
 
     &:empty {
       display: none;
@@ -33,33 +33,36 @@ function ProductPricesCompareAt({
 
   return (
     <>
-      <ProductPrice
-        selectedVariant={selectedVariant}
-        compareAt={false}
-        showPriceRange={showPriceRange}
-        prices={prices}
-      />
+      <div className="swp-l-row">
+        <ProductPrice
+          selectedVariant={selectedVariant}
+          compareAt={false}
+          showPriceRange={showPriceRange}
+          prices={prices}
+        />
 
-      {compareAt && hasCompareAtPrice ? (
-        <div
-          className="wps-product-prices-compare-at"
-          css={ProductPricesCompareAtWrapperCSS}
-        >
-          <ProductPriceSaleNotice
-            fontSize={settings.pricingCompareAtTypeFontSize}
-            color={settings.pricingCompareAtTypeSaleTextColor}
-          >
-            <ProductPrice
-              prices={prices}
-              selectedVariant={selectedVariant}
-              compareAt={true}
-              showPriceRange={showPriceRange}
+        {compareAt && hasCompareAtPrice && selectedVariant ? (
+          <>
+            <ProductPriceSaleNotice
+              fontSize={settings.pricingCompareAtTypeFontSize}
+              color={settings.pricingCompareAtTypeSaleTextColor}
             />
-          </ProductPriceSaleNotice>
-        </div>
-      ) : null}
+            <div
+              className="wps-product-prices-compare-at"
+              css={ProductPricesCompareAtWrapperCSS}
+            >
+              <ProductPrice
+                prices={prices}
+                selectedVariant={selectedVariant}
+                compareAt={true}
+                showPriceRange={showPriceRange}
+              />
+            </div>
+          </>
+        ) : null}
+      </div>
     </>
   )
 }
 
-export default wp.element.memo(ProductPricesCompareAt)
+export default ProductPricesCompareAt

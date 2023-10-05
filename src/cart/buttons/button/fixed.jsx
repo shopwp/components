@@ -119,9 +119,7 @@ function CartIconFixed() {
         <CartCounter
           settings={cartState.settings}
           totalLineItems={
-            shopState.cartData.totalQuantity
-              ? shopState.cartData.totalQuantity
-              : 0
+            shopState.cartData ? shopState.cartData.totalQuantity : 0
           }
           fixed={true}
         />

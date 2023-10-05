@@ -18,7 +18,12 @@ function ProductVariantButtonGroupWrapper({
   const variantGroup = useRef()
 
   const labelStyles = css`
-    margin-bottom: 5px;
+    margin-bottom: 7px;
+
+    animation: ${missingSelections &&
+    !productBuyButtonState.selectedOptions.hasOwnProperty(option.name)
+      ? "swpShake 0.9s ease-in-out"
+      : "none"};
 
     color: ${settings && settings.variantLabelTextColor
       ? settings.variantLabelTextColor
@@ -65,12 +70,23 @@ function ProductVariantButtonGroupWrapper({
           productBuyButtonState.allSelectableOptions,
         ]}
       >
-        <label css={labelStyles}>
+        <label
+          className="swp-l-row swp-l-col-center swp-m-l-col-start"
+          css={labelStyles}
+        >
           {wp.hooks.applyFilters(
             "product.optionName",
             option.name,
             productBuyButtonState
           )}
+
+          {missingSelections &&
+          !productBuyButtonState.selectedOptions.hasOwnProperty(option.name) ? (
+            <ProductVariantMissingSelection
+              option={option}
+              productBuyButtonState={productBuyButtonState}
+            />
+          ) : null}
         </label>
       </FilterHook>
 
@@ -80,13 +96,6 @@ function ProductVariantButtonGroupWrapper({
           selectedOptions={selectedOptions}
         />
       </div>
-      {missingSelections &&
-      !productBuyButtonState.selectedOptions.hasOwnProperty(option.name) ? (
-        <ProductVariantMissingSelection
-          option={option}
-          productBuyButtonState={productBuyButtonState}
-        />
-      ) : null}
     </div>
   )
 }

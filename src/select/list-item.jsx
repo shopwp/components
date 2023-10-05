@@ -53,6 +53,7 @@ function SelectItem({
       width: 100%;
       display: block;
       font-size: 16px;
+      box-sizing: border-box;
     }
 
     &:hover,

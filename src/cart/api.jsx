@@ -247,6 +247,7 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
 
   if (maybeApiError) {
     console.warn("ShopWP Error: ", maybeApiError)
+
     shopDispatch({
       type: "SET_CART_DATA",
       payload: false,

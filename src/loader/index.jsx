@@ -53,11 +53,14 @@ function Loader({ isLoading, dropzone, color, extraCSS, center = true }) {
   `
 
   return usePortal(
-    <div className="wps-loader-wrapper" css={[LoaderPulseCSS, extraCSS]}>
+    <div
+      className="swp-loader wps-loader-wrapper"
+      css={[LoaderPulseCSS, extraCSS]}
+    >
       <LoaderSpinner
         type="ball-pulse"
         color={color ? color : "#FFF"}
-        innerClassName="wps-loader"
+        innerClassName="swp-loader-icon wps-loader"
         active={isLoading}
       />
     </div>,

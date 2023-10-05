@@ -20,7 +20,7 @@ const ProductPriceSingle = wp.element.forwardRef((props, ref) => {
   return props.price !== false || props.price !== null ? (
     <span
       ref={ref}
-      className="wps-product-individual-price"
+      className="swp-price wps-product-individual-price"
       css={priceCSS}
       data-price={props.price}
     >

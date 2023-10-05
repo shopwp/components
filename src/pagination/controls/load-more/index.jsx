@@ -59,7 +59,7 @@ function PaginationLoadMore() {
         {requestsState.isFetchingNew ? (
           <Loader isLoading={requestsState.isFetchingNew} />
         ) : (
-          shopState.t.l.loadMore
+          settings.paginationLoadMoreText
         )}
       </div>
     </InView>,

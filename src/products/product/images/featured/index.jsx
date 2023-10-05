@@ -1,11 +1,21 @@
 /** @jsx jsx */
-import { jsx, css, Global } from "@emotion/react"
+import { jsx, css } from "@emotion/react"
 import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
-import Drift from "drift-zoom"
+import {
+  getImageWidth,
+  getImageHeight,
+  addCustomSizingToImageUrl,
+  getImageWidthString,
+} from "@shopwp/common"
+import { useZoomImageMove } from "@zoom-image/react"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../../../loader")
+)
 
 const ProductImageSoldOutLabel = wp.element.lazy(() =>
   import(
@@ -31,6 +41,8 @@ function ProductFeaturedImage() {
   const settings = useSettingsState()
   const productState = useProductState()
   const shopState = useShopState()
+  const zoomContainer = useRef()
+  const zoom = useZoomImageMove()
 
   function showZoom() {
     if (settings.linkTo !== "none") {
@@ -42,20 +54,6 @@ function ProductFeaturedImage() {
     }
 
     return settings.showZoom
-  }
-
-  function driftOptions() {
-    return {
-      ...settings.imageZoomOptions,
-      inlineContainer: paneElement.current,
-      paneContainer: paneElement.current,
-    }
-  }
-
-  function destroyDrift(drift) {
-    drift.destroy()
-    window.Drift = null
-    drift = null
   }
 
   function hasFeatImage() {
@@ -108,23 +106,11 @@ function ProductFeaturedImage() {
     })
   }
 
-  function getImageWidth() {
-    if (settings.imagesSizingToggle) {
-      if (settings.imagesSizingWidth === 0) {
-        return "100%"
-      } else {
-        return String(settings.imagesSizingWidth) + "px"
-      }
-    }
-
-    return "100%"
-  }
-
   const paneElementCSS = css`
     position: relative;
     cursor: crosshair;
     overflow: hidden;
-    max-width: ${getImageWidth()};
+    max-width: ${getImageWidthString(settings)};
   `
 
   const ProductImageFeaturedWrapperCSS = css`
@@ -173,14 +159,23 @@ function ProductFeaturedImage() {
   }
 
   useEffect(() => {
-    if (hasFeatImage() && showZoom()) {
-      var drift = new Drift(galleryState.featImageElement, driftOptions())
-
-      return () => {
-        destroyDrift(drift)
-      }
+    if (galleryState.featImageIsVideo) {
+      return
     }
-  }, [galleryState.featImageElement, settings.showZoom])
+
+    var newSrc = addCustomSizingToImageUrl({
+      src: galleryState.featImage.originalSrc,
+      width: getImageWidth(settings, 2),
+      height: getImageHeight(settings, 2),
+      crop: settings.imagesSizingCrop,
+    })
+
+    if (zoomContainer.current) {
+      zoom.createZoomImage(zoomContainer.current, {
+        zoomImageSource: newSrc,
+      })
+    }
+  }, [galleryState.featImageElement, galleryState.featImage, settings.showZoom])
 
   return (
     <div
@@ -191,162 +186,6 @@ function ProductFeaturedImage() {
       onMouseLeave={isShowingNextOnHover() ? onMouseLeave : undefined}
     >
       <Suspense fallback={false}>
-        {showZoom() ? (
-          <Global
-            styles={css`
-              @keyframes a {
-                0% {
-                  transform: scale(1.5);
-                  opacity: 0;
-                }
-                to {
-                  transform: scale(1);
-                  opacity: 1;
-                }
-              }
-              @keyframes b {
-                0% {
-                  transform: scale(1);
-                  opacity: 1;
-                }
-                15% {
-                  transform: scale(1.1);
-                  opacity: 1;
-                }
-                to {
-                  transform: scale(0.5);
-                  opacity: 0;
-                }
-              }
-              @keyframes c {
-                0% {
-                  transform: translate(-50%, -50%) rotate(0);
-                }
-                50% {
-                  transform: translate(-50%, -50%) rotate(-180deg);
-                }
-                to {
-                  transform: translate(-50%, -50%) rotate(-1turn);
-                }
-              }
-              @keyframes d {
-                0% {
-                  transform: scale(1);
-                }
-                10% {
-                  transform: scale(1.2) translateX(6px);
-                }
-                25% {
-                  transform: scale(1.3) translateX(8px);
-                }
-                40% {
-                  transform: scale(1.2) translateX(6px);
-                }
-                50% {
-                  transform: scale(1);
-                }
-                60% {
-                  transform: scale(0.8) translateX(6px);
-                }
-                75% {
-                  transform: scale(0.7) translateX(8px);
-                }
-                90% {
-                  transform: scale(0.8) translateX(6px);
-                }
-                to {
-                  transform: scale(1);
-                }
-              }
-              @keyframes e {
-                0% {
-                  transform: scale(1);
-                }
-                10% {
-                  transform: scale(1.2) translateX(-6px);
-                }
-                25% {
-                  transform: scale(1.3) translateX(-8px);
-                }
-                40% {
-                  transform: scale(1.2) translateX(-6px);
-                }
-                50% {
-                  transform: scale(1);
-                }
-                60% {
-                  transform: scale(0.8) translateX(-6px);
-                }
-                75% {
-                  transform: scale(0.7) translateX(-8px);
-                }
-                90% {
-                  transform: scale(0.8) translateX(-6px);
-                }
-                to {
-                  transform: scale(1);
-                }
-              }
-              .drift-zoom-pane {
-                background: rgba(0, 0, 0, 0.8);
-                transform: translateZ(0);
-                // border-radius: 50%;
-                width: 100%;
-                height: 100%;
-                z-index: 999;
-                left: 0 !important;
-                top: 0 !important;
-                img {
-                  max-width: none !important;
-                  width: auto !important;
-                }
-              }
-              .drift-zoom-pane.drift-opening {
-                animation: a 0.18s ease-out;
-              }
-              .drift-zoom-pane.drift-closing {
-                animation: b 0.14s ease-in;
-              }
-              .drift-zoom-pane.drift-inline {
-                position: absolute;
-                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-                z-index: 999;
-              }
-              .drift-loading .drift-zoom-pane-loader {
-                display: block;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 66px;
-                height: 20px;
-                animation: c 1.8s linear infinite;
-              }
-              .drift-zoom-pane-loader:after,
-              .drift-zoom-pane-loader:before {
-                content: "";
-                display: block;
-                width: 20px;
-                height: 20px;
-                position: absolute;
-                top: 50%;
-                margin-top: -10px;
-                border-radius: 20px;
-                background: hsla(0, 0%, 100%, 0.9);
-              }
-              .drift-zoom-pane-loader:before {
-                left: 0;
-                animation: d 1.8s linear infinite;
-              }
-              .drift-zoom-pane-loader:after {
-                right: 0;
-                animation: e 1.8s linear infinite;
-                animation-delay: -0.9s;
-              }
-            `}
-          />
-        ) : null}
-
         {galleryState.featImageIsVideo ? (
           <ProductFeaturedImageVideo videoData={galleryState.featImage} />
         ) : (
@@ -368,9 +207,17 @@ function ProductFeaturedImage() {
             ) : null}
 
             <div
-              className="wps-product-image-wrapper"
+              className={
+                "swp-product-image-wrapper wps-product-image-wrapper" +
+                " swp-zoom-is-" +
+                zoom.zoomImageState.zoomedImgStatus
+              }
               css={ProductImageFeaturedWrapperCSS}
+              ref={zoomContainer}
             >
+              {zoom.zoomImageState.zoomedImgStatus === "loading" ? (
+                <Loader />
+              ) : null}
               {galleryState.featImage ? (
                 <ProductImage
                   settings={settings}

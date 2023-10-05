@@ -11,7 +11,7 @@ function ProductVariantDropdowns({
 }) {
   return (
     <div
-      className="wps-component wps-component-products-options"
+      className="swp-products-options wps-component wps-component-products-options"
       aria-label="Product Options"
     >
       {options
