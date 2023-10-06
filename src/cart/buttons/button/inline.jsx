@@ -7,6 +7,7 @@ import CartIconWrapper from "../icon"
 import CartCounter from "../counter"
 
 function CartIcon({ settings, element }) {
+  const { useEffect } = wp.element
   const shopDispatch = useShopDispatch()
   const shopState = useShopState()
 
@@ -16,47 +17,31 @@ function CartIcon({ settings, element }) {
     shopDispatch({ type: "TOGGLE_CART", payload: true })
   }
 
-  const cartIconCSS = css`
-    background-color: transparent;
-    cursor: pointer;
-    pointer-events: auto;
-    padding: 5px;
+  const cartIconCSS = css``
+  const cartIconInlineCSS = css``
 
-    &:hover,
-    &:focus {
-      border: none;
-      outline: none;
-      background-color: transparent;
-    }
-  `
+  useEffect(() => {
+    const HTMLEl = document.querySelector("html")
 
-  const cartIconInlineCSS = css`
-    border: none;
-    outline: none;
-    position: relative;
-    top: -5px;
-    right: 0px;
+    HTMLEl.style.setProperty(
+      "--cart-counterTextColor",
+      settings.counterTextColor
+    )
 
-    &:hover {
-      cursor: pointer;
-    }
+    HTMLEl.style.setProperty(
+      "--cart-iconInlineCounterBackgroundColor",
+      settings.counterBackgroundColor
+        ? settings.counterBackgroundColor
+        : shopwp.general.cartCounterBackgroundColor
+    )
 
-    .ball-pulse > div {
-      width: 9px;
-      height: 9px;
-    }
-
-    .wps-loader {
-      position: relative;
-      top: 2px;
-      left: 0.01em;
-    }
-  `
+    HTMLEl.style.setProperty("--cart-iconInlineColor", settings.inlineIconColor)
+  }, [])
 
   return usePortal(
     <button
       role="button"
-      className={`wps-btn-cart${
+      className={`swp-cart-icon swp-cart-icon-inline wps-btn-cart${
         shopState.cartData &&
         shopState.cartData.lines &&
         shopState.cartData.lines.edges.length

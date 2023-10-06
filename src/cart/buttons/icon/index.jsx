@@ -2,31 +2,16 @@
 import { jsx, css } from "@emotion/react"
 import { IconCSS } from "@shopwp/common"
 
-function CartIconWrapper({ settings, fixed = false }) {
-  const pathCSS = css`
-    fill: ${fixed ? settings.iconColor : settings.inlineIconColor};
-    margin: 0;
-    width: 28px;
-    max-width: 28px;
-    position: relative;
-    left: 1px;
-  `
-
-  const svgCSS = css`
-    width: 28px;
-    height: 28px;
-
-    &:hover {
-      opacity: ${fixed ? 0.6 : 1};
-    }
-  `
+function CartIconWrapper({ settings }) {
+  const pathCSS = css``
+  const svgCSS = css``
 
   return (
     <>
       {settings.icon ? (
         <img
           src={settings.icon}
-          className="wps-icon wps-icon-cart"
+          className="swp-icon swp-icon-cart wps-icon wps-icon-cart"
           css={IconCSS}
           loading="lazy"
         />
@@ -34,7 +19,7 @@ function CartIconWrapper({ settings, fixed = false }) {
         <svg
           css={[IconCSS, svgCSS]}
           xmlns="http://www.w3.org/2000/svg"
-          className="wps-icon wps-icon-cart"
+          className="swp-icon swp-icon-cart wps-icon wps-icon-cart"
           viewBox="0 0 25 25"
           enableBackground="new 0 0 25 25"
         >

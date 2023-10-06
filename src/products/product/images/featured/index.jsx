@@ -151,7 +151,11 @@ function ProductFeaturedImage() {
   }
 
   useEffect(() => {
-    if (galleryState.featImageIsVideo || settings.showZoom === false) {
+    if (
+      !galleryState.featImage ||
+      galleryState.featImageIsVideo ||
+      settings.showZoom === false
+    ) {
       return
     }
 

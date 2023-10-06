@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react"
+import { jsx, css } from "@emotion/react"
 import { useCartState } from "@shopwp/components"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import CartIconWrapper from "../icon"
@@ -42,70 +42,13 @@ function CartIconFixed() {
     }
   }
 
-  const cartIconCSS = css`
-    background-color: ${shopwp.general.cartIconBackgroundColor};
-    cursor: pointer;
-    pointer-events: auto;
-    padding: 5px;
-
-    &:hover,
-    &:focus {
-      border: none;
-      outline: none;
-      background-color: ${shopwp.general.cartIconBackgroundColor};
-    }
-  `
-
-  const slideInFromRight = keyframes`
-      0% {
-         transform: translateX(100%);
-      }
-      100% {
-         transform: translateX(calc(100% - 70px));
-      }
-   `
-
-  const cartIconFixedCSS = css`
-    position: fixed;
-    top: calc(50% - 80px);
-    right: 0;
-    z-index: 99999;
-    border-radius: ${shopwp.general.globalBorderRadius} 0 0
-      ${shopwp.general.globalBorderRadius};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 0 17px 0;
-    justify-content: center;
-    width: 70px;
-    height: 85px;
-    border: none;
-    outline: none;
-    overflow-y: visible;
-    animation: 0.25s ease-out 0s 1 ${slideInFromRight};
-
-    &:focus,
-    &:active {
-      position: fixed;
-      top: calc(50% - 80px);
-    }
-
-    &:hover {
-      cursor: pointer;
-      position: fixed;
-      top: calc(50% - 80px);
-
-      span,
-      svg {
-        opacity: 0.8;
-      }
-    }
-  `
+  const cartIconCSS = css``
+  const cartIconFixedCSS = css``
 
   return shouldShowCartButton() ? (
     <button
       role="button"
-      className={`wps-btn-cart wps-cart-icon-fixed${
+      className={`swp-cart-icon swp-cart-icon-fixed wps-btn-cart wps-cart-icon-fixed${
         shopState.cartData &&
         shopState.cartData.lines &&
         shopState.cartData.lines.edges.length
@@ -125,7 +68,7 @@ function CartIconFixed() {
         />
       ) : null}
 
-      <CartIconWrapper settings={cartState.settings} fixed={true} />
+      <CartIconWrapper settings={cartState.settings} />
     </button>
   ) : null
 }

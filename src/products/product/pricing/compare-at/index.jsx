@@ -33,7 +33,7 @@ function ProductPricesCompareAt({
 
   return (
     <>
-      <div className="swp-l-row">
+      <div className="swp-l-row swp-m-l-row">
         <ProductPrice
           selectedVariant={selectedVariant}
           compareAt={false}
@@ -41,7 +41,7 @@ function ProductPricesCompareAt({
           prices={prices}
         />
 
-        {compareAt && hasCompareAtPrice && selectedVariant ? (
+        {compareAt && hasCompareAtPrice ? (
           <>
             <ProductPriceSaleNotice
               fontSize={settings.pricingCompareAtTypeFontSize}
