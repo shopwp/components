@@ -96,6 +96,7 @@ function AddButton({
 
   const NoticeCSS = css`
     margin-top: 15px;
+    width: 100%;
   `
 
   const addToCartCSS = css`

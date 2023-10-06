@@ -59,8 +59,14 @@ function Dropdown({
     if (!selectedOptions) {
       setSelected(null)
       setSelectedText(label)
+    } else if (selectedOption) {
+      if (selectedOption.label) {
+        setSelectedText(selectedOption.label)
+      } else {
+        setSelectedText(selectedOption.value.name)
+      }
     }
-  }, [selectedOptions])
+  }, [selectedOptions, selectedOption])
 
   const DropdownButtonCSS = css`
     && {

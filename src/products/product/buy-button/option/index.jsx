@@ -79,4 +79,4 @@ function ProductOption({ children }) {
   return children
 }
 
-export default wp.element.memo(ProductOption)
+export default ProductOption
