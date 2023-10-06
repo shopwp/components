@@ -70,10 +70,7 @@ function ProductVariantButtonGroupWrapper({
           productBuyButtonState.allSelectableOptions,
         ]}
       >
-        <label
-          className="swp-l-row swp-l-col-center swp-m-l-col-start"
-          css={labelStyles}
-        >
+        <label className="swp-variant-label" css={labelStyles}>
           {wp.hooks.applyFilters(
             "product.optionName",
             option.name,

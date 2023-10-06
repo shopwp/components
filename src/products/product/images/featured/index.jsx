@@ -56,14 +56,6 @@ function ProductFeaturedImage() {
     return settings.showZoom
   }
 
-  function hasFeatImage() {
-    return (
-      galleryState.featImage &&
-      galleryState.featImageElement &&
-      paneElement.current
-    )
-  }
-
   function findNextImageIndex() {
     var foundIndex = 0
 
@@ -159,7 +151,7 @@ function ProductFeaturedImage() {
   }
 
   useEffect(() => {
-    if (galleryState.featImageIsVideo) {
+    if (galleryState.featImageIsVideo || settings.showZoom === false) {
       return
     }
 
