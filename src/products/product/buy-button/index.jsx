@@ -13,6 +13,7 @@ const Notice = wp.element.lazy(() =>
 )
 
 function ProductBuyButton() {
+  const { useEffect } = wp.element
   const productState = useProductState()
   const settings = useSettingsState()
   const shopState = useShopState()
@@ -27,6 +28,10 @@ function ProductBuyButton() {
   const unavailableNoticeCSS = css`
     margin-top: 15px;
   `
+
+  useEffect(() => {
+    wp.hooks.doAction("on.productBuyButtonRender", productState)
+  }, [])
 
   return usePortal(
     <ProductBuyButtonProvider payload={productState.payload}>

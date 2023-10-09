@@ -35,7 +35,6 @@ const ProductFeaturedImageVideo = wp.element.lazy(() =>
 
 function ProductFeaturedImage() {
   const { useEffect, useContext, useRef, useState, Suspense } = wp.element
-  const paneElement = useRef()
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const [originalFeatImg] = useState(galleryState.featImage)
   const settings = useSettingsState()
@@ -169,6 +168,7 @@ function ProductFeaturedImage() {
     if (zoomContainer.current) {
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
+        disableScrollLock: true,
       })
     }
   }, [galleryState.featImageElement, galleryState.featImage, settings.showZoom])
@@ -176,7 +176,6 @@ function ProductFeaturedImage() {
   return (
     <div
       className="wps-gallery-featured-wrapper"
-      ref={paneElement}
       css={paneElementCSS}
       onMouseEnter={isShowingNextOnHover() ? onMouseEnter : undefined}
       onMouseLeave={isShowingNextOnHover() ? onMouseLeave : undefined}
