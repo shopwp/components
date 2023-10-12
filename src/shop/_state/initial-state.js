@@ -8,7 +8,7 @@ function ShopInitialState(props) {
   Priorities:
   1. Use identity from shortcode / Render API
   2. Use cached identity from LS
-  3. Use default plugin settings
+  3. Use default plugin settings (will populate on server-side)
   
   */
   const buyerIdentity = {
@@ -17,13 +17,19 @@ function ShopInitialState(props) {
     token: "",
     country: props.country
       ? props.country.toUpperCase()
-      : savedIdentity.country.toUpperCase(),
+      : savedIdentity
+      ? savedIdentity.country.toUpperCase()
+      : false,
     language: props.language
       ? props.language.toUpperCase()
-      : savedIdentity.language.toUpperCase(),
+      : savedIdentity
+      ? savedIdentity.language.toUpperCase()
+      : false,
     currency: props.currency
       ? props.currency.toUpperCase()
-      : savedIdentity.currency.toUpperCase(),
+      : savedIdentity
+      ? savedIdentity.currency.toUpperCase()
+      : false,
   }
 
   var state = {

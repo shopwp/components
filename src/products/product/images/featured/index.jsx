@@ -168,7 +168,7 @@ function ProductFeaturedImage() {
     if (zoomContainer.current) {
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
-        disableScrollLock: true,
+        disableScrollLock: shopwp.misc.isMobile ? false : true,
       })
     }
   }, [galleryState.featImageElement, galleryState.featImage, settings.showZoom])
