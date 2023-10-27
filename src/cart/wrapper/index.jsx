@@ -55,6 +55,7 @@ function CartWrapper() {
   const doToggleCartTerms = useAction("do.toggleCartTerms", null)
   const doCheckout = useAction("do.checkout", null)
   const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity", null)
+
   const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
 
   function openCart() {

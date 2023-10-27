@@ -209,6 +209,7 @@ function ProductModalCloseIcon() {
     <svg
       focusable="false"
       role="img"
+      alt="Close modal icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
       css={ProductModalCloseIconCSS}

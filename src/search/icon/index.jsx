@@ -18,6 +18,7 @@ function SearchIcon() {
       aria-hidden="true"
       focusable="false"
       role="img"
+      alt="Search icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
       width="16px"

@@ -50,6 +50,7 @@ function QuantityButton({
       css={[QuantityIncDecCSS, customCSS]}
       type="button"
       role="button"
+      aria-label={"Quantity " + type + " button"}
       onClick={onClick}
     >
       {children}

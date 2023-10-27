@@ -6,7 +6,6 @@ function RootElement({ settings, id, skeletonType, type = "products" }) {
       data-wpshopify-component-type={type}
       data-wpshopify-skeleton-type={skeletonType}
       data-wpshopify-payload-settings={settings}
-      role={type}
     ></div>
   )
 }

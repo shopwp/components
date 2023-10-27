@@ -54,6 +54,7 @@ function ProductThumbnailImage({
     <div
       css={ThumbnailCSS}
       className="wps-component swp-product-thumbnail wps-component-products-images-thumbnail"
+      role="button"
       aria-label="Product Images Thumbnail"
       onClick={onClick}
       data-wps-is-active={isActive}

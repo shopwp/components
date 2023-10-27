@@ -22,6 +22,7 @@ function LinkModal({ children }) {
       onClick={onClick}
       css={LinkModalCSS}
       className="wps-link-modal"
+      aria-label="Link to modal window"
     >
       {children}
     </a>

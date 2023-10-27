@@ -29,12 +29,7 @@ function shouldShowSubscriptions(payload, settings) {
     var hasSellingPlans = false
   }
 
-  return (
-    shopwp.misc.hasRecharge &&
-    settings.subscriptions &&
-    settings.linkTo === "none" &&
-    hasSellingPlans
-  )
+  return shopwp.misc.hasRecharge && settings.subscriptions && hasSellingPlans
 }
 
 function ProductBuyButtonWrapper() {

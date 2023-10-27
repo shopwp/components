@@ -116,7 +116,7 @@ function CartLineItem({ lineItem }) {
   const lineItemQuantityWrapperCSS = css``
 
   return (
-    <div
+    <li
       className="swp-cart-lineitem wps-cart-lineitem"
       data-wps-is-updating={isUpdating}
       data-wps-is-available={lineItem.merchandise.availableForSale}
@@ -201,7 +201,7 @@ function CartLineItem({ lineItem }) {
         </div>
       </div>
       {notice ? <Notice status={notice.type}>{notice.message}</Notice> : null}
-    </div>
+    </li>
   )
 }
 
