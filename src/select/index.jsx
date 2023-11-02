@@ -4,7 +4,6 @@ import { Menu, MenuButton } from "@szhsin/react-menu"
 import "@szhsin/react-menu/dist/index.css"
 import "@szhsin/react-menu/dist/transitions/slide.css"
 import { usePortal } from "@shopwp/hooks"
-import { useSettingsState } from "../items/_state/settings/hooks"
 import { mq } from "@shopwp/common"
 
 const Loader = wp.element.lazy(() =>
@@ -32,6 +31,7 @@ function UpArrow() {
 function Dropdown({
   items,
   onChange,
+  settings,
   label = false,
   isBusy = false,
   dropzone = false,
@@ -47,10 +47,8 @@ function Dropdown({
   const [selected, setSelected] = useState(selectedOption)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedText, setSelectedText] = useState(
-    selectedOption ? selectedOption.label : label
+    selectedOption ? label + ": " + selectedOption.label : label
   )
-  const settings = useSettingsState()
-
   useEffect(() => {
     if (selectedOptions === null) {
       return
@@ -61,9 +59,9 @@ function Dropdown({
       setSelectedText(label)
     } else if (selectedOption) {
       if (selectedOption.label) {
-        setSelectedText(selectedOption.label)
+        setSelectedText(label + ": " + selectedOption.label)
       } else {
-        setSelectedText(selectedOption.value.name)
+        setSelectedText(label + ": " + selectedOption.value.name)
       }
     }
   }, [selectedOptions, selectedOption])
@@ -169,6 +167,8 @@ function Dropdown({
       padding: 0;
       width: ${inline ? "auto" : "100%"};
       min-width: ${inline ? "200px" : "auto"};
+      max-height: 350px;
+      overflow: scroll;
 
       > [class*="DropdownMenuItemCSS"]:first-of-type,
       > [class*="DropdownMenuItemCSS"]:first-of-type li {
@@ -194,7 +194,7 @@ function Dropdown({
     .wps-loader-wrapper {
       position: absolute;
       left: 10px;
-      top: 30px;
+      top: 5px;
       z-index: 2;
       background: ${settings && settings.variantDropdownButtonColor
         ? settings.variantDropdownButtonColor
@@ -223,49 +223,53 @@ function Dropdown({
     onChange(found)
 
     setSelected(found)
-    setSelectedText(found.value)
+    setSelectedText(label + ": " + found.value)
   }
 
-  return usePortal(
-    <div className="swp-dropdown-label" css={DropdownLabel}>
-      {isBusy ? (
-        <Loader
-          color={
-            settings && settings.variantDropdownButtonTextColor
-              ? settings.variantDropdownButtonTextColor
-              : "black"
-          }
-        />
-      ) : null}
-      <Menu
-        aria-label="Select dropdown menu"
-        onItemClick={onItemClick}
-        gap={5}
-        onMenuChange={onMenuChange}
-        menuButton={
-          <MenuButton css={DropdownButtonCSS}>
-            <span>{selectedText}</span>{" "}
-            {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
-          </MenuButton>
-        }
-        transition
-      >
-        {items.map((item, index) => (
-          <SelectItem
-            key={`${item.label}${index}`}
-            item={item}
-            selected={selected}
-            isVariant={isVariant}
-            allSelectableOptions={allSelectableOptions}
-            selectedOptions={selectedOptions}
-            variants={variants}
-            settings={settings}
-          />
-        ))}
-      </Menu>
-    </div>,
-    dropzone
-  )
+  return items
+    ? usePortal(
+        <div className="swp-dropdown-label" css={DropdownLabel}>
+          {isBusy ? (
+            <Loader
+              color={
+                settings && settings.variantDropdownButtonTextColor
+                  ? settings.variantDropdownButtonTextColor
+                  : "black"
+              }
+            />
+          ) : null}
+          <Menu
+            aria-label="Select dropdown menu"
+            onItemClick={onItemClick}
+            gap={5}
+            onMenuChange={onMenuChange}
+            menuButton={
+              <MenuButton css={DropdownButtonCSS}>
+                <span>{selectedText}</span>{" "}
+                {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
+              </MenuButton>
+            }
+            transition
+          >
+            {items.length
+              ? items.map((item, index) => (
+                  <SelectItem
+                    key={item.value}
+                    item={item}
+                    selected={selected}
+                    isVariant={isVariant}
+                    allSelectableOptions={allSelectableOptions}
+                    selectedOptions={selectedOptions}
+                    variants={variants}
+                    settings={settings}
+                  />
+                ))
+              : null}
+          </Menu>
+        </div>,
+        dropzone
+      )
+    : null
 }
 
 export default Dropdown

@@ -6,6 +6,8 @@ import {
 } from "../../_state/hooks"
 import { onVariantSelection } from "@shopwp/common"
 
+import { useSettingsState } from "../../../../../items/_state/settings/hooks"
+
 const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
 )
@@ -20,6 +22,7 @@ function ProductOptionDropdown({
   const productBuyButtonState = useProductBuyButtonState()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
   const dropdownElement = useRef()
+  const settings = useSettingsState()
 
   const items = option.values.map((opt) => {
     return {
@@ -63,6 +66,7 @@ function ProductOptionDropdown({
       >
         <Suspense fallback="Loading ...">
           <Dropdown
+            settings={settings}
             items={items}
             onChange={onSelection}
             label={option.name}

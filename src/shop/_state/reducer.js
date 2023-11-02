@@ -38,6 +38,10 @@ function ShopReducer(state, action) {
       return rSet("t", action, state)
     }
 
+    case "SET_DIRECT_CHECKOUT_ERROR": {
+      return rSet("directCheckoutError", action, state)
+    }
+
     case "SET_PRODUCTS_VISIBLE": {
       return rSet("productsVisible", action, state)
     }

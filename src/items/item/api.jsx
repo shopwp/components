@@ -268,6 +268,8 @@ function useGetItemsQuery(setNotice) {
       })
     }
   }, [query.data])
+
+  return query
 }
 
 function useGetTemplateQuery(setNotice) {

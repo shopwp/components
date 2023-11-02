@@ -157,6 +157,7 @@ function ProductsSorting() {
         <Suspense fallback="Loading ...">
           <div id="shopwp-storefront-sorting" css={sortingWrapperCSS}>
             <Dropdown
+              settings={settings}
               items={
                 requestsState.queryType !== "products"
                   ? collectionOptionsNew

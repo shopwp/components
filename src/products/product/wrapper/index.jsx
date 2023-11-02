@@ -66,8 +66,6 @@ function ProductWrapper({ payload }) {
       ? "380px"
       : "100%"};
 
-      
-
     > div:nth-last-of-type(2) {
       flex: ${isAlignHeight() ? "1" : "none"};
     }

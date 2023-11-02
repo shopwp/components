@@ -293,6 +293,20 @@ function AddButton({
     }
   }, [selectedOptions])
 
+  useEffect(() => {
+    if (!shopState.directCheckoutError) {
+      return
+    }
+    setIsCheckingOut(false)
+    productBuyButtonDispatch({
+      type: "SET_NOTICE",
+      payload: {
+        type: "error",
+        message: shopState.directCheckoutError,
+      },
+    })
+  }, [shopState.directCheckoutError])
+
   return (
     <>
       <button

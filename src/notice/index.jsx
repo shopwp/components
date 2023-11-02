@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import useIsMounted from "ismounted"
 import Expire from "../expire"
 
 function Notice({
@@ -12,7 +11,6 @@ function Notice({
   element = false,
   isFetchingNew = false,
 }) {
-  const isMounted = useIsMounted()
   const { useEffect } = wp.element
 
   const noticeStyles = css`
@@ -45,7 +43,7 @@ function Notice({
 
   return (
     <>
-      {status === "success" && isMounted.current ? (
+      {status === "success" ? (
         <Expire delay={5000}>
           <p css={[noticeStyles, extraCSS]}>{children}</p>
         </Expire>

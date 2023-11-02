@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useProductState } from "../../_state/hooks"
 import { useShopState } from "../../../../shop/_state/hooks"
 import ProductPrice from "../price"
@@ -28,31 +26,10 @@ function ProductPrices() {
 
   const prices = getPrices(productState.payload)
 
-  const ProductPricesCompareAtCSS = css`
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    position: relative;
-    margin-bottom: ${settings.isSingleComponent || settings.type === "search"
-      ? "0px"
-      : "20px"};
-
-    + .wps-buy-button-wrapper > .wps-product-quantity-wrapper {
-      margin-top: 1.7em;
-    }
-
-    + .shopwp-reviews-wrapper,
-    + .wps-component-products-reviews {
-      margin-top: 0;
-      margin-bottom: 15px;
-    }
-  `
-
   return (
     <div
-      className="wps-component-products-pricing"
+      className={"swp-product-pricing " + settings.pricingClassName}
       aria-label="Product Pricing"
-      css={ProductPricesCompareAtCSS}
       itemScope
       itemProp="offers"
       itemType="https://schema.org/Offer"

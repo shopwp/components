@@ -7,8 +7,18 @@ import isBase64 from "is-base64"
 Does not run for inline cart icon
 
 */
-function updateVariablesInCSS(componentType, settings) {
-  const container = document.querySelector("#shopwp-root")
+function updateVariablesInCSS(componentType, settings, element) {
+  if (shopwp.misc.isAdmin) {
+    var container = document.querySelector("#editor")
+  } else {
+    var container = document.querySelector("#shopwp-root")
+  }
+
+  if (!container) {
+    console.warn(
+      "ShopWP Warning: No container found for style variable injections"
+    )
+  }
 
   if (componentType === "cart") {
     container.style.setProperty(
@@ -22,12 +32,110 @@ function updateVariablesInCSS(componentType, settings) {
       "--cart-iconFixedCounterBackgroundColor",
       settings.backgroundColor
     )
+  } else if (componentType === "products") {
+    if (element) {
+      container = element
+    }
+
+    container.style.setProperty(
+      "--product-titleTypeFontFamily",
+      settings.titleTypeFontFamily ? settings.titleTypeFontFamily : "inherit"
+    )
+    container.style.setProperty(
+      "--product-titleTypeFontWeight",
+      settings.titleTypeFontWeight ? settings.titleTypeFontWeight : "initial"
+    )
+
+    container.style.setProperty(
+      "--product-titleTypeFontSize",
+      settings.titleTypeFontSize ? settings.titleTypeFontSize : "initial"
+    )
+
+    container.style.setProperty(
+      "--product-titleTypeLineHeight",
+      settings.titleTypeLineHeight ? settings.titleTypeLineHeight : "initial"
+    )
+
+    container.style.setProperty(
+      "--product-titleTypeTextDecoration",
+      settings.titleTypeTextDecoration
+        ? settings.titleTypeTextDecoration
+        : "initial"
+    )
+
+    container.style.setProperty(
+      "--product-titleTypeTextTransform",
+      settings.titleTypeTextTransform
+        ? settings.titleTypeTextTransform
+        : "initial"
+    )
+
+    container.style.setProperty(
+      "--product-titleTypeFontStyle",
+      settings.titleTypeFontStyle ? settings.titleTypeFontStyle : "initial"
+    )
+
+    container.style.setProperty("--product-titleColor", settings.titleColor)
+
+    container.style.setProperty(
+      "--product-descriptionColor",
+      settings.descriptionColor
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeFontFamily",
+      settings.descriptionTypeFontFamily
+        ? settings.descriptionTypeFontFamily
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeFontWeight",
+      settings.descriptionTypeFontWeight
+        ? settings.descriptionTypeFontWeight
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeFontSize",
+      settings.descriptionTypeFontSize
+        ? settings.descriptionTypeFontSize
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeFontStyle",
+      settings.descriptionTypeFontStyle
+        ? settings.descriptionTypeFontStyle
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeLetterSpacing",
+      settings.descriptionTypeLetterSpacing
+        ? settings.descriptionTypeLetterSpacing
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeLineHeight",
+      settings.descriptionTypeLineHeight
+        ? settings.descriptionTypeLineHeight
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeTextDecoration",
+      settings.descriptionTypeTextDecoration
+        ? settings.descriptionTypeTextDecoration
+        : "initial"
+    )
+    container.style.setProperty(
+      "--product-descriptionTypeTextTransform",
+      settings.descriptionTypeTextTransform
+        ? settings.descriptionTypeTextTransform
+        : "initial"
+    )
   }
 }
 
 function SettingsInitialState({
   settings = false,
   componentType = "products",
+  element,
 }) {
   settings = mergeDefaults(settings, defaults[componentType])
 
@@ -41,7 +149,7 @@ function SettingsInitialState({
     }
   }
 
-  updateVariablesInCSS(componentType, settings)
+  updateVariablesInCSS(componentType, settings, element)
 
   return {
     ...settings,

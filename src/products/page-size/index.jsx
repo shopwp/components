@@ -78,6 +78,7 @@ function ProductsPageSize() {
     <div id="shopwp-storefront-page-size" css={pageSizeWrapperCSS}>
       <Suspense fallback="Loading ...">
         <Dropdown
+          settings={settings}
           items={options}
           onChange={customOnChange}
           label={settings.pageSizeLabelText}

@@ -295,7 +295,10 @@ async function directCheckout(
 
   if (maybeApiError) {
     cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
-    shopDispatch({ type: "TOGGLE_CART", payload: true })
+    shopDispatch({
+      type: "SET_DIRECT_CHECKOUT_ERROR",
+      payload: maybeApiError,
+    })
     return
   }
 

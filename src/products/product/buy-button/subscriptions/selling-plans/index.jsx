@@ -16,7 +16,6 @@ import {
 } from "@shopwp/api"
 import { getFirstSellingPlanData } from "@shopwp/common"
 
-import useIsMounted from "ismounted"
 import SubscriptionSkeleton from "../skeleton"
 import { to } from "@shopwp/common"
 
@@ -26,7 +25,7 @@ const Notice = wp.element.lazy(() =>
 
 function SellingPlans({ sellingGroup, setSellingGroup }) {
   const { useEffect } = wp.element
-  const isMounted = useIsMounted()
+
   const dispatch = useSubscriptionsBuyButtonDispatch()
   const state = useSubscriptionsBuyButtonState()
   const shopState = useShopState()
@@ -42,10 +41,6 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
   `
 
   async function fetchSellingGroups(productId) {
-    if (!isMounted.current) {
-      return
-    }
-
     dispatch({
       type: "SET_IS_LOADING_SELLING_GROUPS",
       payload: true,
@@ -79,10 +74,6 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
       return
     }
 
-    if (!isMounted.current) {
-      return
-    }
-
     if (!resp.data) {
       return
     }
@@ -106,11 +97,11 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
   }
 
   useEffect(() => {
-    if (!isMounted.current) {
+    if (sellingGroup) {
       return
     }
 
-    if (sellingGroup) {
+    if (!state || !state.id) {
       return
     }
 

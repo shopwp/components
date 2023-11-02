@@ -11,37 +11,6 @@ function ProductTitle() {
   const settings = useSettingsState()
   const productState = useProductState()
 
-  const titleStyles = css`
-    && {
-      font-family: ${settings.titleTypeFontFamily
-        ? settings.titleTypeFontFamily
-        : "inherit"};
-      font-weight: ${settings.titleTypeFontWeight
-        ? settings.titleTypeFontWeight
-        : "initial"};
-      font-size: ${settings.titleTypeFontSize};
-      letter-spacing: ${settings.titleTypeLetterSpacing
-        ? settings.titleTypeLetterSpacing
-        : "initial"};
-      line-height: ${settings.titleTypeLineHeight
-        ? settings.titleTypeLineHeight
-        : "initial"};
-      text-decoration: ${settings.titleTypeTextDecoration
-        ? settings.titleTypeTextDecoration
-        : "initial"};
-      text-transform: ${settings.titleTypeTextTransform
-        ? settings.titleTypeTextTransform
-        : "initial"};
-      font-style: ${settings.titleTypeFontStyle
-        ? settings.titleTypeFontStyle
-        : "initial"};
-
-      color: ${settings.titleColor};
-      white-space: normal;
-      margin: 0;
-    }
-  `
-
   const titleStylesWrapper = css`
     margin-bottom: ${settings.isSingleComponent ? "0px" : "10px"};
   `
@@ -61,17 +30,17 @@ function ProductTitle() {
           linkTitle={productState.payload.title}
           payload={productState.payload}
         >
-          <Title styles={titleStyles} classList={settings.titleClassName} />
+          <Title classList={"swp-product-title " + settings.titleClassName} />
         </Link>
       ) : (
-        <Title styles={titleStyles} classList={settings.titleClassName} />
+        <Title classList={"swp-product-title " + settings.titleClassName} />
       )}
     </div>,
     settings.dropzoneProductTitle
   )
 }
 
-function Title({ styles, classList }) {
+function Title({ classList }) {
   const productState = useProductState()
   const CustomHeading = `h${shopwp.misc.isSingularProducts ? "1" : "2"}`
 
@@ -86,12 +55,7 @@ function Title({ styles, classList }) {
       <FilterHook name="before.productTitle" args={[productState]} />
 
       <FilterHook name="product.titleHtml" args={[productState]}>
-        <CustomHeading
-          itemProp="name"
-          content={heading}
-          className={classList}
-          css={styles}
-        >
+        <CustomHeading itemProp="name" content={heading} className={classList}>
           {heading}
         </CustomHeading>
       </FilterHook>

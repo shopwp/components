@@ -1,5 +1,6 @@
 import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
+import { useSettingsState } from "../../../../../items/_state/settings/hooks"
 
 const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
@@ -9,6 +10,7 @@ function SellingPlansList({ plans, sellingGroup }) {
   const { useState, Suspense } = wp.element
   const buyButtonDispatch = useProductBuyButtonDispatch()
   const shopState = useShopState()
+  const settings = useSettingsState()
 
   const newPlans = plans.map((plan) => {
     return {
@@ -40,6 +42,7 @@ function SellingPlansList({ plans, sellingGroup }) {
   return (
     <Suspense fallback="Loading ...">
       <Dropdown
+        settings={settings}
         items={newPlans}
         onChange={onChange}
         label={shopState.t.l.selectDelivery}

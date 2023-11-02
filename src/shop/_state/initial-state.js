@@ -42,6 +42,7 @@ function ShopInitialState(props) {
     theme: shopwp.misc.theme,
     productsVisible: false,
     trackingParams: false,
+    directCheckoutError: null,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)
