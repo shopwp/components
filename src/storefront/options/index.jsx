@@ -1,7 +1,7 @@
 import isEmpty from "lodash-es/isEmpty"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import StorefrontOptionsWrapper from "./wrapper"
-import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
+import { buildNewSelection } from "@shopwp/common"
 
 function StorefrontOptions({ settings }) {
   const { useEffect } = wp.element
@@ -17,33 +17,31 @@ function StorefrontOptions({ settings }) {
       storefrontState.lastSelected.itemValue,
       storefrontState.lastSelected.itemType,
       storefrontState.lastSelected.isSelected,
-      storefrontState.selections
+      storefrontState.selections,
+      storefrontState.initialSelections
     )
 
     storefrontDispatch({
       type: "SET_SELECTIONS",
-      payload: createSelectionsOfType(
-        storefrontState.lastSelected.itemType,
-        newList
-      ),
+      payload: newList.allSelections,
     })
 
-    storefrontDispatch({
-      type:
-        "SET_SELECTED_" +
-        String(storefrontState.lastSelected.itemType).toUpperCase(),
-      payload: newList,
-    })
+    for (const prop in newList.allSelections) {
+      storefrontDispatch({
+        type: "SET_SELECTED_" + String(prop).toUpperCase(),
+        payload: newList.allSelections[prop],
+      })
+    }
 
-    if (newList.length) {
+    if (isEmpty(newList.allSelections)) {
       storefrontDispatch({
         type: "SET_HAS_SELECTIONS",
-        payload: true,
+        payload: false,
       })
     } else {
       storefrontDispatch({
         type: "SET_HAS_SELECTIONS",
-        payload: false,
+        payload: true,
       })
     }
   }, [storefrontState.lastSelected])

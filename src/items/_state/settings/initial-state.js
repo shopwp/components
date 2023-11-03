@@ -32,7 +32,7 @@ function updateVariablesInCSS(componentType, settings, element) {
       "--cart-iconFixedCounterBackgroundColor",
       settings.backgroundColor
     )
-  } else if (componentType === "products") {
+  } else {
     if (element) {
       container = element
     }

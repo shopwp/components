@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
+import { getImageWidth, getImageHeight } from "@shopwp/common"
 
 function Img(props) {
   function isSelectedImage() {
@@ -76,6 +77,8 @@ function Img(props) {
         loading="lazy"
         alt={props.image.altText ? props.image.altText : ""}
         data-zoom={props.image.originalSrc}
+        width={getImageWidth(props.settings)}
+        height={getImageHeight(props.settings)}
       />
       {props.isVideo ? (
         <svg

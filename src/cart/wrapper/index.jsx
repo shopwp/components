@@ -263,6 +263,20 @@ function CartWrapper() {
   const cartContainerCSS = css``
   const cartInnerCSS = css``
 
+  var isReadyToCheckout =
+    cartState.isCheckingOut ||
+    (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+    (shopwp.general.noteRequired && !cartState.note) ||
+    !shopState.cartData ||
+    !shopState.cartData.lines.edges.length
+
+  isReadyToCheckout = wp.hooks.applyFilters(
+    "cart.checkoutButtonDisabled",
+    isReadyToCheckout,
+    shopState.cartData,
+    cartState
+  )
+
   return (
     <div
       css={cartContainerCSS}
@@ -275,11 +289,7 @@ function CartWrapper() {
           ? " swp-cart-is-not-empty"
           : " swp-cart-is-empty"
       }${
-        cartState.isCheckingOut ||
-        (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
-        (!cartState.note && shopwp.general.noteRequired) ||
-        !shopState.cartData ||
-        !shopState.cartData.lines.edges.length
+        isReadyToCheckout
           ? " swp-cart-is-not-ready-to-checkout"
           : " swp-cart-is-ready-to-checkout"
       }`}

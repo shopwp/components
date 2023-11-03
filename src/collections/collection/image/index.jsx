@@ -75,6 +75,7 @@ function CollectionImage() {
             src={imageSrc}
             isFeatured={true}
             linkTo={settings.collectionsLinkTo}
+            settings={settings}
           />
         </Link>
       </div>

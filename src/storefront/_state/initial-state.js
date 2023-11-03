@@ -16,6 +16,7 @@ function StorefrontInitialState(props) {
     element: props.element ? props.element : false,
     settings: props.settings ? props.settings : false,
     selections: {},
+    initialSelections: {},
     selectedTags: [],
     selectedTypes: [],
     selectedVendors: [],

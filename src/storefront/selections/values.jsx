@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { IconRemove } from "@shopwp/components"
-import { createSelectionsOfType, buildNewSelection } from "@shopwp/common"
+import { buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import { useShopState } from "@shopwp/components"
 import { useRequestsState } from "../../items/_state/requests/hooks"
@@ -12,28 +12,37 @@ function StorefrontSelectionsValue({ selectionType, val }) {
   const shopState = useShopState()
   const requestsState = useRequestsState()
 
+  if (storefrontState.initialSelections[selectionType]) {
+    var isAnInitialSelection =
+      storefrontState.initialSelections[selectionType].includes(val)
+  } else {
+    var isAnInitialSelection = false
+  }
+
   function onClick(e) {
-    if (requestsState.isFetchingNew) {
+    if (requestsState.isFetchingNew || isAnInitialSelection) {
       return
     }
-    const newList = buildNewSelection(
+
+    const newSelections = buildNewSelection(
       val,
       selectionType,
       false,
-      storefrontState.selections
+      storefrontState.selections,
+      storefrontState.initialSelections
     )
-
-    var createdSelections = createSelectionsOfType(selectionType, newList)
 
     storefrontDispatch({
       type: "SET_SELECTIONS",
-      payload: createdSelections,
+      payload: newSelections.allSelections,
     })
 
-    storefrontDispatch({
-      type: "SET_SELECTED_" + String(selectionType).toUpperCase(),
-      payload: newList,
-    })
+    for (const prop in newSelections.allSelections) {
+      storefrontDispatch({
+        type: "SET_SELECTED_" + String(prop).toUpperCase(),
+        payload: newSelections.allSelections[prop],
+      })
+    }
   }
 
   const selectionValueCSS = css`
@@ -48,11 +57,15 @@ function StorefrontSelectionsValue({ selectionType, val }) {
     align-items: center;
     border: 1px solid silver;
     border-radius: ${shopwp.general.globalBorderRadius};
-    opacity: ${requestsState.isFetchingNew ? "0.6" : 1};
+    opacity: ${requestsState.isFetchingNew || isAnInitialSelection ? "0.6" : 1};
 
     &:hover {
-      cursor: ${requestsState.isFetchingNew ? "not-allowed" : "pointer"};
-      opacity: ${requestsState.isFetchingNew ? "0.6" : "0.8"};
+      cursor: ${requestsState.isFetchingNew || isAnInitialSelection
+        ? "not-allowed"
+        : "pointer"};
+      opacity: ${requestsState.isFetchingNew || isAnInitialSelection
+        ? "0.6"
+        : "0.8"};
     }
 
     .wps-icon {
@@ -86,7 +99,7 @@ function StorefrontSelectionsValue({ selectionType, val }) {
         : typeof val === "string"
         ? val
         : val.label}
-      <IconRemove />
+      {isAnInitialSelection ? null : <IconRemove />}
     </span>
   )
 }

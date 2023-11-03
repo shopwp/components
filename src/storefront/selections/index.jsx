@@ -29,6 +29,7 @@ function StorefrontSelections() {
           !objectIsEmpty(storefrontState.selections) ? (
             <StorefrontSelectionsWrapper
               selections={storefrontState.selections}
+              initialSelections={storefrontState.initialSelections}
             />
           ) : null,
           settings.dropzoneSelections

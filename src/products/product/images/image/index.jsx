@@ -73,13 +73,6 @@ function ProductImage({
     }
   }, [image, settings])
 
-  /*
-   
-   TODO: Fix duplication here. For some reason the Drift image zoom breaks if we move 
-   the image tag into a reusable component. Probably something to do with ref forwarding.
-
-   */
-
   return productImageSrc ? (
     hasLink(settings) && isFeatured ? (
       <Link
@@ -97,6 +90,7 @@ function ProductImage({
           isFeatured={isFeatured}
           linkTo={settings.linkTo}
           isVideo={isVideo}
+          settings={settings}
         />
       </Link>
     ) : (
@@ -108,6 +102,7 @@ function ProductImage({
         isFeatured={isFeatured}
         linkTo={settings.linkTo}
         isVideo={isVideo}
+        settings={settings}
       />
     )
   ) : null

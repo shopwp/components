@@ -33,6 +33,10 @@ function StorefrontReducer(state, action) {
       return rSet("hasSelections", action, state)
     }
 
+    case "SET_INITIAL_SELECTIONS": {
+      return rSet("initialSelections", action, state)
+    }
+
     case "CLEAR_SELECTIONS": {
       return {
         ...state,
@@ -76,7 +80,7 @@ function StorefrontReducer(state, action) {
 
       return {
         ...state,
-        selections: update(state.selections, { $merge: action.payload }),
+        selections: update(state.selections, { $set: action.payload }),
       }
     }
 

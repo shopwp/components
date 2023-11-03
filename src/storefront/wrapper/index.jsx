@@ -41,14 +41,13 @@ function StorefrontWrapper() {
   const storefrontState = useStorefrontState()
   const storefrontDispatch = useStorefrontDispatch()
 
-  useEffect(() => {
-    if (storefrontState.hasSelections === false) {
-      storefrontDispatch({ type: "CLEAR_SELECTIONS" })
-    }
-  }, [storefrontState.hasSelections])
-
   function setInitialSelections() {
     var initialSelections = getInitialSelections(settings)
+
+    storefrontDispatch({
+      type: "SET_INITIAL_SELECTIONS",
+      payload: initialSelections,
+    })
 
     storefrontDispatch({
       type: "SET_SELECTIONS",
@@ -64,6 +63,12 @@ function StorefrontWrapper() {
       }
     })
   }
+
+  useEffect(() => {
+    if (storefrontState.hasSelections === false) {
+      storefrontDispatch({ type: "CLEAR_SELECTIONS" })
+    }
+  }, [storefrontState.hasSelections])
 
   useEffect(() => {
     if (isFirstRender) {

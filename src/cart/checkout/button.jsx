@@ -41,17 +41,23 @@ function CartCheckoutButton({ onCheckout }) {
     })
   }
 
+  var shouldDisable =
+    cartState.isCheckingOut ||
+    (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
+    (shopwp.general.noteRequired && !cartState.note) ||
+    !shopState.cartData ||
+    !shopState.cartData.lines.edges.length
+
   return (
     <button
       className="swp-btn-checkout wps-btn-checkout"
       onClick={onCheckout}
-      disabled={
-        cartState.isCheckingOut ||
-        (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
-        (shopwp.general.noteRequired && !cartState.note) ||
-        !shopState.cartData ||
-        !shopState.cartData.lines.edges.length
-      }
+      disabled={wp.hooks.applyFilters(
+        "cart.checkoutButtonDisabled",
+        shouldDisable,
+        shopState.cartData,
+        cartState
+      )}
       css={[buttonCSS, checkoutButtonCSS]}
     >
       {cartState.isCheckingOut ? (
