@@ -45,54 +45,14 @@ function StorefrontSelectionsValue({ selectionType, val }) {
     }
   }
 
-  const selectionValueCSS = css`
-    margin-right: 8px;
-    margin-bottom: 0;
-    text-transform: capitalize;
-    padding: 5px 9px 5px 12px;
-    background: transparent;
-    font-size: 14px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    border: 1px solid silver;
-    border-radius: ${shopwp.general.globalBorderRadius};
-    opacity: ${requestsState.isFetchingNew || isAnInitialSelection ? "0.6" : 1};
-
-    &:hover {
-      cursor: ${requestsState.isFetchingNew || isAnInitialSelection
-        ? "not-allowed"
-        : "pointer"};
-      opacity: ${requestsState.isFetchingNew || isAnInitialSelection
-        ? "0.6"
-        : "0.8"};
-    }
-
-    .wps-icon {
-      width: 7px;
-      height: 7px;
-      display: inline-block;
-      right: 2px;
-      position: relative;
-      top: 0;
-      margin-left: 10px;
-    }
-
-    .wps-icon svg {
-      width: 7px;
-      height: 7px;
-      display: inline-block;
-      position: relative;
-      position: absolute;
-      top: 0;
-    }
-  `
+  const selectionValueCSS = css``
 
   return (
     <span
-      className="wps-filter-selection-value wps-mr-2"
+      className="swp-storefront-selection-value wps-filter-selection-value wps-mr-2"
       onClick={onClick}
       css={selectionValueCSS}
+      data-initial-selection={isAnInitialSelection}
     >
       {selectionType === "available_for_sale"
         ? shopState.t.l.availSale

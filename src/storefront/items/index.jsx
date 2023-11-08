@@ -16,28 +16,19 @@ function StorefrontItems() {
   const settings = useSettingsState()
   const requestsState = useRequestsState()
 
-  const noticeCSS = css`
-    && {
-      margin-left: 40px;
-      margin-top: 0;
-    }
-  `
-
-  const storefrontItemsWrapperCSS = css`
-    position: relative;
-    flex: 1;
-  `
+  const storefrontItemsWrapperCSS = css``
 
   return usePortal(
-    <div css={storefrontItemsWrapperCSS}>
+    <div
+      className="swp-storefront-items-wrapper"
+      css={storefrontItemsWrapperCSS}
+    >
       {payload && payload.length ? (
         <Pagination queryType="products" payload={payload}>
           <Product settings={settings} />
         </Pagination>
       ) : !requestsState.isBootstrapping ? (
-        <Notice css={noticeCSS} status="info">
-          {settings.noResultsText}
-        </Notice>
+        <Notice status="info">{settings.noResultsText}</Notice>
       ) : null}
     </div>,
     settings.dropzonePayload

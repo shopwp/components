@@ -41,6 +41,9 @@ function StorefrontWrapper() {
   const storefrontState = useStorefrontState()
   const storefrontDispatch = useStorefrontDispatch()
 
+  const StorefrontCSS = css``
+  const SelectorsCSS = css``
+
   function setInitialSelections() {
     var initialSelections = getInitialSelections(settings)
 
@@ -166,23 +169,14 @@ function StorefrontWrapper() {
     })
   }, [storefrontState.selections])
 
-  const StorefrontCSS = css`
-    max-width: 1500px;
-    width: 100%;
-    padding-top: 0;
-    margin: 0 auto;
-  `
-
-  const SelectorsCSS = css`
-    min-height: 52px;
-    width: 100%;
-    padding: 0;
-    margin: 0 0 -10px 0;
-  `
-
   return (
     <Suspense fallback={false}>
-      <section id="shopwp-storefront" css={StorefrontCSS}>
+      <section
+        id="shopwp-storefront"
+        className="swp-storefront"
+        css={StorefrontCSS}
+        data-is-fetching={requestsState.isFetchingNew}
+      >
         <div className="swp-l-row">
           {settings.withSearch ? (
             <SearchWrapper
@@ -192,7 +186,10 @@ function StorefrontWrapper() {
           ) : null}
         </div>
 
-        <div className="swp-l-row swp-l-row-between" css={SelectorsCSS}>
+        <div
+          className="swp-storefront-selectors swp-l-row swp-l-row-between"
+          css={SelectorsCSS}
+        >
           {settings.showSelections ? <StorefrontSelections /> : null}
         </div>
 

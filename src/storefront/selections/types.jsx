@@ -8,14 +8,11 @@ import isEmpty from "lodash-es/isEmpty"
 function StorefrontSelectionsType({ selectionType }) {
   const storefrontState = useStorefrontState()
 
-  const filterSelectionGroupCSS = css`
-    display: flex;
-    flex-wrap: wrap;
-  `
+  const filterSelectionGroupCSS = css``
   return !isEmpty(storefrontState.selections[selectionType]) ? (
     <div className="wps-filter-selection-type">
       <div
-        className="wps-selections-group align-items-center"
+        className="swp-selections-group swp-l-row wps-selections-group align-items-center"
         css={filterSelectionGroupCSS}
       >
         <StorefrontSelectionsValues

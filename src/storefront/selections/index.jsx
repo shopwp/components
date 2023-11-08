@@ -16,15 +16,15 @@ function StorefrontSelections() {
   const storefrontState = useStorefrontState()
   const settings = useSettingsState()
 
-  const StorefrontSelectionsCSS = css`
-    display: flex;
-    max-width: 50%;
-    flex-wrap: wrap;
-  `
+  const StorefrontSelectionsCSS = css``
 
   return (
     <Suspense fallback={false}>
-      <div id="shopwp-storefront-selections" css={StorefrontSelectionsCSS}>
+      <div
+        id="shopwp-storefront-selections"
+        className="swp-storefront-selections"
+        css={StorefrontSelectionsCSS}
+      >
         {usePortal(
           !objectIsEmpty(storefrontState.selections) ? (
             <StorefrontSelectionsWrapper

@@ -1,5 +1,6 @@
 import { rSet, rErr } from "@shopwp/common"
 import update from "immutability-helper"
+import { maybeSetCache } from "@shopwp/api"
 
 function ShopReducer(state, action) {
   switch (action.type) {
@@ -28,6 +29,14 @@ function ShopReducer(state, action) {
 
     case "SET_CART_DATA": {
       const updatedShopState = rSet("cartData", action, state)
+
+      if (action.payload) {
+        maybeSetCache({
+          cacheType: "cart",
+          dataToHash: action.payload.id,
+          dataToCache: action.payload,
+        })
+      }
 
       wp.hooks.doAction("on.cartUpdate", updatedShopState)
 

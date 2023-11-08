@@ -32,6 +32,20 @@ function updateVariablesInCSS(componentType, settings, element) {
       "--cart-iconFixedCounterBackgroundColor",
       settings.backgroundColor
     )
+
+    container.style.setProperty(
+      "--border-radius",
+      shopwp.general.globalBorderRadius
+    )
+
+    container.style.setProperty(
+      "--cart-buttonColor",
+      shopwp.general.checkoutColor
+    )
+    container.style.setProperty(
+      "--cart-iconBackgroundColor",
+      shopwp.general.cartIconBackgroundColor
+    )
   } else {
     if (element) {
       container = element
@@ -128,6 +142,10 @@ function updateVariablesInCSS(componentType, settings, element) {
       settings.descriptionTypeTextTransform
         ? settings.descriptionTypeTextTransform
         : "initial"
+    )
+    container.style.setProperty(
+      "--border-radius",
+      shopwp.general.globalBorderRadius
     )
   }
 }

@@ -4,15 +4,13 @@ import StorefrontSelectionsClear from "./clear"
 import { StorefrontSelectionsTypes } from "./types"
 
 function StorefrontSelectionsWrapper({ selections, initialSelections }) {
-  const StorefrontSelectionsWrapperCSS = css`
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    flex-wrap: wrap;
-  `
+  const StorefrontSelectionsWrapperCSS = css``
 
   return (
-    <div className="wps-filter-selections" css={StorefrontSelectionsWrapperCSS}>
+    <div
+      className="swp-l-row swp-l-baseline wps-filter-selections"
+      css={StorefrontSelectionsWrapperCSS}
+    >
       <StorefrontSelectionsTypes selections={selections} />
       {Object.keys(initialSelections).length ? null : (
         <StorefrontSelectionsClear />

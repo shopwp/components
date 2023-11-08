@@ -10,6 +10,9 @@ import {
   applyDiscount,
   updateNote,
   updateBuyerIdentity,
+  getCache,
+  maybeSetCache,
+  clearCache,
 } from "@shopwp/api"
 import { checkoutRedirect } from "@shopwp/common"
 import Cookies from "js-cookie"
@@ -42,10 +45,14 @@ async function updateLines(
   const [updateError, response] = await to(
     updateLineItems({
       cartId: shopState.cartData.id,
-      lines: {
-        id: lineItem.id,
-        quantity: newQuantity,
-      },
+      lines: [
+        {
+          merchandiseId: lineItem.merchandise.id,
+          id: lineItem.id,
+          quantity: newQuantity,
+          attributes: lineItem.attributes ? lineItem.attributes : [],
+        },
+      ],
       buyerIdentity: shopState.buyerIdentity,
     })
   )
@@ -172,6 +179,47 @@ async function getExistingCart(
   cartDispatch,
   shopDispatch
 ) {
+  function updateCartState(cartData) {
+    shopDispatch({
+      type: "SET_CART_DATA",
+      payload: cartData,
+    })
+
+    var discount = hasDiscount(cartData)
+
+    if (discount) {
+      cartDispatch({
+        type: "SET_DISCOUNT_CODE",
+        payload: discount,
+      })
+    }
+
+    shopDispatch({
+      type: "SET_IS_CART_READY",
+      payload: true,
+    })
+    cartDispatch({ type: "SET_CART_NOTE", payload: cartData.note })
+  }
+
+  if (shopwp.misc.cacheEnabled) {
+    let [cartCacheError, cartCache] = await to(getCache(cartId))
+
+    if (cartCacheError) {
+      clearCache()
+    }
+
+    if (cartCache) {
+      if (cartCache.cacheKey === shopwp.misc.cacheKey) {
+        console.log("📦 Valid cart cache found, just returning ...")
+        updateCartState(cartCache)
+        shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
+        return
+      } else {
+        clearCache()
+      }
+    }
+  }
+
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [getCartError, response] = await to(
@@ -203,25 +251,7 @@ async function getExistingCart(
     return
   }
 
-  shopDispatch({
-    type: "SET_CART_DATA",
-    payload: response.data,
-  })
-
-  var discount = hasDiscount(response.data)
-
-  if (discount) {
-    cartDispatch({
-      type: "SET_DISCOUNT_CODE",
-      payload: discount,
-    })
-  }
-
-  shopDispatch({
-    type: "SET_IS_CART_READY",
-    payload: true,
-  })
-  cartDispatch({ type: "SET_CART_NOTE", payload: response.data.note })
+  updateCartState(response.data)
 }
 
 async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
@@ -246,8 +276,6 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
   var maybeApiError = maybeHandleApiError(createCartError, response)
 
   if (maybeApiError) {
-    console.warn("ShopWP Error: ", maybeApiError)
-
     shopDispatch({
       type: "SET_CART_DATA",
       payload: false,

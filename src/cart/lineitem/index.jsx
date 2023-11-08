@@ -47,6 +47,10 @@ const CartLineItemLeftInStock = wp.element.lazy(() =>
   )
 )
 
+const CartLineItemDiscounts = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'CartLineItemDiscounts-public' */ "./discounts")
+)
+
 function CartLineItem({ lineItem }) {
   const { useState, useRef } = wp.element
   const cartState = useCartState()
@@ -115,6 +119,13 @@ function CartLineItem({ lineItem }) {
   const cartLineItemContentCSS = css``
   const lineItemQuantityWrapperCSS = css``
 
+  function hasDiscounts() {
+    if (!lineItem.discountAllocations || !lineItem.discountAllocations.length) {
+      return false
+    }
+    return true
+  }
+
   return (
     <li
       className="swp-cart-lineitem wps-cart-lineitem"
@@ -163,40 +174,46 @@ function CartLineItem({ lineItem }) {
               {cartState.settings.noticeUnavailableText}
             </Notice>
           ) : (
-            <div
-              className="wps-cart-lineitem-quantity-wrapper"
-              css={containerFluidCSS}
-            >
+            <>
               <div
-                className="swp-l-row swp-cart-lineitem-quantity-inner"
-                css={lineItemQuantityWrapperCSS}
+                className="wps-cart-lineitem-quantity-wrapper"
+                css={containerFluidCSS}
               >
-                <CartLineItemQuantity
-                  lineItem={lineItem}
-                  setNotice={setNotice}
-                />
-                <CartLineItemPrice
-                  showingSaleNotice={showingSaleNotice}
-                  lineItemTotal={lineItemTotal}
-                  salePrice={salePrice}
-                  regPrice={regPrice}
-                  subscriptionDiscount={subscriptionDiscount}
-                  discounts={shopState.cartData.discountAllocations}
-                />
+                <div
+                  className="swp-l-row swp-cart-lineitem-quantity-inner"
+                  css={lineItemQuantityWrapperCSS}
+                >
+                  <CartLineItemQuantity
+                    lineItem={lineItem}
+                    setNotice={setNotice}
+                  />
+                  <CartLineItemPrice
+                    showingSaleNotice={showingSaleNotice}
+                    lineItemTotal={lineItemTotal}
+                    salePrice={salePrice}
+                    regPrice={regPrice}
+                    subscriptionDiscount={subscriptionDiscount}
+                    discounts={shopState.cartData.discountAllocations}
+                  />
 
-                {cartState.settings.showInventoryLevels &&
-                lineItem.merchandise.quantityAvailable >= 1 &&
-                lineItem.merchandise.availableForSale &&
-                cartState.settings.leftInStockThreshold >=
-                  lineItem.merchandise.quantityAvailable ? (
-                  <CartLineItemLeftInStock />
+                  {cartState.settings.showInventoryLevels &&
+                  lineItem.merchandise.quantityAvailable >= 1 &&
+                  lineItem.merchandise.availableForSale &&
+                  cartState.settings.leftInStockThreshold >=
+                    lineItem.merchandise.quantityAvailable ? (
+                    <CartLineItemLeftInStock />
+                  ) : null}
+                </div>
+
+                {lineItem.attributes.length ? (
+                  <CartAttributes lineItem={lineItem} />
                 ) : null}
               </div>
 
-              {lineItem.attributes.length ? (
-                <CartAttributes lineItem={lineItem} />
+              {hasDiscounts() ? (
+                <CartLineItemDiscounts lineItem={lineItem} />
               ) : null}
-            </div>
+            </>
           )}
         </div>
       </div>

@@ -49,7 +49,7 @@ function CartTerms() {
         <label
           dangerouslySetInnerHTML={termsLabel()}
           htmlFor="wps-input-terms"
-          className="swp-input-label wps-input-label wps-input-terms"
+          className="swp-l-flex swp-input-label wps-input-label wps-input-terms"
           css={labelCSS}
         />
       </div>

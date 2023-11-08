@@ -31,9 +31,6 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
     }
 
     if (isTheSameObject(settings, settingsState)) {
-      console.info(
-        "ShopWP :: Info :: Settings from outside are the same as internal settings, exiting ..."
-      )
       return
     }
 
@@ -53,9 +50,6 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
     }
 
     if (queryType === requestsState.queryType) {
-      console.info(
-        "ShopWP :: Info :: The query type from outside is the same as internal type, exiting ..."
-      )
       return
     }
 
@@ -83,9 +77,6 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
     }
 
     if (isTheSameObject(queryParams, requestsState.queryParams)) {
-      console.info(
-        "ShopWP :: Info :: Query params from outside are the same as internal params, exiting ..."
-      )
       return
     }
 

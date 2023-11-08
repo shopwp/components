@@ -100,11 +100,6 @@ function OptionCollections({ settings }) {
     onOpen(true)
   }, [])
 
-  const LoadMoreCSS = css`
-    margin: 10px 0 15px 17px;
-    border-radius: ${shopwp.general.globalBorderRadius};
-  `
-
   return (
     <StorefrontFilterOptionsGroup
       error={error}
@@ -128,7 +123,6 @@ function OptionCollections({ settings }) {
               settings={settings}
               isBusy={isLoadingItems}
               onClick={onLoadMore}
-              extraCSS={LoadMoreCSS}
             />
           )}
         </>

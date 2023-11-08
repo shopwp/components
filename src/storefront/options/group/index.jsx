@@ -30,30 +30,8 @@ function StorefrontFilterOptionsGroup({
     }
   }
 
-  const filterContentCSS = css`
-    padding: 0 0 10px 0;
-    transition: all 0.2s ease;
-    opacity: ${isLoadingItems ? 0.6 : 1};
-
-    .components-notice {
-      width: 100%;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-  `
-
-  const LoadingTextCSS = css`
-    padding-left: 0;
-    color: black;
-    font-size: 16px;
-    margin-top: 15px;
-    text-align: center;
-    margin-bottom: 35px;
-  `
+  const filterContentCSS = css``
+  const LoadingTextCSS = css``
 
   return (
     <StorefrontFilter
@@ -61,13 +39,17 @@ function StorefrontFilterOptionsGroup({
       isOpen={isOpen}
       setIsOpen={toggleDrawer}
     >
-      <div className="wps-filter-content" css={filterContentCSS}>
+      <div
+        className="swp-storefront-filter-content wps-filter-content"
+        css={filterContentCSS}
+        data-is-loading-items={isLoadingItems}
+      >
         {error ? (
           <Notice status="error">{error}</Notice>
         ) : areFilterOptionsEmpty && !isLoadingItems ? (
           <Notice status="info">{noFilterGroupFoundText}</Notice>
         ) : isLoadingItems && groupType !== "collections" ? (
-          <p css={LoadingTextCSS}>
+          <p className="swp-storefront-loading-text" css={LoadingTextCSS}>
             {shopState.t.l.loading + " " + groupType + " ..."}
           </p>
         ) : (

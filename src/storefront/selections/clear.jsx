@@ -13,6 +13,8 @@ function StorefrontSelectionsClear() {
   const storefrontDispatch = useStorefrontDispatch()
   const settings = useSettingsState()
 
+  const clearAllCSS = css``
+
   function clearAllSelections() {
     storefrontDispatch({ type: "CLEAR_SELECTIONS" })
     requestsDispatch({
@@ -39,23 +41,9 @@ function StorefrontSelectionsClear() {
     storefrontDispatch({ type: "SET_SEARCH_QUERY", payload: false })
   }
 
-  const clearAllCSS = css`
-    text-decoration: underline;
-    font-size: 14px;
-    margin-left: 4px;
-    margin-top: 0px;
-    position: relative;
-    top: -2px;
-
-    &:hover {
-      opacity: 0.8;
-      cursor: pointer;
-    }
-  `
-
   return (
     <div
-      className="wps-filter-selections-clear"
+      className="swp-storefront-clear-selections wps-filter-selections-clear"
       onClick={clearAllSelections}
       css={clearAllCSS}
     >
