@@ -5,18 +5,14 @@ import { useShopState } from "@shopwp/components"
 
 function SavingsInline({ amount, type }) {
   const shopState = useShopState()
-  const SavingsInlineCSS = css`
-    font-size: 15px;
-    font-weight: normal;
-    margin-right: 6px;
-  `
+  const SavingsInlineCSS = css``
 
   return type === "fixed" ? (
-    <span css={SavingsInlineCSS}>
+    <span className="swp-price-savings" css={SavingsInlineCSS}>
       (<Price price={amount} /> {shopState.t.l.off})
     </span>
   ) : (
-    <span css={SavingsInlineCSS}>
+    <span className="swp-price-savings" css={SavingsInlineCSS}>
       ({amount}% {shopState.t.l.off})
     </span>
   )

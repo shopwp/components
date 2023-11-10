@@ -10,7 +10,7 @@ function CartHeader({ settings }) {
 
   return (
     <section
-      className="swp-cart-header wps-cart-header"
+      className="swp-l-rel100 swp-cart-header wps-cart-header"
       css={[containerFluidCSS, CartHeaderCSS]}
     >
       <div className="swp-l-row swp-cart-header-inner" css={CartHeaderRow}>

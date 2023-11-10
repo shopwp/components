@@ -111,15 +111,7 @@ function Quantity({
     }
   `
 
-  const quantityContainer = css`
-    width: 122px;
-    margin: 0;
-
-    ${mq("small")} {
-      width: 100%;
-      min-width: 160px;
-    }
-  `
+  const quantityContainer = css``
 
   function handleQuantityChange(e) {
     if (isUpdating) {
@@ -276,7 +268,7 @@ function Quantity({
 
   return (
     <div
-      className="wps-quantity-container"
+      className="swp-l-rel100 swp-quantity-container wps-quantity-container"
       css={[containerFluidCSS, quantityContainer]}
     >
       <div css={[flexRowNoBreakCSS]}>

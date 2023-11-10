@@ -12,12 +12,7 @@ function ReviewsPagination() {
   const dispatch = useProductReviewsDispatch()
   const shopState = useShopState()
 
-  const loadMoreButtonCSS = css`
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-  `
+  const loadMoreButtonCSS = css``
 
   function onClick() {
     dispatch({
@@ -29,7 +24,7 @@ function ReviewsPagination() {
   return (
     <div
       css={[buttonCSS, loadMoreButtonCSS]}
-      className={"wps-btn-next-page"}
+      className={"swp-button-pagination wps-btn-next-page"}
       onClick={onClick}
     >
       {shopState.t.l.loadReviews}

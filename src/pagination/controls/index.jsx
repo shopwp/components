@@ -4,15 +4,11 @@ import PaginationLoadMore from "./load-more"
 import { containerFluidCSS } from "@shopwp/common"
 
 function PaginationControls() {
-  const paginationControlsCSS = css`
-    margin-top: 60px;
-    margin-bottom: 60px;
-    text-align: center;
-    display: block;
-  `
+  const paginationControlsCSS = css``
+
   return (
     <section
-      className="wps-pagination-controls"
+      className="swp-pagination-controls wps-pagination-controls"
       css={[containerFluidCSS, paginationControlsCSS]}
     >
       <PaginationLoadMore />

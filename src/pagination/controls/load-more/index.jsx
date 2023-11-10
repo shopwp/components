@@ -8,7 +8,6 @@ import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../../items/_state/requests/hooks"
-import { useShopState } from "@shopwp/components"
 
 import Loader from "../../../loader"
 
@@ -16,7 +15,6 @@ function PaginationLoadMore() {
   const settings = useSettingsState()
   const requestsState = useRequestsState()
   const requestsDispatch = useRequestsDispatch()
-  const shopState = useShopState()
 
   function onViewChange(inView, entry) {
     if (!settings.infiniteScroll) {
@@ -40,20 +38,14 @@ function PaginationLoadMore() {
     })
   }
 
-  const loadMoreButtonCSS = css`
-    max-width: 150px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    background-color: ${settings.paginationLoadMoreButtonColor};
-  `
+  const loadMoreButtonCSS = css``
 
   return usePortal(
     <InView rootMargin="10px 0px 0px 0px" as="div" onChange={onViewChange}>
       <div
         css={[buttonCSS, loadMoreButtonCSS]}
         disabled={requestsState.isFetchingNew}
-        className="wps-btn-next-page"
+        className="swp-button-pagination wps-btn-next-page"
         onClick={onClick}
       >
         {requestsState.isFetchingNew ? (

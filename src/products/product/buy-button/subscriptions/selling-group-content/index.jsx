@@ -28,8 +28,8 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
 
   function getSaveAmount(sellingGroup) {
     if (sellingGroup?.include) {
-      if (sellingGroup?.include?.product?.discount_amount !== 0) {
-        return sellingGroup.include.product.discount_amount
+      if (sellingGroup?.discount_amount !== 0) {
+        return sellingGroup.discount_amount
       } else {
         return false
       }

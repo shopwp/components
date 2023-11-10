@@ -9,7 +9,9 @@ Does not run for inline cart icon
 */
 function updateVariablesInCSS(componentType, settings, element) {
   if (shopwp.misc.isAdmin) {
-    var container = document.querySelector("#editor")
+    var container = document.querySelector(
+      "#editor .edit-post-visual-editor__content-area"
+    )
   } else {
     var container = document.querySelector("#shopwp-root")
   }
@@ -47,9 +49,20 @@ function updateVariablesInCSS(componentType, settings, element) {
       shopwp.general.cartIconBackgroundColor
     )
   } else {
-    if (element) {
-      container = element
+    if (componentType === "collections" && shopwp.misc.isSingularCollections) {
+      container = document.querySelector(".single-wps_collections")
+    } else {
+      if (element) {
+        container = element
+      }
     }
+
+    container.style.setProperty(
+      "--pagination-paginationLoadMoreButtonColor",
+      settings.paginationLoadMoreButtonColor
+        ? settings.paginationLoadMoreButtonColor
+        : "initial"
+    )
 
     container.style.setProperty(
       "--product-titleTypeFontFamily",

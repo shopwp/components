@@ -82,7 +82,7 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
 
     dispatch({
       type: "SET_SELLING_PLANS",
-      payload: resp.data[0].selling_plans,
+      payload: resp.data,
     })
 
     buyButtonDispatch({

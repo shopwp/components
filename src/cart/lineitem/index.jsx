@@ -176,7 +176,7 @@ function CartLineItem({ lineItem }) {
           ) : (
             <>
               <div
-                className="wps-cart-lineitem-quantity-wrapper"
+                className="swp-l-rel100 wps-cart-lineitem-quantity-wrapper"
                 css={containerFluidCSS}
               >
                 <div
