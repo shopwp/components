@@ -1,33 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useProductDispatch } from "../../_state/hooks"
-import { fadeIn } from "@shopwp/common"
 import { useProductBuyButtonDispatch } from "../_state/hooks"
-import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useShopState } from "@shopwp/components"
 
 function ClearSelections() {
   const productDispatch = useProductDispatch()
-  const settings = useSettingsState()
   const shopState = useShopState()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
 
-  const ClearSelectionsCSS = css`
-    position: absolute;
-    right: 0;
-    font-size: 14px;
-    text-decoration: underline;
-    margin: 0;
-    z-index: 2;
-    top: ${settings.variantStyle === "dropdown" ? "-30px" : "-10px"};
-    padding: 5px 0;
-    animation: ${fadeIn} 0.2s ease;
-    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-
-    &:hover {
-      cursor: pointer;
-    }
-  `
+  const ClearSelectionsCSS = css``
 
   function onClear() {
     productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
@@ -41,7 +23,11 @@ function ClearSelections() {
   }
 
   return (
-    <p css={[ClearSelectionsCSS, fadeIn]} onClick={onClear}>
+    <p
+      className="swp-clear-selections"
+      css={ClearSelectionsCSS}
+      onClick={onClear}
+    >
       {shopState.t.l.clearSelections}
     </p>
   )

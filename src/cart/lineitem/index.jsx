@@ -7,9 +7,7 @@ import {
 } from "@shopwp/common"
 import { useCartState, useShopState } from "@shopwp/components"
 
-const Notice = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Notice-public' */ "../../notice")
-)
+import Notice from "../../notice"
 
 const CartLineItemPrice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'CartLineItemPrice-public' */ "./price")
@@ -55,7 +53,7 @@ function CartLineItem({ lineItem }) {
   const { useState, useRef } = wp.element
   const cartState = useCartState()
   const [isUpdating] = useState(() => false)
-  const [notice, setNotice] = useState(false)
+  const [noticeMessage, setNotice] = useState(false)
 
   const [subscriptionDiscount, setSubscriptionDiscount] = useState(false)
   const shopState = useShopState()
@@ -180,7 +178,7 @@ function CartLineItem({ lineItem }) {
                 css={containerFluidCSS}
               >
                 <div
-                  className="swp-l-row swp-cart-lineitem-quantity-inner"
+                  className="swp-l-row swp-m-l-row swp-cart-lineitem-quantity-inner"
                   css={lineItemQuantityWrapperCSS}
                 >
                   <CartLineItemQuantity
@@ -194,16 +192,20 @@ function CartLineItem({ lineItem }) {
                     regPrice={regPrice}
                     subscriptionDiscount={subscriptionDiscount}
                     discounts={shopState.cartData.discountAllocations}
+                    shopState={shopState}
                   />
-
-                  {cartState.settings.showInventoryLevels &&
-                  lineItem.merchandise.quantityAvailable >= 1 &&
-                  lineItem.merchandise.availableForSale &&
-                  cartState.settings.leftInStockThreshold >=
-                    lineItem.merchandise.quantityAvailable ? (
-                    <CartLineItemLeftInStock />
-                  ) : null}
                 </div>
+
+                {noticeMessage ? (
+                  <Notice status="warning">{noticeMessage}</Notice>
+                ) : null}
+                {cartState.settings.showInventoryLevels &&
+                lineItem.merchandise.quantityAvailable >= 1 &&
+                lineItem.merchandise.availableForSale &&
+                cartState.settings.leftInStockThreshold >=
+                  lineItem.merchandise.quantityAvailable ? (
+                  <CartLineItemLeftInStock />
+                ) : null}
 
                 {lineItem.attributes.length ? (
                   <CartAttributes lineItem={lineItem} />
@@ -217,7 +219,6 @@ function CartLineItem({ lineItem }) {
           )}
         </div>
       </div>
-      {notice ? <Notice status={notice.type}>{notice.message}</Notice> : null}
     </li>
   )
 }

@@ -22,7 +22,7 @@ function Notice({
       : status === "error"
       ? "#f8ebea"
       : "#eef6ee"};
-    padding: 0.6em 1.1em;
+    padding: 0.6em 1em;
     border-left: 0.35em solid
       ${status === "warning"
         ? "#f0b849"
@@ -49,13 +49,16 @@ function Notice({
         </Expire>
       ) : html ? (
         <p
+          className="swp-notice"
           css={[noticeStyles, extraCSS]}
           dangerouslySetInnerHTML={{
             __html: html,
           }}
         ></p>
       ) : (
-        <p css={[noticeStyles, extraCSS]}>{children}</p>
+        <p className="swp-notice" css={[noticeStyles, extraCSS]}>
+          {children}
+        </p>
       )}
     </>
   )

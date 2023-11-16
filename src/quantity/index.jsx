@@ -21,6 +21,8 @@ function Quantity({
   setNotice = false,
   globalMaxQuantity = false,
   fontSize = false,
+  selectedOptions = null,
+  selectedVariant = false,
 }) {
   const { useState, useEffect } = wp.element
   const shopState = useShopState()
@@ -28,10 +30,34 @@ function Quantity({
   const debouncedQuantity = useDebounce(parseInt(quantity), 20)
   const isFirstRender = useFirstRender()
 
+  const maxQuantityNoticeMessage =
+    maxQuantity === 1
+      ? "You may only buy one of this item."
+      : "You may only buy " + maxQuantity + " or less of this item."
+
   useEffect(() => {
-    maybeShowInventoryNotice(initialQuantity)
+    if (selectedOptions === null) {
+      return
+    }
+
+    if (selectedOptions !== false) {
+      return
+    }
+
     setQuantity(initialQuantity)
-  }, [initialQuantity])
+    setNotice(false)
+  }, [initialQuantity, selectedOptions])
+
+  useEffect(() => {
+    if (!selectedVariant) {
+      return
+    }
+
+    if (setNotice && maxQuantity && quantity > maxQuantity) {
+      setNotice(maxQuantityNoticeMessage)
+      setQuantity(maxQuantity)
+    }
+  }, [maxQuantity, selectedVariant, quantity])
 
   if (fontSize) {
     var relativeFontSize = parseInt(fontSize.split("px")[0])
@@ -126,8 +152,10 @@ function Quantity({
         maxQuantity > 0 &&
         e.target.value >= maxQuantity
       ) {
+        setNotice(maxQuantityNoticeMessage)
         var newQuantity = maxQuantity
       } else {
+        setNotice(false)
         var newQuantity = e.target.value
       }
 
@@ -149,7 +177,6 @@ function Quantity({
         }
       }
 
-      maybeShowInventoryNotice(e.target.value)
       setQuantity(newQuantity)
     }
   }
@@ -172,7 +199,10 @@ function Quantity({
       payload: false,
     })
 
-    maybeShowInventoryNotice(quantity)
+    if (lineItem && quantity - 1 <= 0) {
+      setQuantity(0)
+      return
+    }
 
     if (minQuantity && quantity <= minQuantity) {
       var newQuantity = minQuantity
@@ -188,7 +218,10 @@ function Quantity({
       }
     }
 
-    maybeShowInventoryNotice(newQuantity)
+    if (setNotice && maxQuantity && newQuantity < maxQuantity) {
+      setNotice(false)
+    }
+
     setQuantity(newQuantity)
   }
 
@@ -203,7 +236,7 @@ function Quantity({
     })
 
     if (!quantityStep) {
-      let newQ = quantity + 1
+      var newQ = quantity + 1
 
       if (maxQuantity && maxQuantity > 0 && newQ >= maxQuantity) {
         var newQuantity = maxQuantity
@@ -211,7 +244,7 @@ function Quantity({
         var newQuantity = newQ
       }
     } else {
-      let newQ = quantity + quantityStep
+      var newQ = quantity + quantityStep
 
       if (maxQuantity && maxQuantity > 0 && newQ >= maxQuantity) {
         var newQuantity = maxQuantity
@@ -228,34 +261,20 @@ function Quantity({
       )
 
       if (hasReachedMaxQuantity(globalMaxQuantity, newPotentialTotal)) {
-        setNotice({
-          type: "error",
-          message: shopState.t.w.maxCartTotal,
-        })
+        setNotice(shopState.t.w.maxCartTotal)
         return
-      }
-    }
-
-    maybeShowInventoryNotice(newQuantity)
-    setQuantity(newQuantity)
-  }
-
-  function maybeShowInventoryNotice(newQuantity) {
-    if (maxQuantity && newQuantity > maxQuantity) {
-      // Only show notice for cart line item quantity
-      if (setNotice && lineItem) {
-        if (lineItem.merchandise.quantityAvailable > 0) {
-          setNotice({
-            type: "warning",
-            message: shopState.t.n.limitedTotal,
-          })
-        }
-      }
-    } else {
-      if (setNotice && lineItem) {
+      } else {
         setNotice(false)
       }
     }
+
+    if (setNotice && maxQuantity && newQ > maxQuantity) {
+      setNotice(maxQuantityNoticeMessage)
+    } else {
+      setNotice(false)
+    }
+
+    setQuantity(newQuantity)
   }
 
   useEffect(() => {

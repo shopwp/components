@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { Price } from "@shopwp/components"
-import CartLineItemPriceSaleNotice from "../sale-notice"
 
 function CartLineItemPriceSubscriptionDiscountNotice({
   subscriptionDiscount,
@@ -28,6 +27,7 @@ function CartLineItemPrice({
   regPrice,
   salePrice,
   subscriptionDiscount,
+  shopState,
 }) {
   const CartLineItemPriceCSS = css``
 
@@ -43,11 +43,21 @@ function CartLineItemPrice({
         />
       ) : null}
 
-      {showingSaleNotice && !subscriptionDiscount && salePrice && (
-        <CartLineItemPriceSaleNotice salePrice={salePrice} />
-      )}
+      {showingSaleNotice && !subscriptionDiscount && salePrice ? (
+        <>
+          <span className="swp-cart-lineitem-price-sale wps-cart-lineitem-price-sale">
+            {shopState.t.l.sale}
+          </span>
 
-      <LineItemPriceSingle regPrice={lineItemTotal} />
+          <LineItemPriceSingle regPrice={lineItemTotal} />
+
+          <div className="swp-cart-sale-price">
+            <Price price={salePrice} />
+          </div>
+        </>
+      ) : (
+        <LineItemPriceSingle regPrice={lineItemTotal} />
+      )}
     </div>
   )
 }

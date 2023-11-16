@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq } from "@shopwp/common"
+import { mq, getMaxQuantity } from "@shopwp/common"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
+import { useProductBuyButtonState } from "../_state/hooks"
 import AddButtonWrapper from "./wrapper"
 import AddButton from "./button"
 
@@ -15,6 +16,8 @@ const ProductBuyButtonLeftInStock = wp.element.lazy(() =>
     /* webpackChunkName: 'ProductBuyButtonLeftInStock-public' */ "../left-in-stock"
   )
 )
+
+import Notice from "../../../../notice"
 
 function ProductAddButton({
   hasLink,
@@ -33,6 +36,9 @@ function ProductAddButton({
 }) {
   const settings = useSettingsState()
   const productState = useProductState()
+  const [notice, setNotice] = wp.element.useState(false)
+
+  const productBuyButtonState = useProductBuyButtonState()
 
   const AddButtonWrapperCSS = css`
     display: ${shouldShowQuantity ? "flex" : "block"};
@@ -60,7 +66,7 @@ function ProductAddButton({
 
   return (
     <div
-      className="wps-component wps-component-products-add-button wps-btn-wrapper"
+      className="swp-component-buy-button wps-component wps-component-products-add-button wps-btn-wrapper"
       aria-label={productState.payload.title + " add button"}
     >
       <div css={AddButtonWrapperCSS}>
@@ -70,22 +76,22 @@ function ProductAddButton({
             onChange={onQuantityChange}
             quantityStep={settings.quantityStep}
             fontSize={settings.addToCartButtonTypeFontSize}
-            maxQuantity={
-              settings.maxQuantity
-                ? settings.maxQuantity
-                : productState.payload.totalInventory
-                ? productState.payload.totalInventory
-                : false
-            }
+            selectedVariant={productState.selectedVariant}
+            maxQuantity={getMaxQuantity(
+              settings.showInventoryLevels,
+              settings.maxQuantity,
+              productState.selectedVariant
+            )}
             minQuantity={settings.minQuantity}
             initialQuantity={
               settings.minQuantity > 1 ? settings.minQuantity : 1
             }
             globalMaxQuantity={shopwp.cart.maxQuantity}
             small={false}
+            setNotice={setNotice}
+            selectedOptions={productBuyButtonState.selectedOptions}
           />
         ) : null}
-
         <AddButtonWrapper
           hasLink={hasLink}
           linkTarget={linkTarget}
@@ -108,7 +114,7 @@ function ProductAddButton({
           />
         </AddButtonWrapper>
       </div>
-
+      {notice ? <Notice status="warning">{notice}</Notice> : null}
       {settings.showInventoryLevels &&
       productState.payload.availableForSale &&
       productState.payload.totalInventory ? (

@@ -20,7 +20,7 @@ function ProductOptions({
   `
   return (
     <div
-      className="wps-product-options"
+      className={"wps-product-options " + "swp-variant-style-" + variantStyle}
       css={ProductOptionsCSS}
       aria-label={`Product variant ${variantStyle ? variantStyle : "dropdown"}`}
     >

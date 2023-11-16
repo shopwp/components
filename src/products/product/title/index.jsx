@@ -11,15 +11,14 @@ function ProductTitle() {
   const settings = useSettingsState()
   const productState = useProductState()
 
-  const titleStylesWrapper = css`
-    margin-bottom: ${settings.isSingleComponent ? "0px" : "10px"};
-  `
+  const titleStylesWrapper = css``
 
   return usePortal(
     <div
-      className="wps-component wps-component-products-title"
+      className="swp-component wps-component wps-component-products-title"
       aria-label={productState.payload.title + " product title"}
       data-wps-component-order="0"
+      data-is-single-component={settings.isSingleComponent}
       css={titleStylesWrapper}
     >
       {hasLink(settings) ? (

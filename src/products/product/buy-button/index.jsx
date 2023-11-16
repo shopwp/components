@@ -18,12 +18,7 @@ function ProductBuyButton() {
   const settings = useSettingsState()
   const shopState = useShopState()
 
-  const buyButtonWrapperCSS = css`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: ${settings.isSingleComponent ? "0px" : "15px"};
-    margin-top: 0;
-  `
+  const buyButtonWrapperCSS = css``
 
   const unavailableNoticeCSS = css`
     margin-top: 15px;
@@ -37,8 +32,9 @@ function ProductBuyButton() {
     <ProductBuyButtonProvider payload={productState.payload}>
       <div
         css={buyButtonWrapperCSS}
-        className="wps-component wps-component-products-buy-button"
+        className="swp-component wps-component wps-component-products-buy-button swp-l-col swp-0"
         aria-label="Product Buy Button"
+        data-is-single-component={settings.isSingleComponent}
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
 

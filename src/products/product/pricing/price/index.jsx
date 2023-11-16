@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react"
+import { jsx, css } from "@emotion/react"
 
 import isEmpty from "lodash-es/isEmpty"
 import last from "lodash-es/last"
@@ -43,19 +43,6 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
   const [comparePrice, setComparePrice] = useState(() =>
     firstPriceCompareAt(prices)
   )
-
-  function isRegAndCompareSame() {
-    if (!showPriceRange && compareAt) {
-      var firstCompare = firstPriceCompareAt(prices)
-      var firstReg = firstRegPrice(prices)
-
-      if (firstCompare === firstReg) {
-        return true
-      }
-    }
-
-    return false
-  }
 
   function isFirstAndLastSame() {
     if (getFirstPrice() === getLastPrice()) {
@@ -112,16 +99,11 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
     }
   }, [selectedVariant])
 
-  const priceWrapperCSS = css`
-    line-height: 1;
-    margin: 0 15px 0 0;
-    display: flex;
-    align-items: baseline;
-  `
+  const priceWrapperCSS = css``
 
-  return !isRegAndCompareSame() ? (
+  return (
     <span
-      className="wps-products-price wps-product-pricing wps-products-price-one"
+      className="swp-product-price wps-products-price wps-product-pricing wps-products-price-one"
       data-show-price-range={showPriceRange}
       css={priceWrapperCSS}
     >
@@ -130,15 +112,6 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
           firstPrice={getFirstPrice()}
           lastPrice={getLastPrice()}
           isFirstAndLastSame={isFirstAndLastSame()}
-          compareAt={compareAt}
-          showPriceRange={showPriceRange}
-          pricingColor={settings.pricingColor}
-          settings={settings}
-        />
-      ) : selectedVariant ? (
-        <ProductPriceSingle
-          ref={singlePriceElement}
-          price={compareAt ? comparePrice : regPrice}
           compareAt={compareAt}
           showPriceRange={showPriceRange}
           pricingColor={settings.pricingColor}
@@ -155,7 +128,7 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
         />
       )}
     </span>
-  ) : null
+  )
 }
 
 export default ProductPrice

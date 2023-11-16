@@ -16,17 +16,16 @@ function ProductGalleryWrapper() {
   const productState = useProductState()
   const settings = useSettingsState()
 
-  const ProductGalleryWrapperCSS = css`
-    margin-bottom: ${settings.isSingleComponent ? "0px" : "15px"};
-  `
+  const ProductGalleryWrapperCSS = css``
 
   return (
     <>
       <FilterHook name="before.productImages" args={[productState.payload]} />
       <div
-        className="wps-component wps-component-products-images"
+        className="swp-component wps-component wps-component-products-images"
         aria-label="Product Images"
         css={ProductGalleryWrapperCSS}
+        data-is-single-component={settings.isSingleComponent}
       >
         <ProductGalleryProvider payload={productState.payload}>
           <ProductGallery

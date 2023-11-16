@@ -1,16 +1,15 @@
 import ProductPriceSingle from "../../single"
-import ProductPricingSeparator from "../../separator"
 
 function ProductPricingRangeGroup({
   firstPrice,
-  lastPrice,
   compareAt,
   showPriceRange,
   pricingColor,
   settings,
 }) {
   return (
-    <>
+    <p className="swp-l-row swp-m-l-row swp-0">
+      <span className="swp-price-label">From</span>
       <ProductPriceSingle
         price={firstPrice}
         compareAt={compareAt}
@@ -18,15 +17,7 @@ function ProductPricingRangeGroup({
         pricingColor={pricingColor}
         settings={settings}
       />
-      <ProductPricingSeparator settings={settings} compareAt={compareAt} />
-      <ProductPriceSingle
-        price={lastPrice}
-        compareAt={compareAt}
-        showPriceRange={showPriceRange}
-        pricingColor={pricingColor}
-        settings={settings}
-      />
-    </>
+    </p>
   )
 }
 

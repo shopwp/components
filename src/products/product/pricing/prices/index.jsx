@@ -24,6 +24,44 @@ function ProductPrices() {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
+  function showPriceRange(prices) {
+    if (!settings.showPriceRange) {
+      return false
+    }
+
+    if (prices.regPrices.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  function shouldShowCompareAt() {
+    if (!settings.showCompareAt) {
+      return false
+    }
+
+    if (productState.selectedVariant) {
+      if (
+        productState.selectedVariant.node.compareAtPrice &&
+        productState.selectedVariant.node.compareAtPrice.amount
+      ) {
+        return true
+      }
+    } else {
+      if (!productState.hasManyVariants) {
+        // Now make sure it actually has a compare at price on the single variant
+        if (productState.payload.variants.edges.length) {
+          if (productState.payload.variants.edges[0].node.compareAtPrice) {
+            return true
+          }
+        }
+      }
+    }
+
+    return false
+  }
+
   const prices = getPrices(productState.payload)
 
   return (
@@ -34,7 +72,7 @@ function ProductPrices() {
       itemProp="offers"
       itemType="https://schema.org/Offer"
     >
-      {settings.showPriceRange ? (
+      {showPriceRange(prices) ? (
         <>
           <meta itemProp="minPrice" content={min(prices.regPrices)} />
           <meta itemProp="maxPrice" content={max(prices.regPrices)} />
@@ -61,13 +99,14 @@ function ProductPrices() {
           subscriptionInfo={productState.selectedSubscriptionInfo}
           selectedVariant={productState.selectedVariant}
           settings={settings}
+          shouldShowCompareAt={shouldShowCompareAt()}
         />
-      ) : settings.showCompareAt ? (
+      ) : shouldShowCompareAt() ? (
         <Suspense fallback={false}>
           <ProductPricesCompareAt
             selectedVariant={productState.selectedVariant}
-            showPriceRange={settings.showPriceRange}
             compareAt={settings.showCompareAt}
+            productState={productState}
             prices={prices}
             settings={settings}
           />
@@ -76,7 +115,7 @@ function ProductPrices() {
         <ProductPrice
           selectedVariant={productState.selectedVariant}
           compareAt={false}
-          showPriceRange={settings.showPriceRange}
+          showPriceRange={showPriceRange(prices)}
           prices={prices}
         />
       )}

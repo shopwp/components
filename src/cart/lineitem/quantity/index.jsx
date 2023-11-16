@@ -1,21 +1,26 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { updateLines } from "../../api"
-import { useCartDispatch, useCartState } from "@shopwp/components"
-import { useShopState, useShopDispatch } from "@shopwp/components"
-
-const Quantity = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Quantity-public' */ "../../../quantity")
-)
+import { updateLines, removeLines } from "../../api"
+import {
+  useShopState,
+  useShopDispatch,
+  useCartDispatch,
+  useCartState,
+} from "@shopwp/components"
+import { getMaxQuantity } from "@shopwp/common"
+import Quantity from "../../../quantity"
 
 function CartLineItemQuantity({ lineItem, setNotice }) {
   const cartState = useCartState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const cartDispatch = useCartDispatch()
-  const maxQuantity = cartState.settings.lineitemsMaxQuantity
-    ? cartState.settings.lineitemsMaxQuantity
-    : false
+  const maxQuantity = getMaxQuantity(
+    cartState.settings.showInventoryLevels,
+    cartState.settings.lineitemsMaxQuantity,
+    lineItem.merchandise,
+    true
+  )
 
   const minQuantity = cartState.settings.lineitemsMinQuantity
   const customStep = cartState.settings.lineitemsQuantityStep
@@ -25,7 +30,11 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
       return
     }
 
-    updateLines(shopState, cartDispatch, shopDispatch, lineItem, newQuantity)
+    if (newQuantity === 0) {
+      removeLines(lineItem.id, shopState, cartDispatch, shopDispatch)
+    } else {
+      updateLines(shopState, cartDispatch, shopDispatch, lineItem, newQuantity)
+    }
   }
 
   return (

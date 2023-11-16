@@ -11,7 +11,6 @@ import {
   updateNote,
   updateBuyerIdentity,
   getCache,
-  maybeSetCache,
   clearCache,
 } from "@shopwp/api"
 import { checkoutRedirect } from "@shopwp/common"
