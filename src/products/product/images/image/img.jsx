@@ -77,8 +77,8 @@ function Img(props) {
         loading="lazy"
         alt={props.image.altText ? props.image.altText : ""}
         data-zoom={props.image.originalSrc}
-        width={getImageWidth(props.settings)}
-        height={getImageHeight(props.settings)}
+        width={getImageWidth(props.settings).toString()}
+        height={getImageHeight(props.settings).toString()}
       />
       {props.isVideo ? (
         <svg

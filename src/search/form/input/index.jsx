@@ -74,7 +74,7 @@ function SearchInput({
     }
 
     if (debouncedSearchTerm) {
-      var newQ = searchBy + ":" + debouncedSearchTerm
+      var newQ = searchBy + ":" + debouncedSearchTerm + "*"
     } else {
       var newQ = ""
     }

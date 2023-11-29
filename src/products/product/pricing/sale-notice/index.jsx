@@ -18,7 +18,7 @@ function ProductPriceSaleNotice({ fontSize, color }) {
         className="swp-pricing-now-notice wps-pricing-sale-notice"
         css={ProductPriceSaleNoticeCSS}
       >
-        {shopState.t.l.now}
+        {shopState.t.l.sale}
       </small>
     </>
   )
