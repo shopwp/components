@@ -7,11 +7,11 @@ import ListMeta from "./meta"
 import ReviewComment from "./comment"
 import { mq, fadeIn } from "@shopwp/common"
 
-const ReviewVerifiedBuyer = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'ReviewsReviewVerifiedBuyer-admin' */ "./verified-buyer"
-  )
-)
+// const ReviewVerifiedBuyer = wp.element.lazy(() =>
+//   import(
+//     /* webpackChunkName: 'ReviewsReviewVerifiedBuyer-admin' */ "./verified-buyer"
+//   )
+// )
 
 function ReviewListItem({ review, size, index, reviewsState }) {
   const ReviewListItemCSS = css`
@@ -136,8 +136,6 @@ function ReviewListItem({ review, size, index, reviewsState }) {
           >
             {prettyDate(review.created_at)}
           </div>
-          {review?.reviewer_type === "verified_buyer" ||
-            (review?.verified_buyer ? <ReviewVerifiedBuyer /> : null)}
         </div>
       </div>
       <div

@@ -17,6 +17,7 @@ function ProductOptionDropdown({
   selectedOptions,
   missingSelections,
   selectFirstVariant,
+  selectedVariant,
 }) {
   const { useRef, Suspense } = wp.element
   const productBuyButtonState = useProductBuyButtonState()
@@ -76,6 +77,7 @@ function ProductOptionDropdown({
             selectedOption={selectedOption}
             selectedOptions={selectedOptions}
             variants={productBuyButtonState.variants}
+            selectedVariant={selectedVariant}
           />
         </Suspense>
       </div>

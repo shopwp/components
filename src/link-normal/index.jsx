@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { getItemLink } from "@shopwp/common"
 import { usePayloadState } from "../items/_state/payload/hooks"
 
@@ -14,18 +12,7 @@ function LinkNormal({
   payload = false,
 }) {
   payload = payload ? payload : usePayloadState()
-  const className = "wps-" + type + "-link" + " " + classNames
-
-  const linkCSS = css`
-    text-decoration: none;
-    display: block;
-
-    .wps-product-image {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  `
+  const className = "swp-link wps-" + type + "-link" + " " + classNames
 
   function getTarget(target) {
     if (target) {
@@ -48,7 +35,6 @@ function LinkNormal({
     <a
       href={link}
       className={className}
-      css={linkCSS}
       aria-label={linkTitle + typeSingular + " link"}
       target={wp.hooks.applyFilters(
         "misc.linkTarget",

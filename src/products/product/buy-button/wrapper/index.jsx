@@ -175,6 +175,7 @@ function ProductBuyButtonWrapper() {
           productDispatch={productDispatch}
           isDirectCheckoutOut={productState.isDirectCheckingOut}
           selectFirstVariant={productState.selectFirstVariant}
+          selectedVariant={productState.selectedVariant}
         />
       )}
 

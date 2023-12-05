@@ -42,6 +42,7 @@ function Dropdown({
   selectedOptions = null,
   selectedOption = false,
   variants = false,
+  selectedVariant = null,
 }) {
   const { useState, useEffect } = wp.element
   const [selected, setSelected] = useState(selectedOption)
@@ -58,6 +59,12 @@ function Dropdown({
       setSelected(null)
       setSelectedText(label)
     } else if (selectedOption) {
+      if (selectedVariant) {
+        setSelected(true)
+      } else {
+        setSelected(false)
+      }
+
       if (selectedOption.label) {
         setSelectedText(label + ": " + selectedOption.label)
       } else {

@@ -8,6 +8,7 @@ function ProductVariantDropdowns({
   missingSelections,
   variants,
   selectFirstVariant,
+  selectedVariant,
 }) {
   return (
     <div
@@ -29,6 +30,7 @@ function ProductVariantDropdowns({
                 missingSelections={missingSelections}
                 option={option}
                 selectFirstVariant={selectFirstVariant}
+                selectedVariant={selectedVariant}
               />
             </ProductOption>
           ))

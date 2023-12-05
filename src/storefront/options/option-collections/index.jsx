@@ -117,14 +117,13 @@ function OptionCollections({ settings }) {
             isBusy={isLoadingItems}
             itemType="collections"
           />
-          {hasNextPage && (
+          {hasNextPage ? (
             <ButtonSecondary
               shopState={shopState}
-              settings={settings}
               isBusy={isLoadingItems}
               onClick={onLoadMore}
             />
-          )}
+          ) : null}
         </>
       }
     />
