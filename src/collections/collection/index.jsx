@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import CollectionProvider from "./_state/provider"
 import { itemWidthClass } from "@shopwp/common"
 import { useSettingsState } from "../../items/_state/settings/hooks"
@@ -12,19 +10,11 @@ import CollectionProducts from "./products"
 function Collection(props) {
   const settings = useSettingsState()
 
-  const CollectionCSS = css`
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    max-width: 100%;
-  `
-
   return (
     <div
-      className={`${itemWidthClass(settings.collectionsItemsPerRow)} wps-item`}
-      css={CollectionCSS}
+      className={`swp-l-col swp-0 swp-mw100 swp-collection ${itemWidthClass(
+        settings.collectionsItemsPerRow
+      )} swp-item wps-item`}
     >
       <CollectionProvider {...props}>
         {settings.collectionsExcludes &&

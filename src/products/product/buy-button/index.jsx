@@ -32,7 +32,12 @@ function ProductBuyButton() {
     <ProductBuyButtonProvider payload={productState.payload}>
       <div
         css={buyButtonWrapperCSS}
-        className="swp-component wps-component wps-component-products-buy-button swp-l-col swp-0"
+        className={
+          "swp-l-col swp-0" + settings.isSingleComponent
+            ? " swp-mb20 "
+            : null +
+              " swp-component wps-component wps-component-products-buy-button"
+        }
         aria-label="Product Buy Button"
         data-is-single-component={settings.isSingleComponent}
       >

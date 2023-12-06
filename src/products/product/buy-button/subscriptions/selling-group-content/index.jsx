@@ -27,7 +27,12 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
   }
 
   function getSaveAmount(sellingGroup) {
-    if (sellingGroup?.discount_amount !== 0) {
+    if (
+      sellingGroup.discount_amount &&
+      sellingGroup.discount_amount !== "0.00" &&
+      sellingGroup.discount_amount !== "0" &&
+      sellingGroup.discount_amount !== "0.0"
+    ) {
       return sellingGroup.discount_amount
     } else {
       return false
@@ -186,11 +191,11 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
                 </p>
               ) : null}
 
-              {saveAmount && (
+              {saveAmount ? (
                 <p css={SaveInlineCSS}>
                   ({shopState.t.l.save} {saveAmount}%)
                 </p>
-              )}
+              ) : null}
             </>
           ) : null}
         </div>

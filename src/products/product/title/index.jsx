@@ -15,7 +15,11 @@ function ProductTitle() {
 
   return usePortal(
     <div
-      className="swp-component wps-component wps-component-products-title"
+      className={
+        settings.isSingleComponent
+          ? "swp-mb20 "
+          : null + "swp-component wps-component wps-component-products-title"
+      }
       aria-label={productState.payload.title + " product title"}
       data-wps-component-order="0"
       data-is-single-component={settings.isSingleComponent}

@@ -66,7 +66,10 @@ function ProductPrices() {
 
   return (
     <div
-      className={"swp-product-pricing " + settings.pricingClassName}
+      className={
+        "swp-mb20 swp-l-col swp-l-baseline swp-l-rel100 swp-product-pricing " +
+        settings.pricingClassName
+      }
       aria-label="Product Pricing"
       itemScope
       itemProp="offers"

@@ -12,12 +12,18 @@ function SellingPlansList({ plans, sellingGroup }) {
   const shopState = useShopState()
   const settings = useSettingsState()
 
-  const newPlans = plans.map((plan) => {
-    return {
-      label: plan.external_plan_name,
-      value: plan.external_plan_name,
-    }
-  })
+  const newPlans = plans
+    .map((plan) => {
+      if (plan.type === "onetime") {
+        return false
+      }
+
+      return {
+        label: plan.external_plan_name,
+        value: plan.external_plan_name,
+      }
+    })
+    .filter(Boolean)
 
   const [selectedOption, setSelectedOption] = useState(newPlans[0])
 

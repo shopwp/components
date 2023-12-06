@@ -126,7 +126,7 @@ function CartLineItem({ lineItem }) {
 
   return (
     <li
-      className="swp-cart-lineitem wps-cart-lineitem"
+      className="swp-cart-lineitem swp-mb20 wps-cart-lineitem"
       data-wps-is-updating={isUpdating}
       data-wps-is-available={lineItem.merchandise.availableForSale}
       ref={lineItemElement}

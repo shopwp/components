@@ -22,7 +22,11 @@ function ProductGalleryWrapper() {
     <>
       <FilterHook name="before.productImages" args={[productState.payload]} />
       <div
-        className="swp-component wps-component wps-component-products-images"
+        className={
+          settings.isSingleComponent
+            ? "swp-mb20 "
+            : null + "swp-component wps-component wps-component-products-images"
+        }
         aria-label="Product Images"
         css={ProductGalleryWrapperCSS}
         data-is-single-component={settings.isSingleComponent}

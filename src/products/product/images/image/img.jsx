@@ -72,7 +72,7 @@ function Img(props) {
         src={props.src}
         className={
           (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
-          " wps-product-image"
+          " swp-mw100 wps-product-image"
         }
         loading="lazy"
         alt={props.image.altText ? props.image.altText : ""}

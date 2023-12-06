@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
 import { addCustomSizingToImageUrl } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
@@ -46,21 +44,11 @@ function CollectionImage() {
     }
   }, [settings])
 
-  const CollectionImageWrapperCSS = css`
-    margin-bottom: 20px;
-    max-width: 100%;
-  `
-
-  const CollectionImageCSS = css`
-    max-width: 100%;
-  `
-
   return usePortal(
     imageSrc ? (
       <div
-        className="wps-component wps-component-collection-image"
+        className="swp-mb20 swp-mw100 wps-component swp-collection-image wps-component-collection-image"
         aria-label={collectionState.payload.title + " collection image"}
-        css={CollectionImageWrapperCSS}
       >
         <Link
           type="collections"

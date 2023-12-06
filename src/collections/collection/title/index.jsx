@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
 import { hasLink } from "@shopwp/common"
 import { useCollectionState } from "../_state/hooks"
@@ -12,26 +10,10 @@ const Link = wp.element.lazy(() =>
 function TitleContent({ payload, settings }) {
   const CustomHeading = `h${shopwp.misc.isSingularCollections ? "1" : "2"}`
 
-  const CollectionTitleCSS = css`
-    && {
-      font-family: ${settings.collectionsTitleTypeFontFamily
-        ? settings.collectionsTitleTypeFontFamily
-        : "inherit"};
-      font-size: ${settings.collectionsTitleTypeFontSize
-        ? settings.collectionsTitleTypeFontSize
-        : settings.collectionsTitleSize};
-
-      color: ${settings.collectionsTitleColor};
-      white-space: normal;
-      margin: 0;
-    }
-  `
-
   return (
     <CustomHeading
       itemProp="name"
-      className="wps-collection-title"
-      css={CollectionTitleCSS}
+      className="swp-collection-title wps-collection-title"
     >
       {payload.title}
     </CustomHeading>

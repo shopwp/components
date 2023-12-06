@@ -23,7 +23,9 @@ function ProductDescription() {
 
   return usePortal(
     <div
-      className={"swp-product-description " + settings.descriptionClassName}
+      className={
+        "swp-mb20 swp-product-description " + settings.descriptionClassName
+      }
       aria-label="Product Description"
       itemProp="description"
       dangerouslySetInnerHTML={{ __html: maybeTruncateDescription() }}

@@ -60,7 +60,10 @@ function CartFooterDiscountWrapper() {
       css={discountCSS}
       className="swp-l-col swp-l-row-end swp-l-row-between swp-0 wps-discount-row"
     >
-      <div className="swp-discount-row" css={discountFormCSS}>
+      <div
+        className="swp-l-row swp-mb20 swp-discount-row"
+        css={discountFormCSS}
+      >
         <input
           className="swp-discount-input"
           type="text"

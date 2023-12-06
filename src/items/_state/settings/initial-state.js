@@ -57,6 +57,92 @@ function updateVariablesInCSS(componentType, settings, element) {
       }
     }
 
+    if (componentType === "collections") {
+      container.style.setProperty(
+        "--collection-descriptionColor",
+        settings.collectionsDescriptionColor
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionFontFamily",
+        settings.collectionsDescriptionTypeFontFamily
+          ? settings.collectionsDescriptionTypeFontFamily
+          : settings.collectionsDescriptionFont
+          ? settings.collectionsDescriptionFont
+          : "inherit"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionFontWeight",
+        settings.collectionsDescriptionTypeFontWeight
+          ? settings.collectionsDescriptionTypeFontWeight
+          : settings.collectionsDescriptionFontWeight
+          ? settings.collectionsDescriptionFontWeight
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionFontSize",
+        settings.collectionsDescriptionTypeFontSize
+          ? settings.collectionsDescriptionTypeFontSize
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionFontStyle",
+        settings.collectionsDescriptionTypeFontStyle
+          ? settings.collectionsDescriptionTypeFontStyle
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionLetterSpacing",
+        settings.collectionsDescriptionTypeLetterSpacing
+          ? settings.collectionsDescriptionTypeLetterSpacing
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionLineHeight",
+        settings.collectionsDescriptionTypeLineHeight
+          ? settings.collectionsDescriptionTypeLineHeight
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionTextDecoration",
+        settings.collectionsDescriptionTypeTextDecoration
+          ? settings.collectionsDescriptionTypeTextDecoration
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-descriptionTextTransform",
+        settings.collectionsDescriptionTypeTextTransform
+          ? settings.collectionsDescriptionTypeTextTransform
+          : "initial"
+      )
+
+      container.style.setProperty(
+        "--collection-titleFontFamily",
+        settings.collectionsTitleTypeFontFamily
+          ? settings.collectionsTitleTypeFontFamily
+          : "inherit"
+      )
+
+      container.style.setProperty(
+        "--collection-titleFontSize",
+        settings.collectionsTitleTypeFontSize
+          ? settings.collectionsTitleTypeFontSize
+          : settings.collectionsTitleSize
+      )
+
+      container.style.setProperty(
+        "--collection-titleColor",
+        settings.collectionsTitleColor
+      )
+    }
+
     container.style.setProperty(
       "--pagination-paginationLoadMoreButtonColor",
       settings.paginationLoadMoreButtonColor
