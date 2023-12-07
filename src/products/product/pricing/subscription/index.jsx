@@ -9,18 +9,13 @@ function ProductPricesSubscription({
   settings,
   shouldShowCompareAt,
 }) {
-  const ProductPricesSubscriptionCSS = css`
-    display: flex;
-    flex-direction: row;
-    line-height: 1;
-
-    .swp-price {
-      margin-right: 5px;
-    }
-  `
+  const ProductPricesSubscriptionCSS = css``
 
   return (
-    <div css={ProductPricesSubscriptionCSS}>
+    <div
+      css={ProductPricesSubscriptionCSS}
+      className="swp-l-row swp-l-baseline"
+    >
       {subscriptionInfo.discountPrice ? (
         <>
           {shouldShowCompareAt ? (

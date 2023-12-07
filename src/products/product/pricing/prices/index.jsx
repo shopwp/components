@@ -46,6 +46,13 @@ function ProductPrices() {
         productState.selectedVariant.node.compareAtPrice &&
         productState.selectedVariant.node.compareAtPrice.amount
       ) {
+        if (
+          productState.selectedVariant.node.compareAtPrice.amount === "0" ||
+          productState.selectedVariant.node.compareAtPrice.amount === "0.0" ||
+          productState.selectedVariant.node.compareAtPrice.amount === "0.00"
+        ) {
+          return false
+        }
         return true
       }
     } else {
@@ -70,6 +77,9 @@ function ProductPrices() {
         "swp-mb20 swp-l-col swp-l-baseline swp-l-rel100 swp-product-pricing " +
         settings.pricingClassName
       }
+      data-show-price-range={showPriceRange(prices)}
+      data-is-selected={!!productState.selectedVariant}
+      data-show-sale-pricing={shouldShowCompareAt()}
       aria-label="Product Pricing"
       itemScope
       itemProp="offers"

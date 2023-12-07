@@ -2,12 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { isOneTimeSubscription } from "@shopwp/common"
 import SellingGroupOnetime from "../selling-group-onetime"
-
-const SellingGroupSubscription = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'SellingGroupSubscription-public' */ "../selling-group-subscription"
-  )
-)
+import SellingGroupSubscription from "../selling-group-subscription"
 
 function SellingGroup({ sellingGroup, selectedSubscriptionId }) {
   const isSelected = selectedSubscriptionId === sellingGroup.id

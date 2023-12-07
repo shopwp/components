@@ -104,7 +104,6 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
   return (
     <span
       className="swp-product-price wps-products-price wps-product-pricing wps-products-price-one"
-      data-show-price-range={showPriceRange}
       css={priceWrapperCSS}
     >
       {showPriceRange && !selectedVariant ? (

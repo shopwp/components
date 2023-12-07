@@ -14,7 +14,7 @@ function ProductPricesCompareAt({
 
   return (
     <>
-      <div className="swp-l-row swp-m-l-row">
+      <div className="swp-l-row swp-l-baseline swp-m-l-row">
         {(compareAt && selectedVariant) || !productState.hasManyVariants ? (
           <ProductPriceSaleNotice
             fontSize={settings.pricingCompareAtTypeFontSize}

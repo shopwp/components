@@ -61,113 +61,19 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
     }
   }, [isSelected, value, sellingGroup, productState.selectedVariant])
 
-  const SellingGroupLabelCSS = css`
-    display: flex;
-    transition: all ease 0.18s;
-    padding: 15px 0px;
+  const SellingGroupLabelCSS = css``
 
-    *,
-    *:before,
-    *:after {
-      box-sizing: border-box;
-    }
-
-    input[type="radio"] {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      margin: 0;
-
-      + .shopwp-radio-control::before {
-        content: "";
-        width: 0.5em;
-        height: 0.5em;
-        box-shadow: inset 0.5em 0.5em ${isSelected ? "blue" : "black"};
-        border-radius: 50%;
-        transition: 180ms transform ease-in-out;
-        transform: scale(0);
-        display: block;
-      }
-
-      &:checked + .shopwp-radio-control::before {
-        transform: scale(1);
-      }
-    }
-
-    .shopwp-radio-control {
-      display: block;
-      width: 1em;
-      height: 1em;
-      border-radius: 50%;
-      border: 0.1em solid ${isSelected ? "blue" : "black"};
-      position: absolute;
-      top: 26px;
-      left: 15px;
-      transform: translate(0, -50%);
-      display: grid;
-      place-items: center;
-      margin: 0;
-    }
-
-    .shopwp-radio-text {
-      padding-left: 30px;
-      margin: 0;
-      color: ${isSelected ? "blue" : "black"};
-      display: flex;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    &:hover {
-      cursor: ${isSelected ? "text" : "pointer"};
-    }
-  `
-
-  const PriceCSS = css`
-    && {
-      margin: 0 0 0 10px;
-      display: inline-block;
-      line-height: initial;
-      font-size: 16px;
-    }
-  `
-
-  const FinalPriceCSS = css`
-    && {
-      font-weight: bold;
-    }
-  `
-
-  const RegFullPriceCSS = css`
-    text-decoration: line-through;
-    font-weight: normal;
-  `
-
-  const SaveInlineCSS = css`
-    display: inline-block;
-    margin-left: 5px;
-    margin-top: 0px;
-    margin-bottom: 0;
-    font-size: 15px;
-    font-weight: normal;
-  `
-
-  const SubscriptionLabelTextCSS = css`
-    && {
-      line-height: initial;
-      display: inline-block;
-      margin: 0;
-      font-size: 16px;
-    }
-  `
+  const PriceCSS = css``
+  const FinalPriceCSS = css``
+  const RegFullPriceCSS = css``
 
   return (
-    <div className="shopwp-selling-group-content">
+    <div className="swp-selling-group-content" data-is-selected={isSelected}>
       <label css={SellingGroupLabelCSS}>
         <Radio value={value} />
         <div className="shopwp-radio-control"></div>
-        <div className="shopwp-radio-text">
-          <p css={SubscriptionLabelTextCSS}>
+        <div className="swp-radio-text shopwp-radio-text">
+          <p className="swp-radio-label">
             {wp.hooks.applyFilters(
               "product.subscriptionLabel",
               text,
@@ -181,18 +87,24 @@ function SellingGroupContent({ value, text, isSelected, sellingGroup }) {
 
           {sellingGroup ? (
             <>
-              <p css={[PriceCSS, FinalPriceCSS]}>
+              <p
+                className="swp-price swp-final-price"
+                css={[PriceCSS, FinalPriceCSS]}
+              >
                 <Price price={discountPrice ? discountPrice : regularPrice} />
               </p>
 
               {discountPrice && saveAmount ? (
-                <p css={[PriceCSS, RegFullPriceCSS]}>
+                <p
+                  className="swp-price swp-discounted-reg-price"
+                  css={[PriceCSS, RegFullPriceCSS]}
+                >
                   <Price price={regularPrice} />
                 </p>
               ) : null}
 
               {saveAmount ? (
-                <p css={SaveInlineCSS}>
+                <p className="swp-save-inline">
                   ({shopState.t.l.save} {saveAmount}%)
                 </p>
               ) : null}

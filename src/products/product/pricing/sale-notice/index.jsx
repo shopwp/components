@@ -15,7 +15,7 @@ function ProductPriceSaleNotice({ fontSize, color }) {
   return (
     <>
       <small
-        className="swp-pricing-now-notice wps-pricing-sale-notice"
+        className="swp-pricing-sale-notice wps-pricing-sale-notice"
         css={ProductPriceSaleNoticeCSS}
       >
         {shopState.t.l.sale}

@@ -171,7 +171,7 @@ function Dropdown({
       border: 1px solid #a7a7a7;
       border-radius: 5px;
       top: 5px;
-      padding: 0;
+      padding: 0 !important;
       width: ${inline ? "auto" : "100%"};
       min-width: ${inline ? "200px" : "auto"};
       max-height: 350px;

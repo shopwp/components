@@ -8,7 +8,7 @@ function ProductPricingRangeGroup({
   settings,
 }) {
   return (
-    <p className="swp-l-row swp-m-l-row swp-0">
+    <p className="swp-l-row swp-l-baseline swp-m-l-row swp-0">
       <span className="swp-price-label">From</span>
       <ProductPriceSingle
         price={firstPrice}

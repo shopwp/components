@@ -37,7 +37,7 @@ function SellingPlansList({ plans, sellingGroup }) {
     buyButtonDispatch({
       type: "SET_SUBSCRIPTION",
       payload: {
-        sellingPlanId: selectedSubscription.id,
+        sellingPlanId: selectedSubscription.external_plan_id,
         sellingPlanName: selectedSubscription.external_plan_name,
         discountAmount: sellingGroup.discount_amount,
         discountType: sellingGroup.discount_type,
