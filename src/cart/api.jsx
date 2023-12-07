@@ -209,7 +209,6 @@ async function getExistingCart(
 
     if (cartCache) {
       if (cartCache.cacheKey === shopwp.misc.cacheKey) {
-        console.log("📦 Valid cart cache found, just returning ...")
         updateCartState(cartCache)
         shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
         return

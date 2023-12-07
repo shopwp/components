@@ -10,7 +10,6 @@ function LinkModal({ children }) {
     <a
       href="#!"
       onClick={onClick}
-      css={LinkModalCSS}
       className="swp-link wps-link-modal"
       aria-label="Link to modal window"
     >
