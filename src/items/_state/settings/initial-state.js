@@ -242,6 +242,7 @@ function updateVariablesInCSS(componentType, settings, element) {
         ? settings.descriptionTypeTextTransform
         : "initial"
     )
+
     container.style.setProperty(
       "--border-radius",
       shopwp.general.globalBorderRadius

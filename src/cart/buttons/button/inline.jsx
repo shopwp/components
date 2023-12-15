@@ -41,6 +41,7 @@ function CartIcon({ settings, element }) {
   return usePortal(
     <button
       role="button"
+      aria-label="Cart icon"
       className={`swp-cart-icon swp-cart-icon-inline wps-btn-cart${
         shopState.cartData &&
         shopState.cartData.lines &&

@@ -80,6 +80,9 @@ function ProductThumbnailImages({ customOnClick }) {
     <div
       className="wps-thumbnails-wrapper"
       aria-label="Product Thumbnails"
+      data-is-showing-thumbs-carousel={
+        settings.showThumbsCarousel && thumbnails.edges.length > 5
+      }
       css={thumbnailsWrapperCSS}
       onMouseEnter={preloadStatus === "idle" ? onMouseEnter : undefined}
     >

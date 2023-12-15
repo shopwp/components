@@ -48,6 +48,7 @@ function CartIconFixed() {
   return shouldShowCartButton() ? (
     <button
       role="button"
+      aria-label="Cart icon"
       className={`swp-cart-icon swp-cart-icon-fixed wps-btn-cart wps-cart-icon-fixed${
         shopState.cartData &&
         shopState.cartData.lines &&
