@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import ReviewRating from "../rating"
-import { buttonCSS } from "@shopwp/common"
 
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../../loader")
@@ -77,6 +76,8 @@ function ReviewForm(props) {
     max-width: 200px;
     margin-bottom: 20px;
   `
+
+  const buttonCSS = css``
 
   function maybeSetName(value) {
     setReviewName(value)
@@ -292,7 +293,11 @@ function ReviewForm(props) {
             />
             {bodyError ? <p css={inputErrorCSS}>{bodyError}</p> : null}
           </div>
-          <button css={[buttonCSS, SubmitReviewsCSS]} onClick={createReview}>
+          <button
+            className="swp-btn"
+            css={[buttonCSS, SubmitReviewsCSS]}
+            onClick={createReview}
+          >
             {isBusy ? (
               <Loader isLoading={isBusy} />
             ) : (

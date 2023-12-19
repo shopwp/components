@@ -13,7 +13,6 @@ import {
   getCache,
   clearCache,
 } from "@shopwp/api"
-import { checkoutRedirect } from "@shopwp/common"
 import Cookies from "js-cookie"
 
 function hasDiscount(cartData) {
@@ -293,51 +292,42 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
   })
 }
 
-async function directCheckout(
-  data,
-  cartState,
-  cartDispatch,
-  shopState,
-  shopDispatch
-) {
-  const [directCheckoutError, response] = await to(
-    createCart(
-      wp.hooks.applyFilters(
-        "cart.directCheckoutSettings",
-        {
-          lines: data.lines,
-          discountCodes: data?.discountCodes ? data.discountCodes : [],
-          note: data?.note ? data.note : "",
-          attributes: data?.attributes ? data.attributes : [],
-          buyerIdentity: shopState.buyerIdentity,
-        },
-        cartState,
-        data
+function directCheckout(data, shopState) {
+  return new Promise(async (resolve, reject) => {
+    const [directCheckoutError, response] = await to(
+      createCart(
+        wp.hooks.applyFilters(
+          "cart.directCheckoutSettings",
+          {
+            lines: data.lines,
+            discountCodes: data?.discountCodes ? data.discountCodes : [],
+            note: data?.note ? data.note : "",
+            attributes: data?.attributes ? data.attributes : [],
+            buyerIdentity: shopState.buyerIdentity,
+          },
+          shopState,
+          data
+        )
       )
     )
-  )
 
-  var maybeApiError = maybeHandleApiError(directCheckoutError, response)
+    var maybeApiError = maybeHandleApiError(directCheckoutError, response)
 
-  if (maybeApiError) {
-    cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
-    shopDispatch({
-      type: "SET_DIRECT_CHECKOUT_ERROR",
-      payload: maybeApiError,
+    if (maybeApiError) {
+      reject(maybeApiError)
+    }
+
+    if (data.settings && data.settings.linkTarget) {
+      var linkTarget = data.settings.linkTarget
+    } else {
+      var linkTarget = false
+    }
+
+    resolve({
+      checkoutUrl: response.data.checkoutUrl,
+      trackingParams: shopState.trackingParams,
+      target: linkTarget,
     })
-    return
-  }
-
-  if (data.settings && data.settings.linkTarget) {
-    var linkTarget = data.settings.linkTarget
-  } else {
-    var linkTarget = false
-  }
-
-  checkoutRedirect({
-    checkoutUrl: response.data.checkoutUrl,
-    trackingParams: shopState.trackingParams,
-    target: linkTarget,
   })
 }
 

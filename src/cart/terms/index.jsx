@@ -43,7 +43,7 @@ function CartTerms() {
           id="wps-input-terms"
           checked={cartState.termsAccepted}
           type="checkbox"
-          className="swp-input wps-input wps-input-checkbox"
+          className="swp-input-checkbox wps-input wps-input-checkbox"
           css={termsInputCSS}
         />
         <label

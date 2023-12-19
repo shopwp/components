@@ -42,7 +42,6 @@ function ProductInitialState(props) {
     payload: props.payload ? props.payload : false,
     selectedSubscriptionInfo: false,
     isDirectCheckingOut: false,
-    directCheckoutParams: false,
   }
 }
 

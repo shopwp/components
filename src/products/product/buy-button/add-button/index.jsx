@@ -77,6 +77,7 @@ function ProductAddButton({
             quantityStep={settings.quantityStep}
             fontSize={settings.addToCartButtonTypeFontSize}
             selectedVariant={productState.selectedVariant}
+            element={productState.element}
             maxQuantity={getMaxQuantity(
               settings.showInventoryLevels,
               settings.maxQuantity,

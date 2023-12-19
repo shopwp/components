@@ -19,10 +19,6 @@ function ProductReducer(state, action) {
       return rSet("isDirectCheckingOut", action, state)
     }
 
-    case "SET_DIRECT_CHECKOUT_PARAMS": {
-      return rSet("directCheckoutParams", action, state)
-    }
-
     case "SET_SELECTED_SUBSCRIPTION_INFO": {
       return rSet("selectedSubscriptionInfo", action, state)
     }

@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 import ProductVariantButtons from "../variant-buttons"
 import ProductVariantDropdowns from "../variant-dropdowns"
 import ClearSelections from "../clear-selections"
@@ -16,13 +13,14 @@ function ProductOptions({
   selectFirstVariant,
   selectedVariant,
 }) {
-  const ProductOptionsCSS = css`
-    position: relative;
-  `
   return (
     <div
-      className={"wps-product-options " + "swp-variant-style-" + variantStyle}
-      css={ProductOptionsCSS}
+      className={
+        "swp-l-rel100 swp-product-options wps-product-options " +
+        "swp-variant-style-" +
+        variantStyle
+      }
+      data-is-checking-out={isDirectCheckoutOut}
       aria-label={`Product variant ${variantStyle ? variantStyle : "dropdown"}`}
     >
       {hasSelections && !isDirectCheckoutOut && <ClearSelections />}

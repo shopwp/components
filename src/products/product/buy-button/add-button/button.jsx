@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react"
+import { jsx, css } from "@emotion/react"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useShopState } from "../../../../shop/_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
@@ -8,11 +8,13 @@ import {
   findVariantByVariantId,
   allOptionsSelectedMatch,
 } from "@shopwp/common"
-import { buttonCSS } from "@shopwp/common"
+import { to, createCheckoutUrl } from "@shopwp/common"
 import {
   useProductBuyButtonState,
   useProductBuyButtonDispatch,
 } from "../_state/hooks"
+
+import { directCheckout } from "../../../../cart/api.jsx"
 
 const AddButtonText = wp.element.lazy(() =>
   import(/* webpackChunkName: 'AddButtonText-public' */ "./text")
@@ -94,6 +96,8 @@ function AddButton({
 
   var variant = findVariant()
 
+  const buttonCSS = css``
+
   const NoticeCSS = css`
     margin-top: 15px;
     width: 100%;
@@ -151,12 +155,12 @@ function AddButton({
   `
 
   async function handleClick(e) {
-    if (linkTo === "modal" && !isDirectCheckout && !linkWithBuyButton) {
+    if (linkTo === "modal" && !linkWithBuyButton) {
       productDispatch({ type: "TOGGLE_MODAL", payload: true })
       return
     }
 
-    if (hasLink && !isDirectCheckout && !linkWithBuyButton) {
+    if (hasLink && !linkWithBuyButton) {
       return
     }
 
@@ -198,73 +202,50 @@ function AddButton({
       return
     }
 
-    if (isDirectCheckout) {
-      if (settings.linkTarget === "_self") {
-        setIsCheckingOut(true)
-      }
-
-      var checkoutData = {
-        lines: lines,
-        note: false,
-        discountCode: false,
-        customAttributes: false,
-        settings: settings,
-      }
-
-      productDispatch({
-        type: "SET_DIRECT_CHECKOUT_PARAMS",
-        payload: checkoutData,
-      })
-
-      productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: true })
-
-      wp.hooks.doAction("do.directCheckout", checkoutData)
-    } else {
-      if (settings.variantId) {
-        wp.hooks.doAction("do.addToCart", {
-          lines: lines,
-          extras: {
-            openCartAfterAdding: settings.openCartAfterAdding,
-          },
-        })
-        return
-      }
-
-      if (
-        productState.payload.requiresSellingPlan &&
-        !productBuyButtonState.subscription
-      ) {
-        productBuyButtonDispatch({
-          type: "SET_NOTICE",
-          payload: {
-            type: "error",
-            message: shopState.t.e.requireSub,
-          },
-        })
-        return
-      }
-
-      productDispatch({ type: "SET_ADDED_VARIANT", payload: variant.node })
-
-      if (settings.resetVariantsAfterAdding) {
-        productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
-
-        productBuyButtonDispatch({
-          type: "UPDATE_SELECTED_OPTIONS",
-          payload: false,
-        })
-      }
-
-      productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
-      productDispatch({ type: "SET_NOTICE", payload: false })
-
+    if (settings.variantId) {
       wp.hooks.doAction("do.addToCart", {
         lines: lines,
         extras: {
           openCartAfterAdding: settings.openCartAfterAdding,
         },
       })
+      return
     }
+
+    if (
+      productState.payload.requiresSellingPlan &&
+      !productBuyButtonState.subscription
+    ) {
+      productBuyButtonDispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message: shopState.t.e.requireSub,
+        },
+      })
+      return
+    }
+
+    productDispatch({ type: "SET_ADDED_VARIANT", payload: variant.node })
+
+    if (settings.resetVariantsAfterAdding) {
+      productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
+
+      productBuyButtonDispatch({
+        type: "UPDATE_SELECTED_OPTIONS",
+        payload: false,
+      })
+    }
+
+    productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
+    productDispatch({ type: "SET_NOTICE", payload: false })
+
+    wp.hooks.doAction("do.addToCart", {
+      lines: lines,
+      extras: {
+        openCartAfterAdding: settings.openCartAfterAdding,
+      },
+    })
   }
 
   useEffect(() => {
@@ -309,33 +290,50 @@ function AddButton({
 
   return (
     <>
-      <button
-        ref={button}
-        type="button"
-        role="button"
-        itemProp="potentialAction"
-        itemScope
-        itemType="https://schema.org/BuyAction"
-        className="wps-btn wps-btn-secondary wps-add-to-cart"
-        data-wps-is-direct-checkout={isDirectCheckout ? "1" : "0"}
-        onClick={handleClick}
-        css={[buttonCSS, addToCartCSS]}
-        disabled={isCheckingOut || isDisabled}
-      >
-        {isCheckingOut ? (
-          <Loader />
-        ) : (
-          <AddButtonText
-            isDisabled={isDisabled}
-            addedToCart={addedToCart}
-            addToCartButtonTextColor={addToCartButtonTextColor}
-            productBuyButtonState={productBuyButtonState}
-            settings={settings}
-            isDirectCheckout={isDirectCheckout}
-            productState={productState}
-          />
-        )}
-      </button>
+      {isDirectCheckout ? (
+        <DirectCheckoutButton
+          shopState={shopState}
+          isDisabled={isDisabled}
+          addedToCart={addedToCart}
+          addToCartButtonTextColor={addToCartButtonTextColor}
+          productBuyButtonState={productBuyButtonState}
+          productBuyButtonDispatch={productBuyButtonDispatch}
+          settings={settings}
+          productState={productState}
+          productDispatch={productDispatch}
+          quantity={quantity}
+          variant={variant}
+          hasManyVariants={hasManyVariants}
+        />
+      ) : (
+        <button
+          ref={button}
+          type="button"
+          role="button"
+          itemProp="potentialAction"
+          itemScope
+          itemType="https://schema.org/BuyAction"
+          className="swp-btn wps-btn wps-btn-secondary wps-add-to-cart"
+          data-wps-is-direct-checkout={isDirectCheckout ? "1" : "0"}
+          onClick={handleClick}
+          css={[buttonCSS, addToCartCSS]}
+          disabled={isCheckingOut || isDisabled}
+        >
+          {isCheckingOut ? (
+            <Loader />
+          ) : (
+            <AddButtonText
+              isDisabled={isDisabled}
+              addedToCart={addedToCart}
+              addToCartButtonTextColor={addToCartButtonTextColor}
+              productBuyButtonState={productBuyButtonState}
+              settings={settings}
+              isDirectCheckout={isDirectCheckout}
+              productState={productState}
+            />
+          )}
+        </button>
+      )}
 
       {productBuyButtonState.notice ? (
         <Notice status={productBuyButtonState.notice.type} extraCSS={NoticeCSS}>
@@ -343,6 +341,149 @@ function AddButton({
         </Notice>
       ) : null}
     </>
+  )
+}
+
+function DirectCheckoutButton({
+  isDisabled,
+  addedToCart,
+  addToCartButtonTextColor,
+  settings,
+  productState,
+  shopState,
+  variant,
+  quantity,
+  productBuyButtonState,
+  productDispatch,
+  hasManyVariants,
+  productBuyButtonDispatch,
+}) {
+  const { useState } = wp.element
+
+  const [checkoutLink, setCheckoutLink] = useState(undefined)
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
+
+  const buttonCSS = css``
+
+  var shouldDisable = false
+
+  function onCheckout(e) {
+    if (!variant && hasManyVariants) {
+      productDispatch({ type: "SET_MISSING_SELECTIONS", payload: true })
+      return
+    }
+
+    if (!variant) {
+      console.error("ShopWP error: handleClick variant undefined ")
+
+      productDispatch({ type: "SET_MISSING_SELECTIONS", payload: true })
+      productBuyButtonDispatch({
+        type: "UPDATE_SELECTED_OPTIONS",
+        payload: false,
+      })
+
+      return
+    }
+
+    if (shouldDisable) {
+      return
+    }
+
+    if (settings.linkTarget === "_self") {
+      setIsCheckingOut(true)
+    }
+
+    const lines = buildLines(variant, quantity, productBuyButtonState)
+
+    var checkoutData = {
+      lines: lines,
+      note: false,
+      discountCode: false,
+      customAttributes: false,
+      settings: settings,
+    }
+
+    productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: true })
+
+    createCartAndCheckoutUrl(checkoutData, shopState)
+  }
+
+  async function createCartAndCheckoutUrl(checkoutData, shopState) {
+    const [error, resp] = await to(directCheckout(checkoutData, shopState))
+
+    if (error) {
+      setIsCheckingOut(false)
+      productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: false })
+
+      productBuyButtonDispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message: JSON.stringify(error),
+        },
+      })
+      return
+    }
+
+    if (resp) {
+      var finalUrl = createCheckoutUrl({
+        checkoutUrl: resp.checkoutUrl,
+        trackingParams: shopState.trackingParams,
+        target: shopwp.misc.isMobile
+          ? "_self"
+          : shopwp.general.checkoutButtonTarget,
+      })
+
+      setCheckoutLink(finalUrl)
+    }
+  }
+
+  return isCheckingOut && checkoutLink ? (
+    <AutoClickLink href={checkoutLink} />
+  ) : (
+    <div
+      className="swp-btn swp-l-flex swp-btn swp-btn-direct-checkout"
+      onClick={onCheckout}
+      css={[buttonCSS]}
+      data-is-disabled={isCheckingOut || isDisabled}
+    >
+      {isCheckingOut ? (
+        <Loader />
+      ) : (
+        <AddButtonText
+          isDisabled={isDisabled}
+          addedToCart={addedToCart}
+          addToCartButtonTextColor={addToCartButtonTextColor}
+          productBuyButtonState={productBuyButtonState}
+          settings={settings}
+          productState={productState}
+          isDirectCheckout={true}
+        />
+      )}
+    </div>
+  )
+}
+
+function AutoClickLink({ href }) {
+  const { useEffect, useRef } = wp.element
+  const linkBtn = useRef()
+
+  useEffect(() => {
+    linkBtn.current.click()
+  }, [])
+
+  return (
+    <a
+      ref={linkBtn}
+      href={href}
+      className="swp-btn swp-l-flex swp-btn-direct-checkout-linker"
+      target={
+        shopwp.misc.isMobile ? "_self" : shopwp.general.checkoutButtonTarget
+      }
+      data-is-disabled={true}
+    >
+      <Loader />
+    </a>
   )
 }
 

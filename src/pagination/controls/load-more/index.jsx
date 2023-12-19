@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
-import { buttonCSS } from "@shopwp/common"
 import { InView } from "react-intersection-observer"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import {
@@ -39,13 +38,14 @@ function PaginationLoadMore() {
   }
 
   const loadMoreButtonCSS = css``
+  const buttonCSS = css``
 
   return usePortal(
     <InView rootMargin="10px 0px 0px 0px" as="div" onChange={onViewChange}>
       <div
         css={[buttonCSS, loadMoreButtonCSS]}
         disabled={requestsState.isFetchingNew}
-        className="swp-button-pagination wps-btn-next-page"
+        className="swp-btn swp-button-pagination wps-btn-next-page"
         onClick={onClick}
       >
         {requestsState.isFetchingNew ? (

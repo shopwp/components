@@ -21,7 +21,6 @@ import {
   updateAttrs,
   getExistingCart,
   createNewCart,
-  directCheckout,
   updateDiscount,
   updateCartNote,
   updateIdentity,
@@ -50,7 +49,6 @@ function CartWrapper() {
   const setCartNotes = useAction("do.setCartNote", null)
   const lineItemsAdded = useAction("do.addToCart")
   const discountCode = useAction("do.setCartDiscount", null)
-  const doDirectCheckout = useAction("do.directCheckout", null)
   const doCartToggle = useAction("do.cartToggle", null)
   const doToggleCartTerms = useAction("do.toggleCartTerms", null)
   const doCheckout = useAction("do.checkout", null)
@@ -166,20 +164,6 @@ function CartWrapper() {
 
     cartDispatch({ type: "SET_TERMS_ACCEPTED", payload: doToggleCartTerms })
   }, [doToggleCartTerms])
-
-  useEffect(() => {
-    if (doDirectCheckout === null) {
-      return
-    }
-
-    directCheckout(
-      doDirectCheckout,
-      cartState,
-      cartDispatch,
-      shopState,
-      shopDispatch
-    )
-  }, [doDirectCheckout])
 
   useEffect(() => {
     if (discountCode === null) {

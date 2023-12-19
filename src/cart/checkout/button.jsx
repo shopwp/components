@@ -1,45 +1,23 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import { useCartState, useCartDispatch } from "@shopwp/components"
-import { buttonCSS } from "@shopwp/common"
-import { checkoutRedirect } from "@shopwp/common"
+import { createCheckoutUrl } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../../loader")
 )
 
-function CartCheckoutButton({ onCheckout }) {
+function CartCheckoutButton() {
+  const { useState, useEffect } = wp.element
   const cartState = useCartState()
   const cartDispatch = useCartDispatch()
   const shopState = useShopState()
 
   const checkoutButtonCSS = css``
+  const buttonCSS = css``
 
-  function onCheckout() {
-    cartDispatch({ type: "SET_NOTICE", payload: false })
-    cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: true })
-
-    wp.hooks.doAction("on.checkout", shopState)
-
-    checkoutRedirect({
-      checkoutUrl: shopState.cartData.checkoutUrl,
-      trackingParams: shopState.trackingParams,
-      callback: function (checkoutUrl, options) {
-        if (options.target && options.target === "_blank") {
-          cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
-        } else {
-          if (
-            navigator.userAgent.indexOf("Safari") !== -1 &&
-            navigator.userAgent.indexOf("Chrome") === -1
-          ) {
-            // Is Safari
-            cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: false })
-          }
-        }
-      },
-    })
-  }
+  const [checkoutLink, setCheckoutLink] = useState("")
 
   var shouldDisable =
     cartState.isCheckingOut ||
@@ -48,24 +26,54 @@ function CartCheckoutButton({ onCheckout }) {
     !shopState.cartData ||
     !shopState.cartData.lines.edges.length
 
+  shouldDisable = wp.hooks.applyFilters(
+    "cart.checkoutButtonDisabled",
+    shouldDisable,
+    shopState.cartData,
+    cartState
+  )
+
+  function onCheckout() {
+    if (shouldDisable) {
+      return
+    }
+
+    cartDispatch({ type: "SET_NOTICE", payload: false })
+    cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: true })
+
+    wp.hooks.doAction("on.checkout", shopState)
+  }
+
+  useEffect(() => {
+    if (!shopState || !shopState.cartData) {
+      return
+    }
+
+    var newCheckoutLink = createCheckoutUrl({
+      checkoutUrl: shopState.cartData.checkoutUrl,
+      trackingParams: shopState.trackingParams,
+    })
+
+    setCheckoutLink(newCheckoutLink)
+  }, [shopState.cartData, shopState.trackingParams])
+
   return (
-    <button
-      className="swp-btn-checkout wps-btn-checkout"
+    <a
+      href={shouldDisable ? undefined : checkoutLink}
+      className="swp-btn swp-btn-checkout wps-btn-checkout"
       onClick={onCheckout}
-      disabled={wp.hooks.applyFilters(
-        "cart.checkoutButtonDisabled",
-        shouldDisable,
-        shopState.cartData,
-        cartState
-      )}
       css={[buttonCSS, checkoutButtonCSS]}
+      target={
+        shopwp.misc.isMobile ? "_self" : shopwp.general.checkoutButtonTarget
+      }
+      data-is-disabled={shouldDisable}
     >
       {cartState.isCheckingOut ? (
         <Loader isLoading={cartState.isCheckingOut} />
       ) : (
         shopState.t.l.beginCheckout
       )}
-    </button>
+    </a>
   )
 }
 

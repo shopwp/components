@@ -1,5 +1,5 @@
 import defaults from "./defaults"
-import { mergeDefaults } from "@shopwp/common"
+import { mergeDefaults, getElementForCSSVariables } from "@shopwp/common"
 import isBase64 from "is-base64"
 
 /*
@@ -8,13 +8,7 @@ Does not run for inline cart icon
 
 */
 function updateVariablesInCSS(componentType, settings, element) {
-  if (shopwp.misc.isAdmin) {
-    var container = document.querySelector(
-      "#editor .edit-post-visual-editor__content-area"
-    )
-  } else {
-    var container = document.querySelector("#shopwp-root")
-  }
+  const container = getElementForCSSVariables(element, componentType)
 
   if (!container) {
     console.warn(
@@ -49,14 +43,6 @@ function updateVariablesInCSS(componentType, settings, element) {
       shopwp.general.cartIconBackgroundColor
     )
   } else {
-    if (componentType === "collections" && shopwp.misc.isSingularCollections) {
-      container = document.querySelector(".single-wps_collections")
-    } else {
-      if (element) {
-        container = element
-      }
-    }
-
     if (componentType === "collections") {
       container.style.setProperty(
         "--collection-descriptionColor",

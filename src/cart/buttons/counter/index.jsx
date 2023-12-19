@@ -27,7 +27,11 @@ function CartCounter({ settings, totalLineItems, fixed = false }) {
           className="swp-cart-counter wps-cart-counter"
           ref={element}
         >
-          <span className="swp-cart-counter-text" css={counterTextCSS}>
+          <span
+            className="swp-cart-counter-text"
+            css={counterTextCSS}
+            aria-label={"Number of items in cart: " + totalLineItems}
+          >
             {shopState.isCartUpdating ? (
               <Loader
                 extraCSS={inlineCounterLoaderCSS}
