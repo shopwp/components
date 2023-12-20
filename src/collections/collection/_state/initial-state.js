@@ -49,7 +49,7 @@ function CollectionInitialState(props) {
         if (splitTwo.length) {
           var finallyFound = splitTwo[splitTwo.length - 1]
 
-          return JSON.parse(atob(finallyFound))
+          return JSON.parse(decodeURI(atob(finallyFound)))
         }
       }
     }

@@ -314,7 +314,7 @@ function useGetTemplateQuery(setNotice) {
       })
     } else {
       if (isBase64(query.data.data)) {
-        var temData = atob(query.data.data)
+        var temData = decodeURI(atob(query.data.data))
       } else {
         var temData = query.data.data
       }

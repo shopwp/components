@@ -35,7 +35,7 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
     }
 
     if (isBase64(settings.htmlTemplateData)) {
-      settings.htmlTemplateData = atob(settings.htmlTemplateData)
+      settings.htmlTemplateData = decodeURI(atob(settings.htmlTemplateData))
     }
 
     settingsDispatch({

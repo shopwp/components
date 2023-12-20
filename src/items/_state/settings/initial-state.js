@@ -244,7 +244,7 @@ function SettingsInitialState({
   settings = mergeDefaults(settings, defaults[componentType])
 
   if (isBase64(settings.htmlTemplateData)) {
-    var htmlTemplateData = atob(settings.htmlTemplateData)
+    var htmlTemplateData = decodeURI(atob(settings.htmlTemplateData))
   } else {
     if (settings.htmlTemplateData) {
       var htmlTemplateData = settings.htmlTemplateData

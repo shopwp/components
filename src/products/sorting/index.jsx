@@ -9,7 +9,6 @@ import {
 import { usePortal } from "@shopwp/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useShopState } from "@shopwp/components"
-import { mq } from "@shopwp/common"
 
 const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
@@ -22,20 +21,7 @@ function ProductsSorting() {
   const settings = useSettingsState()
   const shopState = useShopState()
 
-  const sortingWrapperCSS = css`
-    width: auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    align-items: baseline;
-    margin-left: 10px;
-
-    ${mq("medium")} {
-      width: 100%;
-      margin-left: 0;
-    }
-  `
+  const sortingWrapperCSS = css``
 
   var collectionOptions = wp.hooks.applyFilters("collections.sortingOptions", [
     {

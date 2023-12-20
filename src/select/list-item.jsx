@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-
 import { MenuItem } from "@szhsin/react-menu"
+
 import {
   createObj,
   isVariantAvailableInShopify,
@@ -20,48 +20,7 @@ function SelectItem({
   const { useEffect, useState } = wp.element
   const [isAvailableToSelect, setIsAvailableToSelect] = useState(true)
 
-  const DropdownMenuItemCSS = css`
-    text-align: center;
-    margin-bottom: 0;
-    padding: 0;
-    border-bottom: 1px solid #ddd;
-    opacity: ${isAvailableToSelect || selected ? 1 : 0.4};
-    text-decoration: ${isAvailableToSelect || selected
-      ? "none"
-      : "line-through"};
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &[data-is-selected="true"] {
-      background-color: rgb(233, 233, 233);
-      color: black;
-
-      &:hover {
-        background-color: rgb(233, 233, 233);
-
-        li {
-          background-color: rgb(233, 233, 233);
-        }
-      }
-    }
-
-    .szh-menu__item {
-      padding: 0.4rem 1.5rem;
-      width: 100%;
-      display: block;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-
-    &:hover,
-    &:focus {
-      cursor: pointer;
-      background-color: rgb(233, 233, 233);
-    }
-  `
+  const DropdownMenuItemCSS = css``
 
   useEffect(() => {
     if (!isVariant) {
@@ -94,7 +53,9 @@ function SelectItem({
   return (
     <div
       css={DropdownMenuItemCSS}
+      className="swp-select-item"
       data-is-selected={selected ? selected.value === item.value : false}
+      data-is-available-to-select={isAvailableToSelect}
     >
       <MenuItem value={item.value} label={item.label}>
         {item.value}
