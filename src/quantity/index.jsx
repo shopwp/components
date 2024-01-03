@@ -58,6 +58,11 @@ function Quantity({
       return
     }
 
+    // currentlyNotInStock evaluates to true when the inventory option "Continue selling when out of stock" is checked AND the quantity available is <= 0.
+    if (selectedVariant.node.currentlyNotInStock) {
+      return
+    }
+
     if (setNotice && maxQuantity && quantity > maxQuantity) {
       setNotice(maxQuantityNoticeMessage)
       setQuantity(maxQuantity)
