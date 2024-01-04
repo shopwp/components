@@ -4,7 +4,6 @@ import { mergeDefaults } from "@shopwp/common"
 function CartInitialState(props) {
   return {
     settings: mergeDefaults(props.settings, defaults),
-    isCheckingOut: false,
     isCartOpen: false,
     termsAccepted: false,
     buttons: props.element,

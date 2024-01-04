@@ -248,7 +248,6 @@ function CartWrapper() {
   const cartInnerCSS = css``
 
   var isReadyToCheckout =
-    cartState.isCheckingOut ||
     (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
     (shopwp.general.noteRequired && !cartState.note) ||
     !shopState.cartData ||

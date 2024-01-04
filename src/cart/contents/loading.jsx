@@ -20,7 +20,7 @@ function CartLoadingContents() {
 
         {shopState.t.l.updatingCart}
 
-        <Loader color="#000" center={true} />
+        <Loader />
       </div>
     </Suspense>
   )

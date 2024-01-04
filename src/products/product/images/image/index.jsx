@@ -80,7 +80,6 @@ function ProductImage({
         linkTo={settings.linkTo}
         target={settings.linkTarget}
         payload={productState.payload}
-        linkTitle={productState.payload.title}
       >
         <Img
           imageRef={imageRef}

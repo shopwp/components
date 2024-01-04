@@ -43,7 +43,6 @@ function CartLineItemImage({ lineItem, settings }) {
       target={settings.lineitemsLinkTarget}
       manualLink={manualLink}
       disableLink={disableLink}
-      linkTitle={lineItem.merchandise.product.title}
     >
       <img
         className="swp-cart-img wps-cart-lineitem-img"

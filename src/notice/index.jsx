@@ -14,7 +14,7 @@ function Notice({
   const { useEffect } = wp.element
 
   const noticeStyles = css`
-    margin: 0;
+    margin: 15px 0 0 0;
     background-color: ${status === "warning"
       ? "#fef8e7"
       : status === "info"

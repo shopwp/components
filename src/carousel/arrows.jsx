@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 function DefaultNextArrow(props) {
   const { className, style, onClick } = props
   return (
@@ -52,18 +49,13 @@ function DefaultPrevArrow(props) {
 function CustomArrow(props) {
   const { className, style, onClick, arrowSrc } = props
 
-  const CustomArrowImgCSS = css`
-    max-width: 55px;
-    max-height: 55px;
-  `
-
   return (
     <div
       className={className}
       style={{ ...style, display: "block", color: "inherit" }}
       onClick={onClick}
     >
-      <img src={arrowSrc} css={CustomArrowImgCSS} />
+      <img src={arrowSrc} />
     </div>
   )
 }

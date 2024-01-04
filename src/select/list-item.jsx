@@ -29,12 +29,17 @@ function SelectItem({
 
     const optionNameValue = createObj(item.label, item.value)
 
+    var selectedObject = {
+      name: item.label,
+      value: item.value,
+    }
+
     const isOptionSelected = selectedOptions.hasOwnProperty(item.label)
 
     // Whether the variant is actually in stock
     const isAvailableInShopify = isVariantAvailableInShopify(
       allSelectableOptions,
-      item.value
+      selectedObject
     )
 
     // Whether the variant combination is available depending on what the user is choosing

@@ -230,6 +230,13 @@ function updateVariablesInCSS(componentType, settings, element) {
     )
 
     container.style.setProperty(
+      "--product-variantDropdownButtonTextColor",
+      settings.variantDropdownButtonTextColor
+        ? settings.variantDropdownButtonTextColor
+        : "black"
+    )
+
+    container.style.setProperty(
       "--border-radius",
       shopwp.general.globalBorderRadius
     )

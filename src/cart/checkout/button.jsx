@@ -4,10 +4,6 @@ import { useCartState, useCartDispatch } from "@shopwp/components"
 import { createCheckoutUrl } from "@shopwp/common"
 import { useShopState } from "@shopwp/components"
 
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
-)
-
 function CartCheckoutButton() {
   const { useState, useEffect } = wp.element
   const cartState = useCartState()
@@ -20,7 +16,6 @@ function CartCheckoutButton() {
   const [checkoutLink, setCheckoutLink] = useState("")
 
   var shouldDisable =
-    cartState.isCheckingOut ||
     (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
     (shopwp.general.noteRequired && !cartState.note) ||
     !shopState.cartData ||
@@ -39,7 +34,6 @@ function CartCheckoutButton() {
     }
 
     cartDispatch({ type: "SET_NOTICE", payload: false })
-    cartDispatch({ type: "SET_IS_CHECKING_OUT", payload: true })
 
     wp.hooks.doAction("on.checkout", shopState)
   }
@@ -68,11 +62,7 @@ function CartCheckoutButton() {
       }
       data-is-disabled={shouldDisable}
     >
-      {cartState.isCheckingOut ? (
-        <Loader isLoading={cartState.isCheckingOut} />
-      ) : (
-        shopState.t.l.beginCheckout
-      )}
+      {shopState.t.l.beginCheckout}
     </a>
   )
 }

@@ -18,7 +18,7 @@ function ProductTitle() {
       className={
         settings.isSingleComponent
           ? "swp-mb20 "
-          : null + "swp-component wps-component wps-component-products-title"
+          : "" + "swp-component wps-component wps-component-products-title"
       }
       aria-label={productState.payload.title + " product title"}
       data-wps-component-order="0"
@@ -30,7 +30,6 @@ function ProductTitle() {
           type="products"
           target={settings.linkTarget}
           linkTo={settings.linkTo}
-          linkTitle={productState.payload.title}
           payload={productState.payload}
         >
           <Title classList={"swp-product-title " + settings.titleClassName} />

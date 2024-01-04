@@ -10,7 +10,6 @@ function Link({
   linkTo = shopwp.general.productsLinkTo,
   manualLink,
   disableLink,
-  linkTitle,
   payload = false,
 }) {
   function renderLink() {
@@ -38,7 +37,6 @@ function Link({
         target={target}
         classNames={classNames}
         payload={payload}
-        linkTitle={linkTitle}
       >
         {children}
       </LinkNormal>

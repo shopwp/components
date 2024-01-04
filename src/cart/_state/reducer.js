@@ -2,10 +2,6 @@ import { rSet, rErr } from "@shopwp/common"
 
 function CartReducer(state, action) {
   switch (action.type) {
-    case "SET_IS_CHECKING_OUT": {
-      return rSet("isCheckingOut", action, state)
-    }
-
     case "SET_TERMS_ACCEPTED": {
       return rSet("termsAccepted", action, state)
     }

@@ -236,15 +236,7 @@ function Dropdown({
   return items
     ? usePortal(
         <div className="swp-dropdown-label" css={DropdownLabel}>
-          {isBusy ? (
-            <Loader
-              color={
-                settings && settings.variantDropdownButtonTextColor
-                  ? settings.variantDropdownButtonTextColor
-                  : "black"
-              }
-            />
-          ) : null}
+          {isBusy ? <Loader /> : null}
           <Menu
             aria-label="Select dropdown menu"
             onItemClick={onItemClick}

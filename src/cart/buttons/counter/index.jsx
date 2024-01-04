@@ -14,13 +14,11 @@ function CartCounter({ settings, totalLineItems, fixed = false }) {
   const counterCSS = css``
   const customCounterCSS = css``
   const counterTextCSS = css``
-  const counterLoaderCSS = css``
-  const inlineCounterLoaderCSS = css``
 
   return (
     <Suspense fallback={false}>
       {shopState.isCartUpdating && fixed ? (
-        <Loader extraCSS={counterLoaderCSS} color={settings.counterTextColor} />
+        <Loader />
       ) : (
         <span
           css={[counterCSS, customCounterCSS]}
@@ -32,14 +30,7 @@ function CartCounter({ settings, totalLineItems, fixed = false }) {
             css={counterTextCSS}
             aria-label={"Number of items in cart: " + totalLineItems}
           >
-            {shopState.isCartUpdating ? (
-              <Loader
-                extraCSS={inlineCounterLoaderCSS}
-                color={settings.counterTextColor}
-              />
-            ) : (
-              totalLineItems
-            )}
+            {shopState.isCartUpdating ? <Loader /> : totalLineItems}
           </span>
         </span>
       )}

@@ -8,7 +8,6 @@ function LinkNormal({
   target,
   classNames,
   children,
-  linkTitle,
   payload = false,
 }) {
   payload = payload ? payload : usePayloadState()
@@ -29,13 +28,10 @@ function LinkNormal({
     payload
   )
 
-  const typeSingular = type === "collections" ? " collection" : " product"
-
   return (
     <a
       href={link}
       className={className}
-      aria-label={linkTitle + typeSingular + " link"}
       target={wp.hooks.applyFilters(
         "misc.linkTarget",
         getTarget(target),
