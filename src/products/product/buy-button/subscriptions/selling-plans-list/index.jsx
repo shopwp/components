@@ -46,7 +46,7 @@ function SellingPlansList({ plans, sellingGroup }) {
   }
 
   return (
-    <Suspense fallback="Loading ...">
+    <Suspense fallback="Loading subscriptions list ...">
       <Dropdown
         settings={settings}
         items={newPlans}

@@ -3,14 +3,10 @@ import {
   fetchProductsByCollections,
   fetchCollections,
   getTemplate,
-  queryOptionsNoRefetch,
-  queryOptionsWithRefetch,
   maybeHandleApiError,
   maybeAlterErrorMessage,
 } from "@shopwp/api"
-
-import { findLastItem } from "@shopwp/common"
-import { useQuery } from "@tanstack/react-query"
+import { to, findLastItem } from "@shopwp/common"
 import { useRequestsState, useRequestsDispatch } from "../_state/requests/hooks"
 import { useSettingsState, useSettingsDispatch } from "../_state/settings/hooks"
 import { usePayloadDispatch } from "../_state/payload/hooks"
@@ -27,56 +23,55 @@ function useGetItemsQuery(setNotice) {
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
 
-  var options = requestsState.cursor
-    ? queryOptionsNoRefetch
-    : queryOptionsWithRefetch
-
-  const query = useQuery({
-    queryKey: [
-      requestsState.queryType,
-      requestsState.queryParams,
-      shopState.buyerIdentity,
-    ],
-    queryFn: () => {
-      wp.hooks.doAction("on.beforePayloadUpdate", requestsState)
-
-      if (
-        requestsState.queryType === "collectionProducts" ||
-        (requestsState.queryType === "products" &&
-          requestsState.queryParams.collection_titles)
-      ) {
-        return fetchProductsByCollections(
-          requestsState.queryParams,
-          shopState,
-          requestsState.cursor
-        )
-      } else if (requestsState.queryType === "collections") {
-        return fetchCollections(
-          requestsState.queryParams,
-          shopState,
-          requestsState.cursor,
-          requestsState.withProducts
-        )
-      } else {
-        return fetchProducts(
-          requestsState.queryParams,
-          shopState,
-          requestsState.cursor
-        )
-      }
-    },
-    enabled: requestsState.isFetchingNew,
-    retry: false,
-    suspense: false,
-    ...options,
-  })
-
   useEffect(() => {
-    if (!query.error) {
+    if (!requestsState.isFetchingNew) {
       return
     }
 
-    wp.hooks.doAction("on.afterPayloadUpdate", query.error)
+    wp.hooks.doAction("on.beforePayloadUpdate", requestsState)
+
+    if (
+      requestsState.queryType === "collectionProducts" ||
+      (requestsState.queryType === "products" &&
+        requestsState.queryParams.collection_titles)
+    ) {
+      fetchProductsByCollections(
+        requestsState.queryParams,
+        shopState,
+        requestsState.cursor
+      )
+        .then((response) => {
+          onSuccess(response)
+        })
+        .catch((err) => {
+          onError(err)
+        })
+    } else if (requestsState.queryType === "collections") {
+      fetchCollections(
+        requestsState.queryParams,
+        shopState,
+        requestsState.cursor,
+        requestsState.withProducts
+      )
+        .then((response) => {
+          onSuccess(response)
+        })
+        .catch((err) => {
+          onError(err)
+        })
+    } else {
+      fetchProducts(requestsState.queryParams, shopState, requestsState.cursor)
+        .then((response) => {
+          onSuccess(response)
+        })
+        .catch((err) => {
+          onError(err)
+        })
+    }
+  }, [requestsState.isFetchingNew])
+
+  function onError(error) {
+    wp.hooks.doAction("on.afterPayloadUpdate", error)
 
     requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
     requestsDispatch({
@@ -86,16 +81,16 @@ function useGetItemsQuery(setNotice) {
 
     setNotice({
       type: "error",
-      message: maybeAlterErrorMessage(query.error.message, shopState),
+      message: maybeAlterErrorMessage(error.message, shopState),
     })
-  }, [query.error])
+  }
 
-  useEffect(() => {
-    if (!query.data) {
+  function onSuccess(response) {
+    if (!response) {
       return
     }
 
-    const newItems = query.data
+    const newItems = response
 
     var error = maybeHandleApiError(false, newItems)
 
@@ -267,9 +262,7 @@ function useGetItemsQuery(setNotice) {
         payload: newItems.pageInfo.hasPreviousPage,
       })
     }
-  }, [query.data])
-
-  return query
+  }
 }
 
 function useGetTemplateQuery(setNotice) {
@@ -279,52 +272,49 @@ function useGetTemplateQuery(setNotice) {
   const settingsState = useSettingsState()
   const settingsDispatch = useSettingsDispatch()
 
-  const query = useQuery({
-    queryKey: ["templates"],
-    queryFn: () => {
-      return getTemplate(settingsState, shopState)
-    },
-    enabled: !!settingsState.htmlTemplate && !settingsState.htmlTemplateData,
-    ...queryOptionsNoRefetch,
-  })
+  async function getLayoutTemplate() {
+    const [error, result] = await to(getTemplate(settingsState, shopState))
 
-  useEffect(() => {
-    if (!query.error) {
-      return
-    }
-    setNotice({
-      type: "error",
-      message: maybeAlterErrorMessage(query.error, shopState),
-    })
-
-    requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
-  }, [query.error])
-
-  useEffect(() => {
-    if (!query.data) {
-      return
-    }
-
-    requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
-
-    if (query.data.success === false) {
+    if (error) {
       setNotice({
         type: "error",
-        message: maybeAlterErrorMessage(query.data.data, shopState),
+        message: maybeAlterErrorMessage(error, shopState),
       })
+
+      requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
     } else {
-      if (isBase64(query.data.data)) {
-        var temData = decodeURI(atob(query.data.data))
-      } else {
-        var temData = query.data.data
+      if (!result) {
+        return
       }
 
-      settingsDispatch({
-        type: "UPDATE_HTML_TEMPLATE_DATA",
-        payload: temData,
-      })
+      requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
+
+      if (result.success === false) {
+        setNotice({
+          type: "error",
+          message: maybeAlterErrorMessage(result.data, shopState),
+        })
+      } else {
+        if (isBase64(result.data)) {
+          var temData = decodeURI(atob(result.data))
+        } else {
+          var temData = result.data
+        }
+
+        settingsDispatch({
+          type: "UPDATE_HTML_TEMPLATE_DATA",
+          payload: temData,
+        })
+      }
     }
-  }, query.data)
+  }
+
+  useEffect(() => {
+    if (!settingsState.htmlTemplate || !settingsState.htmlTemplateData) {
+      return
+    }
+    getLayoutTemplate()
+  }, [settingsState.htmlTemplate, settingsState.htmlTemplateData])
 }
 
 export { useGetItemsQuery, useGetTemplateQuery }

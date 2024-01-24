@@ -57,6 +57,7 @@ function CollectionImage() {
           payload={collectionState.payload}
         >
           <Img
+            payload={collectionState.payload}
             imageRef={imageRef}
             image={collectionState.payload.image}
             src={imageSrc}

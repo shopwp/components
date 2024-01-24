@@ -26,7 +26,6 @@ function Quantity({
   setNotice = false,
   globalMaxQuantity = false,
   fontSize = false,
-  selectedOptions = null,
   selectedVariant = false,
 }) {
   const { useState, useEffect } = wp.element
@@ -41,17 +40,9 @@ function Quantity({
       : "You may only buy " + maxQuantity + " or less of this item."
 
   useEffect(() => {
-    if (selectedOptions === null) {
-      return
-    }
-
-    if (selectedOptions !== false) {
-      return
-    }
-
     setQuantity(initialQuantity)
     setNotice(false)
-  }, [initialQuantity, selectedOptions])
+  }, [initialQuantity])
 
   useEffect(() => {
     if (!selectedVariant) {

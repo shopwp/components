@@ -82,6 +82,7 @@ function ProductImage({
         payload={productState.payload}
       >
         <Img
+          payload={productState.payload}
           imageRef={imageRef}
           image={image}
           src={productImageSrc}
@@ -94,6 +95,7 @@ function ProductImage({
       </Link>
     ) : (
       <Img
+        payload={productState.payload}
         imageRef={imageRef}
         image={image}
         src={productImageSrc}

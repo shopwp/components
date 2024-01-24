@@ -140,7 +140,7 @@ function ProductsSorting() {
 
   return settings.withSorting && !requestsState.isBootstrapping
     ? usePortal(
-        <Suspense fallback="Loading ...">
+        <Suspense fallback="Loading sorting dropdown ...">
           <div id="shopwp-storefront-sorting" css={sortingWrapperCSS}>
             <Dropdown
               settings={settings}

@@ -254,6 +254,17 @@ async function getExistingCart(
 async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
+  var attrs = []
+
+  if (shopwp.general.addAttrsToOrder) {
+    attrs = [
+      {
+        key: "ShopWP Site",
+        value: shopwp.misc.siteUrl,
+      },
+    ]
+  }
+
   const [createCartError, response] = await to(
     createCart(
       wp.hooks.applyFilters(
@@ -261,6 +272,7 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
         {
           note: "",
           buyerIdentity: shopState.buyerIdentity,
+          attributes: attrs,
         },
         cartState,
         shopState

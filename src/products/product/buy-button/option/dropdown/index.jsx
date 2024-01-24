@@ -65,7 +65,7 @@ function ProductOptionDropdown({
         data-wps-is-selected={productBuyButtonState.isOptionSelected}
         ref={dropdownElement}
       >
-        <Suspense fallback="Loading ...">
+        <Suspense fallback="Loading product option dropdown ...">
           <Dropdown
             settings={settings}
             items={items}

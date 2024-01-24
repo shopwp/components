@@ -90,7 +90,6 @@ function ProductAddButton({
             globalMaxQuantity={shopwp.cart.maxQuantity}
             small={false}
             setNotice={setNotice}
-            selectedOptions={productBuyButtonState.selectedOptions}
           />
         ) : null}
         <AddButtonWrapper

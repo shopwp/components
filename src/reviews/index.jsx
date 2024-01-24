@@ -19,7 +19,7 @@ function Reviews(props) {
     ? usePortal(
         <ProductReviewsProvider shopState={shopState} {...props}>
           <ProductReviewsWrapper>
-            <Suspense fallback="Loading ...">
+            <Suspense fallback="Loading reviews ...">
               {props.settings.showRating ? <ReviewsRating /> : null}
               {props.settings.showListing ? <ReviewsList /> : null}
             </Suspense>

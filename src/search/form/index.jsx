@@ -12,26 +12,8 @@ function SearchForm({
 }) {
   const settings = useSettingsState()
 
-  const searchWrapperCSS = css`
-    max-width: 100%;
-    margin: 0 auto;
-
-    .is-loading {
-      position: absolute;
-      bottom: -30px;
-      font-size: 19px;
-    }
-
-    .components-notice {
-      margin: 0;
-      width: 100%;
-    }
-  `
-
-  const searchInputWrapperCSS = css`
-    display: flex;
-    margin-bottom: 20px;
-  `
+  const searchWrapperCSS = css``
+  const searchInputWrapperCSS = css``
 
   function onSubmit(e) {
     e.preventDefault()
@@ -39,11 +21,14 @@ function SearchForm({
 
   return usePortal(
     <form
-      className="wps-search-form"
+      className="swp-search-form wps-search-form"
       css={searchWrapperCSS}
       onSubmit={onSubmit}
     >
-      <div className="wps-search-wrapper" css={searchInputWrapperCSS}>
+      <div
+        className="swp-search-wrapper wps-search-wrapper"
+        css={searchInputWrapperCSS}
+      >
         <SearchInput
           hasStorefrontSelections={hasStorefrontSelections}
           searchTerm={searchTerm}

@@ -76,7 +76,7 @@ function ProductsPageSize() {
 
   return (
     <div id="shopwp-storefront-page-size" css={pageSizeWrapperCSS}>
-      <Suspense fallback="Loading ...">
+      <Suspense fallback="Loading page size...">
         <Dropdown
           settings={settings}
           items={options}

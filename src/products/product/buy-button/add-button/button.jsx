@@ -35,14 +35,16 @@ function findSingleVariantFromPayload(payload) {
 }
 
 function buildLines(variant, quantity, productBuyButtonState) {
+  var customAttrs = wp.hooks.applyFilters(
+    "cart.lineItemAttributes",
+    [],
+    variant,
+    quantity,
+    productBuyButtonState
+  )
+
   const data = {
-    attributes: wp.hooks.applyFilters(
-      "cart.lineItemAttributes",
-      [],
-      variant,
-      quantity,
-      productBuyButtonState
-    ),
+    attributes: customAttrs,
     merchandiseId: variant.node.id,
     quantity: quantity,
   }
