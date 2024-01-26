@@ -131,6 +131,7 @@ function CartLineItem({ lineItem }) {
       data-wps-is-available={lineItem.merchandise.availableForSale}
       ref={lineItemElement}
       css={lineItemStyles}
+      role="listitem"
     >
       <div className="swp-cart-lineitem-inner" css={lineItemInner}>
         <CartLineItemImage lineItem={lineItem} settings={cartState.settings} />

@@ -58,7 +58,10 @@ function PaginationItems({ children, payload }) {
   const PaginationButtonsCSS = css``
 
   return (
-    <section className="wps-items-wrapper" css={PaginationItemsContainerCSS}>
+    <section
+      className="swp-items-wrapper wps-items-wrapper"
+      css={PaginationItemsContainerCSS}
+    >
       <Global
         styles={css`
           .wps-item:empty {
@@ -77,7 +80,11 @@ function PaginationItems({ children, payload }) {
         </div>
       ) : null}
 
-      <section className="wps-items wps-items-list" css={PaginationItemsCSS}>
+      <ul
+        className="swp-items wps-items wps-items-list"
+        css={PaginationItemsCSS}
+        role="list"
+      >
         <PaginationItemsMap
           payload={payload}
           settings={settings}
@@ -86,7 +93,7 @@ function PaginationItems({ children, payload }) {
         >
           {children}
         </PaginationItemsMap>
-      </section>
+      </ul>
     </section>
   )
 }

@@ -16,7 +16,7 @@ const Row = wp.element.memo(({ data, index, size, start }) => {
   const itemValue = filterOptions[index]
 
   return (
-    <div
+    <ul
       style={{
         position: "absolute",
         top: 0,
@@ -24,6 +24,9 @@ const Row = wp.element.memo(({ data, index, size, start }) => {
         width: "100%",
         height: `${size}px`,
         transform: `translateY(${start}px)`,
+        listStyle: "none",
+        margin: 0,
+        padding: 0,
       }}
     >
       <CheckboxItem
@@ -33,7 +36,7 @@ const Row = wp.element.memo(({ data, index, size, start }) => {
         isLoading={isLoading}
         initialSelections={initialSelections}
       />
-    </div>
+    </ul>
   )
 })
 
@@ -84,12 +87,15 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
         overflow: "auto",
       }}
     >
-      <div
+      <li
         className="ListInner"
         style={{
           height: `${rowVirtualizer.totalSize}px`,
           width: "100%",
           position: "relative",
+          listStyle: "none",
+          margin: 0,
+          padding: 0,
         }}
       >
         {rowVirtualizer.virtualItems.map((virtualRow) => (
@@ -101,7 +107,7 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
             start={virtualRow.start}
           />
         ))}
-      </div>
+      </li>
     </ul>
   )
 }

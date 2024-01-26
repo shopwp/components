@@ -16,6 +16,7 @@ function CartContents() {
 
   return (
     <section
+      tabIndex="0"
       className="swp-cart-contents wps-cart-contents"
       data-is-cart-empty={
         shopState.cartData && shopState.cartData.lines.edges.length

@@ -75,10 +75,17 @@ function Img(props) {
           " swp-mw100 wps-product-image"
         }
         loading="lazy"
-        alt={props.image.altText ? props.image.altText : ""}
+        alt={
+          props.image.altText
+            ? props.image.altText
+            : props.payload
+            ? props.payload.title
+            : "Product image"
+        }
+        aria-label={props.payload ? props.payload.title : "Product image"}
         data-zoom={props.image.originalSrc}
-        width={getImageWidth(props.settings).toString()}
-        height={getImageHeight(props.settings).toString()}
+        width={getImageWidth(props.settings, !props.isFeatured).toString()}
+        height={getImageHeight(props.settings, !props.isFeatured).toString()}
       />
       {props.isVideo ? (
         <svg

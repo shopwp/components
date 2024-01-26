@@ -118,8 +118,6 @@ function ProductFeaturedImage() {
     a img {
       display: block;
       flex: 1;
-      width: 100%;
-      max-width: 100%;
     }
 
     + div {
@@ -160,8 +158,8 @@ function ProductFeaturedImage() {
 
     var newSrc = addCustomSizingToImageUrl({
       src: galleryState.featImage.originalSrc,
-      width: getImageWidth(settings, 2),
-      height: getImageHeight(settings, 2),
+      width: getImageWidth(settings, false, 2),
+      height: getImageHeight(settings, false, 2),
       crop: settings.imagesSizingCrop,
     })
 

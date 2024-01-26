@@ -11,10 +11,10 @@ function Collection(props) {
   const settings = useSettingsState()
 
   return (
-    <div
-      className={`swp-l-col swp-0 swp-mw100 swp-collection ${itemWidthClass(
+    <li
+      className={`swp-l-col swp-0 swp-mw100 ${itemWidthClass(
         settings.collectionsItemsPerRow
-      )} swp-item wps-item`}
+      )} swp-item wps-item swp-collection`}
     >
       <CollectionProvider {...props}>
         {settings.collectionsExcludes &&
@@ -34,7 +34,7 @@ function Collection(props) {
           <CollectionProducts settings={settings} />
         )}
       </CollectionProvider>
-    </div>
+    </li>
   )
 }
 

@@ -82,14 +82,15 @@ function ProductWrapper({ payload }) {
   }, [payload])
 
   return (
-    <div
+    <li
       itemType={
         shopwp.misc.isSingularProducts ? "" : "https://schema.org/Product"
       }
       itemScope={shopwp.misc.isSingularProducts ? false : true}
       css={ProductWrapperCSS}
-      className="wps-item"
+      className="swp-item wps-item"
       aria-label={productState.payload.title}
+      role="listitem"
       data-product-id={productState.payload ? productId : false}
       data-wpshopify-is-available-for-sale={
         productState.payload ? productState.payload.availableForSale : false
@@ -178,7 +179,7 @@ function ProductWrapper({ payload }) {
       {productState.notice ? (
         <Notice status="warning">{productState.notice.message}</Notice>
       ) : null}
-    </div>
+    </li>
   )
 }
 

@@ -15,7 +15,7 @@ function CartLineItems() {
   return (
     <>
       <FilterHook name="before.cartLineItems" args={[shopState.cartData]} />
-      <ul className="swp-cart-lineitems" css={CartLineItemsCSS}>
+      <ul className="swp-cart-lineitems" css={CartLineItemsCSS} role="list">
         {shopState.cartData.lines.edges.map((item) => (
           <CartLineItem key={item.node.id} lineItem={item.node} />
         ))}

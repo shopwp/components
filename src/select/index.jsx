@@ -253,7 +253,7 @@ function Dropdown({
             {items.length
               ? items.map((item, index) => (
                   <SelectItem
-                    key={item.value}
+                    key={item.value + index}
                     item={item}
                     selected={selected}
                     isVariant={isVariant}
