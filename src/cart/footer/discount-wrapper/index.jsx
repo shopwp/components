@@ -61,13 +61,14 @@ function CartFooterDiscountWrapper() {
       className="swp-l-col swp-l-row-end swp-l-row-between swp-0 wps-discount-row"
     >
       <div
-        className="swp-l-row swp-mb20 swp-discount-row"
+        className="swp-l-row swp-m-l-row swp-mb20 swp-discount-row"
         css={discountFormCSS}
       >
         <input
           className="swp-discount-input"
           type="text"
           placeholder="Enter discount code"
+          id="swp-discount-input"
           ref={discountInputRef}
           css={discountFormInputCSS}
           disabled={

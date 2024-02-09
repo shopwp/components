@@ -109,4 +109,4 @@ function ProductImage({
   ) : null
 }
 
-export default wp.element.memo(ProductImage)
+export default ProductImage

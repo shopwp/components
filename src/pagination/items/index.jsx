@@ -46,7 +46,7 @@ function PaginationItems({ children, payload }) {
   `
 
   const PaginationItemsContainerCSS = css`
-    max-width: ${settings.containerWidth};
+    max-width: ${settings.fullWidth ? "100%" : settings.containerWidth};
     margin: 0 auto;
     padding: 0;
 

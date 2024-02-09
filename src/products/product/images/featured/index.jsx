@@ -4,7 +4,7 @@ import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
-import { useShopState } from "@shopwp/components"
+
 import {
   getImageWidth,
   getImageHeight,
@@ -39,7 +39,7 @@ function ProductFeaturedImage() {
   const [originalFeatImg] = useState(galleryState.featImage)
   const settings = useSettingsState()
   const productState = useProductState()
-  const shopState = useShopState()
+  // const shopState = useShopState()
   const zoomContainer = useRef()
   const zoom = useZoomImageMove()
 
@@ -99,7 +99,11 @@ function ProductFeaturedImage() {
 
   const paneElementCSS = css`
     position: relative;
-    cursor: crosshair;
+    cursor: ${showZoom()
+      ? "crosshair"
+      : settings.linkTo === "none"
+      ? "default"
+      : "pointer"};
     overflow: hidden;
     max-width: ${getImageWidthString(settings)};
   `
@@ -187,7 +191,7 @@ function ProductFeaturedImage() {
             settings.showSaleNotice &&
             !isOutOfStock ? (
               <ProductImageOnSaleLabel
-                text={shopState.t.l.sale}
+                text={shopwp.t.l.sale}
                 payload={productState.payload}
                 showSaleNoticePercentage={settings.showSaleNoticePercentage}
               />
@@ -196,7 +200,7 @@ function ProductFeaturedImage() {
             {isOutOfStock &&
             galleryState.featImage &&
             settings.showOutOfStockNotice ? (
-              <ProductImageSoldOutLabel text={shopState.t.l.soldOut} />
+              <ProductImageSoldOutLabel text={shopwp.t.l.soldOut} />
             ) : null}
 
             <div

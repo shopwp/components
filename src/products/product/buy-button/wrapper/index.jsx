@@ -127,11 +127,6 @@ function ProductBuyButtonWrapper() {
         })
       }
     } else {
-      productDispatch({
-        type: "SET_SELECTED_VARIANT",
-        payload: false,
-      })
-
       if (
         allOptionsSelectedMatch(
           productBuyButtonState.selectedOptions,

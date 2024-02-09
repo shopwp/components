@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useProductState, useProductDispatch } from "../_state/hooks"
-import { removeProductIdPrefix } from "@shopwp/common"
+import { removeProductIdPrefix, findVariantFromVariantId } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import ErrorFallback from "../../../error-fallback"
 import BuyButtonSkeleton from "../buy-button/skeleton"
@@ -63,7 +63,7 @@ function ProductWrapper({ payload }) {
     max-width: ${productState.payload &&
     !settings.isModal &&
     !settings.fullWidth
-      ? "380px"
+      ? "400px"
       : "100%"};
 
     > div:nth-last-of-type(2) {
@@ -80,6 +80,17 @@ function ProductWrapper({ payload }) {
       productDispatch({ type: "SET_PAYLOAD", payload: payload })
     }
   }, [payload])
+
+  useEffect(() => {
+    if (!settings.selectFirstVariant) {
+      productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
+    } else {
+      productDispatch({
+        type: "SET_SELECTED_VARIANT",
+        payload: productState.payload.variants.edges[0],
+      })
+    }
+  }, [settings.selectFirstVariant])
 
   return (
     <li

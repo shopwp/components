@@ -1,6 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { getImageWidth, getImageHeight } from "@shopwp/common"
+import {
+  getImageWidth,
+  getImageHeight,
+  addCustomSizingToImageUrl,
+} from "@shopwp/common"
 
 function Img(props) {
   function isSelectedImage() {
@@ -69,6 +73,8 @@ function Img(props) {
         css={isSelectedImage() ? featThumbStyles : thumbnailStyles}
         ref={props.imageRef}
         itemProp="image"
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
         src={props.src}
         className={
           (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
@@ -100,4 +106,4 @@ function Img(props) {
   )
 }
 
-export default wp.element.memo(Img)
+export default Img

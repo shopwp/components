@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/react"
 import { mq, getMaxQuantity } from "@shopwp/common"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
-import { useProductBuyButtonState } from "../_state/hooks"
 import AddButtonWrapper from "./wrapper"
 import AddButton from "./button"
 
@@ -38,7 +37,11 @@ function ProductAddButton({
   const productState = useProductState()
   const [notice, setNotice] = wp.element.useState(false)
 
-  const productBuyButtonState = useProductBuyButtonState()
+  const maxQu = getMaxQuantity(
+    settings.showInventoryLevels,
+    settings.maxQuantity,
+    productState.selectedVariant
+  )
 
   const AddButtonWrapperCSS = css`
     display: ${shouldShowQuantity ? "flex" : "block"};
@@ -78,11 +81,7 @@ function ProductAddButton({
             fontSize={settings.addToCartButtonTypeFontSize}
             selectedVariant={productState.selectedVariant}
             element={productState.element}
-            maxQuantity={getMaxQuantity(
-              settings.showInventoryLevels,
-              settings.maxQuantity,
-              productState.selectedVariant
-            )}
+            maxQuantity={maxQu}
             minQuantity={settings.minQuantity}
             initialQuantity={
               settings.minQuantity > 1 ? settings.minQuantity : 1

@@ -1,4 +1,4 @@
-import { useProductState, useProductDispatch } from "../../_state/hooks"
+import { useProductState } from "../../_state/hooks"
 import {
   createSelectedOptionsObject,
   findVariantFromVariantId,
@@ -16,7 +16,6 @@ function createSelected(options) {
 function ProductOption({ children }) {
   const { useEffect } = wp.element
   const productState = useProductState()
-  const productDispatch = useProductDispatch()
   const productBuyButtonDispatch = useProductBuyButtonDispatch()
 
   // Allows for selecting first variant
@@ -30,17 +29,6 @@ function ProductOption({ children }) {
       }
 
       const firstVariant = productState.payload.variants.edges[0].node
-
-      if (
-        !productState.payload.availableForSale ||
-        !firstVariant.availableForSale ||
-        !firstVariant.selectedOptions
-      ) {
-        console.warn(
-          "ShopWP warning: Unable to select first variant because product is not available for sale."
-        )
-        return
-      }
 
       const selectedVariant = createSelected(firstVariant.selectedOptions)
 
@@ -58,11 +46,6 @@ function ProductOption({ children }) {
         var createdOptions = createSelectedOptionsObject(
           foundVariant.node.selectedOptions
         )
-
-        productDispatch({
-          type: "SET_SELECTED_VARIANT",
-          payload: foundVariant,
-        })
 
         createdOptions.forEach((selectedOption) => {
           productBuyButtonDispatch({

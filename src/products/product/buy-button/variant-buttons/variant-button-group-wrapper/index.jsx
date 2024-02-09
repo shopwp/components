@@ -61,7 +61,10 @@ function ProductVariantButtonGroupWrapper({
   `
 
   return (
-    <div className="wpshopify-variant-buttons-group" css={groupStyles}>
+    <div
+      className="swp-variants-group wpshopify-variant-buttons-group"
+      css={groupStyles}
+    >
       <FilterHook
         name="product.labelHtml"
         args={[
@@ -71,11 +74,7 @@ function ProductVariantButtonGroupWrapper({
         ]}
       >
         <label className="swp-variant-label" css={labelStyles}>
-          {wp.hooks.applyFilters(
-            "product.optionName",
-            option.name,
-            productBuyButtonState
-          )}
+          {wp.hooks.applyFilters("product.optionName", option.name, option)}
 
           {missingSelections &&
           !productBuyButtonState.selectedOptions.hasOwnProperty(option.name) ? (
@@ -87,7 +86,10 @@ function ProductVariantButtonGroupWrapper({
         </label>
       </FilterHook>
 
-      <div className="wpshopify-variant-buttons" ref={variantGroup}>
+      <div
+        className="swp-variants wpshopify-variant-buttons"
+        ref={variantGroup}
+      >
         <ProductVariantsButtons
           option={option}
           selectedOptions={selectedOptions}

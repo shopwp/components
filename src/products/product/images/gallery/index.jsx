@@ -8,7 +8,7 @@ import { useSettingsState } from "../../../../items/_state/settings/hooks"
 function ProductGallery({ carousel }) {
   const { useEffect, useContext } = wp.element
   const productState = useProductState()
-  const [, galleryDispatch] = useContext(ProductGalleryContext)
+  const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const settings = useSettingsState()
 
   function hasManyImages() {
@@ -33,6 +33,20 @@ function ProductGallery({ carousel }) {
 
   useEffect(() => {
     if (!productState.selectedVariant) {
+      // need to reset image back to the first image
+
+      if (productState.payload.media.edges.length) {
+        galleryDispatch({
+          type: "SET_FEAT_IMAGE",
+          payload: productState.payload.media.edges[0].node.image,
+        })
+      } else {
+        galleryDispatch({
+          type: "SET_FEAT_IMAGE",
+          payload: galleryState.featImagePlaceholder,
+        })
+      }
+
       return
     }
 
@@ -41,10 +55,12 @@ function ProductGallery({ carousel }) {
       payload: false,
     })
 
-    galleryDispatch({
-      type: "SET_FEAT_IMAGE",
-      payload: productState.selectedVariant.node.image,
-    })
+    if (productState.selectedVariant.node.image) {
+      galleryDispatch({
+        type: "SET_FEAT_IMAGE",
+        payload: productState.selectedVariant.node.image,
+      })
+    }
   }, [productState.selectedVariant])
 
   return (

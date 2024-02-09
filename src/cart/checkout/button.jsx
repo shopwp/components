@@ -28,6 +28,13 @@ function CartCheckoutButton() {
     cartState
   )
 
+  var cartButtonText = wp.hooks.applyFilters(
+    "cart.checkoutButtonText",
+    shopwp.general.cartCheckoutButtonText,
+    shopState.cartData,
+    cartState
+  )
+
   function onCheckout() {
     if (shouldDisable) {
       return
@@ -62,7 +69,7 @@ function CartCheckoutButton() {
       }
       data-is-disabled={shouldDisable}
     >
-      {shopState.t.l.beginCheckout}
+      {cartButtonText}
     </a>
   )
 }

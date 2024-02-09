@@ -244,7 +244,13 @@ function Dropdown({
             onMenuChange={onMenuChange}
             menuButton={
               <MenuButton css={DropdownButtonCSS}>
-                <span>{selectedText}</span>{" "}
+                <span>
+                  {wp.hooks.applyFilters(
+                    "product.optionName",
+                    selectedText,
+                    selectedOption
+                  )}
+                </span>{" "}
                 {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
               </MenuButton>
             }
