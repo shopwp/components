@@ -8,12 +8,13 @@ Does not run for inline cart icon
 
 */
 function updateVariablesInCSS(componentType, settings, element) {
-  const container = getElementForCSSVariables(element, componentType)
+  const container = getElementForCSSVariables(element, componentType, settings)
 
   if (!container) {
     console.warn(
       "ShopWP Warning: No container found for style variable injections"
     )
+    return
   }
 
   if (componentType === "cart") {

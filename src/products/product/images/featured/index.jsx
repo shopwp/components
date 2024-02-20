@@ -171,6 +171,11 @@ function ProductFeaturedImage() {
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
         disableScrollLock: shopwp.misc.isMobile ? false : true,
+        zoomImageProps: {
+          alt: galleryState.featImage.altText
+            ? galleryState.featImage.altText
+            : productState.payload.title,
+        },
       })
     }
   }, [galleryState.featImageElement, galleryState.featImage, settings.showZoom])
