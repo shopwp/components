@@ -199,7 +199,7 @@ async function getExistingCart(
     cartDispatch({ type: "SET_CART_NOTE", payload: cartData.note })
   }
 
-  cartId = false
+  // cartId = false
 
   if (shopwp.misc.cacheEnabled) {
     let [cartCacheError, cartCache] = await to(getCache(cartId))
