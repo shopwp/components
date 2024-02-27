@@ -20,6 +20,7 @@ function ReviewListItem({ review, size, index, reviewsState }) {
     border-bottom: ${size === index + 1 ? "none" : "1px solid #ddd"};
     padding-bottom: 30px;
     animation: ${fadeIn} 0.2s ease;
+    color: black;
 
     ${mq("medium")} {
       flex-direction: column;

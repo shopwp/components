@@ -15,19 +15,23 @@ function Reviews(props) {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
-  return shopwp.misc.hasYotpo && props.settings.showReviews
-    ? usePortal(
-        <ProductReviewsProvider shopState={shopState} {...props}>
-          <ProductReviewsWrapper>
-            <Suspense fallback="Loading reviews ...">
-              {props.settings.showRating ? <ReviewsRating /> : null}
-              {props.settings.showListing ? <ReviewsList /> : null}
-            </Suspense>
-          </ProductReviewsWrapper>
-        </ProductReviewsProvider>,
-        props.element
-      )
-    : null
+  return (
+    <ProductReviewsProvider shopState={shopState} {...props}>
+      <ProductReviewsWrapper>
+        <Suspense fallback="Loading reviews ...">
+          {shopwp.misc.hasYotpo && props.settings.showReviews
+            ? usePortal(
+                <>
+                  {props.settings.showRating ? <ReviewsRating /> : null}
+                  {props.settings.showListing ? <ReviewsList /> : null}
+                </>,
+                props.element
+              )
+            : null}
+        </Suspense>
+      </ProductReviewsWrapper>
+    </ProductReviewsProvider>
+  )
 }
 
 export default Reviews

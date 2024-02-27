@@ -34,6 +34,7 @@ function ReviewForm(props) {
 
   const ReviewFormCSS = css`
     margin-bottom: 50px;
+    color: black;
 
     h4 {
       font-size: 20px;
@@ -51,13 +52,16 @@ function ReviewForm(props) {
     font-weight: bold;
     transition: opacity 0.3s ease;
     opacity: ${isBusy ? 0.4 : 1};
+    color: black;
   `
   const ReviewInputCSS = css`
     padding: 10px;
     font-size: 16px;
     border-radius: ${shopwp.general.globalBorderRadius};
+    background: white;
     border: 1px solid #a5a5a5;
     font-family: helvetica, sans-serif;
+    color: black;
 
     &.swp-field-error {
       border-color: red;
@@ -153,18 +157,18 @@ function ReviewForm(props) {
     setSuccess(false)
     setApiError(false)
 
-    const [error, resp] = await to(
-      createYotpoReview({
-        sku: props.sku,
-        product_title: props.product_title,
-        product_url: props.product_url,
-        display_name: reviewName,
-        email: reviewEmail,
-        review_score: reviewScore,
-        review_title: reviewTitle,
-        review_content: reviewBody,
-      })
-    )
+    let data = {
+      sku: state.settings.productId,
+      product_title: state.payload.title,
+      product_url: state.payload.onlineStoreUrl,
+      display_name: reviewName,
+      email: reviewEmail,
+      review_score: reviewScore,
+      review_title: reviewTitle,
+      review_content: reviewBody,
+    }
+
+    const [error, resp] = await to(createYotpoReview(data))
 
     setIsBusy(false)
 

@@ -28,7 +28,7 @@ function htmlTemp(payload, settings) {
               showRating: true,
               showListing: false,
               productId: payload.id
-            }} />
+            }} payload={payload} />
             <ProductTitle />
             <ProductPricing />
             <ProductDescription />

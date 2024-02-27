@@ -199,26 +199,6 @@ async function getExistingCart(
     cartDispatch({ type: "SET_CART_NOTE", payload: cartData.note })
   }
 
-  // cartId = false
-
-  if (shopwp.misc.cacheEnabled) {
-    let [cartCacheError, cartCache] = await to(getCache(cartId))
-
-    if (cartCacheError) {
-      clearCache()
-    }
-
-    if (cartCache) {
-      if (cartCache.cacheKey === shopwp.misc.cacheKey) {
-        updateCartState(cartCache)
-        shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
-        return
-      } else {
-        clearCache()
-      }
-    }
-  }
-
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [getCartError, response] = await to(
@@ -237,13 +217,13 @@ async function getExistingCart(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
-  var maybeApiError = maybeHandleApiError(getCartError, response)
+  var maybeApiErrorMessage = maybeHandleApiError(getCartError, response)
 
-  if (maybeApiError) {
-    console.warn("ShopWP Error: ", maybeApiError)
+  if (maybeApiErrorMessage) {
+    console.warn("ShopWP Error: ", maybeApiErrorMessage)
     localStorage.removeItem("shopwp-cart-id")
 
-    if (!response || response.data.includes("No cart data found")) {
+    if (!response || response.success === false) {
       createNewCart(cartState, shopState, cartDispatch, shopDispatch)
     }
 

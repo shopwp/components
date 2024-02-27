@@ -37,7 +37,8 @@ function ReviewsList() {
   const ReviewsListWrapCSS = css`
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    max-width: 1300px;
+    margin: 0 auto;
   `
 
   const ReviewsListHeaderCSS = css`
@@ -46,6 +47,7 @@ function ReviewsList() {
     align-items: baseline;
     border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
+    color: black;
 
     h3 {
       font-size: 24px;
@@ -108,6 +110,7 @@ function ReviewsList() {
               ? reviewsState.products[0].name
               : shopwp.misc.postTitle
           }
+          payload={reviewsState.payload}
           product_url={
             reviewsState.products.length
               ? reviewsState.products[0].product_link

@@ -22,6 +22,7 @@ function ProductReviewsInitialState(props) {
     settings: props?.settings ? props.settings : false,
     element: props?.element ? props.element : false,
     id: props?.id ? props.id : false,
+    payload: props.payload ? props.payload : false,
     notice: initialNotice,
     hasApiConnection: hasApiConnection,
     products: false,

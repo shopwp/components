@@ -35,6 +35,7 @@ const ProductBuyButton = wp.element.lazy(() =>
   import(/* webpackChunkName: 'ProductBuyButton-public' */ "../buy-button")
 )
 
+// import Reviews from "../../../reviews";
 const Reviews = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Reviews-public' */ "../../../reviews")
 )

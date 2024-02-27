@@ -12,6 +12,8 @@ import {
   useProductReviewsDispatch,
 } from "../_state/hooks"
 
+import { useAction } from "@shopwp/hooks"
+
 import Notice from "../../notice"
 
 function ProductReviewsWrapper({ children }) {
@@ -19,6 +21,24 @@ function ProductReviewsWrapper({ children }) {
   const [isFetchingReviews, setIsFetchingReviews] = useState(true)
   const dispatch = useProductReviewsDispatch()
   const state = useProductReviewsState()
+  const payloadReady = useAction("on.itemsLoad")
+
+  useEffect(() => {
+    if (payloadReady) {
+      var found = payloadReady.filter((i) =>
+        i.node.id.includes(state.settings.productId.toString())
+      )
+
+      if (found) {
+        found[0].node
+
+        dispatch({
+          type: "SET_REVIEWS_PAYLOAD",
+          payload: found[0].node,
+        })
+      }
+    }
+  }, [payloadReady])
 
   function updateTruncatedReviews(reviews) {
     dispatch({

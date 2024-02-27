@@ -72,16 +72,8 @@ function ReviewsRating({
     setScore(value)
 
     if (onScore) {
-      onScore(calcFractionScore(value))
+      onScore(value)
     }
-  }
-
-  function calcFractionScore(score) {
-    return (score / 100) * 5
-  }
-
-  function calcPercentageScore(score) {
-    return (score / 5) * 100
   }
 
   return reviewsState.reviews
