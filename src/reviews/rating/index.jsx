@@ -89,7 +89,7 @@ function ReviewsRating({
             onClick={onRating}
             initialValue={score}
             size={size}
-            allowFraction={true}
+            allowFraction={false}
             iconsCount={5}
             transition
             readonly={type === "static" ? true : false}

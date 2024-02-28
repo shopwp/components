@@ -111,11 +111,6 @@ function ReviewsList() {
               : shopwp.misc.postTitle
           }
           payload={reviewsState.payload}
-          product_url={
-            reviewsState.products.length
-              ? reviewsState.products[0].product_link
-              : window.location.href
-          }
         />
       ) : null}
       {reviewsState.reviewsTruncated?.length ? <ReviewsListContent /> : null}

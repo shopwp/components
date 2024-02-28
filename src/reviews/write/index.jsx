@@ -21,7 +21,7 @@ function ReviewForm(props) {
   const [reviewEmail, setReviewEmail] = useState("")
   const [reviewTitle, setReviewTitle] = useState("")
   const [reviewBody, setReviewBody] = useState("")
-  const [reviewScore, setReviewScore] = useState(0)
+  const [reviewScore, setReviewScore] = useState(5)
 
   const [nameError, setNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
@@ -160,7 +160,9 @@ function ReviewForm(props) {
     let data = {
       sku: state.settings.productId,
       product_title: state.payload.title,
-      product_url: state.payload.onlineStoreUrl,
+      product_url: state.payload.onlineStoreUrl
+        ? state.payload.onlineStoreUrl
+        : window.location.href,
       display_name: reviewName,
       email: reviewEmail,
       review_score: reviewScore,
