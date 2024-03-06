@@ -17,8 +17,12 @@ function ProductReviewsInitialState(props) {
     reviews: false,
     reviewsBottomLine: false,
     reviewsTruncated: false,
-    reviewsShown: props.settings.reviewsShown,
-    reviewsShownIncrement: props.settings.reviewsShownIncrement,
+    reviewsShown: props.settings?.reviewsShown
+      ? props.settings.reviewsShown
+      : 10,
+    reviewsShownIncrement: props.settings?.reviewsShownIncrement
+      ? props.settings.reviewsShownIncrement
+      : 10,
     settings: props?.settings ? props.settings : false,
     element: props?.element ? props.element : false,
     id: props?.id ? props.id : false,

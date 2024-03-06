@@ -29,9 +29,7 @@ function ProductReviewsWrapper({ children }) {
         i.node.id.includes(state.settings.productId.toString())
       )
 
-      if (found) {
-        found[0].node
-
+      if (found.length) {
         dispatch({
           type: "SET_REVIEWS_PAYLOAD",
           payload: found[0].node,

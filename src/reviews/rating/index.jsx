@@ -52,17 +52,8 @@ function ReviewsRating({
     }
   `
 
-  const ReviewsRatingLabelCSS = css`
-    font-weight: normal;
-    margin-top: 0;
-    margin-left: 10px;
-    font-size: 14px;
-    margin-bottom: 5px;
-  `
-
-  const totalReviewsCSS = css`
-    display: inline;
-  `
+  const ReviewsRatingLabelCSS = css``
+  const totalReviewsCSS = css``
 
   function onRating(value) {
     if (type === "static") {
@@ -107,11 +98,16 @@ function ReviewsRating({
           {showLabel ? (
             <p
               css={ReviewsRatingLabelCSS}
+              className="swp-rating-label"
               itemProp="aggregateRating"
               itemScope
               itemType="https://schema.org/AggregateRating"
             >
-              <span css={totalReviewsCSS} itemProp="reviewCount">
+              <span
+                className="swp-rating-count"
+                css={totalReviewsCSS}
+                itemProp="reviewCount"
+              >
                 {reviewsState.reviewsBottomLine
                   ? reviewsState.reviewsBottomLine.total_review
                   : 0}

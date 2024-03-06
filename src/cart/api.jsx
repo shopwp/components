@@ -136,6 +136,12 @@ async function addLines(data, cartDispatch, shopDispatch) {
     type: "SET_CART_DATA",
     payload: response.data,
   })
+
+  var existingCartId = localStorage.getItem("shopwp-cart-id")
+
+  if (existingCartId !== response.data.id) {
+    localStorage.setItem("shopwp-cart-id", response.data.id)
+  }
 }
 
 async function updateAttrs(data, shopState, cartDispatch, shopDispatch) {

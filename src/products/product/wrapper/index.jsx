@@ -117,6 +117,7 @@ function ProductWrapper({ payload }) {
       {settings.htmlTemplateData ? (
         <ProductCustomTemplate
           payload={productState.payload}
+          settings={settings}
           htmlTemplateData={settings.htmlTemplateData}
         />
       ) : (
@@ -168,6 +169,7 @@ function ProductWrapper({ payload }) {
                     showListing: false,
                     productId: productState.payload.id,
                   }}
+                  payload={productState.payload}
                 />
               ) : null}
             </Suspense>

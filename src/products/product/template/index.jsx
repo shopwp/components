@@ -8,7 +8,7 @@ import Reviews from "../../../reviews"
 import { ErrorBoundary } from "react-error-boundary"
 import ErrorFallback from "../../../error-fallback"
 
-function ProductCustomTemplate({ htmlTemplateData, payload }) {
+function ProductCustomTemplate({ htmlTemplateData, payload, settings }) {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <JsxParser
@@ -22,6 +22,7 @@ function ProductCustomTemplate({ htmlTemplateData, payload }) {
         }}
         bindings={{
           payload: payload,
+          settings: settings,
         }}
         renderInWrapper={false}
         showWarnings={true}

@@ -8,7 +8,7 @@ Does not run for inline cart icon
 
 */
 function updateVariablesInCSS(componentType, settings, element) {
-  const container = getElementForCSSVariables(element, componentType, settings)
+  const container = getElementForCSSVariables(element, componentType)
 
   if (!container) {
     console.warn(

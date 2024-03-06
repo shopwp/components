@@ -36,7 +36,8 @@ function htmlTemp(payload, settings) {
          </div>
       </div>
    `,
-    settings
+    settings,
+    payload
   )
 }
 
@@ -224,23 +225,20 @@ function ProductModalCloseIcon() {
 }
 
 function ProductModalContent({ payload, settings, id }) {
-  const ProductModalCSS = css`
-    height: 100%;
-  `
-
-  const ProductModalContentInnerCSS = css`
-    overflow: scroll !important;
-    height: 100%;
-  `
+  const ProductModalCSS = css``
+  const ProductModalContentInnerCSS = css``
 
   return (
     <div
-      className="wps-modal"
+      className="swp-modal wps-modal"
       aria-label={payload.title + " product modal"}
       css={ProductModalCSS}
     >
       <ProductModalCloseIcon />
-      <div className="wps-modal-inner" css={ProductModalContentInnerCSS}>
+      <div
+        className="swp-modal-inner wps-modal-inner"
+        css={ProductModalContentInnerCSS}
+      >
         <Products
           settings={settings}
           payload={[payload]}

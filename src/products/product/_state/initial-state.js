@@ -1,4 +1,4 @@
-import { hasLink, getURLParam, findVariantFromVariantId } from "@shopwp/common"
+import { hasLink, getURLParam } from "@shopwp/common"
 import { isOnSale, hasManyVariants, getInitialQuantity } from "@shopwp/common"
 
 function ProductInitialState(props) {
