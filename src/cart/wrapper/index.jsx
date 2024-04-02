@@ -46,13 +46,13 @@ function CartWrapper() {
 
   const updateCartAttributes = useAction("do.updateCartAttributes")
   const removeLineItems = useAction("do.removeLineItems")
-  const setCartNotes = useAction("do.setCartNote", null)
+  const setCartNotes = useAction("do.setCartNote")
   const lineItemsAdded = useAction("do.addToCart")
-  const discountCode = useAction("do.setCartDiscount", null)
-  const doCartToggle = useAction("do.cartToggle", null)
-  const doToggleCartTerms = useAction("do.toggleCartTerms", null)
-  const doCheckout = useAction("do.checkout", null)
-  const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity", null)
+  const discountCode = useAction("do.setCartDiscount")
+  const doCartToggle = useAction("do.cartToggle")
+  const doToggleCartTerms = useAction("do.toggleCartTerms")
+  const doCheckout = useAction("do.checkout")
+  const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity")
 
   const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
 
@@ -174,7 +174,7 @@ function CartWrapper() {
   }, [discountCode])
 
   useEffect(() => {
-    if (!updateCartAttributes) {
+    if (updateCartAttributes === null) {
       return
     }
 
@@ -182,7 +182,7 @@ function CartWrapper() {
   }, [updateCartAttributes])
 
   useEffect(() => {
-    if (!removeLineItems) {
+    if (removeLineItems === null) {
       return
     }
 
@@ -208,7 +208,7 @@ function CartWrapper() {
   }
 
   useEffect(() => {
-    if (!lineItemsAdded) {
+    if (lineItemsAdded === null) {
       return
     }
 
@@ -240,7 +240,7 @@ function CartWrapper() {
       openCart()
     }
 
-    addLines(dataToAdd, cartDispatch, shopDispatch)
+    addLines(dataToAdd, cartDispatch, shopDispatch, cartState, shopState)
   }, [lineItemsAdded])
 
   const cartCSS = css``

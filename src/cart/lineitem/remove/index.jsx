@@ -22,13 +22,15 @@ function CartLineItemRemove({ lineItem }) {
   const removeStyles = css``
 
   return (
-    <span
+    <a
       className="swp-cart-lineitem-remove wps-cart-lineitem-remove"
       css={removeStyles}
       onClick={onRemove}
+      tabIndex="0"
+      href="#!"
     >
       {shopState.t.l.remove}
-    </span>
+    </a>
   )
 }
 

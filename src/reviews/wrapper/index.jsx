@@ -25,8 +25,8 @@ function ProductReviewsWrapper({ children }) {
 
   useEffect(() => {
     if (payloadReady) {
-      var found = payloadReady.filter((i) =>
-        i.node.id.includes(state.settings.productId.toString())
+      var found = payloadReady.filter(
+        (i) => i.node && i.node.id.includes(state.settings.productId.toString())
       )
 
       if (found.length) {

@@ -27,6 +27,7 @@ function Quantity({
   globalMaxQuantity = false,
   fontSize = false,
   selectedVariant = false,
+  inventoryErrors = false,
 }) {
   const { useState, useEffect } = wp.element
   const shopState = useShopState()
@@ -42,7 +43,7 @@ function Quantity({
   useEffect(() => {
     setQuantity(initialQuantity)
     setNotice(false)
-  }, [initialQuantity])
+  }, [initialQuantity, inventoryErrors])
 
   useEffect(() => {
     if (!selectedVariant) {

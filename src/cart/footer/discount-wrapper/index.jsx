@@ -1,45 +1,21 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-import { updateDiscount } from "../../api.jsx"
-import { useCartDispatch, useCartState } from "@shopwp/components"
-import { useShopState, useShopDispatch } from "@shopwp/components"
-import CartFooterDiscount from "../discount"
+import { useShopState, useCartState } from "@shopwp/components"
 
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
 )
 
-function CartFooterDiscountWrapper() {
-  const { useRef, useState } = wp.element
-
+function CartFooterDiscountWrapper({
+  onAddDiscount,
+  changeDiscount,
+  onKeyDown,
+  discountCode,
+  setDiscountCode,
+}) {
+  const { useRef } = wp.element
   const cartState = useCartState()
   const shopState = useShopState()
-  const shopDispatch = useShopDispatch()
-  const cartDispatch = useCartDispatch()
 
   const discountInputRef = useRef(false)
-
-  const [discountCode, setDiscountCode] = useState("")
-
-  const discountCSS = css``
-  const discountFormCSS = css``
-  const discountFormInputCSS = css``
-  const discountFormButtonCSS = css``
-
-  function changeDiscount(discount, shouldRemove = false) {
-    if (!cartState.isAddingDiscountCode) {
-      updateDiscount(
-        cartDispatch,
-        shopState,
-        discount,
-        shopDispatch,
-        () => {
-          setDiscountCode("")
-        },
-        shouldRemove
-      )
-    }
-  }
 
   function onAddDiscount(e) {
     changeDiscount(discountInputRef.current.value.toUpperCase())
@@ -56,21 +32,14 @@ function CartFooterDiscountWrapper() {
   }
 
   return (
-    <div
-      css={discountCSS}
-      className="swp-l-col swp-l-row-end swp-l-row-between swp-0 wps-discount-row"
-    >
-      <div
-        className="swp-l-row swp-m-l-row swp-mb20 swp-discount-row"
-        css={discountFormCSS}
-      >
+    <div className="swp-l-col swp-l-row-end swp-l-row-between swp-0 swp-mt20 wps-discount-row">
+      <div className="swp-l-row swp-m-l-row swp-discount-row">
         <input
           className="swp-discount-input"
           type="text"
           placeholder="Enter discount code"
           id="swp-discount-input"
           ref={discountInputRef}
-          css={discountFormInputCSS}
           disabled={
             shopState.isCartUpdating ||
             !shopState.cartData ||
@@ -82,7 +51,6 @@ function CartFooterDiscountWrapper() {
         />
         <button
           className="swp-cart-discount-button"
-          css={discountFormButtonCSS}
           onClick={onAddDiscount}
           disabled={
             shopState.isCartUpdating ||
@@ -91,24 +59,12 @@ function CartFooterDiscountWrapper() {
             !discountCode
           }
         >
-          {!cartState.isAddingDiscountCode && (
+          {!cartState.isAddingDiscountCode ? (
             <span>{shopState.t.l.apply}</span>
-          )}
-          {cartState.isAddingDiscountCode && <Loader />}
+          ) : null}
+          {cartState.isAddingDiscountCode ? <Loader /> : null}
         </button>
       </div>
-
-      {shopState.cartData.discountCodes.length
-        ? shopState.cartData.discountCodes.map((discount) =>
-            discount.applicable ? (
-              <CartFooterDiscount
-                discount={discount}
-                changeDiscount={changeDiscount}
-                key={discount.code}
-              />
-            ) : null
-          )
-        : null}
     </div>
   )
 }

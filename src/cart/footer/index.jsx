@@ -52,7 +52,7 @@ function CartFooter() {
           </Notice>
         ) : null}
 
-        {shopState.cartData ? <CartFooterTotal cartState={cartState} /> : null}
+        {shopState.cartData ? <CartFooterTotal /> : null}
 
         <CartCheckout />
       </Suspense>

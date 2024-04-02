@@ -1,42 +1,39 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { useShopState } from "@shopwp/components"
 
 function CartFooterDiscount({ discount, changeDiscount }) {
-  const shopState = useShopState()
-
-  const discountCodeWrapperCSS = css``
-  const discountLabelCSS = css``
-  const discountCodeCSS = css``
-  const discountCodeIconCSS = css``
-
   async function onRemoval() {
     changeDiscount(discount.code, true) // True means remove discount
   }
 
   return (
-    <div className="swp-cart-discount-wrapper" css={discountCodeWrapperCSS}>
-      <p
-        css={discountLabelCSS}
-        className="swp-cart-discount-label wps-cart-discount-label"
-      >
-        {shopState.t.n.discountApplied}
-      </p>
-
+    <div className="swp-l-row swp-l-col-center swp-cart-discount-wrapper">
       <p
         className="swp-cart-discount-code wps-cart-discount-code"
-        css={discountCodeCSS}
         onClick={onRemoval}
       >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          className="swp-icon-discount"
+          viewBox="0 0 12 12"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M7 0h3a2 2 0 012 2v3a1 1 0 01-.3.7l-6 6a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4l6-6A1 1 0 017 0zm2 2a1 1 0 102 0 1 1 0 00-2 0z"
+            fill="currentColor"
+          ></path>
+        </svg>
+
         {discount.code}
 
         <svg
-          css={discountCodeIconCSS}
           aria-hidden="true"
           focusable="false"
           data-prefix="far"
           data-icon="times"
-          className="swp-cart-discount-icon svg-inline--fa fa-times fa-w-10"
+          className="swp-cart-discount-icon-remove svg-inline--fa fa-times fa-w-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 320 512"
         >

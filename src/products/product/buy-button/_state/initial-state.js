@@ -11,12 +11,19 @@ function ProductBuyButtonInitialState(props) {
     })
   }
 
+  var variants = props.payload ? props.payload.variants : false
+  var finalVariants = wp.hooks.applyFilters(
+    "product.variants",
+    variants,
+    props.payload
+  )
+
   return {
     subscription: false,
     subscriptions: false,
     attributes: false,
     selectedOptions: false,
-    variants: props.payload ? props.payload.variants : false,
+    variants: finalVariants,
     totalOptions: props.payload.options.length,
     allSelectableOptions: allSelectableOptions,
   }

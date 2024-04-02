@@ -11,6 +11,7 @@ import { getMaxQuantity } from "@shopwp/common"
 import Quantity from "../../../quantity"
 
 function CartLineItemQuantity({ lineItem, setNotice }) {
+  const { useState } = wp.element
   const cartState = useCartState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
@@ -33,7 +34,14 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
     if (newQuantity === 0) {
       removeLines(lineItem.id, shopState, cartDispatch, shopDispatch)
     } else {
-      updateLines(shopState, cartDispatch, shopDispatch, lineItem, newQuantity)
+      updateLines(
+        shopState,
+        cartState,
+        cartDispatch,
+        shopDispatch,
+        lineItem,
+        newQuantity
+      )
     }
   }
 
@@ -49,6 +57,7 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
       isUpdating={shopState.isCartUpdating}
       setNotice={setNotice}
       globalMaxQuantity={cartState.settings.maxQuantity}
+      inventoryErrors={cartState.inventoryErrors}
     />
   )
 }

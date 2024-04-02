@@ -10,8 +10,6 @@ import {
   applyDiscount,
   updateNote,
   updateBuyerIdentity,
-  getCache,
-  clearCache,
 } from "@shopwp/api"
 import Cookies from "js-cookie"
 
@@ -33,6 +31,7 @@ function hasDiscount(cartData) {
 
 async function updateLines(
   shopState,
+  cartState,
   cartDispatch,
   shopDispatch,
   lineItem,
@@ -60,6 +59,14 @@ async function updateLines(
   var maybeApiError = maybeHandleApiError(updateError, response)
 
   if (maybeApiError) {
+    cartDispatch({
+      type: "SET_INVENTORY_ERRORS",
+      payload: {
+        lineItem: lineItem,
+        error: maybeApiError,
+      },
+    })
+
     cartDispatch({
       type: "SET_NOTICE",
       payload: {
@@ -109,7 +116,13 @@ async function removeLines(lineItemIds, shopState, cartDispatch, shopDispatch) {
   })
 }
 
-async function addLines(data, cartDispatch, shopDispatch) {
+async function addLines(
+  data,
+  cartDispatch,
+  shopDispatch,
+  cartState,
+  shopState
+) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [addError, response] = await to(addLineItems(data))
@@ -119,6 +132,17 @@ async function addLines(data, cartDispatch, shopDispatch) {
   var maybeApiError = maybeHandleApiError(addError, response)
 
   if (maybeApiError) {
+    var existingCartId = localStorage.getItem("shopwp-cart-id")
+
+    // Until we move to the admin API, we need to call this again to fetch the correct cart contents
+    getExistingCart(
+      existingCartId,
+      cartState,
+      shopState,
+      cartDispatch,
+      shopDispatch
+    )
+
     cartDispatch({
       type: "SET_NOTICE",
       payload: {

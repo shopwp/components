@@ -15,6 +15,7 @@ function CartInitialState(props) {
     customAttributes: [],
     note: false,
     isAddingDiscountCode: false,
+    inventoryErrors: false,
   }
 }
 

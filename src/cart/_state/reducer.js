@@ -30,6 +30,10 @@ function CartReducer(state, action) {
       return rSet("amountOff", action, state)
     }
 
+    case "SET_INVENTORY_ERRORS": {
+      return rSet("inventoryErrors", action, state)
+    }
+
     default: {
       rErr(action, "Cart")
     }

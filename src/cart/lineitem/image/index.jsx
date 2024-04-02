@@ -19,7 +19,7 @@ function CartLineItemImage({ lineItem, settings }) {
     } else if (lineItem.merchandise.product?.featuredImage) {
       var src = lineItem.merchandise.product.featuredImage.url
     } else {
-      return false
+      return shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png"
     }
 
     return wp.hooks.applyFilters(

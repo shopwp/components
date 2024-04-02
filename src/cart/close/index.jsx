@@ -19,6 +19,7 @@ function CartClose() {
       title={shopState.t.l.closeCart}
       aria-label="Close"
       onClick={onClose}
+      tabIndex="0"
     >
       <span className="wps-modal-close-trigger">×</span>
     </button>

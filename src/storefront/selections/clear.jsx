@@ -33,6 +33,7 @@ function StorefrontSelectionsClear() {
       type: "SET_IS_REPLACING",
       payload: true,
     })
+
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
     storefrontDispatch({
       type: "SET_HAS_STOREFRONT_SELECTIONS",

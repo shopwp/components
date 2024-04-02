@@ -167,7 +167,7 @@ function ProductFeaturedImage() {
       crop: settings.imagesSizingCrop,
     })
 
-    if (zoomContainer.current) {
+    if (zoomContainer.current && settings.linkTo !== "modal") {
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
         disableScrollLock: shopwp.misc.isMobile ? false : true,
@@ -178,7 +178,14 @@ function ProductFeaturedImage() {
         },
       })
     }
-  }, [galleryState.featImageElement, galleryState.featImage, settings.showZoom])
+  }, [
+    zoomContainer,
+    galleryState.featImage,
+    settings.showZoom,
+    productState.payload,
+    galleryState.featImageIsVideo,
+    settings.linkTo,
+  ])
 
   return (
     <div

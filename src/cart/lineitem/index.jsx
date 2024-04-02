@@ -5,7 +5,7 @@ import {
   shouldShowSaleNotice,
   containerFluidCSS,
 } from "@shopwp/common"
-import { useCartState, useShopState } from "@shopwp/components"
+import { useCartState, useShopState, Price } from "@shopwp/components"
 
 import Notice from "../../notice"
 
@@ -87,25 +87,14 @@ function CartLineItem({ lineItem }) {
 
   const lineItemTotal = findLineItemPrice()
 
-  const regPrice = calcPrice(
-    lineItem.quantity,
-    lineItem.merchandise.price.amount
-  )
+  const regPrice = lineItem.cost.subtotalAmount
+    ? lineItem.cost.subtotalAmount.amount
+    : false
 
-  const salePrice = calcPrice(
-    lineItem.quantity,
-    lineItem.merchandise?.compareAtPrice
-      ? lineItem.merchandise.compareAtPrice.amount
-      : false
-  )
-
-  function calcPrice(lineItemQuantity, price) {
-    if (price === false) {
-      return false
-    }
-
-    return parseFloat(price) * parseFloat(lineItemQuantity)
-  }
+  // const salePrice = lineItem.cost.compareAtAmountPerQuantity
+  //   ? lineItem.cost.compareAtAmountPerQuantity.amount
+  //   : false
+  const salePrice = false
 
   function hasRealVariant() {
     return lineItem.merchandise.title !== shopState.t.l.defaultTitle
@@ -166,7 +155,24 @@ function CartLineItem({ lineItem }) {
 
           <FilterHook name="after.lineItemTitle" args={[cartState, lineItem]} />
 
-          {hasRealVariant() && <CartLineItemVariantTitle lineItem={lineItem} />}
+          <div className="swp-l-row">
+            {hasRealVariant() && (
+              <CartLineItemVariantTitle lineItem={lineItem} />
+            )}
+
+            <Price price={lineItem.cost.amountPerQuantity.amount} />
+
+            {lineItem.cost.compareAtAmountPerQuantity ? (
+              <p className="swp-lineitem-was-price-wrap">
+                Was:{" "}
+                <span>
+                  <Price
+                    price={lineItem.cost.compareAtAmountPerQuantity.amount}
+                  />
+                </span>
+              </p>
+            ) : null}
+          </div>
 
           {!lineItem.merchandise.availableForSale ? (
             <Notice status="warning">
@@ -175,7 +181,7 @@ function CartLineItem({ lineItem }) {
           ) : (
             <>
               <div
-                className="swp-l-rel100 wps-cart-lineitem-quantity-wrapper"
+                className="swp-l-rel100 swp-mt10 swp-cart-lineitem-quantity-wrapper"
                 css={containerFluidCSS}
               >
                 <div
@@ -189,6 +195,7 @@ function CartLineItem({ lineItem }) {
                   <CartLineItemPrice
                     showingSaleNotice={showingSaleNotice}
                     lineItemTotal={lineItemTotal}
+                    lineItem={lineItem}
                     salePrice={salePrice}
                     regPrice={regPrice}
                     subscriptionDiscount={subscriptionDiscount}

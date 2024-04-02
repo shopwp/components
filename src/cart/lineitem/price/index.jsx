@@ -1,20 +1,15 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { Price } from "@shopwp/components"
 
 function CartLineItemPriceSubscriptionDiscountNotice({
   subscriptionDiscount,
   price,
 }) {
-  const DiscountSubCSS = css``
-  const DiscountSubPriceCSS = css``
-
   return (
     <>
-      <p className="swp-discount-label" css={DiscountSubCSS}>
+      <p className="swp-discount-label">
         You're saving {subscriptionDiscount}%{" "}
       </p>
-      <p className="swp-discount-price" css={DiscountSubPriceCSS}>
+      <p className="swp-discount-price">
         <Price price={price} />
       </p>
     </>
@@ -28,14 +23,10 @@ function CartLineItemPrice({
   salePrice,
   subscriptionDiscount,
   shopState,
+  lineItem,
 }) {
-  const CartLineItemPriceCSS = css``
-
   return (
-    <div
-      className="swp-cart-lineitem-price-total-wrapper wps-cart-lineitem-price-total-wrapper"
-      css={CartLineItemPriceCSS}
-    >
+    <div className="swp-cart-lineitem-price-total-wrapper wps-cart-lineitem-price-total-wrapper">
       {subscriptionDiscount ? (
         <CartLineItemPriceSubscriptionDiscountNotice
           subscriptionDiscount={subscriptionDiscount}
@@ -56,20 +47,15 @@ function CartLineItemPrice({
           </div>
         </>
       ) : (
-        <LineItemPriceSingle regPrice={lineItemTotal} />
+        <LineItemPriceSingle regPrice={lineItem.cost.subtotalAmount.amount} />
       )}
     </div>
   )
 }
 
 function LineItemPriceSingle({ regPrice }) {
-  const lineItemPriceCSS = css``
-
   return (
-    <div
-      className="swp-cart-lineitem-price wps-cart-lineitem-price wps-cart-lineitem-price-total"
-      css={lineItemPriceCSS}
-    >
+    <div className="swp-cart-lineitem-price wps-cart-lineitem-price wps-cart-lineitem-price-total">
       <Price price={regPrice} />
     </div>
   )

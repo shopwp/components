@@ -22,13 +22,17 @@ function htmlTemp(payload, settings) {
             <ProductImages />
          </div>
          <div style="width: 50%;padding-right: 1em;">
-            <Reviews settings={{
+            ${
+              settings.showReviews
+                ? `<Reviews settings={{
               showReviews: ${settings.showReviews},
               showCreateNew: false,
               showRating: true,
               showListing: false,
               productId: payload.id
-            }} payload={payload} />
+            }} payload={payload} />`
+                : ""
+            }
             <ProductTitle />
             <ProductPricing />
             <ProductDescription />

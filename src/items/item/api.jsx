@@ -74,6 +74,7 @@ function useGetItemsQuery(setNotice) {
     wp.hooks.doAction("on.afterPayloadUpdate", error)
 
     requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
+
     requestsDispatch({
       type: "SET_IS_FETCHING_NEW",
       payload: false,
