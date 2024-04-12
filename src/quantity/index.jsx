@@ -238,7 +238,7 @@ function Quantity({
   return (
     <div
       className="swp-l-rel100 swp-quantity-container wps-quantity-container"
-      css={[containerFluidCSS, quantityContainer]}
+      css={[quantityContainer]}
     >
       <div css={[flexRowNoBreakCSS]}>
         <QuantityButton

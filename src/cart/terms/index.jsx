@@ -33,7 +33,7 @@ function CartTerms() {
   }
 
   return (
-    <section className="swp-cart-terms wps-cart-terms" css={containerCSS}>
+    <section className="swp-cart-terms swp-0 wps-cart-terms" css={containerCSS}>
       <div
         className="swp-input-row wps-input-row swp-l-row"
         css={termsWrapperCSS}

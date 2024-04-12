@@ -4,6 +4,10 @@ const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../../../loader")
 )
 
+const CartFooterDiscount = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'CartFooterDiscount-public' */ "../discount")
+)
+
 function CartFooterDiscountWrapper({
   onAddDiscount,
   changeDiscount,
@@ -32,7 +36,7 @@ function CartFooterDiscountWrapper({
   }
 
   return (
-    <div className="swp-l-col swp-l-row-end swp-l-row-between swp-0 swp-mt20 wps-discount-row">
+    <div className="swp-l-col swp-l-row-end swp-l-row-between swp-0 swp-mt20 swp-cart-footer-discount-row wps-discount-row">
       <div className="swp-l-row swp-m-l-row swp-discount-row">
         <input
           className="swp-discount-input"
@@ -64,6 +68,20 @@ function CartFooterDiscountWrapper({
           ) : null}
           {cartState.isAddingDiscountCode ? <Loader /> : null}
         </button>
+      </div>
+
+      <div className="swp-discount-code-wrap swp-mt10">
+        {shopState.cartData.discountCodes.length
+          ? shopState.cartData.discountCodes.map((discount) =>
+              discount.applicable ? (
+                <CartFooterDiscount
+                  discount={discount}
+                  changeDiscount={changeDiscount}
+                  key={discount.code}
+                />
+              ) : null
+            )
+          : null}
       </div>
     </div>
   )

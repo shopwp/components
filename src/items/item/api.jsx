@@ -146,7 +146,7 @@ function useGetItemsQuery(setNotice) {
 
       setNotice({
         type: "error",
-        message: maybeAlterErrorMessage(error, shopState),
+        message: error,
       })
 
       return
@@ -276,38 +276,33 @@ function useGetTemplateQuery(setNotice) {
   async function getLayoutTemplate() {
     const [error, result] = await to(getTemplate(settingsState, shopState))
 
-    if (error) {
+    var errMsg = maybeHandleApiError(error, result)
+
+    if (errMsg) {
       setNotice({
         type: "error",
-        message: maybeAlterErrorMessage(error, shopState),
+        message: errMsg,
       })
 
       requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
-    } else {
-      if (!result) {
-        return
-      }
-
-      requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
-
-      if (result.success === false) {
-        setNotice({
-          type: "error",
-          message: maybeAlterErrorMessage(result.data, shopState),
-        })
-      } else {
-        if (isBase64(result.data)) {
-          var temData = decodeURI(atob(result.data))
-        } else {
-          var temData = result.data
-        }
-
-        settingsDispatch({
-          type: "UPDATE_HTML_TEMPLATE_DATA",
-          payload: temData,
-        })
-      }
     }
+
+    if (!result) {
+      return
+    }
+
+    requestsDispatch({ type: "SET_IS_BOOTSTRAPPING", payload: false })
+
+    if (isBase64(result.data)) {
+      var temData = decodeURI(atob(result.data))
+    } else {
+      var temData = result.data
+    }
+
+    settingsDispatch({
+      type: "UPDATE_HTML_TEMPLATE_DATA",
+      payload: temData,
+    })
   }
 
   useEffect(() => {

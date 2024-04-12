@@ -23,7 +23,6 @@ function ProductAddButton({
   linkTarget,
   linkTo,
   linkWithBuyButton,
-  addToCartButtonColor,
   addToCartButtonTextColor,
   isDirectCheckout,
   hasManyVariants,
@@ -43,25 +42,7 @@ function ProductAddButton({
     productState.selectedVariant
   )
 
-  const AddButtonWrapperCSS = css`
-    display: ${shouldShowQuantity ? "flex" : "block"};
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-top: 15px;
-
-    .wps-quantity-container {
-      margin-right: 10px;
-      margin-bottom: 10px;
-    }
-
-    ${mq("medium")} {
-      flex-direction: column;
-
-      .wps-quantity-container {
-        margin-bottom: 10px;
-      }
-    }
-  `
+  const AddButtonWrapperCSS = css``
 
   function onQuantityChange(newQuantity) {
     productDispatch({ type: "UPDATE_QUANTITY", payload: newQuantity })
@@ -72,7 +53,11 @@ function ProductAddButton({
       className="swp-component-buy-button wps-component wps-component-products-add-button wps-btn-wrapper"
       aria-label={productState.payload.title + " add button"}
     >
-      <div css={AddButtonWrapperCSS}>
+      <div
+        className="swp-add-to-cart-wrapper"
+        css={AddButtonWrapperCSS}
+        data-should-show-quantity={shouldShowQuantity}
+      >
         {shouldShowQuantity ? (
           <Quantity
             dispatch={productDispatch}
@@ -102,7 +87,6 @@ function ProductAddButton({
           <AddButton
             hasLink={hasLink}
             linkWithBuyButton={linkWithBuyButton}
-            addToCartButtonColor={addToCartButtonColor}
             addToCartButtonTextColor={addToCartButtonTextColor}
             isDirectCheckout={isDirectCheckout}
             hasManyVariants={hasManyVariants}

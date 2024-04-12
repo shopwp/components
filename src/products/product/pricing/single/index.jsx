@@ -1,25 +1,12 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { Price } from "@shopwp/components"
 
 const ProductPriceSingle = wp.element.forwardRef((props, ref) => {
-  const priceCSS = css`
-    font-size: ${props.compareAt
-      ? props.settings.pricingCompareAtTypeFontSize
-      : props.settings.pricingTypeFontSize};
-    color: ${props.compareAt
-      ? props.settings.pricingCompareAtTypeFontColor
-      : props.settings.pricingColor};
-    text-decoration: ${props.compareAt ? "line-through" : "none"};
-    font-weight: ${props.compareAt ? "normal" : "bold"};
-  `
-
   return props.price !== false || props.price !== null ? (
     <span
       ref={ref}
-      className="swp-price wps-product-individual-price"
-      css={priceCSS}
+      className="swp-price swp-product-price wps-product-individual-price"
       data-price={props.price}
+      data-is-compare-at={props.compareAt}
     >
       <Price price={props.price} />
     </span>

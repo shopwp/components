@@ -29,8 +29,6 @@ function CartNote() {
       return
     }
 
-    shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
-
     updateCartNote(
       debouncedValue,
       shopState,
@@ -43,6 +41,7 @@ function CartNote() {
   useEffect(() => {
     if (shopState.cartData.note) {
       setNoteValue(shopState.cartData.note)
+      inputElement.current.focus()
     }
   }, [shopState.cartData.note])
 
@@ -50,6 +49,7 @@ function CartNote() {
     if (shopState.isCartUpdating) {
       return
     }
+
     setNoteValue(e.target.value)
   }
 

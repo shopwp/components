@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import {
-  getImageWidth,
-  getImageHeight,
-  addCustomSizingToImageUrl,
-} from "@shopwp/common"
+import { getImageWidth, getImageHeight } from "@shopwp/common"
 
 function Img(props) {
   function isSelectedImage() {
@@ -75,7 +71,9 @@ function Img(props) {
         itemProp="image"
         crossOrigin="anonymous"
         referrerPolicy="no-referrer"
-        src={props.src}
+        src={
+          props.src ? props.src : props.galleryState.featImagePlaceholder.src
+        }
         className={
           (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
           " swp-mw100 wps-product-image"

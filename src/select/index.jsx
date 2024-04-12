@@ -4,7 +4,6 @@ import { Menu, MenuButton } from "@szhsin/react-menu"
 import "@szhsin/react-menu/dist/index.css"
 import "@szhsin/react-menu/dist/transitions/slide.css"
 import { usePortal } from "@shopwp/hooks"
-import { mq } from "@shopwp/common"
 
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../loader")
@@ -73,152 +72,8 @@ function Dropdown({
     }
   }, [selectedOptions, selectedOption])
 
-  const DropdownButtonCSS = css`
-    && {
-      padding: 10px 45px 10px 10px;
-      display: block;
-      width: 100%;
-      min-width: 200px;
-      text-align: left;
-      background: white;
-      position: relative;
-      border: 1px solid
-        ${settings &&
-        settings.variantDropdownButtonColor &&
-        settings.variantDropdownButtonColor !== "white" &&
-        settings.variantDropdownButtonColor !== "#ffffff"
-          ? settings.variantDropdownButtonColor
-          : "#606060"};
-      border-radius: ${settings.globalBorderRadius};
-      transition: all 100ms ease 0s;
-
-      background-color: ${settings && settings.variantDropdownButtonColor
-        ? settings.variantDropdownButtonColor
-        : "white"};
-
-      color: ${settings && settings.variantDropdownButtonTextColor
-        ? settings.variantDropdownButtonTextColor
-        : "black"};
-      font-family: ${settings && settings.variantDropdownTypeFontFamily
-        ? settings.variantDropdownTypeFontFamily
-        : "inherit"};
-      font-weight: ${settings && settings.variantDropdownTypeFontWeight
-        ? settings.variantDropdownTypeFontWeight
-        : "initial"};
-      font-style: ${settings && settings.variantDropdownTypeFontStyle
-        ? settings.variantDropdownTypeFontStyle
-        : "initial"};
-      font-size: ${settings && settings.variantDropdownTypeFontSize
-        ? settings.variantDropdownTypeFontSize
-        : "initial"};
-      letter-spacing: ${settings && settings.variantDropdownTypeLetterSpacing
-        ? settings.variantDropdownTypeLetterSpacing
-        : "initial"};
-      line-height: ${settings && settings.variantDropdownTypeLineHeight
-        ? settings.variantDropdownTypeLineHeight
-        : "initial"};
-      text-decoration: ${settings && settings.variantDropdownTypeTextDecoration
-        ? settings.variantDropdownTypeTextDecoration
-        : "initial"};
-      text-transform: ${settings && settings.variantDropdownTypeTextTransform
-        ? settings.variantDropdownTypeTextTransform
-        : "initial"};
-
-      svg {
-        position: absolute;
-        top: 12px;
-        right: 15px;
-        width: ${settings.variantDropdownTypeFontSize
-          ? settings.variantDropdownTypeFontSize
-          : "15px;"};
-        height: ${settings.variantDropdownTypeFontSize
-          ? settings.variantDropdownTypeFontSize
-          : "15px;"};
-
-        path {
-          fill: ${settings && settings.variantDropdownButtonTextColor
-            ? settings.variantDropdownButtonTextColor
-            : "white"};
-        }
-      }
-
-      span {
-        transition: all 0.2s ease;
-      }
-
-      &:hover {
-        cursor: pointer;
-
-        span {
-          opacity: 0.7;
-        }
-      }
-    }
-  `
-
-  const DropdownLabel = css`
-    margin: 0 0 10px 0;
-    position: relative;
-    animation: ${missingSelections && !selected
-      ? "swpShake 0.9s ease-in-out"
-      : "none"};
-
-    ${mq("small")} {
-      flex: 1;
-    }
-
-    .szh-menu {
-      border: 1px solid #a7a7a7;
-      border-radius: 5px;
-      top: 5px;
-      padding: 0 !important;
-      width: ${inline ? "auto" : "100%"};
-      min-width: ${inline ? "200px" : "auto"};
-      max-height: 350px;
-      overflow: scroll;
-
-      > [class*="DropdownMenuItemCSS"]:first-of-type,
-      > [class*="DropdownMenuItemCSS"]:first-of-type li {
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-      }
-
-      > [class*="DropdownMenuItemCSS"]:last-of-type,
-      > [class*="DropdownMenuItemCSS"]:last-of-type li {
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-    }
-
-    .szh-menu-container--itemTransition .szh-menu__item {
-      transition-duration: 0s;
-    }
-
-    .szh-menu-container {
-      width: ${inline ? "auto" : "100%"};
-    }
-
-    .wps-loader-wrapper {
-      position: absolute;
-      left: 10px;
-      top: 5px;
-      z-index: 2;
-      background: ${settings && settings.variantDropdownButtonColor
-        ? settings.variantDropdownButtonColor
-        : "black"};
-      width: 70%;
-      padding: 10px 5px;
-    }
-
-    label {
-      margin-bottom: 5px;
-      font-size: 15px;
-      display: inline-block;
-      color: ${settings && settings.variantLabelTextColor
-        ? settings.variantLabelTextColor
-        : "black"};
-    }
-  `
+  const DropdownButtonCSS = css``
+  const DropdownLabel = css``
 
   function onMenuChange(open) {
     setIsOpen(open.open)
@@ -235,7 +90,13 @@ function Dropdown({
 
   return items
     ? usePortal(
-        <div className="swp-dropdown-label" css={DropdownLabel}>
+        <div
+          data-is-inline={inline}
+          data-is-selected={selected}
+          data-is-missing-selections={missingSelections}
+          className="swp-dropdown-label"
+          css={DropdownLabel}
+        >
           {isBusy ? <Loader /> : null}
           <Menu
             aria-label="Select dropdown menu"

@@ -9,19 +9,14 @@ const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../../link")
 )
 
-function ProductImage({
-  image,
-  isFeatured,
-  placeholder = false,
-  isVideo = false,
-}) {
+function ProductImage({ image, isFeatured, isVideo = false }) {
   const { useEffect, useContext, useRef, useState } = wp.element
   const imageRef = useRef()
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const productState = useProductState()
   const settings = useSettingsState()
-  const [productImageSrc, setProductImageSrc] = useState(() =>
-    wp.hooks.applyFilters(
+  const [productImageSrc, setProductImageSrc] = useState(() => {
+    return wp.hooks.applyFilters(
       "product.imageSrc",
       applyImageSizing(),
       image,
@@ -29,7 +24,7 @@ function ProductImage({
       isVideo,
       productState.payload
     )
-  )
+  })
 
   function applyImageSizing() {
     if (isVideo) {
@@ -40,12 +35,7 @@ function ProductImage({
           return image.sources[0].url
         }
       }
-
       return doThumbnailSizing(image.previewImage.url, settings)
-    }
-
-    if (placeholder) {
-      return image.src
     }
 
     if (isFeatured) {
@@ -73,27 +63,13 @@ function ProductImage({
     }
   }, [image, settings])
 
-  return productImageSrc ? (
-    hasLink(settings) && isFeatured ? (
-      <Link
-        type="products"
-        linkTo={settings.linkTo}
-        target={settings.linkTarget}
-        payload={productState.payload}
-      >
-        <Img
-          payload={productState.payload}
-          imageRef={imageRef}
-          image={image}
-          src={productImageSrc}
-          galleryState={galleryState}
-          isFeatured={isFeatured}
-          linkTo={settings.linkTo}
-          isVideo={isVideo}
-          settings={settings}
-        />
-      </Link>
-    ) : (
+  return hasLink(settings) && isFeatured ? (
+    <Link
+      type="products"
+      linkTo={settings.linkTo}
+      target={settings.linkTarget}
+      payload={productState.payload}
+    >
       <Img
         payload={productState.payload}
         imageRef={imageRef}
@@ -105,8 +81,20 @@ function ProductImage({
         isVideo={isVideo}
         settings={settings}
       />
-    )
-  ) : null
+    </Link>
+  ) : (
+    <Img
+      payload={productState.payload}
+      imageRef={imageRef}
+      image={image}
+      src={productImageSrc}
+      galleryState={galleryState}
+      isFeatured={isFeatured}
+      linkTo={settings.linkTo}
+      isVideo={isVideo}
+      settings={settings}
+    />
+  )
 }
 
 export default ProductImage

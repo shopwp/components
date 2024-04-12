@@ -38,7 +38,6 @@ function CartWrapper() {
   const { useRef, useState, useEffect } = wp.element
   const cartElement = useRef()
   const isFirstRender = useFirstRender()
-
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const cartState = useCartState()

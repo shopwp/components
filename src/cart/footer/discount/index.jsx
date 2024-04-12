@@ -7,9 +7,9 @@ function CartFooterDiscount({ discount, changeDiscount }) {
   }
 
   return (
-    <div className="swp-l-row swp-l-col-center swp-cart-discount-wrapper">
+    <div className="swp-cart-discount-wrapper">
       <p
-        className="swp-cart-discount-code wps-cart-discount-code"
+        className="swp-l-row swp-m-l-row swp-l-col-center swp-cart-discount-code wps-cart-discount-code"
         onClick={onRemoval}
       >
         <svg
@@ -38,7 +38,7 @@ function CartFooterDiscount({ discount, changeDiscount }) {
           viewBox="0 0 320 512"
         >
           <path
-            fill="currentColor"
+            fill="#505050"
             d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"
           ></path>
         </svg>

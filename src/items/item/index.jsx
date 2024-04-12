@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useItemsState } from "../_state/hooks"
 
 const Notice = wp.element.lazy(() =>
@@ -12,9 +10,7 @@ function Item({ children, notice, isFetchingNew }) {
 
   return (
     <>
-      {notice &&
-      itemsState.componentType !== "search" &&
-      itemsState.componentType !== "storefront" ? (
+      {notice && itemsState.componentType !== "search" ? (
         <Suspense fallback={false}>
           <Notice
             status={notice.type}

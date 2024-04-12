@@ -52,6 +52,7 @@ function ProductReviewsWrapper({ children }) {
 
     if (maybeApiError) {
       setIsFetchingReviews(false)
+      console.error(maybeApiError)
       return
     }
 
@@ -92,6 +93,7 @@ function ProductReviewsWrapper({ children }) {
     var maybeApiError = maybeHandleApiError(error, resp)
 
     if (maybeApiError) {
+      console.error(maybeApiError)
       setIsFetchingReviews(false)
       return
     }

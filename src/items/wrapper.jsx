@@ -4,7 +4,11 @@ import { useRequestsState, useRequestsDispatch } from "./_state/requests/hooks"
 import { useItemsState } from "./_state/hooks"
 import { useShopState } from "@shopwp/components"
 import { useFirstRender, useAction, usePortal } from "@shopwp/hooks"
-import { isTheSameObject } from "@shopwp/common"
+import {
+  isTheSameObject,
+  underscoreToCamel,
+  updateVariablesInCSS,
+} from "@shopwp/common"
 import Item from "./item"
 import ItemsSkeleton from "./skeleton"
 import isBase64 from "is-base64"
@@ -26,6 +30,7 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
   const doShopHydrate = useAction("do.shopHydrate")
   const doChangeQuery = useAction("do.changeQuery")
   const doChangeSettings = useAction("do.changeSettings")
+  const doChangeVarsCSS = useAction("do.changeVarsCSS")
 
   useEffect(() => {
     if (isFirstRender || !settingsState) {
@@ -164,13 +169,11 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
       return
     }
 
+    var formatted = underscoreToCamel(doChangeSettings)
+
     var newSettings = {
       ...settings,
-      ...doChangeSettings,
-    }
-
-    if (isTheSameObject(newSettings, settings)) {
-      return
+      ...formatted,
     }
 
     settingsDispatch({
@@ -178,6 +181,21 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
       payload: newSettings,
     })
   }, [doChangeSettings])
+
+  useEffect(() => {
+    if (doChangeVarsCSS === null) {
+      return
+    }
+
+    var formatted = underscoreToCamel(doChangeVarsCSS.settings)
+
+    var newSettings = {
+      ...settings,
+      ...formatted,
+    }
+
+    updateVariablesInCSS("products", newSettings, doChangeVarsCSS.element)
+  }, [doChangeVarsCSS])
 
   useEffect(() => {
     if (isFirstRender) {

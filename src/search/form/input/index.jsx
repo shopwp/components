@@ -114,37 +114,9 @@ function SearchInput({
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
   }, [debouncedSearchTerm])
 
-  const spinnerCSS = css`
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    font-size: 15px;
-  `
-
-  const searchInputCSS = css`
-    && {
-      padding: 15px;
-      font-size: 1em;
-      border: none;
-      border: 1px solid #606060;
-      outline: none;
-      width: 100%;
-      height: 45px;
-      border-radius: 8px;
-      -webkit-appearance: none;
-
-      &::-webkit-search-cancel-button {
-        display: ${requestsState.isFetchingNew ? "none" : "block"};
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-  `
-  const searchInputWrapperCSS = css`
-    width: 100%;
-    position: relative;
-  `
+  const spinnerCSS = css``
+  const searchInputCSS = css``
+  const searchInputWrapperCSS = css``
 
   function onChange(e) {
     setLocalTerm(e.target.value)
@@ -178,11 +150,15 @@ function SearchInput({
 
   return (
     <Suspense fallback={false}>
-      <div className="wps-search-input-wrapper" css={searchInputWrapperCSS}>
+      <div
+        className="swp-search-input-wrapper wps-search-input-wrapper"
+        css={searchInputWrapperCSS}
+        data-is-fetching-new={requestsState.isFetchingNew}
+      >
         <input
           type="search"
           id="wps-search-input"
-          className="wps-search-input"
+          className="swp-search-input wps-search-input"
           name="search"
           role="searchbox"
           val={localTerm ? localTerm : ""}
@@ -195,7 +171,9 @@ function SearchInput({
         {!localTerm ? <SearchIcon /> : null}
 
         {requestsState.isFetchingNew && !requestsState.isBootstrapping ? (
-          <div css={spinnerCSS}>{shopState.t.l.loading} ...</div>
+          <div className="swp-search-spinner" css={spinnerCSS}>
+            {shopState.t.l.loading} ...
+          </div>
         ) : null}
       </div>
     </Suspense>

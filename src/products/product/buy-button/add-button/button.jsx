@@ -7,8 +7,10 @@ import {
   findVariantFromSelectedOptions,
   findVariantByVariantId,
   allOptionsSelectedMatch,
+  to,
+  createCheckoutUrl,
 } from "@shopwp/common"
-import { to, createCheckoutUrl } from "@shopwp/common"
+import { maybeHandleApiError } from "@shopwp/api"
 import {
   useProductBuyButtonState,
   useProductBuyButtonDispatch,
@@ -34,13 +36,14 @@ function findSingleVariantFromPayload(payload) {
   return payload.variants.edges[0]
 }
 
-function buildLines(variant, quantity, productBuyButtonState) {
+function buildLines(variant, quantity, productBuyButtonState, buttonRef) {
   var customAttrs = wp.hooks.applyFilters(
     "cart.lineItemAttributes",
     [],
     variant,
     quantity,
-    productBuyButtonState
+    productBuyButtonState,
+    buttonRef
   )
 
   const data = {
@@ -57,7 +60,6 @@ function buildLines(variant, quantity, productBuyButtonState) {
 }
 
 function AddButton({
-  addToCartButtonColor,
   addToCartButtonTextColor,
   hasLink,
   linkWithBuyButton,
@@ -99,61 +101,11 @@ function AddButton({
   var variant = findVariant()
 
   const buttonCSS = css``
+  const addToCartCSS = css``
 
   const NoticeCSS = css`
     margin-top: 15px;
     width: 100%;
-  `
-
-  const addToCartCSS = css`
-    font-family: ${settings.addToCartButtonTypeFontFamily
-      ? settings.addToCartButtonTypeFontFamily
-      : "inherit"};
-    font-weight: ${settings.addToCartButtonTypeFontWeight
-      ? settings.addToCartButtonTypeFontWeight
-      : "initial"};
-    font-style: ${settings.addToCartButtonTypeFontStyle
-      ? settings.addToCartButtonTypeFontStyle
-      : "initial"};
-    font-size: ${settings.addToCartButtonTypeFontSize
-      ? settings.addToCartButtonTypeFontSize
-      : "initial"} !important;
-    letter-spacing: ${settings.addToCartButtonTypeLetterSpacing
-      ? settings.addToCartButtonTypeLetterSpacing
-      : "initial"};
-    line-height: ${settings.addToCartButtonTypeLineHeight
-      ? settings.addToCartButtonTypeLineHeight
-      : 1} !important;
-    text-decoration: ${settings.addToCartButtonTypeTextDecoration
-      ? settings.addToCartButtonTypeTextDecoration
-      : "initial"};
-    text-transform: ${settings.addToCartButtonTypeTextTransform
-      ? settings.addToCartButtonTypeTextTransform
-      : "initial"};
-    overflow-y: hidden;
-    min-height: 45px;
-    width: 100%;
-    max-width: auto;
-    min-width: auto;
-    flex: 1;
-    border-radius: ${settings.globalBorderRadius};
-
-    animation: ${shouldShake && !isCheckingOut
-      ? "swpShake 0.9s ease-in-out"
-      : "none"};
-
-    &:hover {
-      text-decoration: none;
-      cursor: ${isCheckingOut || isDisabled ? "not-allowed" : "pointer"};
-
-      .swp-add-to-cart-text {
-        opacity: 0.7;
-      }
-    }
-
-    && {
-      background-color: ${isDisabled ? "#cfcfcf" : addToCartButtonColor};
-    }
   `
 
   async function handleClick(e) {
@@ -187,7 +139,12 @@ function AddButton({
       return
     }
 
-    const lines = buildLines(variant, quantity, productBuyButtonState)
+    const lines = buildLines(
+      variant,
+      quantity,
+      productBuyButtonState,
+      button.current
+    )
 
     if (
       shopwp.cart.maxQuantity &&
@@ -315,8 +272,10 @@ function AddButton({
           itemProp="potentialAction"
           itemScope
           itemType="https://schema.org/BuyAction"
-          className="swp-btn wps-btn wps-btn-secondary wps-add-to-cart"
-          data-wps-is-direct-checkout={isDirectCheckout ? "1" : "0"}
+          className="swp-btn swp-btn-add-to-cart wps-btn wps-btn-secondary wps-add-to-cart"
+          data-is-direct-checkout={isDirectCheckout}
+          data-should-shake={shouldShake}
+          data-is-checking-out={isCheckingOut}
           onClick={handleClick}
           css={[buttonCSS, addToCartCSS]}
           disabled={isCheckingOut || isDisabled}
@@ -360,10 +319,11 @@ function DirectCheckoutButton({
   hasManyVariants,
   productBuyButtonDispatch,
 }) {
-  const { useState } = wp.element
+  const { useState, useRef } = wp.element
 
   const [checkoutLink, setCheckoutLink] = useState(undefined)
   const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const button = useRef()
 
   const buttonCSS = css``
 
@@ -395,7 +355,12 @@ function DirectCheckoutButton({
       setIsCheckingOut(true)
     }
 
-    const lines = buildLines(variant, quantity, productBuyButtonState)
+    const lines = buildLines(
+      variant,
+      quantity,
+      productBuyButtonState,
+      button.current
+    )
 
     var checkoutData = {
       lines: lines,
@@ -413,7 +378,9 @@ function DirectCheckoutButton({
   async function createCartAndCheckoutUrl(checkoutData, shopState) {
     const [error, resp] = await to(directCheckout(checkoutData, shopState))
 
-    if (error) {
+    var errMsg = maybeHandleApiError(error, resp)
+
+    if (errMsg) {
       setIsCheckingOut(false)
       productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: false })
 
@@ -421,7 +388,7 @@ function DirectCheckoutButton({
         type: "SET_NOTICE",
         payload: {
           type: "error",
-          message: JSON.stringify(error),
+          message: errMsg,
         },
       })
       return
@@ -440,13 +407,27 @@ function DirectCheckoutButton({
     }
   }
 
+  function callbackAfter() {
+    setTimeout(() => {
+      setIsCheckingOut(false)
+      productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: false })
+      productBuyButtonDispatch({
+        type: "UPDATE_SELECTED_OPTIONS",
+        payload: false,
+      })
+      productDispatch({ type: "SET_MISSING_SELECTIONS", payload: false })
+      setCheckoutLink(undefined)
+    }, 500)
+  }
+
   return isCheckingOut && checkoutLink ? (
-    <AutoClickLink href={checkoutLink} />
+    <AutoClickLink href={checkoutLink} callback={callbackAfter} />
   ) : (
     <div
       className="swp-btn swp-l-flex swp-btn swp-btn-direct-checkout"
       onClick={onCheckout}
       css={[buttonCSS]}
+      ref={button}
       data-is-disabled={isCheckingOut || isDisabled}
     >
       {isCheckingOut ? (
@@ -466,12 +447,13 @@ function DirectCheckoutButton({
   )
 }
 
-function AutoClickLink({ href }) {
+function AutoClickLink({ href, callback }) {
   const { useEffect, useRef } = wp.element
   const linkBtn = useRef()
 
   useEffect(() => {
     linkBtn.current.click()
+    callback()
   }, [])
 
   return (

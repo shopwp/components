@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { updateDiscount } from "../../api.jsx"
 import CartFooterSubtotal from "../subtotal"
 import {
@@ -8,12 +6,6 @@ import {
   useShopState,
   useShopDispatch,
 } from "@shopwp/components"
-
-const CartFooterEstimatedTax = wp.element.lazy(() =>
-  import(
-    /* webpackChunkName: 'CartFooterEstimatedTax-public' */ "../estimated-tax"
-  )
-)
 
 const CartFooterDiscountWrapper = wp.element.lazy(() =>
   import(
@@ -27,24 +19,6 @@ function CartFooterTotal() {
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
   const cartDispatch = useCartDispatch()
-
-  const CartFooterTotalCSS = css`
-    display: flex;
-    flex-direction: column;
-    margin-top: 0;
-
-    .wps-tax-row {
-      order: ${cartState.discountCode ? "1" : "2"};
-    }
-
-    .wps-discount-row {
-      order: ${cartState.discountCode ? "2" : "1"};
-    }
-
-    .wps-subtotal-row {
-      order: 3;
-    }
-  `
 
   function changeDiscount(discount, shouldRemove = false) {
     if (!cartState.isAddingDiscountCode) {
@@ -72,11 +46,7 @@ function CartFooterTotal() {
   }
 
   return (
-    <div css={CartFooterTotalCSS}>
-      {shopwp.general.showEstimatedTax ? (
-        <CartFooterEstimatedTax discountApplied={cartState.discountCode} />
-      ) : null}
-
+    <div className="swp-cart-footer-totals">
       {shopwp.general.enableDiscountCodes ? (
         <CartFooterDiscountWrapper
           changeDiscount={changeDiscount}
@@ -86,7 +56,7 @@ function CartFooterTotal() {
           setDiscountCode={setDiscountCode}
         />
       ) : null}
-      <CartFooterSubtotal changeDiscount={changeDiscount} />
+      <CartFooterSubtotal />
     </div>
   )
 }

@@ -14,11 +14,17 @@ function ProductGalleryInitialState(props) {
 
   return {
     featImageIsVideo: featImageIsVideo,
-    featImage: props.payload ? featImage : false,
+    featImage: props.payload
+      ? featImage
+      : {
+          originalSrc:
+            shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png",
+          altText: "Placeholder Product Image",
+        },
     featImageElement: false,
     featImagePlaceholder: {
-      src: shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png",
-      alt: "Placeholder Product Image",
+      originalSrc: shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png",
+      altText: "Placeholder Product Image",
     },
   }
 }

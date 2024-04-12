@@ -190,7 +190,6 @@ function ProductBuyButtonWrapper() {
         linkTarget={settings.linkTarget}
         linkTo={settings.linkTo}
         linkWithBuyButton={settings.linkWithBuyButton}
-        addToCartButtonColor={settings.addToCartButtonColor}
         addToCartButtonTextColor={settings.addToCartButtonTextColor}
         isDirectCheckout={isDirectCheckout}
         hasManyVariants={productState.hasManyVariants}

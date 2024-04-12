@@ -12,12 +12,10 @@ import { useProductBuyButtonDispatch } from "../../_state/hooks"
 import {
   getRechargeSellingGroupsFromProductId,
   maybeHandleApiError,
-  maybeAlterErrorMessage,
 } from "@shopwp/api"
-import { getFirstSellingPlanData } from "@shopwp/common"
+import { to, getFirstSellingPlanData } from "@shopwp/common"
 
 import SubscriptionSkeleton from "../skeleton"
-import { to } from "@shopwp/common"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../../../../notice")
@@ -60,15 +58,14 @@ function SellingPlans({ sellingGroup, setSellingGroup }) {
       payload: false,
     })
 
-    var maybeApiError = maybeHandleApiError(error, resp)
-    var finalErrorMessage = maybeAlterErrorMessage(maybeApiError, shopState)
+    var errMsg = maybeHandleApiError(error, resp)
 
-    if (maybeApiError) {
+    if (errMsg) {
       dispatch({
         type: "SET_NOTICE",
         payload: {
           type: "error",
-          message: finalErrorMessage,
+          message: errMsg,
         },
       })
       return

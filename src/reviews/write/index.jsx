@@ -64,12 +64,12 @@ function ReviewForm(props) {
     color: black;
 
     &.swp-field-error {
-      border-color: red;
+      border-color: #ec4e4e;
     }
   `
 
   const inputErrorCSS = css`
-    color: red;
+    color: #ec4e4e;
     margin-top: 5px;
     margin-bottom: 15px;
     font-size: 14px;

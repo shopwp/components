@@ -2,11 +2,9 @@
 import { jsx, css } from "@emotion/react"
 import isEmpty from "lodash-es/isEmpty"
 import union from "lodash-es/union"
-import { to } from "@shopwp/common"
 import { fetchCollections, maybeHandleApiError } from "@shopwp/api"
-import { shouldOpenOnLoad } from "@shopwp/common"
-import { ButtonSecondary } from "@shopwp/components"
-import { useShopState } from "@shopwp/components"
+import { to, shouldOpenOnLoad } from "@shopwp/common"
+import { ButtonSecondary, useShopState } from "@shopwp/components"
 
 import StorefrontFilterOptionsGroupItems from "../group-items"
 import StorefrontFilterOptionsGroup from "../group"

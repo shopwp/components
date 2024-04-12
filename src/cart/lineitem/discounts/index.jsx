@@ -1,19 +1,18 @@
-import { Price } from "@shopwp/components"
+import { findPercentageDiff } from "@shopwp/common"
 
 function CartLineItemDiscounts({ lineItem }) {
-  return lineItem.discountAllocations.map((discount, index) => (
-    <div
-      className="swp-l-row swp-m-l-row swp-l-col-center swp-discount-wrapper"
-      key={lineItem.id + discount.discountedAmount.amount}
-    >
+  return (
+    <div className="swp-l-row swp-m-l-row swp-l-col-center swp-discount-wrapper">
       <p className="swp-cart-discount-code">
-        You save -<Price price={discount.discountedAmount.amount} />
-      </p>
-      <p className="swp-price-savings">
-        <Price price={lineItem.cost.subtotalAmount.amount} />
+        You save -{" "}
+        {findPercentageDiff(
+          lineItem.cost.totalAmount.amount,
+          lineItem.cost.subtotalAmount.amount
+        )}
+        %
       </p>
     </div>
-  ))
+  )
 }
 
 export default CartLineItemDiscounts

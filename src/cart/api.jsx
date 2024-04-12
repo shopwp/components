@@ -339,6 +339,7 @@ function directCheckout(data, shopState) {
 
     if (maybeApiError) {
       reject(maybeApiError)
+      return
     }
 
     if (data.settings && data.settings.linkTarget) {
@@ -355,25 +356,25 @@ function directCheckout(data, shopState) {
   })
 }
 
-function combineDiscounts(shopState, discountToAdd) {
-  var newDiscountCodesToAdd = [discountToAdd]
+// function combineDiscounts(shopState, discountToAdd) {
+//   var newDiscountCodesToAdd = [discountToAdd]
 
-  if (shopState.cartData.discountCodes.length) {
-    var currentlyAppliedCodes = shopState.cartData.discountCodes.map(
-      (ds) => ds.code
-    )
-  } else {
-    var currentlyAppliedCodes = []
-  }
+//   if (shopState.cartData.discountCodes.length) {
+//     var currentlyAppliedCodes = shopState.cartData.discountCodes.map(
+//       (ds) => ds.code
+//     )
+//   } else {
+//     var currentlyAppliedCodes = []
+//   }
 
-  return currentlyAppliedCodes.concat(newDiscountCodesToAdd)
-}
-function subtractDiscounts(shopState, discountToRemove) {
-  var newlist = shopState.cartData.discountCodes.filter(
-    (d) => d.code !== discountToRemove
-  )
-  return newlist.map((ds) => ds.code)
-}
+//   return currentlyAppliedCodes.concat(newDiscountCodesToAdd)
+// }
+// function subtractDiscounts(shopState, discountToRemove) {
+//   var newlist = shopState.cartData.discountCodes.filter(
+//     (d) => d.code !== discountToRemove
+//   )
+//   return newlist.map((ds) => ds.code)
+// }
 
 async function updateDiscount(
   cartDispatch,
@@ -402,16 +403,12 @@ async function updateDiscount(
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
   cartDispatch({ type: "SET_IS_ADDING_DISCOUNT_CODE", payload: true })
 
-  if (shouldRemove) {
-    var finalDiscountCodes = subtractDiscounts(shopState, discount)
-  } else {
-    var finalDiscountCodes = combineDiscounts(shopState, discount)
-  }
-
   var discountOptions = {
     cartId: shopState.cartData.id,
-    discountCodes: finalDiscountCodes,
+    existingDiscountCodes: shopState.cartData.discountCodes,
     buyerIdentity: shopState.buyerIdentity,
+    discountToChange: discount,
+    isRemoving: shouldRemove,
   }
 
   const [errorDiscount, response] = await to(applyDiscount(discountOptions))
@@ -432,13 +429,6 @@ async function updateDiscount(
     return
   }
 
-  const addedDiscount = hasDiscount(response.data)
-
-  cartDispatch({
-    type: "SET_DISCOUNT_CODE",
-    payload: addedDiscount ? discount : false,
-  })
-
   shopDispatch({
     type: "SET_CART_DATA",
     payload: response.data,
@@ -452,9 +442,9 @@ async function updateDiscount(
     type: "SET_NOTICE",
     payload: {
       type: "success",
-      message: addedDiscount
-        ? shopState.t.n.addedDiscount
-        : shopState.t.n.removedDiscount,
+      message: shouldRemove
+        ? shopState.t.n.removedDiscount
+        : shopState.t.n.addedDiscount,
     },
   })
 }

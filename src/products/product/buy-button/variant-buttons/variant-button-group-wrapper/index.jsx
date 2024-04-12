@@ -65,26 +65,30 @@ function ProductVariantButtonGroupWrapper({
       className="swp-variants-group wpshopify-variant-buttons-group"
       css={groupStyles}
     >
-      <FilterHook
-        name="product.labelHtml"
-        args={[
-          option,
-          productBuyButtonState,
-          productBuyButtonState.allSelectableOptions,
-        ]}
-      >
-        <label className="swp-variant-label" css={labelStyles}>
-          {wp.hooks.applyFilters("product.optionName", option.name, option)}
+      {settings.showVariantButtonLabels ? (
+        <FilterHook
+          name="product.labelHtml"
+          args={[
+            option,
+            productBuyButtonState,
+            productBuyButtonState.allSelectableOptions,
+          ]}
+        >
+          <label className="swp-variant-label" css={labelStyles}>
+            {wp.hooks.applyFilters("product.optionName", option.name, option)}
 
-          {missingSelections &&
-          !productBuyButtonState.selectedOptions.hasOwnProperty(option.name) ? (
-            <ProductVariantMissingSelection
-              option={option}
-              productBuyButtonState={productBuyButtonState}
-            />
-          ) : null}
-        </label>
-      </FilterHook>
+            {missingSelections &&
+            !productBuyButtonState.selectedOptions.hasOwnProperty(
+              option.name
+            ) ? (
+              <ProductVariantMissingSelection
+                option={option}
+                productBuyButtonState={productBuyButtonState}
+              />
+            ) : null}
+          </label>
+        </FilterHook>
+      ) : null}
 
       <div
         className="swp-variants wpshopify-variant-buttons"

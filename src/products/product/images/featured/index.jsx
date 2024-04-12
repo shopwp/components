@@ -9,7 +9,6 @@ import {
   getImageWidth,
   getImageHeight,
   addCustomSizingToImageUrl,
-  getImageWidthString,
 } from "@shopwp/common"
 import { useZoomImageMove } from "@zoom-image/react"
 
@@ -39,7 +38,7 @@ function ProductFeaturedImage() {
   const [originalFeatImg] = useState(galleryState.featImage)
   const settings = useSettingsState()
   const productState = useProductState()
-  // const shopState = useShopState()
+
   const zoomContainer = useRef()
   const zoom = useZoomImageMove()
 
@@ -105,7 +104,6 @@ function ProductFeaturedImage() {
       ? "default"
       : "pointer"};
     overflow: hidden;
-    max-width: ${getImageWidthString(settings)};
   `
 
   const ProductImageFeaturedWrapperCSS = css`
@@ -117,11 +115,10 @@ function ProductFeaturedImage() {
       ? "flex-end"
       : settings.imagesAlign};
 
-    > a,
     > img,
     a img {
       display: block;
-      flex: 1;
+      flex: ${settings.imagesAlign !== "left" ? "1" : "none"};
     }
 
     + div {
@@ -167,10 +164,14 @@ function ProductFeaturedImage() {
       crop: settings.imagesSizingCrop,
     })
 
+    if (!newSrc) {
+      newSrc = galleryState.featImagePlaceholder.src
+    }
+
     if (zoomContainer.current && settings.linkTo !== "modal") {
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
-        disableScrollLock: shopwp.misc.isMobile ? false : true,
+        disableScrollLock: true,
         zoomImageProps: {
           alt: galleryState.featImage.altText
             ? galleryState.featImage.altText
@@ -227,20 +228,11 @@ function ProductFeaturedImage() {
               {zoom.zoomImageState.zoomedImgStatus === "loading" ? (
                 <Loader />
               ) : null}
-              {galleryState.featImage ? (
-                <ProductImage
-                  settings={settings}
-                  isFeatured={true}
-                  image={galleryState.featImage}
-                />
-              ) : (
-                <ProductImage
-                  settings={settings}
-                  isFeatured={true}
-                  image={galleryState.featImagePlaceholder}
-                  placeholder={true}
-                />
-              )}
+              <ProductImage
+                settings={settings}
+                isFeatured={true}
+                image={galleryState.featImage}
+              />
             </div>
           </>
         )}
