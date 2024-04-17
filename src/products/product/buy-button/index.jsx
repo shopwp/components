@@ -39,8 +39,7 @@ function ProductBuyButton() {
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
 
-        {productState.payload.availableForSale ||
-        settings.linkTo === "wordpress" ? (
+        {settings.linkTo !== "none" || productState.payload.availableForSale ? (
           <ProductBuyButtonWrapper />
         ) : (
           <FilterHook name="product.unavailableHtml" args={[productState]}>

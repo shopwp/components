@@ -1,13 +1,11 @@
 import { FilterHook } from "@shopwp/common"
-import { useShopState, Tooltip } from "@shopwp/components"
+import { Tooltip } from "@shopwp/components"
 
-function SubscriptionDetails() {
-  const shopState = useShopState()
-
+function SubscriptionDetails({ settings }) {
   return (
     <FilterHook name="product.subscriptionsInfoHTML">
-      <Tooltip label={shopState.t.l.subDetailsHeading}>
-        <p>{shopState.t.n.subDetailsContent}</p>
+      <Tooltip label={settings.subscriptionsDetailsHeading}>
+        <p>{settings.subscriptionsDetailsText}</p>
       </Tooltip>
     </FilterHook>
   )

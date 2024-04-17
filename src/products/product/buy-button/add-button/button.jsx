@@ -56,7 +56,12 @@ function buildLines(variant, quantity, productBuyButtonState, buttonRef) {
     data["sellingPlanId"] = productBuyButtonState.subscription.sellingPlanId
   }
 
-  return [data]
+  return wp.hooks.applyFilters(
+    "cart.lineItems",
+    [data],
+    variant,
+    productBuyButtonState
+  )
 }
 
 function AddButton({

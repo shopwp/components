@@ -1,24 +1,17 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import SubscriptionDetails from "../details"
 
 const SellingGroups = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SellingGroups-public' */ "../selling-groups")
 )
 
-function SubscriptionsBuyButtonWrapper() {
+function SubscriptionsBuyButtonWrapper({ settings }) {
   const { Suspense } = wp.element
-  const SubscriptionBuyButtonCSS = css`
-    margin: 15px 0 10px 0;
-    display: flex;
-    flex-direction: column;
-  `
 
   return (
     <Suspense fallback={false}>
-      <div css={SubscriptionBuyButtonCSS}>
+      <div className="swp-l-col swp-mb10 swp-mt15 swp-sub-wrapper">
         <SellingGroups />
-        <SubscriptionDetails translations={shopwp.t} />
+        <SubscriptionDetails settings={settings} />
       </div>
     </Suspense>
   )

@@ -306,9 +306,10 @@ function useGetTemplateQuery(setNotice) {
   }
 
   useEffect(() => {
-    if (!settingsState.htmlTemplate || !settingsState.htmlTemplateData) {
+    if (!settingsState.htmlTemplate || settingsState.htmlTemplateData) {
       return
     }
+
     getLayoutTemplate()
   }, [settingsState.htmlTemplate, settingsState.htmlTemplateData])
 }
