@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useCartState, useShopState } from "@shopwp/components"
 
 const CartFooterTotal = wp.element.lazy(() =>
@@ -23,9 +21,8 @@ const Notice = wp.element.lazy(() =>
 )
 
 function CartFooterSkeleton() {
-  const CartFooterSkeletonCSS = css``
   return (
-    <div className="swp-cart-footer-skeleton" css={CartFooterSkeletonCSS}>
+    <div className="swp-cart-footer-skeleton">
       <div></div>
       <div></div>
     </div>
@@ -37,10 +34,13 @@ function CartFooter() {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
-  const CartFooterCSS = css``
-
   return (
-    <section className="swp-cart-footer wps-cart-footer" css={CartFooterCSS}>
+    <section
+      className="swp-cart-footer wps-cart-footer"
+      data-is-showing-cart-notes={shopwp.general.enableCartNotes}
+      data-is-showing-cart-terms={shopwp.general.enableCartTerms}
+      data-is-showing-cart-discount={shopwp.general.enableDiscountCodes}
+    >
       <Suspense fallback={<CartFooterSkeleton />}>
         {shopwp.general.enableCartNotes ? <CartNote /> : null}
         {shopwp.general.enableCartTerms ? (

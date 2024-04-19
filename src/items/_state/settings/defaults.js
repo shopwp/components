@@ -156,6 +156,8 @@ const defaults = {
     carousel: false,
     carouselDots: true,
     carouselInfinite: true,
+    carouselAutoplay: false,
+    carouselAutoplaySpeed: 3000,
     carouselSpeed: 500,
     carouselSlidesToShow: 3,
     carouselSlidesToScroll: 3,

@@ -2,6 +2,7 @@ import { useProductState } from "../../_state/hooks"
 import {
   createSelectedOptionsObject,
   findVariantFromVariantId,
+  onlyInStockVariants,
 } from "@shopwp/common"
 import { useProductBuyButtonDispatch } from "../_state/hooks"
 
@@ -28,7 +29,22 @@ function ProductOption({ children }) {
         return
       }
 
-      const firstVariant = productState.payload.variants.edges[0].node
+      var firstVariant = onlyInStockVariants(
+        productState.payload.variants.edges
+      )
+
+      if (!firstVariant.length) {
+        productBuyButtonDispatch({
+          type: "SET_NOTICE",
+          payload: {
+            type: "error",
+            message: "No in stock variants found to select",
+          },
+        })
+        return
+      } else {
+        firstVariant = firstVariant[0].node
+      }
 
       const selectedVariant = createSelected(firstVariant.selectedOptions)
 

@@ -302,7 +302,11 @@ function AddButton({
       )}
 
       {productBuyButtonState.notice ? (
-        <Notice status={productBuyButtonState.notice.type} extraCSS={NoticeCSS}>
+        <Notice
+          status={productBuyButtonState.notice.type}
+          extraCSS={NoticeCSS}
+          className="swp-l-row-break"
+        >
           {productBuyButtonState.notice.message}
         </Notice>
       ) : null}

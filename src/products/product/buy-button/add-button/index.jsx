@@ -54,48 +54,51 @@ function ProductAddButton({
       aria-label={productState.payload.title + " add button"}
     >
       <div
-        className="swp-add-to-cart-wrapper"
+        className="swp-add-to-cart-wrapper swp-mt10"
         css={AddButtonWrapperCSS}
         data-should-show-quantity={shouldShowQuantity}
+        data-should-link-to={linkTo}
       >
-        {shouldShowQuantity ? (
-          <Quantity
-            dispatch={productDispatch}
-            onChange={onQuantityChange}
-            quantityStep={settings.quantityStep}
-            fontSize={settings.addToCartButtonTypeFontSize}
-            selectedVariant={productState.selectedVariant}
-            element={productState.element}
-            maxQuantity={maxQu}
-            minQuantity={settings.minQuantity}
-            initialQuantity={
-              settings.minQuantity > 1 ? settings.minQuantity : 1
-            }
-            globalMaxQuantity={shopwp.cart.maxQuantity}
-            small={false}
-            setNotice={setNotice}
-          />
-        ) : null}
-        <AddButtonWrapper
-          hasLink={hasLink}
-          linkTarget={linkTarget}
-          linkTo={linkTo}
-          linkWithBuyButton={linkWithBuyButton}
-          isDirectCheckout={isDirectCheckout}
-          payload={productState.payload}
-        >
-          <AddButton
+        <div className="swp-add-to-cart-inner swp-l-row swp-l-col-start">
+          {shouldShowQuantity ? (
+            <Quantity
+              dispatch={productDispatch}
+              onChange={onQuantityChange}
+              quantityStep={settings.quantityStep}
+              fontSize={settings.addToCartButtonTypeFontSize}
+              selectedVariant={productState.selectedVariant}
+              element={productState.element}
+              maxQuantity={maxQu}
+              minQuantity={settings.minQuantity}
+              initialQuantity={
+                settings.minQuantity > 1 ? settings.minQuantity : 1
+              }
+              globalMaxQuantity={shopwp.cart.maxQuantity}
+              small={false}
+              setNotice={setNotice}
+            />
+          ) : null}
+          <AddButtonWrapper
             hasLink={hasLink}
-            linkWithBuyButton={linkWithBuyButton}
-            addToCartButtonTextColor={addToCartButtonTextColor}
-            isDirectCheckout={isDirectCheckout}
-            hasManyVariants={hasManyVariants}
-            addedToCart={addedToCart}
-            quantity={quantity}
-            selectedOptions={selectedOptions}
+            linkTarget={linkTarget}
             linkTo={linkTo}
-          />
-        </AddButtonWrapper>
+            linkWithBuyButton={linkWithBuyButton}
+            isDirectCheckout={isDirectCheckout}
+            payload={productState.payload}
+          >
+            <AddButton
+              hasLink={hasLink}
+              linkWithBuyButton={linkWithBuyButton}
+              addToCartButtonTextColor={addToCartButtonTextColor}
+              isDirectCheckout={isDirectCheckout}
+              hasManyVariants={hasManyVariants}
+              addedToCart={addedToCart}
+              quantity={quantity}
+              selectedOptions={selectedOptions}
+              linkTo={linkTo}
+            />
+          </AddButtonWrapper>
+        </div>
       </div>
       {notice ? <Notice status="warning">{notice}</Notice> : null}
       {settings.showInventoryLevels &&

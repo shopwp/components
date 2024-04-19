@@ -36,7 +36,7 @@ function CartFooterDiscountWrapper({
   }
 
   return (
-    <div className="swp-l-col swp-l-row-end swp-l-row-between swp-0 swp-mt20 swp-cart-footer-discount-row wps-discount-row">
+    <div className="swp-l-col swp-l-row-end swp-l-row-between swp-0 swp-mt15 swp-cart-footer-discount-row wps-discount-row">
       <div className="swp-l-row swp-m-l-row swp-discount-row">
         <input
           className="swp-discount-input"

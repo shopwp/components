@@ -6,6 +6,7 @@ function Notice({
   onRender = false,
   html = false,
   isFetchingNew = false,
+  className = false,
 }) {
   const { useEffect } = wp.element
 
@@ -20,7 +21,7 @@ function Notice({
       {status === "success" ? (
         <Expire delay={5000}>
           <p
-            className="swp-notice"
+            className={`swp-notice ${className}`}
             data-status={status}
             data-is-fetching-new={isFetchingNew}
           >
@@ -29,7 +30,7 @@ function Notice({
         </Expire>
       ) : html ? (
         <p
-          className="swp-notice"
+          className={`swp-notice ${className}`}
           data-status={status}
           data-is-fetching-new={isFetchingNew}
           dangerouslySetInnerHTML={{
@@ -38,7 +39,7 @@ function Notice({
         ></p>
       ) : (
         <p
-          className="swp-notice"
+          className={`swp-notice ${className}`}
           data-status={status}
           data-is-fetching-new={isFetchingNew}
         >

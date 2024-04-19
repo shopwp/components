@@ -37,6 +37,8 @@ function Carousel({
     var defaults = {
       dots: settings.carouselDots,
       infinite: settings.carouselInfinite,
+      autoplay: settings.carouselAutoplay,
+      autoplaySpeed: settings.carouselAutoplaySpeed,
       speed: settings.carouselSpeed,
       slidesToShow: settings.carouselSlidesToShow,
       slidesToScroll: settings.carouselSlidesToScroll,

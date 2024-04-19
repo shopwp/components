@@ -34,6 +34,8 @@ function ProductInitialState(props) {
       carouselNextArrow: props.settings.carouselNextArrow,
       carouselDots: props.settings.carouselDots,
       carouselInfinite: props.settings.carouselInfinite,
+      carouselAutoplay: props.settings.carouselAutoplay,
+      carouselAutoplaySpeed: props.settings.carouselAutoplaySpeed,
       carouselSpeed: props.settings.carouselSpeed,
       carouselSlidesToShow: props.settings.carouselSlidesToShow,
       carouselSlidesToScroll: props.settings.carouselSlidesToScroll,
