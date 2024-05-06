@@ -4,7 +4,7 @@ import { getImageWidth, getImageHeight } from "@shopwp/common"
 
 function Img(props) {
   function isSelectedImage() {
-    if (props.isFeatured || !props.galleryState.featImage) {
+    if (props.isFeatured || !props.galleryState.featImage || !props.image) {
       return
     }
 
@@ -80,14 +80,16 @@ function Img(props) {
         }
         loading="lazy"
         alt={
-          props.image.altText
+          props.image
             ? props.image.altText
-            : props.payload
-            ? props.payload.title
-            : "Product image"
+              ? props.image.altText
+              : props.payload
+              ? props.payload.title
+              : "Product image"
+            : props.payload.title + " featured image"
         }
         aria-label={props.payload ? props.payload.title : "Product image"}
-        data-zoom={props.image.originalSrc}
+        data-zoom={props.image ? props.image.originalSrc : false}
         width={getImageWidth(props.settings, !props.isFeatured).toString()}
         height={getImageHeight(props.settings, !props.isFeatured).toString()}
       />

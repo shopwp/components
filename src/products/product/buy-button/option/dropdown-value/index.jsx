@@ -30,7 +30,7 @@ function ProductVariantDropdownValue({
   return isAvailableToSelect ? (
     <li
       itemProp="category"
-      className="wps-product-variant wps-product-style wps-modal-close-trigger"
+      className="wps-product-variant wps-product-style swp-modal-close-trigger"
       onClick={onSelection}
       css={ProductVariantDropdownValueCSS}
       data-is-available={isAvailableToSelect}

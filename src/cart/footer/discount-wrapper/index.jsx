@@ -55,6 +55,7 @@ function CartFooterDiscountWrapper({
         />
         <button
           className="swp-cart-discount-button"
+          tabIndex="0"
           onClick={onAddDiscount}
           disabled={
             shopState.isCartUpdating ||

@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 import isEmpty from "lodash-es/isEmpty"
 import last from "lodash-es/last"
 import min from "lodash-es/min"
@@ -86,26 +83,21 @@ function ProductPrice({ prices, compareAt, showPriceRange, selectedVariant }) {
 
   useEffect(() => {
     if (selectedVariant) {
-      if (selectedVariant.node.compareAtPrice) {
-        setComparePrice(selectedVariant.node.compareAtPrice.amount)
+      if (selectedVariant.compareAtPrice) {
+        setComparePrice(selectedVariant.compareAtPrice.amount)
       } else {
         setComparePrice(false)
       }
 
-      setRegPrice(selectedVariant.node.price.amount)
+      setRegPrice(selectedVariant.price.amount)
     } else {
       setComparePrice(firstPriceCompareAt(prices))
       setRegPrice(getFirstPrice())
     }
   }, [selectedVariant])
 
-  const priceWrapperCSS = css``
-
   return (
-    <span
-      className="swp-product-price wps-products-price wps-product-pricing wps-products-price-one"
-      css={priceWrapperCSS}
-    >
+    <span className="swp-product-price wps-products-price wps-product-pricing wps-products-price-one">
       {showPriceRange && !selectedVariant ? (
         <ProductPricingRange
           firstPrice={getFirstPrice()}

@@ -4,7 +4,6 @@ import Products from "../../../index"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useSettings } from "@shopwp/hooks"
 import Modal from "react-modal"
-import { useItemsState } from "../../../../items/_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 if (shopwp.misc.isAdmin) {
@@ -63,7 +62,7 @@ function customModalSettings(settings, payload) {
 function ProductModal() {
   const productState = useProductState()
   const productDispatch = useProductDispatch()
-  const itemsState = useItemsState()
+
   const settings = useSettingsState()
 
   const pSettings = useSettings(
@@ -184,41 +183,27 @@ function ProductModal() {
 function ProductModalCloseIcon() {
   const productDispatch = useProductDispatch()
 
-  const ProductModalCloseIconCSS = css`
-    position: absolute;
-    top: ${shopwp.misc.isAdmin ? "-32px" : "-18px"};
-    width: ${shopwp.misc.isAdmin ? "25px" : "60px"};
-    height: ${shopwp.misc.isAdmin ? "25px" : "60px"};
-    box-sizing: border-box;
-    padding: 15px;
-    right: ${shopwp.misc.isAdmin ? "-54px" : "-60px"};
-    z-index: 99999999;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      cursor: pointer;
-      opacity: 0.7;
-    }
-
-    path {
-      fill: white;
-    }
-  `
-
   function onModalClose() {
     productDispatch({ type: "TOGGLE_MODAL", payload: false })
   }
 
+  function onKeyDown(e) {
+    if (e.key === "Enter") {
+      onModalClose()
+    }
+  }
+
   return (
     <svg
-      focusable="false"
+      focusable="true"
       role="img"
-      alt="Close modal icon"
+      alt="Close ShopWP modal icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
-      css={ProductModalCloseIconCSS}
       onClick={onModalClose}
+      onKeyDown={onKeyDown}
+      tabIndex="0"
+      className="swp-modal-close-icon"
     >
       <path
         fill="currentColor"
@@ -229,20 +214,13 @@ function ProductModalCloseIcon() {
 }
 
 function ProductModalContent({ payload, settings, id }) {
-  const ProductModalCSS = css``
-  const ProductModalContentInnerCSS = css``
-
   return (
     <div
       className="swp-modal wps-modal"
       aria-label={payload.title + " product modal"}
-      css={ProductModalCSS}
     >
       <ProductModalCloseIcon />
-      <div
-        className="swp-modal-inner wps-modal-inner"
-        css={ProductModalContentInnerCSS}
-      >
+      <div className="swp-modal-inner wps-modal-inner">
         <Products
           settings={settings}
           payload={[payload]}

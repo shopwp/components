@@ -14,16 +14,16 @@ function ProductBuyButtonLeftInStock() {
       return
     }
 
-    if (productState.selectedVariant.node.availableForSale) {
-      if (!productState.selectedVariant.node.quantityAvailable) {
+    if (productState.selectedVariant.availableForSale) {
+      if (!productState.selectedVariant.quantityAvailable) {
         setQuantityLeft(false)
       }
 
       if (
-        productState.selectedVariant.node.quantityAvailable <=
+        productState.selectedVariant.quantityAvailable <=
         settings.leftInStockThreshold
       ) {
-        setQuantityLeft(productState.selectedVariant.node.quantityAvailable)
+        setQuantityLeft(productState.selectedVariant.quantityAvailable)
       }
     } else {
       setQuantityLeft(false)

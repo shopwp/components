@@ -68,6 +68,7 @@ function CartCheckoutButton() {
         shopwp.misc.isMobile ? "_self" : shopwp.general.checkoutButtonTarget
       }
       data-is-disabled={shouldDisable}
+      tabIndex="0"
     >
       {cartButtonText}
     </a>

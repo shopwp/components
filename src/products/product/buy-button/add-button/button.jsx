@@ -36,13 +36,13 @@ function findSingleVariantFromPayload(payload) {
   return payload.variants.edges[0]
 }
 
-function buildLines(variant, quantity, productBuyButtonState, buttonRef) {
+function buildLines(variant, quantity, productState, buttonRef) {
   var customAttrs = wp.hooks.applyFilters(
     "cart.lineItemAttributes",
     [],
     variant,
     quantity,
-    productBuyButtonState,
+    productState,
     buttonRef
   )
 
@@ -52,16 +52,12 @@ function buildLines(variant, quantity, productBuyButtonState, buttonRef) {
     quantity: quantity,
   }
 
-  if (productBuyButtonState?.subscription) {
-    data["sellingPlanId"] = productBuyButtonState.subscription.sellingPlanId
+  // Responsible for turning a normal product into a subscription before adding to cart
+  if (productState?.selectedSubscription) {
+    data["sellingPlanId"] = productState.selectedSubscription.id
   }
 
-  return wp.hooks.applyFilters(
-    "cart.lineItems",
-    [data],
-    variant,
-    productBuyButtonState
-  )
+  return wp.hooks.applyFilters("cart.lineItems", [data], variant, productState)
 }
 
 function AddButton({
@@ -95,7 +91,7 @@ function AddButton({
 
     if (hasManyVariants) {
       return findVariantFromSelectedOptions(
-        productState.payload,
+        productState.payload.variants,
         selectedOptions
       )
     } else {
@@ -144,12 +140,7 @@ function AddButton({
       return
     }
 
-    const lines = buildLines(
-      variant,
-      quantity,
-      productBuyButtonState,
-      button.current
-    )
+    const lines = buildLines(variant, quantity, productState, button.current)
 
     if (
       shopwp.cart.maxQuantity &&
@@ -176,9 +167,10 @@ function AddButton({
       return
     }
 
+    // If the product requires a selling plan, but no subscription selected, complain
     if (
       productState.payload.requiresSellingPlan &&
-      !productBuyButtonState.subscription
+      !productState.selectedSubscription
     ) {
       productBuyButtonDispatch({
         type: "SET_NOTICE",
@@ -364,12 +356,7 @@ function DirectCheckoutButton({
       setIsCheckingOut(true)
     }
 
-    const lines = buildLines(
-      variant,
-      quantity,
-      productBuyButtonState,
-      button.current
-    )
+    const lines = buildLines(variant, quantity, productState, button.current)
 
     var checkoutData = {
       lines: lines,

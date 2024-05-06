@@ -75,7 +75,12 @@ function ProductVariantButtonGroupWrapper({
           ]}
         >
           <label className="swp-variant-label" css={labelStyles}>
-            {wp.hooks.applyFilters("product.optionName", option.name, option)}
+            {wp.hooks.applyFilters(
+              "product.optionName",
+              option.name,
+              option,
+              productBuyButtonState
+            )}
 
             {missingSelections &&
             !productBuyButtonState.selectedOptions.hasOwnProperty(

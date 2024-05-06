@@ -12,6 +12,7 @@ function QuantityButton({ onClick, type, children }) {
       css={[QuantityIncDecCSS]}
       type="button"
       role="button"
+      tabIndex="0"
       aria-label={"Quantity " + type + " button"}
       onClick={onClick}
     >

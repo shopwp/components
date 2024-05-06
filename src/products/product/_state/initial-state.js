@@ -1,7 +1,13 @@
 import { hasLink, getURLParam } from "@shopwp/common"
-import { isOnSale, hasManyVariants, getInitialQuantity } from "@shopwp/common"
+import {
+  isOnSale,
+  hasManyVariants,
+  getInitialQuantity,
+  maybeFindFirstSellingPlan,
+} from "@shopwp/common"
 
 function ProductInitialState(props) {
+  var selectedSubscription = false
   const variantIdFromURL = getURLParam("variant")
 
   const preselectVariant = wp.hooks.applyFilters(
@@ -11,6 +17,10 @@ function ProductInitialState(props) {
       : false,
     props.payload
   )
+
+  if (props.settings.subscriptionsSelectOnLoad) {
+    selectedSubscription = maybeFindFirstSellingPlan(props.payload)
+  }
 
   return {
     element: props.element,
@@ -42,8 +52,10 @@ function ProductInitialState(props) {
     },
     id: props.id, // read only
     payload: props.payload ? props.payload : false,
-    selectedSubscriptionInfo: false,
+    selectedSubscription: selectedSubscription,
     isDirectCheckingOut: false,
+    subscriptionPricing: false,
+    activeSellingGroup: "onetime",
   }
 }
 

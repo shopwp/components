@@ -1,26 +1,13 @@
 import SellingGroupContent from "../selling-group-content"
-import { useProductDispatch } from "../../../_state/hooks"
 import { useShopState } from "@shopwp/components"
 
-function SellingGroupOnetime({ isSelected, sellingGroup }) {
-  const { useEffect } = wp.element
-  const productDispatch = useProductDispatch()
+function SellingGroupOnetime({ isSelected }) {
   const shopState = useShopState()
-
-  useEffect(() => {
-    if (isSelected) {
-      productDispatch({
-        type: "SET_SELECTED_SUBSCRIPTION_INFO",
-        payload: false,
-      })
-    }
-  }, [isSelected])
 
   return (
     <SellingGroupContent
-      sellingGroup={sellingGroup}
       isSelected={isSelected}
-      value={sellingGroup.id}
+      subType="onetime"
       text={shopState.t.l.oneTimePurchase}
     />
   )

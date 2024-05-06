@@ -1,26 +1,27 @@
-import { useProductBuyButtonDispatch } from "../../_state/hooks"
-import { useShopState } from "@shopwp/components"
+import { findSubscriptionByName } from "@shopwp/common"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
+import { useProductDispatch, useProductState } from "../../../_state/hooks"
 
 const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../../../../select")
 )
 
-function SellingPlansList({ plans, sellingGroup }) {
+function SellingPlansList({ plans }) {
   const { useState, Suspense } = wp.element
-  const buyButtonDispatch = useProductBuyButtonDispatch()
-  const shopState = useShopState()
   const settings = useSettingsState()
+
+  const productState = useProductState()
+  const productDispatch = useProductDispatch()
 
   const newPlans = plans
     .map((plan) => {
-      if (plan.type === "onetime") {
+      if (plan.node.type === "onetime") {
         return false
       }
 
       return {
-        label: plan.external_plan_name,
-        value: plan.external_plan_name,
+        label: plan.node.name,
+        value: plan.node.name,
       }
     })
     .filter(Boolean)
@@ -28,31 +29,27 @@ function SellingPlansList({ plans, sellingGroup }) {
   const [selectedOption, setSelectedOption] = useState(newPlans[0])
 
   function onChange(value) {
-    var found = plans.filter((p) => p.external_plan_name === value.value)
-
-    var selectedSubscription = found[0]
+    var sellingPlan = findSubscriptionByName(plans, value.value)
 
     setSelectedOption(value)
 
-    buyButtonDispatch({
-      type: "SET_SUBSCRIPTION",
-      payload: {
-        sellingPlanId: selectedSubscription.external_plan_id,
-        sellingPlanName: selectedSubscription.external_plan_name,
-        discountAmount: sellingGroup.discount_amount,
-        discountType: sellingGroup.discount_type,
-      },
-    })
+    if (sellingPlan) {
+      productDispatch({
+        type: "SET_SELECTED_SUBSCRIPTION",
+        payload: sellingPlan,
+      })
+    }
   }
 
   return (
-    <Suspense fallback="Loading subscriptions list ...">
+    <Suspense fallback="Loading subscriptions ...">
       <Dropdown
         settings={settings}
         items={newPlans}
         onChange={onChange}
-        label={shopState.t.l.selectDelivery}
+        label={false}
         selectedOption={selectedOption}
+        productState={productState}
       />
     </Suspense>
   )

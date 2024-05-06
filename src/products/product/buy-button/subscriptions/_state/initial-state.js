@@ -2,27 +2,22 @@ import { getPrices } from "@shopwp/common"
 
 function defaultSellingGroups(props) {
   if (props.payload && props.payload.requiresSellingPlan) {
-    return [{ id: props.payload.id + "subscription" }]
+    return [{ id: "subscription" }]
   } else {
-    return [
-      { id: props.payload.id + "onetime" },
-      { id: props.payload.id + "subscription" },
-    ]
+    return [{ id: "onetime" }, { id: "subscription" }]
   }
 }
 
 function SubscriptionsBuyButtonInitialState(props) {
   return {
     id: props.payload ? props.payload.id : "",
+    activeSellingGroup: "onetime",
     sellingGroups: props.payload ? defaultSellingGroups(props) : [],
-    sellingPlans: false,
+    sellingPlans: props.payload.sellingPlanGroups
+      ? props.payload.sellingPlanGroups.edges[0].node.sellingPlans.edges
+      : false,
     isLoadingSellingGroups:
       props.payload && props.payload.requiresSellingPlan ? true : false,
-    selectedSubscription:
-      (props.payload && props.payload.requiresSellingPlan) ||
-      (props.settings && props.settings.subscriptionsSelectOnLoad)
-        ? props.payload.id + "subscription"
-        : props.payload.id + "onetime",
     prices: getPrices(props.payload, "asc"),
     error: false,
     settings: props.settings,

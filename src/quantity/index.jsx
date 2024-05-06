@@ -51,7 +51,7 @@ function Quantity({
     }
 
     // currentlyNotInStock evaluates to true when the inventory option "Continue selling when out of stock" is checked AND the quantity available is <= 0.
-    if (selectedVariant.node.currentlyNotInStock) {
+    if (selectedVariant.currentlyNotInStock) {
       return
     }
 

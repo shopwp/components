@@ -78,6 +78,8 @@ function ProductOptionDropdown({
             selectedOptions={selectedOptions}
             variants={productBuyButtonState.variants}
             selectedVariant={selectedVariant}
+            totalOptions={productBuyButtonState.totalOptions}
+            productState={productBuyButtonState}
           />
         </Suspense>
       </div>

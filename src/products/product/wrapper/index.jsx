@@ -88,7 +88,7 @@ function ProductWrapper({ payload }) {
     } else {
       productDispatch({
         type: "SET_SELECTED_VARIANT",
-        payload: productState.payload.variants.edges[0],
+        payload: productState.payload.variants.edges[0].node,
       })
     }
   }, [settings.selectFirstVariant])

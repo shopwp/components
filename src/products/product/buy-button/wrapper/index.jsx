@@ -29,7 +29,7 @@ function shouldShowSubscriptions(payload, settings) {
     var hasSellingPlans = false
   }
 
-  return shopwp.misc.hasRecharge && settings.subscriptions && hasSellingPlans
+  return settings.subscriptions && hasSellingPlans
 }
 
 function ProductBuyButtonWrapper() {
@@ -100,14 +100,14 @@ function ProductBuyButtonWrapper() {
 
   useEffect(() => {
     var foundVariant = findVariantFromSelectedOptions(
-      productState.payload,
+      productState.payload.variants,
       productBuyButtonState.selectedOptions
     )
 
     if (foundVariant) {
       productDispatch({
         type: "SET_SELECTED_VARIANT",
-        payload: foundVariant,
+        payload: foundVariant.node,
       })
 
       wp.hooks.doAction("on.beforeAddToCart", productState)
@@ -174,7 +174,7 @@ function ProductBuyButtonWrapper() {
         />
       )}
 
-      {showSubscriptions ? (
+      {showSubscriptions && !isHidingControls() ? (
         <SubscriptionsBuyButton
           payload={productState.payload}
           settings={settings}

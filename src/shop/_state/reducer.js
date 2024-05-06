@@ -2,6 +2,48 @@ import { rSet, rErr } from "@shopwp/common"
 import update from "immutability-helper"
 import { maybeSetCache } from "@shopwp/api"
 
+function forceCartTabbing(isOpeningCart) {
+  const cartElement = document.querySelector(".swp-cart-container")
+
+  const focusableElements =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  const firstFocusableElement =
+    cartElement.querySelectorAll(focusableElements)[0]
+  const focusableContent = cartElement.querySelectorAll(focusableElements)
+  const lastFocusableElement = focusableContent[focusableContent.length - 1]
+
+  function onKeyDown(e) {
+    let isTabPressed = e.key === "Tab" || e.keyCode === 9
+
+    if (!isTabPressed) {
+      return
+    }
+
+    if (e.shiftKey) {
+      // if shift key pressed for shift + tab combination
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus() // add focus for the last focusable element
+        e.preventDefault()
+      }
+    } else {
+      // if tab key is pressed
+      if (document.activeElement === lastFocusableElement) {
+        // if focused has reached to last focusable element then focus first focusable element after pressing tab
+        firstFocusableElement.focus() // add focus for the first focusable element
+        e.preventDefault()
+      }
+    }
+  }
+
+  if (!isOpeningCart) {
+    document.removeEventListener("keydown", onKeyDown)
+  } else {
+    document.addEventListener("keydown", onKeyDown)
+
+    firstFocusableElement.focus()
+  }
+}
+
 function ShopReducer(state, action) {
   switch (action.type) {
     case "UPDATE_BUYER_IDENTITY": {
@@ -14,7 +56,7 @@ function ShopReducer(state, action) {
     case "TOGGLE_CART": {
       const updatedShopState = rSet("isCartOpen", action, state)
 
-      wp.hooks.doAction("on.cartToggle", updatedShopState)
+      forceCartTabbing(action.payload)
 
       return updatedShopState
     }

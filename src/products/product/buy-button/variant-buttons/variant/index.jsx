@@ -158,6 +158,7 @@ function ProductVariantButtonValueButton({
       data-option-name={optionName}
       data-variant-name={variantValue}
       title={variantValue}
+      tabIndex="0"
     >
       <FilterHook
         name="product.variantButtonHtml"

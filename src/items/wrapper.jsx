@@ -28,7 +28,11 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
 
   const shopState = useShopState()
   const doShopHydrate = useAction("do.shopHydrate")
-  const doChangeQuery = useAction("do.changeQuery")
+  const doChangeQuery = useAction(
+    "do.changeQuery",
+    null,
+    element ? element.dataset.wpshopifyComponentId : ""
+  )
   const doChangeSettings = useAction("do.changeSettings")
   const doChangeVarsCSS = useAction("do.changeVarsCSS")
 

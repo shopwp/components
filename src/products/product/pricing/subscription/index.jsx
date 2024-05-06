@@ -1,76 +1,95 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-import ProductPriceSingle from "../single"
-import ProductPriceSaleNotice from "../sale-notice"
+import { Price, useShopState } from "@shopwp/components"
 
 function ProductPricesSubscription({
-  subscriptionInfo,
-  selectedVariant,
-  settings,
-  shouldShowCompareAt,
+  productState,
+  subType,
+  insideSubscriptionsWidget,
 }) {
-  const ProductPricesSubscriptionCSS = css``
+  return (
+    <>
+      {productState.selectedVariant &&
+      productState.subscriptionPricing &&
+      subType === "subscription" ? (
+        <SellingGroupSubscriptionPricing
+          productState={productState}
+          insideSubscriptionsWidget={insideSubscriptionsWidget}
+        />
+      ) : null}
+
+      {productState.selectedVariant && subType === "onetime" ? (
+        <SellingGroupOnetimePricing
+          productState={productState}
+          insideSubscriptionsWidget={insideSubscriptionsWidget}
+        />
+      ) : null}
+    </>
+  )
+}
+
+function SellingGroupSubscriptionPricing({
+  productState,
+  insideSubscriptionsWidget,
+}) {
+  const shopState = useShopState()
 
   return (
-    <div
-      css={ProductPricesSubscriptionCSS}
-      className="swp-l-row swp-l-baseline"
-    >
-      {subscriptionInfo.discountPrice ? (
-        <>
-          {shouldShowCompareAt ? (
-            <>
-              <ProductPriceSaleNotice
-                fontSize={settings.pricingCompareAtTypeFontSize}
-                color={settings.pricingCompareAtTypeSaleTextColor}
-              />
-              <ProductPriceSingle
-                price={subscriptionInfo.discountPrice}
-                settings={settings}
-              />
-              <ProductPriceSingle
-                price={subscriptionInfo.regularPrice}
-                compareAt={true}
-                settings={settings}
-              />
-            </>
-          ) : (
-            <ProductPriceSingle
-              price={subscriptionInfo.discountPrice}
-              settings={settings}
-            />
-          )}
-        </>
-      ) : selectedVariant.node.compareAtPrice ? (
-        shouldShowCompareAt ? (
-          <>
-            <ProductPriceSaleNotice
-              fontSize={settings.pricingCompareAtTypeFontSize}
-              color={settings.pricingCompareAtTypeSaleTextColor}
-            />
-            <ProductPriceSingle
-              price={subscriptionInfo.regularPrice}
-              settings={settings}
-            />
-            <ProductPriceSingle
-              price={selectedVariant.node.compareAtPrice.amount}
-              compareAt={true}
-              settings={settings}
-            />
-          </>
-        ) : (
-          <ProductPriceSingle
-            price={subscriptionInfo.regularPrice}
-            settings={settings}
-          />
-        )
-      ) : (
-        <ProductPriceSingle
-          price={subscriptionInfo.regularPrice}
-          settings={settings}
+    <>
+      <p
+        className={`swp-price swp-final-price${
+          !insideSubscriptionsWidget ? " swp-price swp-product-price" : ""
+        }`}
+        data-is-compare-at="false"
+      >
+        <Price
+          price={
+            productState.subscriptionPricing.saved
+              ? productState.subscriptionPricing.newPrice
+              : productState.subscriptionPricing.oldPrice
+          }
         />
-      )}
-    </div>
+      </p>
+
+      {productState.subscriptionPricing.saved ? (
+        <p
+          className={`swp-price${
+            !insideSubscriptionsWidget ? " swp-price swp-product-price" : ""
+          }`}
+          data-is-compare-at="true"
+        >
+          <Price price={productState.subscriptionPricing.oldPrice} />
+        </p>
+      ) : null}
+
+      {productState.subscriptionPricing.savingsType === "percent" ? (
+        <p className="swp-save-inline">
+          ({shopState.t.l.save} {productState.subscriptionPricing.saved}
+          %)
+        </p>
+      ) : productState.subscriptionPricing.savingsType === "fixed" ? (
+        <p className="swp-save-inline">
+          ({shopState.t.l.save}{" "}
+          <Price price={productState.subscriptionPricing.saved} />)
+        </p>
+      ) : null}
+    </>
+  )
+}
+
+function SellingGroupOnetimePricing({
+  productState,
+  insideSubscriptionsWidget,
+}) {
+  return (
+    <>
+      <p className="swp-price swp-final-price">
+        <Price price={productState.selectedVariant.price.amount} />
+      </p>
+      {productState.selectedVariant.compareAtPrice ? (
+        <p className="swp-price" data-is-compare-at="true">
+          <Price price={productState.selectedVariant.compareAtPrice.amount} />
+        </p>
+      ) : null}
+    </>
   )
 }
 

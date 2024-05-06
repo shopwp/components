@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useCartState } from "@shopwp/components"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import CartIconWrapper from "../icon"
@@ -10,7 +8,7 @@ function CartIconFixed() {
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
 
-  function onClick(e) {
+  function onMouseUp(e) {
     shopDispatch({ type: "TOGGLE_CART", payload: true })
   }
 
@@ -42,13 +40,11 @@ function CartIconFixed() {
     }
   }
 
-  const cartIconCSS = css``
-  const cartIconFixedCSS = css``
-
   return shouldShowCartButton() ? (
     <button
       role="button"
       aria-label="Cart icon"
+      aria-expanded={shopState.isCartOpen}
       className={`swp-cart-icon swp-cart-icon-fixed wps-btn-cart wps-cart-icon-fixed${
         shopState.cartData &&
         shopState.cartData.lines &&
@@ -56,8 +52,7 @@ function CartIconFixed() {
           ? " wps-cart-is-not-empty"
           : " wps-cart-is-empty"
       }`}
-      onClick={onClick}
-      css={[cartIconCSS, cartIconFixedCSS]}
+      onMouseUp={onMouseUp}
     >
       {cartState.settings.showCounter ? (
         <CartCounter

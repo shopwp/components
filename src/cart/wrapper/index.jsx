@@ -81,6 +81,8 @@ function CartWrapper() {
     }
   }
 
+  function makeTabbable() {}
+
   /*
   
   When cart is ready
@@ -88,7 +90,6 @@ function CartWrapper() {
   */
   useEffect(() => {
     if (shopState.isCartReady) {
-      wp.hooks.doAction("on.cartLoad", cartState, shopState)
       maybeApplyDiscountFromURL()
     }
   }, [shopState.isCartReady])

@@ -3,10 +3,6 @@ import { rSet, rErr } from "@shopwp/common"
 
 function ProductBuyButtonReducer(state, action) {
   switch (action.type) {
-    case "SET_SUBSCRIPTION": {
-      return rSet("subscription", action, state)
-    }
-
     case "SET_SUBSCRIPTIONS": {
       return rSet("subscriptions", action, state)
     }

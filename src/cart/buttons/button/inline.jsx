@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { usePortal } from "@shopwp/hooks"
 import { mergeDefaults } from "@shopwp/common"
@@ -13,12 +11,9 @@ function CartIcon({ settings, element }) {
 
   settings = mergeDefaults(settings, shopwp.cart)
 
-  function onClick(e) {
+  function onMouseUp(e) {
     shopDispatch({ type: "TOGGLE_CART", payload: true })
   }
-
-  const cartIconCSS = css``
-  const cartIconInlineCSS = css``
 
   useEffect(() => {
     const HTMLEl = document.querySelector("html")
@@ -42,6 +37,7 @@ function CartIcon({ settings, element }) {
     <button
       role="button"
       aria-label="Cart icon"
+      aria-expanded={shopState.isCartOpen}
       className={`swp-cart-icon swp-cart-icon-inline wps-btn-cart${
         shopState.cartData &&
         shopState.cartData.lines &&
@@ -49,8 +45,7 @@ function CartIcon({ settings, element }) {
           ? " wps-cart-is-not-empty"
           : " wps-cart-is-empty"
       }`}
-      onClick={onClick}
-      css={[cartIconCSS, cartIconInlineCSS]}
+      onMouseUp={onMouseUp}
     >
       {settings.showCounter || settings.showCounter === "undefined" ? (
         <CartCounter

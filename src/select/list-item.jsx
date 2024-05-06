@@ -6,7 +6,10 @@ import {
   createObj,
   isVariantAvailableInShopify,
   isVariantAvailableToSelect,
+  findVariantFromSelectedOptions,
 } from "@shopwp/common"
+
+import { Price } from "@shopwp/components"
 
 function SelectItem({
   item,
@@ -16,18 +19,28 @@ function SelectItem({
   selectedOptions = false,
   variants = false,
   settings = false,
+  totalOptions = false,
 }) {
   const { useEffect, useState } = wp.element
   const [isAvailableToSelect, setIsAvailableToSelect] = useState(true)
 
   const DropdownMenuItemCSS = css``
 
+  const optionNameValue = createObj(item.label, item.value)
+
+  const shouldShowPrice =
+    isVariant && settings.showPriceUnderVariantButton && totalOptions === 1
+
+  const variant = shouldShowPrice
+    ? findVariantFromSelectedOptions(variants, optionNameValue)
+    : false
+
   useEffect(() => {
     if (!isVariant) {
       return
     }
 
-    const optionNameValue = createObj(item.label, item.value)
+    // const optionNameValue = createObj(item.label, item.value)
 
     var selectedObject = {
       name: item.label,
@@ -64,6 +77,11 @@ function SelectItem({
     >
       <MenuItem value={item.value} label={item.label}>
         {item.value}
+        {shouldShowPrice ? (
+          <>
+            {" - "} <Price price={variant.node.price.amount} />
+          </>
+        ) : null}
       </MenuItem>
     </div>
   )

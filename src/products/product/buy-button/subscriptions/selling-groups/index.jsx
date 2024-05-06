@@ -1,62 +1,49 @@
 import { RadioGroup } from "react-radio-group"
 import SellingGroup from "../selling-group"
-import {
-  useSubscriptionsBuyButtonState,
-  useSubscriptionsBuyButtonDispatch,
-} from "../_state/hooks"
-import {
-  useProductBuyButtonState,
-  useProductBuyButtonDispatch,
-} from "../../_state/hooks"
-import {
-  isOneTimeSubscription,
-  findSubscriptionFromProductId,
-  getFirstSellingPlanData,
-} from "@shopwp/common"
+import { useSubscriptionsBuyButtonState } from "../_state/hooks"
+import { isOneTimeSub, maybeFindFirstSellingPlan } from "@shopwp/common"
+import { useProductState, useProductDispatch } from "../../../_state/hooks"
 
 function SellingGroups() {
-  const state = useSubscriptionsBuyButtonState()
-  const dispatch = useSubscriptionsBuyButtonDispatch()
-  const buyButtonState = useProductBuyButtonState()
-  const buyButtonDispatch = useProductBuyButtonDispatch()
+  const subscriptionsBuyButtonState = useSubscriptionsBuyButtonState()
+  const productDispatch = useProductDispatch()
+  const productState = useProductState()
 
-  function onChange(newValue) {
-    dispatch({
-      type: "SET_SELECTED_SUBSCRIPTION",
-      payload: newValue,
-    })
-
-    if (isOneTimeSubscription(newValue)) {
-      buyButtonDispatch({
-        type: "SET_SUBSCRIPTION",
+  /*
+  
+  subType can be either 'onetime' or 'subscription'
+  
+  */
+  function onChange(subType) {
+    if (isOneTimeSub(subType)) {
+      productDispatch({
+        type: "SET_SELECTED_SUBSCRIPTION",
         payload: false,
       })
     } else {
-      var foundSubscription = findSubscriptionFromProductId(
-        newValue,
-        buyButtonState
-      )
-
-      if (foundSubscription) {
-        buyButtonDispatch({
-          type: "SET_SUBSCRIPTION",
-          payload: getFirstSellingPlanData(foundSubscription),
-        })
-      }
+      productDispatch({
+        type: "SET_SELECTED_SUBSCRIPTION",
+        payload: maybeFindFirstSellingPlan(productState.payload),
+      })
     }
+
+    productDispatch({
+      type: "SET_ACTIVE_SELLING_GROUP",
+      payload: subType,
+    })
   }
 
   return (
     <RadioGroup
-      name={state.id + "subscriptions"}
-      selectedValue={state.selectedSubscription}
+      name={subscriptionsBuyButtonState.id + "subscriptions"}
+      selectedValue={productState.activeSellingGroup}
       onChange={onChange}
     >
-      {state.sellingGroups.map((sellingGroup) => (
+      {subscriptionsBuyButtonState.sellingGroups.map((sellingGroup) => (
         <SellingGroup
           key={sellingGroup.id}
-          sellingGroup={sellingGroup}
-          selectedSubscriptionId={state.selectedSubscription}
+          subType={sellingGroup.id}
+          isSelected={productState.activeSellingGroup === sellingGroup.id}
         />
       ))}
     </RadioGroup>

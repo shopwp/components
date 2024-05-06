@@ -10,10 +10,6 @@ function SubscriptionsBuyButtonReducer(state, action) {
       return rSet("isLoadingSellingGroups", action, state)
     }
 
-    case "SET_SELECTED_SUBSCRIPTION": {
-      return rSet("selectedSubscription", action, state)
-    }
-
     case "SET_NOTICE": {
       return rSet("notice", action, state)
     }

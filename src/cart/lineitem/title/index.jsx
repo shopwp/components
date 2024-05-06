@@ -1,20 +1,20 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
 
 const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../link")
 )
 
-function CartLineItemSubscriptionTitle({ subscriptionName }) {
+function CartLineItemSubscriptionTitle({ lineItem }) {
   const shopState = useShopState()
-  const CartLineItemSubscriptionTitleCSS = css``
 
   return (
-    <p className="swp-cart-sub-title" css={CartLineItemSubscriptionTitleCSS}>
+    <p className="swp-cart-sub-title">
       {wp.hooks.applyFilters(
         "cart.lineItemSubscriptionDescription",
-        shopState.t.l.subscription + ": " + subscriptionName
+        shopState.t.l.subscription +
+          ": " +
+          lineItem.sellingPlanAllocation.sellingPlan.name,
+        lineItem
       )}
     </p>
   )
@@ -27,10 +27,6 @@ function CartLineItemTitle({ lineItem, settings }) {
     lineItem
   )
 
-  const CartLineItemTitleCSS = css``
-
-  const CartLineItemTitleWrapperCSS = css``
-
   return (
     <Link
       payload={lineItem.merchandise}
@@ -40,13 +36,9 @@ function CartLineItemTitle({ lineItem, settings }) {
       target={settings.lineitemsLinkTarget}
       manualLink={manualLink}
     >
-      <div
-        className="swp-cart-lineitem-wrapper"
-        css={CartLineItemTitleWrapperCSS}
-      >
+      <div className="swp-cart-lineitem-wrapper">
         <span
           className="swp-cart-lineitem-title wps-cart-lineitem-title-content"
-          css={CartLineItemTitleCSS}
           data-has-link={!!manualLink}
         >
           {wp.hooks.applyFilters(
@@ -56,9 +48,7 @@ function CartLineItemTitle({ lineItem, settings }) {
           )}
         </span>
         {lineItem.sellingPlanAllocation ? (
-          <CartLineItemSubscriptionTitle
-            subscriptionName={lineItem.sellingPlanAllocation.sellingPlan.name}
-          />
+          <CartLineItemSubscriptionTitle lineItem={lineItem} />
         ) : null}
       </div>
     </Link>

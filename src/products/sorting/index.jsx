@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { findDefaultSelectVal, updateQueryParamsWithSort } from "@shopwp/common"
 
 import {
@@ -20,8 +18,6 @@ function ProductsSorting() {
   const requestsDispatch = useRequestsDispatch()
   const settings = useSettingsState()
   const shopState = useShopState()
-
-  const sortingWrapperCSS = css``
 
   var collectionOptions = wp.hooks.applyFilters("collections.sortingOptions", [
     {
@@ -141,7 +137,7 @@ function ProductsSorting() {
   return settings.withSorting && !requestsState.isBootstrapping
     ? usePortal(
         <Suspense fallback="Loading sorting dropdown ...">
-          <div id="shopwp-storefront-sorting" css={sortingWrapperCSS}>
+          <div id="shopwp-storefront-sorting">
             <Dropdown
               settings={settings}
               items={

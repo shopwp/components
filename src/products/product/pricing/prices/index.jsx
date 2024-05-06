@@ -43,13 +43,13 @@ function ProductPrices() {
 
     if (productState.selectedVariant) {
       if (
-        productState.selectedVariant.node.compareAtPrice &&
-        productState.selectedVariant.node.compareAtPrice.amount
+        productState.selectedVariant.compareAtPrice &&
+        productState.selectedVariant.compareAtPrice.amount
       ) {
         if (
-          productState.selectedVariant.node.compareAtPrice.amount === "0" ||
-          productState.selectedVariant.node.compareAtPrice.amount === "0.0" ||
-          productState.selectedVariant.node.compareAtPrice.amount === "0.00"
+          productState.selectedVariant.compareAtPrice.amount === "0" ||
+          productState.selectedVariant.compareAtPrice.amount === "0.0" ||
+          productState.selectedVariant.compareAtPrice.amount === "0.00"
         ) {
           return false
         }
@@ -107,13 +107,14 @@ function ProductPrices() {
 
       <FilterHook name="before.productPricing" args={[productState]} />
 
-      {productState.selectedSubscriptionInfo && productState.selectedVariant ? (
-        <ProductPricesSubscription
-          subscriptionInfo={productState.selectedSubscriptionInfo}
-          selectedVariant={productState.selectedVariant}
-          settings={settings}
-          shouldShowCompareAt={shouldShowCompareAt()}
-        />
+      {productState.subscriptionPricing ? (
+        <div className="swp-l-row swp-l-baseline swp-m-l-row">
+          <ProductPricesSubscription
+            productState={productState}
+            subType={productState.activeSellingGroup}
+            insideSubscriptionsWidget={false}
+          />
+        </div>
       ) : shouldShowCompareAt() ? (
         <Suspense fallback={false}>
           <ProductPricesCompareAt

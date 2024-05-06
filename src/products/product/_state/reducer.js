@@ -19,12 +19,20 @@ function ProductReducer(state, action) {
       return rSet("isDirectCheckingOut", action, state)
     }
 
-    case "SET_SELECTED_SUBSCRIPTION_INFO": {
-      return rSet("selectedSubscriptionInfo", action, state)
+    case "SET_SELECTED_SUBSCRIPTION": {
+      return rSet("selectedSubscription", action, state)
+    }
+
+    case "SET_SUBSCRIPTION_PRICING": {
+      return rSet("subscriptionPricing", action, state)
     }
 
     case "TOGGLE_MODAL": {
       return rSet("isModalOpen", action, state)
+    }
+
+    case "SET_ACTIVE_SELLING_GROUP": {
+      return rSet("activeSellingGroup", action, state)
     }
 
     case "SET_NOTICE": {
@@ -42,7 +50,7 @@ function ProductReducer(state, action) {
       const variant = action.payload
 
       if (variant) {
-        wp.hooks.doAction("on.allVariantsSelected", variant.node)
+        wp.hooks.doAction("on.allVariantsSelected", variant)
       }
 
       return {

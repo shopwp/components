@@ -119,6 +119,12 @@ function CartLineItem({ lineItem }) {
     setShowingBreakdowns(!showingBreakdowns)
   }
 
+  function onHandleKeyDown(e) {
+    if (e.key === "Enter") {
+      toggleBreakdowns()
+    }
+  }
+
   return (
     <li
       className="swp-cart-lineitem swp-mb30 wps-cart-lineitem"
@@ -198,6 +204,8 @@ function CartLineItem({ lineItem }) {
                   <p
                     className="swp-lineitem-view-price-breakdowns"
                     onClick={toggleBreakdowns}
+                    onKeyDown={onHandleKeyDown}
+                    tabIndex="0"
                   >
                     {showingBreakdowns ? (
                       <svg

@@ -55,10 +55,10 @@ function ProductGallery({ carousel }) {
       payload: false,
     })
 
-    if (productState.selectedVariant.node.image) {
+    if (productState.selectedVariant.image) {
       galleryDispatch({
         type: "SET_FEAT_IMAGE",
-        payload: productState.selectedVariant.node.image,
+        payload: productState.selectedVariant.image,
       })
     }
   }, [productState.selectedVariant])

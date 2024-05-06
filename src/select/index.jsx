@@ -4,7 +4,9 @@ import { Menu, MenuButton } from "@szhsin/react-menu"
 import "@szhsin/react-menu/dist/index.css"
 import "@szhsin/react-menu/dist/transitions/slide.css"
 import { usePortal } from "@shopwp/hooks"
+import { findVariantFromSelectedOptions } from "@shopwp/common"
 
+import { Price } from "@shopwp/components"
 const Loader = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Loader-public' */ "../loader")
 )
@@ -42,13 +44,23 @@ function Dropdown({
   selectedOption = false,
   variants = false,
   selectedVariant = null,
+  totalOptions = false,
+  productState = false,
 }) {
   const { useState, useEffect } = wp.element
   const [selected, setSelected] = useState(selectedOption)
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedText, setSelectedText] = useState(
-    selectedOption ? label + ": " + selectedOption.label : label
-  )
+  const defaultLabel = "Select an option"
+  const [selectedText, setSelectedText] = useState(() => {
+    if (label) {
+      return selectedOption ? label + ": " + selectedOption.label : label
+    } else {
+      return selectedOption ? selectedOption.label : defaultLabel
+    }
+  })
+
+  const variant = findVariantFromSelectedOptions(variants, selectedOptions)
+
   useEffect(() => {
     if (selectedOptions === null) {
       return
@@ -56,7 +68,12 @@ function Dropdown({
 
     if (!selectedOptions) {
       setSelected(null)
-      setSelectedText(label)
+
+      if (label) {
+        setSelectedText(label)
+      } else {
+        setSelectedText(defaultLabel)
+      }
     } else if (selectedOption) {
       if (selectedVariant) {
         setSelected(true)
@@ -65,9 +82,9 @@ function Dropdown({
       }
 
       if (selectedOption.label) {
-        setSelectedText(label + ": " + selectedOption.label)
+        setSelectedText(selectedOption.label)
       } else {
-        setSelectedText(label + ": " + selectedOption.value.name)
+        setSelectedText(selectedOption.value.name)
       }
     }
   }, [selectedOptions, selectedOption])
@@ -85,7 +102,8 @@ function Dropdown({
     onChange(found)
 
     setSelected(found)
-    setSelectedText(label + ": " + found.value)
+
+    setSelectedText(found.value)
   }
 
   return items
@@ -109,9 +127,13 @@ function Dropdown({
                   {wp.hooks.applyFilters(
                     "product.optionName",
                     selectedText,
-                    selectedOption
+                    selectedOption,
+                    productState
                   )}
                 </span>{" "}
+                {selected && isVariant && variant ? (
+                  <Price price={variant.node.price.amount} />
+                ) : null}
                 {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}
               </MenuButton>
             }
@@ -128,6 +150,7 @@ function Dropdown({
                     selectedOptions={selectedOptions}
                     variants={variants}
                     settings={settings}
+                    totalOptions={totalOptions}
                   />
                 ))
               : null}

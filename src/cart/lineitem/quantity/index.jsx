@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { updateLines, removeLines } from "../../api"
 import {
   useShopState,
@@ -11,7 +9,6 @@ import { getMaxQuantity } from "@shopwp/common"
 import Quantity from "../../../quantity"
 
 function CartLineItemQuantity({ lineItem, setNotice }) {
-  const { useState } = wp.element
   const cartState = useCartState()
   const shopState = useShopState()
   const shopDispatch = useShopDispatch()
@@ -19,8 +16,7 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
   const maxQuantity = getMaxQuantity(
     cartState.settings.showInventoryLevels,
     cartState.settings.lineitemsMaxQuantity,
-    lineItem.merchandise,
-    true
+    lineItem.merchandise
   )
 
   const minQuantity = cartState.settings.lineitemsMinQuantity
