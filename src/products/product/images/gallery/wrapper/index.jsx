@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { ProductGalleryProvider } from "../_state/provider.jsx"
 import { FilterHook } from "@shopwp/common"
 import { useProductState } from "../../../_state/hooks"
@@ -16,8 +14,6 @@ function ProductGalleryWrapper() {
   const productState = useProductState()
   const settings = useSettingsState()
 
-  const ProductGalleryWrapperCSS = css``
-
   return (
     <>
       <FilterHook name="before.productImages" args={[productState.payload]} />
@@ -28,7 +24,6 @@ function ProductGalleryWrapper() {
             : "" + "swp-component wps-component wps-component-products-images"
         }
         aria-label="Product Images"
-        css={ProductGalleryWrapperCSS}
         data-is-single-component={settings.isSingleComponent}
       >
         <ProductGalleryProvider payload={productState.payload}>
