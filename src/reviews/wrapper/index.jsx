@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { to } from "@shopwp/common"
 import {
   getYotpoReviewsByProductId,
@@ -21,12 +19,13 @@ function ProductReviewsWrapper({ children }) {
   const [isFetchingReviews, setIsFetchingReviews] = useState(true)
   const dispatch = useProductReviewsDispatch()
   const state = useProductReviewsState()
+
   const payloadReady = useAction("on.itemsLoad")
 
   useEffect(() => {
     if (payloadReady) {
       var found = payloadReady.filter(
-        (i) => i.node && i.node.id.includes(state.settings.productId.toString())
+        (i) => i.node && i.node.id.includes(state.reviewsProductId.toString())
       )
 
       if (found.length) {
@@ -83,10 +82,10 @@ function ProductReviewsWrapper({ children }) {
     setIsFetchingReviews(false)
   }
 
-  async function getReviewsForProduct() {
+  async function getReviewsForProduct(productId) {
     const [error, resp] = await to(
       getYotpoReviewsByProductId({
-        productId: state.settings.productId,
+        productId: productId,
       })
     )
 
@@ -149,8 +148,8 @@ function ProductReviewsWrapper({ children }) {
       return
     }
 
-    if (state.settings.productId) {
-      getReviewsForProduct()
+    if (state.reviewsProductId) {
+      getReviewsForProduct(state.reviewsProductId)
     } else {
       getAllReviews()
     }

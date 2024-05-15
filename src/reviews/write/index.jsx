@@ -1,16 +1,13 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import ReviewRating from "../rating"
-
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
-)
-
 import { to } from "@shopwp/common"
 import { createYotpoReview, maybeHandleApiError } from "@shopwp/api"
 import { useProductReviewsState } from "../_state/hooks"
 import Notice from "../../notice"
 import { useShopState } from "@shopwp/components"
+
+const Loader = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'Loader-public' */ "../../loader")
+)
 
 function ReviewForm(props) {
   const { useState } = wp.element
@@ -31,57 +28,6 @@ function ReviewForm(props) {
 
   const [apiError, setApiError] = useState(false)
   const [successMessage, setSuccess] = useState(false)
-
-  const ReviewFormCSS = css`
-    margin-bottom: 50px;
-    color: black;
-
-    h4 {
-      font-size: 20px;
-    }
-  `
-  const ReviewFieldGroupCSS = css`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  `
-
-  const ReviewLabelCSS = css`
-    font-size: 16px;
-    margin-bottom: 3px;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
-    opacity: ${isBusy ? 0.4 : 1};
-    color: black;
-  `
-  const ReviewInputCSS = css`
-    padding: 10px;
-    font-size: 16px;
-    border-radius: ${shopwp.general.globalBorderRadius};
-    background: white;
-    border: 1px solid #a5a5a5;
-    font-family: helvetica, sans-serif;
-    color: black;
-
-    &.swp-field-error {
-      border-color: #ec4e4e;
-    }
-  `
-
-  const inputErrorCSS = css`
-    color: #ec4e4e;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    font-size: 14px;
-  `
-
-  const SubmitReviewsCSS = css`
-    display: inline-block;
-    max-width: 200px;
-    margin-bottom: 20px;
-  `
-
-  const buttonCSS = css``
 
   function maybeSetName(value) {
     setReviewName(value)
@@ -158,7 +104,7 @@ function ReviewForm(props) {
     setApiError(false)
 
     let data = {
-      sku: state.settings.productId,
+      sku: state.reviewsProductId,
       product_title: state.payload.title,
       product_url: state.payload.onlineStoreUrl
         ? state.payload.onlineStoreUrl
@@ -185,25 +131,20 @@ function ReviewForm(props) {
   }
 
   function HeadingProductName({ title }) {
-    const HeadingProductNameCSS = css`
-      font-size: 16px;
-      font-weight: normal;
-      margin-left: 5px;
-    `
     return (
       <span
-        css={HeadingProductNameCSS}
+        className="swp-review-product-name"
         dangerouslySetInnerHTML={{ __html: title }}
       />
     )
   }
 
-  return state.settings.productId ? (
-    <div css={ReviewFormCSS}>
+  return state.reviewsProductId ? (
+    <div className="swp-review-form" data-is-busy={isBusy}>
       {!successMessage ? (
         <>
           <h4>
-            {shopState.t.l.writeAReview}{" "}
+            {shopState.t.l.writingAReviewFor}{" "}
             {props.product_title ? (
               <HeadingProductName title={props.product_title} />
             ) : state.products.length ? (
@@ -212,10 +153,8 @@ function ReviewForm(props) {
               false
             )}
           </h4>
-          <div className="shopwp-fieldgroup" css={ReviewFieldGroupCSS}>
-            <label css={ReviewLabelCSS} htmlFor="name">
-              {shopState.t.l.name}
-            </label>
+          <div className="swp-review-fieldgroup">
+            <label htmlFor="name">{shopState.t.l.name}</label>
             <input
               type="text"
               id="name"
@@ -224,15 +163,12 @@ function ReviewForm(props) {
               value={reviewName}
               disabled={isBusy}
               onChange={(e) => maybeSetName(e.target.value)}
-              css={ReviewInputCSS}
-              className={nameError ? "swp-field-error" : ""}
+              className={nameError ? "swp-field-error" : "swp-review-input"}
             />
-            {nameError ? <p css={inputErrorCSS}>{nameError}</p> : null}
+            {nameError ? <p className="swp-review-error">{nameError}</p> : null}
           </div>
-          <div className="shopwp-fieldgroup" css={ReviewFieldGroupCSS}>
-            <label css={ReviewLabelCSS} htmlFor="email">
-              {shopState.t.l.email}
-            </label>
+          <div className="swp-review-fieldgroup">
+            <label htmlFor="email">{shopState.t.l.email}</label>
             <input
               type="email"
               id="email"
@@ -241,15 +177,14 @@ function ReviewForm(props) {
               value={reviewEmail}
               disabled={isBusy}
               onChange={(e) => maybeSetEmail(e.target.value)}
-              css={ReviewInputCSS}
-              className={emailError ? "swp-field-error" : ""}
+              className={emailError ? "swp-field-error" : "swp-review-input"}
             />
-            {emailError ? <p css={inputErrorCSS}>{emailError}</p> : null}
+            {emailError ? (
+              <p className="swp-review-error">{emailError}</p>
+            ) : null}
           </div>
-          <div className="shopwp-fieldgroup" css={ReviewFieldGroupCSS}>
-            <label css={ReviewLabelCSS} htmlFor="rating">
-              {shopState.t.n.reviewRating}
-            </label>
+          <div className="swp-review-fieldgroup">
+            <label htmlFor="rating">{shopState.t.n.reviewRating}</label>
             <ReviewRating
               type="dynamic"
               onScore={maybeSetScore}
@@ -262,12 +197,12 @@ function ReviewForm(props) {
               reviewScore={reviewScore}
               dropzone={false}
             />
-            {scoreError ? <p css={inputErrorCSS}>{scoreError}</p> : null}
+            {scoreError ? (
+              <p className="swp-review-error">{scoreError}</p>
+            ) : null}
           </div>
-          <div className="shopwp-fieldgroup" css={ReviewFieldGroupCSS}>
-            <label css={ReviewLabelCSS} htmlFor="title">
-              {shopState.t.n.reviewTitle}
-            </label>
+          <div className="swp-review-fieldgroup">
+            <label htmlFor="title">{shopState.t.n.reviewTitle}</label>
             <input
               type="text"
               id="title"
@@ -276,15 +211,14 @@ function ReviewForm(props) {
               value={reviewTitle}
               disabled={isBusy}
               onChange={(e) => maybeSetTitle(e.target.value)}
-              css={ReviewInputCSS}
-              className={titleError ? "swp-field-error" : ""}
+              className={titleError ? "swp-field-error" : "swp-review-input"}
             />
-            {titleError ? <p css={inputErrorCSS}>{titleError}</p> : null}
+            {titleError ? (
+              <p className="swp-review-error">{titleError}</p>
+            ) : null}
           </div>
-          <div className="shopwp-fieldgroup" css={ReviewFieldGroupCSS}>
-            <label css={ReviewLabelCSS} htmlFor="body">
-              {shopState.t.n.bodyOfReview}
-            </label>
+          <div className="swp-review-fieldgroup">
+            <label htmlFor="body">{shopState.t.n.bodyOfReview}</label>
             <textarea
               rows="5"
               cols="33"
@@ -294,16 +228,11 @@ function ReviewForm(props) {
               value={reviewBody}
               disabled={isBusy}
               onChange={(e) => maybeSetBody(e.target.value)}
-              css={ReviewInputCSS}
-              className={bodyError ? "swp-field-error" : ""}
+              className={bodyError ? "swp-field-error" : "swp-review-input"}
             />
-            {bodyError ? <p css={inputErrorCSS}>{bodyError}</p> : null}
+            {bodyError ? <p className="swp-review-error">{bodyError}</p> : null}
           </div>
-          <button
-            className="swp-btn"
-            css={[buttonCSS, SubmitReviewsCSS]}
-            onClick={createReview}
-          >
+          <button className="swp-btn swp-review-btn" onClick={createReview}>
             {isBusy ? (
               <Loader isLoading={isBusy} />
             ) : (

@@ -1,10 +1,15 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
 import { Rating } from "react-simple-star-rating"
-import { fadeIn } from "@shopwp/common"
 import { useProductReviewsState } from "../_state/hooks"
 import { useShopState } from "@shopwp/components"
+import { useSettingsState } from "../../items/_state/settings/hooks"
+
+import ReviewsList from "../list"
+import Modal from "../../modal"
+
+// const Modal = wp.element.lazy(() =>
+//   import(/* webpackChunkName: 'Modal-public' */ "../../modal")
+// )
 
 function ReviewsRating({
   reviewScore = false,
@@ -14,12 +19,14 @@ function ReviewsRating({
   onScore = false,
   showTooltip = false,
   tooltipArray = false,
-  isBusy = false,
   dropzone = null,
+  linkToModal = true,
 }) {
   const { useState } = wp.element
   const reviewsState = useProductReviewsState()
   const shopState = useShopState()
+  const [isShowingModal, setIsShowingModal] = useState(false)
+  const settings = useSettingsState()
 
   const [score, setScore] = useState(
     reviewScore !== false && reviewScore > 0
@@ -28,32 +35,6 @@ function ReviewsRating({
       ? reviewsState.reviewsBottomLine.average_score
       : 0
   )
-
-  const ReviewsRatingCSS = css`
-    margin: 0 0 4px 0;
-    display: flex;
-    align-items: center;
-    position: relative;
-    left: -5px;
-    animation: ${fadeIn} 0.2s ease;
-
-    .react-simple-star-rating-tooltip {
-      margin-left: 10px !important;
-      margin-top: -3px !important;
-      font-size: 14px !important;
-      line-height: 1.5 !important;
-      background-color: ${isBusy
-        ? "rgb(181 181 181)"
-        : "rgb(51, 51, 51)"} !important;
-    }
-
-    .filled-icons {
-      color: ${isBusy ? "#848280" : "rgb(241, 179, 69)"} !important;
-    }
-  `
-
-  const ReviewsRatingLabelCSS = css``
-  const totalReviewsCSS = css``
 
   function onRating(value) {
     if (type === "static") {
@@ -67,60 +48,73 @@ function ReviewsRating({
     }
   }
 
+  function onOpenModal(e) {
+    if (!linkToModal) {
+      return
+    }
+
+    setIsShowingModal(true)
+  }
+
+  function onCloseModal(e) {
+    setIsShowingModal(false)
+  }
+
   return reviewsState.reviews
     ? usePortal(
-        <div
-          className="wps-component-products-reviews"
-          css={ReviewsRatingCSS}
-          itemProp="reviewRating"
-          itemScope
-          itemType="https://schema.org/Rating"
-        >
-          <Rating
-            onClick={onRating}
-            initialValue={score}
-            size={size}
-            allowFraction={false}
-            iconsCount={5}
-            transition
-            readonly={type === "static" ? true : false}
-            fillColorArray={[
-              "#f17a45",
-              "#f19745",
-              "#f1a545",
-              "#f1b345",
-              "#f1d045",
-            ]}
-            showTooltip={showTooltip}
-            tooltipArray={tooltipArray}
-          />
+        <>
+          <div
+            className="wps-component-products-reviews swp-component-products-reviews"
+            itemProp="reviewRating"
+            itemScope
+            itemType="https://schema.org/Rating"
+            data-link-to-modal={linkToModal}
+          >
+            <Rating
+              onClick={onRating}
+              initialValue={score}
+              size={size}
+              allowFraction={false}
+              iconsCount={5}
+              transition
+              readonly={type === "static" ? true : false}
+              fillColorArray={[
+                "#f17a45",
+                "#f19745",
+                "#f1a545",
+                "#f1b345",
+                "#f1d045",
+              ]}
+              showTooltip={showTooltip}
+              tooltipArray={tooltipArray}
+            />
 
-          {showLabel ? (
-            <p
-              css={ReviewsRatingLabelCSS}
-              className="swp-rating-label"
-              itemProp="aggregateRating"
-              itemScope
-              itemType="https://schema.org/AggregateRating"
-            >
-              <span
-                className="swp-rating-count"
-                css={totalReviewsCSS}
-                itemProp="reviewCount"
+            {showLabel ? (
+              <p
+                onClick={onOpenModal}
+                className="swp-rating-label"
+                itemProp="aggregateRating"
+                itemScope
+                itemType="https://schema.org/AggregateRating"
               >
-                {reviewsState.reviewsBottomLine
-                  ? reviewsState.reviewsBottomLine.total_review
-                  : 0}
-              </span>
+                <span className="swp-rating-count" itemProp="reviewCount">
+                  {reviewsState.reviewsBottomLine
+                    ? reviewsState.reviewsBottomLine.total_review
+                    : 0}
+                </span>
 
-              {!reviewsState.reviewsBottomLine ||
-              reviewsState.reviewsBottomLine.total_review === 1
-                ? " " + shopState.t.l.review
-                : " " + shopState.t.l.reviews}
-            </p>
-          ) : null}
-        </div>,
-        dropzone === false ? dropzone : reviewsState.settings.dropzoneRating
+                {!reviewsState.reviewsBottomLine ||
+                reviewsState.reviewsBottomLine.total_review === 1
+                  ? " " + shopState.t.l.review
+                  : " " + shopState.t.l.reviews}
+              </p>
+            ) : null}
+          </div>
+          <Modal isModalOpen={isShowingModal} onModalClose={onCloseModal}>
+            <ReviewsList shouldEnablePortal={false} />
+          </Modal>
+        </>,
+        dropzone === false ? dropzone : settings.dropzoneRating
       )
     : null
 }

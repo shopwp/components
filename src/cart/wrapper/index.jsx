@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
 import ErrorFallback from "../../error-fallback"
 import {
@@ -80,8 +78,6 @@ function CartWrapper() {
       updateDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
     }
   }
-
-  function makeTabbable() {}
 
   /*
   
@@ -214,6 +210,11 @@ function CartWrapper() {
 
     var lines = lineItemsAdded.lines
 
+    if (!lines || !lines.length) {
+      console.error("No line items found to add")
+      return
+    }
+
     var lineItems = addDefaults(lineItemsAdded)
 
     var dataToAdd = {
@@ -243,10 +244,6 @@ function CartWrapper() {
     addLines(dataToAdd, cartDispatch, shopDispatch, cartState, shopState)
   }, [lineItemsAdded])
 
-  const cartCSS = css``
-  const cartContainerCSS = css``
-  const cartInnerCSS = css``
-
   var isReadyToCheckout =
     (shopwp.general.enableCartTerms && !cartState.termsAccepted) ||
     (shopwp.general.noteRequired && !cartState.note) ||
@@ -262,7 +259,7 @@ function CartWrapper() {
 
   return (
     <div
-      css={cartContainerCSS}
+      id="swp-cart"
       className={`swp-cart ${
         shopState.isCartOpen ? "swp-cart-is-open" : "swp-cart-is-closed"
       }${shopState.isCartUpdating ? " swp-cart-is-updating" : ""}${
@@ -277,12 +274,8 @@ function CartWrapper() {
           : " swp-cart-is-ready-to-checkout"
       }`}
     >
-      <div className="swp-cart-inner" css={cartInnerCSS}>
-        <div
-          ref={cartElement}
-          className="swp-cart-container wps-cart"
-          css={cartCSS}
-        >
+      <div className="swp-cart-inner">
+        <div ref={cartElement} className="swp-cart-container wps-cart">
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             {shopState.isCartUpdating ? <CartLoadingContents /> : null}
 

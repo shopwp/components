@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import {
   useProductReviewsState,
   useProductReviewsDispatch,
@@ -11,10 +9,7 @@ function ReviewsPagination() {
   const dispatch = useProductReviewsDispatch()
   const shopState = useShopState()
 
-  const loadMoreButtonCSS = css``
-  const buttonCSS = css``
-
-  function onClick() {
+  function onClick(e) {
     dispatch({
       type: "SET_REVIEWS_SHOWN",
       payload: state.reviewsShown + state.reviewsShownIncrement,
@@ -23,7 +18,6 @@ function ReviewsPagination() {
 
   return (
     <div
-      css={[buttonCSS, loadMoreButtonCSS]}
       className="swp-btn swp-button-pagination wps-btn-next-page"
       onClick={onClick}
     >

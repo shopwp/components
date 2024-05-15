@@ -1,19 +1,11 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useProductReviewsState } from "../_state/hooks"
 import ReviewListItem from "./item"
 
 function ReviewsListContent() {
   const reviewsState = useProductReviewsState()
 
-  const ReviewsListCSS = css`
-    padding: 0;
-    margin: 20px 0 0 0;
-    list-style: none;
-  `
-
   return (
-    <ul className="shopwp-reviews-list" css={ReviewsListCSS}>
+    <ul className="swp-reviews-list">
       {reviewsState.reviewsTruncated.map((review, index) => (
         <ReviewListItem
           key={review.id}

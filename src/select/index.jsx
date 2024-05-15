@@ -131,7 +131,7 @@ function Dropdown({
                     productState
                   )}
                 </span>{" "}
-                {selected && isVariant && variant ? (
+                {selected && isVariant && variant && totalOptions === 1 ? (
                   <Price price={variant.node.price.amount} />
                 ) : null}
                 {isOpen && !isBusy ? <UpArrow /> : <DownArrow />}

@@ -1,83 +1,22 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 import {
   useProductReviewsState,
   useProductReviewsDispatch,
 } from "../_state/hooks"
 import { usePortal } from "@shopwp/hooks"
 import { useShopState } from "@shopwp/components"
-import { mq } from "@shopwp/common"
 
-const ReviewsListContent = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ReviewsListContent-public' */ "./content")
-)
+import ReviewsListContent from "./content"
+import ReviewsPagination from "../pagination"
+import ReviewForm from "../write"
+import EmptyReviews from "./empty"
+import WriteReviewLink from "./write"
+import { useSettingsState } from "../../items/_state/settings/hooks"
 
-const ReviewsPagination = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ReviewsPagination-public' */ "../pagination")
-)
-
-const ReviewForm = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'ReviewForm-public' */ "../write")
-)
-
-const EmptyReviews = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'EmptyReviews-public' */ "./empty")
-)
-
-const WriteReviewLink = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'WriteReviewLink-public' */ "./write")
-)
-
-function ReviewsList() {
+function ReviewsList({ shouldEnablePortal = true }) {
   const reviewsState = useProductReviewsState()
   const reviewsDispatch = useProductReviewsDispatch()
   const shopState = useShopState()
-
-  const ReviewsListWrapCSS = css`
-    display: flex;
-    flex-direction: column;
-    max-width: 1300px;
-    margin: 0 auto;
-  `
-
-  const ReviewsListHeaderCSS = css`
-    margin-bottom: 0;
-    display: flex;
-    align-items: baseline;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-    color: black;
-
-    h3 {
-      font-size: 24px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      margin-left: 10px;
-      font-size: 14px;
-      color: #818181;
-      position: relative;
-      top: -2px;
-    }
-
-    ${mq("small")} {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      p {
-        margin-left: 0;
-        margin-bottom: 20px;
-        margin-top: 2px;
-      }
-
-      h3 {
-        margin-bottom: 0;
-      }
-    }
-  `
+  const settings = useSettingsState()
 
   function onToggle() {
     reviewsDispatch({
@@ -86,43 +25,49 @@ function ReviewsList() {
     })
   }
 
-  return usePortal(
-    <div css={ReviewsListWrapCSS}>
-      <header css={ReviewsListHeaderCSS}>
-        <h3>{shopState.t.l.customerReviews}</h3>
-        <p>
-          (Showing {reviewsState.reviewsTruncated.length}
-          {reviewsState.reviewsTruncated.length === 1
-            ? " " + shopState.t.l.review
-            : " " + shopState.t.l.reviews}
-          )
-        </p>
-        {reviewsState.settings.showCreateNew &&
-        reviewsState.settings.productId ? (
-          <WriteReviewLink onToggle={onToggle} />
+  function ListContent() {
+    return (
+      <div className="swp-review-list-wrap">
+        <header className="swp-review-list-header">
+          <h3>{shopState.t.l.customerReviews}</h3>
+          <p>
+            (Showing {reviewsState.reviewsTruncated.length}
+            {reviewsState.reviewsTruncated.length === 1
+              ? " " + shopState.t.l.review
+              : " " + shopState.t.l.reviews}
+            )
+          </p>
+          {settings.showCreateNew ? (
+            <WriteReviewLink onToggle={onToggle} />
+          ) : null}
+        </header>
+        {reviewsState.isWritingReview && reviewsState.reviewsProductId ? (
+          <ReviewForm
+            sku={reviewsState.reviewsProductId}
+            product_title={
+              reviewsState.products.length
+                ? reviewsState.products[0].name
+                : shopwp.misc.postTitle
+            }
+            payload={reviewsState.payload}
+          />
         ) : null}
-      </header>
-      {reviewsState.isWritingReview && reviewsState.settings.productId ? (
-        <ReviewForm
-          sku={reviewsState.settings.productId}
-          product_title={
-            reviewsState.products.length
-              ? reviewsState.products[0].name
-              : shopwp.misc.postTitle
-          }
-          payload={reviewsState.payload}
-        />
-      ) : null}
-      {reviewsState.reviewsTruncated?.length ? <ReviewsListContent /> : null}
-      {reviewsState.reviewsShown < reviewsState.reviews.length ? (
-        <ReviewsPagination />
-      ) : null}
+        {reviewsState.reviewsTruncated.length ? <ReviewsListContent /> : null}
+        {reviewsState.reviewsShown < reviewsState.reviews.length ? (
+          <ReviewsPagination />
+        ) : null}
 
-      {reviewsState.reviews.length <= 0 && !reviewsState.isWritingReview ? (
-        <EmptyReviews onToggle={onToggle} />
-      ) : null}
-    </div>,
-    reviewsState.settings.dropzoneListing
+        {reviewsState.reviews.length <= 0 && !reviewsState.isWritingReview ? (
+          <EmptyReviews onToggle={onToggle} />
+        ) : null}
+      </div>
+    )
+  }
+
+  return shouldEnablePortal ? (
+    usePortal(<ListContent />, settings.dropzoneListing)
+  ) : (
+    <ListContent />
   )
 }
 

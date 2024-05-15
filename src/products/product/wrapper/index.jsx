@@ -160,13 +160,17 @@ function ProductWrapper({ payload }) {
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {settings.showReviews && productState.payload ? (
+              {settings.showReviews &&
+              shopwp.misc.hasYotpo &&
+              productState.payload ? (
                 <Reviews
                   settings={{
                     showReviews: settings.showReviews,
                     showCreateNew: false,
                     showRating: true,
                     showListing: false,
+                    reviewsShown: settings.reviewsShown,
+                    reviewsShownIncrement: settings.reviewsShownIncrement,
                     productId: productState.payload.id,
                   }}
                   payload={productState.payload}

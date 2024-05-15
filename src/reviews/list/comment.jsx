@@ -1,34 +1,6 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 function ReviewComment({ review }) {
-  const ReviewCommentCSS = css`
-    background: rgb(238, 238, 238);
-    background: linear-gradient(
-      0deg,
-      rgba(238, 238, 238, 1) 0%,
-      rgba(247, 247, 247, 1) 100%
-    );
-    padding: 10px 20px 12px 20px;
-    border-radius: ${shopwp.general.globalBorderRadius};
-    margin-left: 40px;
-    margin-bottom: 0;
-    font-size: 14px;
-    position: relative;
-
-    svg {
-      position: absolute;
-      left: -32px;
-      top: -2px;
-      width: 27px;
-
-      path {
-        fill: #eaeaea;
-      }
-    }
-  `
   return (
-    <p css={ReviewCommentCSS}>
+    <p className="swp-review-comment">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 530.4 532"
