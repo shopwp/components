@@ -4,10 +4,13 @@ import SettingsProvider from "./_state/settings/provider"
 import ItemsProvider from "./_state/provider"
 import ItemsWrapper from "./wrapper"
 import Pagination from "../pagination"
+import { useShopState, useShopDispatch } from "@shopwp/components"
 
 function Items(props) {
+  const shopState = useShopState()
+
   return (
-    <RequestsProvider {...props}>
+    <RequestsProvider buyerIdentity={shopState.buyerIdentity} {...props}>
       <PayloadProvider {...props}>
         <SettingsProvider {...props}>
           <ItemsProvider {...props}>

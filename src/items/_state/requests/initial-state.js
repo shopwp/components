@@ -6,6 +6,7 @@ function RequestsInitialState({
   queryType = "products",
   isFetchingNew = true,
   payload = false,
+  buyerIdentity = false,
 }) {
   if (queryType === "collections") {
     var collection_titles = false
@@ -95,11 +96,11 @@ function RequestsInitialState({
     first: first,
     sortKey: sortKey,
     reverse: reverse,
-    language: settings?.language
-      ? settings.language.toUpperCase()
+    language: buyerIdentity
+      ? buyerIdentity.language
       : shopwp.general.languageCode.toUpperCase(),
-    country: settings?.country
-      ? settings.country.toUpperCase()
+    country: buyerIdentity
+      ? buyerIdentity.country
       : shopwp.general.countryCode.toUpperCase(),
     collection_titles: collection_titles,
   }
