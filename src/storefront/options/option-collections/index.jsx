@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import isEmpty from "lodash-es/isEmpty"
 import union from "lodash-es/union"
 import { fetchCollections, maybeHandleApiError } from "@shopwp/api"

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import StorefrontFilterOptionsHeading from "../heading"
 import { usePortal } from "@shopwp/hooks"
 
@@ -26,27 +24,13 @@ const OptionPrice = wp.element.lazy(() =>
 )
 
 function StorefrontOptionsWrapper({ settings }) {
-  const StorefrontSidebarCSS = css``
-  const StorefrontOptionsCSS = css``
-  const StorefrontOptionsWrapperCSS = css``
-
   return usePortal(
-    <div
-      className="swp-storefront-options-wrapper"
-      css={StorefrontOptionsWrapperCSS}
-    >
-      <div
-        id="shopwp-storefront-options"
-        className="swp-storefront-options"
-        css={StorefrontOptionsCSS}
-      >
+    <div className="swp-storefront-options-wrapper">
+      <div id="shopwp-storefront-options" className="swp-storefront-options">
         {settings.showOptionsHeading ? (
           <StorefrontFilterOptionsHeading settings={settings} />
         ) : null}
-        <aside
-          className="swp-storefront-sidebar wps-storefront-sidebar"
-          css={StorefrontSidebarCSS}
-        >
+        <aside className="swp-storefront-sidebar wps-storefront-sidebar">
           {settings.showTags ? <OptionTags settings={settings} /> : null}
           {settings.showVendors ? <OptionVendors settings={settings} /> : null}
           {settings.showTypes ? <OptionTypes settings={settings} /> : null}

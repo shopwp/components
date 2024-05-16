@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import StorefrontFilter from "../../filter"
 import { useShopState } from "@shopwp/components"
 
@@ -30,9 +28,6 @@ function StorefrontFilterOptionsGroup({
     }
   }
 
-  const filterContentCSS = css``
-  const LoadingTextCSS = css``
-
   return (
     <StorefrontFilter
       heading={heading}
@@ -41,7 +36,6 @@ function StorefrontFilterOptionsGroup({
     >
       <div
         className="swp-storefront-filter-content wps-filter-content"
-        css={filterContentCSS}
         data-is-loading-items={isLoadingItems}
       >
         {error ? (
@@ -49,7 +43,7 @@ function StorefrontFilterOptionsGroup({
         ) : areFilterOptionsEmpty && !isLoadingItems ? (
           <Notice status="info">{noFilterGroupFoundText}</Notice>
         ) : isLoadingItems && groupType !== "collections" ? (
-          <p className="swp-storefront-loading-text" css={LoadingTextCSS}>
+          <p className="swp-storefront-loading-text">
             {shopState.t.l.loading + " " + groupType + " ..."}
           </p>
         ) : (

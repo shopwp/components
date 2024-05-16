@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import Products from "../../../products"
 import { usePortal } from "@shopwp/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
