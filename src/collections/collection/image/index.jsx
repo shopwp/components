@@ -25,7 +25,10 @@ function CollectionImage() {
       return
     }
 
-    if (settings.collectionsImagesSizingToggle) {
+    if (
+      settings.collectionsImagesSizingToggle &&
+      collectionState.payload.image
+    ) {
       setImageSrc(
         addCustomSizingToImageUrl({
           src: collectionState.payload.image.originalSrc,

@@ -2,7 +2,7 @@ import ReactModal from "react-modal"
 // import Dialog from "rc-dialog"
 
 if (shopwp.misc.isAdmin) {
-  ReactModal.setAppElement("#wpwrap")
+  ReactModal.setAppElement(".wp-admin")
 } else {
   ReactModal.setAppElement("#shopwp-root")
 }

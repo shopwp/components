@@ -326,11 +326,9 @@ function DirectCheckoutButton({
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const button = useRef()
 
-  const buttonCSS = css``
-
   var shouldDisable = false
 
-  function onCheckout(e) {
+  async function onCheckout(e) {
     if (!variant && hasManyVariants) {
       productDispatch({ type: "SET_MISSING_SELECTIONS", payload: true })
       return
@@ -352,9 +350,7 @@ function DirectCheckoutButton({
       return
     }
 
-    if (settings.linkTarget === "_self") {
-      setIsCheckingOut(true)
-    }
+    setIsCheckingOut(true)
 
     const lines = buildLines(variant, quantity, productState, button.current)
 
@@ -368,10 +364,6 @@ function DirectCheckoutButton({
 
     productDispatch({ type: "SET_IS_DIRECT_CHECKOUT", payload: true })
 
-    createCartAndCheckoutUrl(checkoutData, shopState)
-  }
-
-  async function createCartAndCheckoutUrl(checkoutData, shopState) {
     const [error, resp] = await to(directCheckout(checkoutData, shopState))
 
     var errMsg = maybeHandleApiError(error, resp)
@@ -391,15 +383,12 @@ function DirectCheckoutButton({
     }
 
     if (resp) {
-      var finalUrl = createCheckoutUrl({
+      var checkoutURL = createCheckoutUrl({
         checkoutUrl: resp.checkoutUrl,
         trackingParams: shopState.trackingParams,
-        target: shopwp.misc.isMobile
-          ? "_self"
-          : shopwp.general.checkoutButtonTarget,
       })
 
-      setCheckoutLink(finalUrl)
+      setCheckoutLink(checkoutURL)
     }
   }
 
@@ -422,7 +411,6 @@ function DirectCheckoutButton({
     <div
       className="swp-btn swp-l-flex swp-btn swp-btn-direct-checkout"
       onClick={onCheckout}
-      css={[buttonCSS]}
       ref={button}
       data-is-disabled={isCheckingOut || isDisabled}
     >

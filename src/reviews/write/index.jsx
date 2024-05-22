@@ -103,12 +103,20 @@ function ReviewForm(props) {
     setSuccess(false)
     setApiError(false)
 
+    if (state.payload) {
+      var productTitle = state.payload.title
+      var productUrl = state.payload.onlineStoreUrl
+        ? state.payload.onlineStoreUrl
+        : window.location.href
+    } else {
+      var productTitle = state.products[0].name
+      var productUrl = state.products[0].product_link
+    }
+
     let data = {
       sku: state.reviewsProductId,
-      product_title: state.payload.title,
-      product_url: state.payload.onlineStoreUrl
-        ? state.payload.onlineStoreUrl
-        : window.location.href,
+      product_title: productTitle,
+      product_url: productUrl,
       display_name: reviewName,
       email: reviewEmail,
       review_score: reviewScore,

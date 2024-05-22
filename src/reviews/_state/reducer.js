@@ -34,6 +34,10 @@ function ProductReviewsReducer(state, action) {
       return rSet("payload", action, state)
     }
 
+    case "SET_REVIEWS_PRODUCT_ID": {
+      return rSet("reviewsProductId", action, state)
+    }
+
     default: {
       rErr(action, "ProductReviews")
     }

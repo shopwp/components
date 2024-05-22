@@ -14,7 +14,7 @@ import { useAction } from "@shopwp/hooks"
 
 import Notice from "../../notice"
 
-function ProductReviewsWrapper({ children }) {
+function ProductReviewsWrapper({ children, productId = false }) {
   const { useEffect, useState } = wp.element
   const [isFetchingReviews, setIsFetchingReviews] = useState(true)
   const dispatch = useProductReviewsDispatch()
@@ -143,6 +143,17 @@ function ProductReviewsWrapper({ children }) {
   }, [state.reviewsShown])
 
   useEffect(() => {
+    if (!productId || productId === state.reviewsProductId) {
+      return
+    }
+
+    dispatch({
+      type: "SET_REVIEWS_PRODUCT_ID",
+      payload: productId,
+    })
+  }, [productId])
+
+  useEffect(() => {
     if (!state.hasApiConnection || !shopwp.misc.hasYotpo) {
       setIsFetchingReviews(false)
       return
@@ -153,7 +164,7 @@ function ProductReviewsWrapper({ children }) {
     } else {
       getAllReviews()
     }
-  }, [])
+  }, [state.reviewsProductId])
 
   return (
     <>

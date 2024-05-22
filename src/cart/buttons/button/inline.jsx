@@ -49,7 +49,6 @@ function CartIcon({ settings, element }) {
     >
       {settings.showCounter || settings.showCounter === "undefined" ? (
         <CartCounter
-          settings={settings}
           totalLineItems={
             shopState.cartData.totalQuantity
               ? shopState.cartData.totalQuantity

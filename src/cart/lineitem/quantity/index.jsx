@@ -30,14 +30,7 @@ function CartLineItemQuantity({ lineItem, setNotice }) {
     if (newQuantity === 0) {
       removeLines(lineItem.id, shopState, cartDispatch, shopDispatch)
     } else {
-      updateLines(
-        shopState,
-        cartState,
-        cartDispatch,
-        shopDispatch,
-        lineItem,
-        newQuantity
-      )
+      updateLines(shopState, cartDispatch, shopDispatch, lineItem, newQuantity)
     }
   }
 

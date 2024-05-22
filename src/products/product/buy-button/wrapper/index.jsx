@@ -43,8 +43,6 @@ function ProductBuyButtonWrapper() {
   const isDirectCheckout =
     settings.directCheckout || shopwp.general.directCheckout
 
-  const selectVariant = useAction("do.selectVariant")
-
   const [showSubscriptions, setShowSubscriptions] = useState(
     shouldShowSubscriptions(productState.payload, settings)
   )

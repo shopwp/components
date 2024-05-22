@@ -17,6 +17,7 @@ function ProductReviewsInitialState(props) {
     reviews: [],
     reviewsBottomLine: false,
     reviewsTruncated: [],
+    settings: props.settings,
     reviewsShown: props.settings.reviewsShown
       ? props.settings.reviewsShown
       : 10,
@@ -32,7 +33,9 @@ function ProductReviewsInitialState(props) {
     isWritingReview: false,
     reviewsProductId: props.settings.productId
       ? props.settings.productId
-      : props.payload.id,
+      : props?.payload
+      ? props.payload.id
+      : false,
   }
 }
 

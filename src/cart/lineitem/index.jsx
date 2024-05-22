@@ -2,7 +2,6 @@
 import { jsx, css } from "@emotion/react"
 import {
   FilterHook,
-  shouldShowSaleNotice,
   containerFluidCSS,
   findPercentageDiff,
 } from "@shopwp/common"
@@ -57,10 +56,9 @@ function CartLineItem({ lineItem }) {
   const [noticeMessage, setNotice] = useState(false)
   const [showingBreakdowns, setShowingBreakdowns] = useState(false)
 
-  const [subscriptionDiscount, setSubscriptionDiscount] = useState(false)
+  const [subscriptionDiscount] = useState(false)
   const shopState = useShopState()
   const lineItemElement = useRef()
-  const showingSaleNotice = shouldShowSaleNotice(lineItem)
 
   function findLineItemPrice() {
     if (
@@ -296,7 +294,10 @@ function CartLineItem({ lineItem }) {
                 ) : null}
 
                 {lineItem.attributes.length ? (
-                  <CartAttributes lineItem={lineItem} />
+                  <CartAttributes
+                    attributes={lineItem.attributes}
+                    cartData={shopState.cartData}
+                  />
                 ) : null}
               </div>
             </>

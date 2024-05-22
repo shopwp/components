@@ -71,7 +71,6 @@ function ReviewListItem({ review, size, index, reviewsState }) {
             reviewScore={review.score}
             size={20}
             showLabel={false}
-            dropzone={false}
             linkToModal={false}
           />
         </div>

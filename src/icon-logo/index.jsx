@@ -7,6 +7,7 @@ function IconLogo({ color }) {
       y="0"
       viewBox="0 0 731.9 189.4"
       xmlSpace="preserve"
+      className="swp-icon-logo"
     >
       <path
         fill={color}

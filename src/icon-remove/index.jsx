@@ -1,8 +1,6 @@
-import Icon from "../icon"
-
 function IconRemove() {
   return (
-    <Icon>
+    <div className="swp-icon swp-icon-remove">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
         <path
           fillRule="evenodd"
@@ -10,7 +8,7 @@ function IconRemove() {
           clipRule="evenodd"
         />
       </svg>
-    </Icon>
+    </div>
   )
 }
 

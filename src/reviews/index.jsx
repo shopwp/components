@@ -12,16 +12,20 @@ function Reviews(props) {
 
   return (
     <ProductReviewsProvider shopState={shopState} {...props}>
-      <ProductReviewsWrapper>
+      <ProductReviewsWrapper productId={props.settings.productId}>
         <Suspense fallback="Loading reviews ...">
           {usePortal(
             <>
-              {props.settings.showRating ? <ReviewsRating /> : null}
+              {props.settings.showRating ? (
+                <ReviewsRating dropzone={props.settings.dropzoneRating} />
+              ) : null}
               {props.settings.showListing ? (
                 <ReviewsList shouldEnablePortal={true} />
               ) : null}
             </>,
-            props.element
+            props.settings.dropzoneProductReviews
+              ? props.settings.dropzoneProductReviews
+              : props.element
           )}
         </Suspense>
       </ProductReviewsWrapper>

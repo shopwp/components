@@ -10,13 +10,11 @@ import ReviewsPagination from "../pagination"
 import ReviewForm from "../write"
 import EmptyReviews from "./empty"
 import WriteReviewLink from "./write"
-import { useSettingsState } from "../../items/_state/settings/hooks"
 
 function ReviewsList({ shouldEnablePortal = true }) {
   const reviewsState = useProductReviewsState()
   const reviewsDispatch = useProductReviewsDispatch()
   const shopState = useShopState()
-  const settings = useSettingsState()
 
   function onToggle() {
     reviewsDispatch({
@@ -37,7 +35,7 @@ function ReviewsList({ shouldEnablePortal = true }) {
               : " " + shopState.t.l.reviews}
             )
           </p>
-          {settings.showCreateNew ? (
+          {reviewsState.settings.showCreateNew ? (
             <WriteReviewLink onToggle={onToggle} />
           ) : null}
         </header>
@@ -65,7 +63,7 @@ function ReviewsList({ shouldEnablePortal = true }) {
   }
 
   return shouldEnablePortal ? (
-    usePortal(<ListContent />, settings.dropzoneListing)
+    usePortal(<ListContent />, reviewsState.settings.dropzoneListing)
   ) : (
     <ListContent />
   )

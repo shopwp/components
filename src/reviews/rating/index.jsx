@@ -2,7 +2,6 @@ import { usePortal } from "@shopwp/hooks"
 import { Rating } from "react-simple-star-rating"
 import { useProductReviewsState } from "../_state/hooks"
 import { useShopState } from "@shopwp/components"
-import { useSettingsState } from "../../items/_state/settings/hooks"
 
 import ReviewsList from "../list"
 import Modal from "../../modal"
@@ -19,14 +18,13 @@ function ReviewsRating({
   onScore = false,
   showTooltip = false,
   tooltipArray = false,
-  dropzone = null,
+  dropzone = false,
   linkToModal = true,
 }) {
-  const { useState } = wp.element
+  const { useState, useEffect } = wp.element
   const reviewsState = useProductReviewsState()
   const shopState = useShopState()
   const [isShowingModal, setIsShowingModal] = useState(false)
-  const settings = useSettingsState()
 
   const [score, setScore] = useState(
     reviewScore !== false && reviewScore > 0
@@ -35,6 +33,12 @@ function ReviewsRating({
       ? reviewsState.reviewsBottomLine.average_score
       : 0
   )
+
+  useEffect(() => {
+    if (reviewsState.reviewsBottomLine) {
+      setScore(reviewsState.reviewsBottomLine.average_score)
+    }
+  }, [reviewsState.reviewsBottomLine])
 
   function onRating(value) {
     if (type === "static") {
@@ -114,7 +118,7 @@ function ReviewsRating({
             <ReviewsList shouldEnablePortal={false} />
           </Modal>
         </>,
-        dropzone === false ? dropzone : settings.dropzoneRating
+        dropzone
       )
     : null
 }

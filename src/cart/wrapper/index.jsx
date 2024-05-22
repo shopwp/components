@@ -6,11 +6,14 @@ import {
   useCartState,
   useCartDispatch,
 } from "@shopwp/components"
+
+import { maybeHandleApiError } from "@shopwp/api"
 import { useAction, useFirstRender } from "@shopwp/hooks"
 import {
   checkoutRedirect,
   getURLParam,
   findTrackingParams,
+  to,
 } from "@shopwp/common"
 
 import {
@@ -22,6 +25,7 @@ import {
   updateDiscount,
   updateCartNote,
   updateIdentity,
+  directCheckout,
 } from "../api.jsx"
 
 import CartContainer from "../container"
@@ -49,6 +53,7 @@ function CartWrapper() {
   const doCartToggle = useAction("do.cartToggle")
   const doToggleCartTerms = useAction("do.toggleCartTerms")
   const doCheckout = useAction("do.checkout")
+  const doDirectCheckout = useAction("do.directCheckout")
   const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity")
 
   const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
@@ -140,6 +145,35 @@ function CartWrapper() {
       trackingParams: shopState.trackingParams,
     })
   }, [doCheckout])
+
+  useEffect(() => {
+    if (doDirectCheckout === null) {
+      return
+    }
+
+    performDirectCheckout(doDirectCheckout)
+  }, [doDirectCheckout])
+
+  async function performDirectCheckout(checkoutData) {
+    const [error, resp] = await to(directCheckout(checkoutData, shopState))
+
+    var errMsg = maybeHandleApiError(error, resp)
+
+    if (errMsg) {
+      console.error(errMsg)
+      return
+    }
+
+    if (resp) {
+      checkoutRedirect({
+        checkoutUrl: resp.checkoutUrl,
+        trackingParams: shopState.trackingParams,
+        target: shopwp.misc.isMobile
+          ? "_self"
+          : shopwp.general.checkoutButtonTarget,
+      })
+    }
+  }
 
   useEffect(() => {
     if (doCartToggle === null) {

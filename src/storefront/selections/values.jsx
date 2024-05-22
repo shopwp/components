@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { IconRemove } from "@shopwp/components"
 import { buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
-import { useShopState } from "@shopwp/components"
+import { useShopState, IconRemove } from "@shopwp/components"
 import { useRequestsState } from "../../items/_state/requests/hooks"
 
 function StorefrontSelectionsValue({ selectionType, val }) {

@@ -133,6 +133,30 @@ function ProductWrapper({ payload }) {
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
+              {settings.showReviews &&
+              shopwp.misc.hasYotpo &&
+              productState.payload ? (
+                <Reviews
+                  element={false}
+                  settings={{
+                    showReviews: true,
+                    showCreateNew: settings.showCreateNew,
+                    showRating: settings.showRating,
+                    showListing: settings.showListing,
+                    reviewsShown: settings.reviewsShown,
+                    reviewsShownIncrement: settings.reviewsShownIncrement,
+                    productId: productState.payload.id,
+                    dropzoneRating: settings.dropzoneRating,
+                    dropzoneProductReviews: settings.dropzoneProductReviews,
+                  }}
+                  payload={productState.payload}
+                />
+              ) : null}
+            </Suspense>
+          </ErrorBoundary>
+
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={false}>
               {settings.excludes &&
               settings.excludes.includes("title") ? null : (
                 <ProductTitle />
@@ -155,27 +179,6 @@ function ProductWrapper({ payload }) {
               settings.excludes.includes("description") ? null : (
                 <ProductDescription />
               )}
-            </Suspense>
-          </ErrorBoundary>
-
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <Suspense fallback={false}>
-              {settings.showReviews &&
-              shopwp.misc.hasYotpo &&
-              productState.payload ? (
-                <Reviews
-                  settings={{
-                    showReviews: settings.showReviews,
-                    showCreateNew: false,
-                    showRating: true,
-                    showListing: false,
-                    reviewsShown: settings.reviewsShown,
-                    reviewsShownIncrement: settings.reviewsShownIncrement,
-                    productId: productState.payload.id,
-                  }}
-                  payload={productState.payload}
-                />
-              ) : null}
             </Suspense>
           </ErrorBoundary>
 

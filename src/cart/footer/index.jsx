@@ -16,6 +16,12 @@ const CartTerms = wp.element.lazy(() =>
   import(/* webpackChunkName: 'CartTerms-public' */ "../terms")
 )
 
+const CartAttributes = wp.element.lazy(() =>
+  import(
+    /* webpackChunkName: 'CartAttributes-public' */ "../lineitem/attributes"
+  )
+)
+
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
 )
@@ -42,6 +48,15 @@ function CartFooter() {
       data-is-showing-cart-discount={shopwp.general.enableDiscountCodes}
     >
       <Suspense fallback={<CartFooterSkeleton />}>
+        {shopState.cartData && shopState.cartData.attributes.length ? (
+          <div className="swp-cart-attrs-footer">
+            <p className="swp-cart-attrs-heading">Order attributes:</p>
+            <CartAttributes
+              attributes={shopState.cartData.attributes}
+              cartData={shopState.cartData}
+            />
+          </div>
+        ) : null}
         {shopwp.general.enableCartNotes ? <CartNote /> : null}
         {shopwp.general.enableCartTerms ? (
           <CartTerms termsAccepted={cartState.termsAccepted} />

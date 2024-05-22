@@ -6,7 +6,6 @@ import { useShopState } from "@shopwp/components"
 function AddButtonText({
   addedToCart,
   addToCartButtonTextColor,
-  isDisabled,
   productBuyButtonState,
   settings,
   isDirectCheckout,

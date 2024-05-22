@@ -42,6 +42,8 @@ function ProductFeaturedImage() {
   const zoomContainer = useRef()
   const zoom = useZoomImageMove()
 
+  const disableZoom = wp.hooks.applyFilters("product.disableImageZoom", false)
+
   function showZoom() {
     if (settings.linkTo !== "none") {
       return false
@@ -152,7 +154,8 @@ function ProductFeaturedImage() {
     if (
       !galleryState.featImage ||
       galleryState.featImageIsVideo ||
-      settings.showZoom === false
+      settings.showZoom === false ||
+      disableZoom
     ) {
       return
     }
@@ -169,6 +172,10 @@ function ProductFeaturedImage() {
     }
 
     if (zoomContainer.current && settings.linkTo !== "modal") {
+      if (newSrc && newSrc.includes("public/imgs/placeholder")) {
+        return
+      }
+
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
         disableScrollLock: true,

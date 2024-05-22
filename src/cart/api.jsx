@@ -31,7 +31,6 @@ function hasDiscount(cartData) {
 
 async function updateLines(
   shopState,
-  cartState,
   cartDispatch,
   shopDispatch,
   lineItem,
