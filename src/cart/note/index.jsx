@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { useCartState, useCartDispatch } from "@shopwp/components"
 import { updateCartNote } from "../api.jsx"
@@ -53,17 +51,13 @@ function CartNote() {
     setNoteValue(e.target.value)
   }
 
-  const CartNotesCSS = css``
-  const CartTextareaCSS = css``
-
   return (
-    <section className="swp-cart-notes wps-cart-notes" css={CartNotesCSS}>
+    <section className="swp-cart-notes wps-cart-notes">
       <label htmlFor="wps-input-notes">
         {shopState.t.l.checkoutNotes}{" "}
         {shopwp.general.noteRequired ? <span>(Required)</span> : null}
       </label>
       <textarea
-        css={CartTextareaCSS}
         placeholder={shopwp.general.cartNotesPlaceholder}
         id="wps-input-notes"
         className="wps-input swp-input-textarea wps-input-textarea"

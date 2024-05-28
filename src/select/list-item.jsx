@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { MenuItem } from "@szhsin/react-menu"
 
 import {
@@ -23,8 +21,6 @@ function SelectItem({
 }) {
   const { useEffect, useState } = wp.element
   const [isAvailableToSelect, setIsAvailableToSelect] = useState(true)
-
-  const DropdownMenuItemCSS = css``
 
   const optionNameValue = createObj(item.label, item.value)
 
@@ -70,7 +66,6 @@ function SelectItem({
 
   return (
     <div
-      css={DropdownMenuItemCSS}
       className="swp-select-item"
       data-is-selected={selected ? selected.value === item.value : false}
       data-is-available-to-select={isAvailableToSelect}

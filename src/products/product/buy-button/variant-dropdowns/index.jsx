@@ -1,5 +1,4 @@
 import ProductOption from "../option"
-
 import ProductOptionDropdown from "../option/dropdown"
 
 function ProductVariantDropdowns({

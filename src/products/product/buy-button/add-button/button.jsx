@@ -61,7 +61,6 @@ function buildLines(variant, quantity, productState, buttonRef) {
 }
 
 function AddButton({
-  addToCartButtonTextColor,
   hasLink,
   linkWithBuyButton,
   isDirectCheckout,
@@ -251,7 +250,6 @@ function AddButton({
           shopState={shopState}
           isDisabled={isDisabled}
           addedToCart={addedToCart}
-          addToCartButtonTextColor={addToCartButtonTextColor}
           productBuyButtonState={productBuyButtonState}
           productBuyButtonDispatch={productBuyButtonDispatch}
           settings={settings}
@@ -283,7 +281,6 @@ function AddButton({
             <AddButtonText
               isDisabled={isDisabled}
               addedToCart={addedToCart}
-              addToCartButtonTextColor={addToCartButtonTextColor}
               productBuyButtonState={productBuyButtonState}
               settings={settings}
               isDirectCheckout={isDirectCheckout}
@@ -309,7 +306,6 @@ function AddButton({
 function DirectCheckoutButton({
   isDisabled,
   addedToCart,
-  addToCartButtonTextColor,
   settings,
   productState,
   shopState,
@@ -420,7 +416,6 @@ function DirectCheckoutButton({
         <AddButtonText
           isDisabled={isDisabled}
           addedToCart={addedToCart}
-          addToCartButtonTextColor={addToCartButtonTextColor}
           productBuyButtonState={productBuyButtonState}
           settings={settings}
           productState={productState}

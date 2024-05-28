@@ -43,6 +43,19 @@ function CartCheckoutButton() {
     cartDispatch({ type: "SET_NOTICE", payload: false })
 
     wp.hooks.doAction("on.checkout", shopState)
+
+    if (shopwp.general.checkoutButtonTarget === "popout") {
+      openCheckoutInPopout()
+    }
+  }
+
+  function openCheckoutInPopout() {
+    window.open(
+      checkoutLink,
+      "popup",
+      "location=0,width=750,height=650,left=500,top=55"
+    )
+    return false
   }
 
   useEffect(() => {
@@ -60,7 +73,11 @@ function CartCheckoutButton() {
 
   return (
     <a
-      href={shouldDisable ? undefined : checkoutLink}
+      href={
+        shouldDisable || shopwp.general.checkoutButtonTarget === "popout"
+          ? undefined
+          : checkoutLink
+      }
       className="swp-btn swp-btn-checkout wps-btn-checkout"
       onClick={onCheckout}
       css={[buttonCSS, checkoutButtonCSS]}

@@ -9,6 +9,7 @@ function SearchForm({
   searchTerm,
   setSearchTerm,
   withStorefront,
+  setIsShowingModal,
 }) {
   const settings = useSettingsState()
 
@@ -34,6 +35,7 @@ function SearchForm({
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           withStorefront={withStorefront}
+          setIsShowingModal={setIsShowingModal}
         />
       </div>
     </form>,

@@ -94,7 +94,9 @@ function ProductPrices() {
 
       <meta
         itemProp="availability"
-        href="https://schema.org/InStock"
+        href={`https://schema.org/${
+          productState.payload.availableForSale ? "InStock" : "OutOfStock"
+        }`}
         content={
           productState.payload.availableForSale ? "In stock" : "Out of stock"
         }

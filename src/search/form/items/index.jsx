@@ -8,7 +8,12 @@ const SearchModal = wp.element.lazy(() =>
   import(/* webpackChunkName: 'SearchModal-public' */ "../modal")
 )
 
-function SearchItems({ searchTerm, setSearchTerm, withStorefront = false }) {
+function SearchItems({
+  searchTerm,
+  setSearchTerm,
+  setIsShowingModal,
+  withStorefront = false,
+}) {
   const requestsState = useRequestsState()
   const payload = usePayloadState()
   const settings = useSettingsState()
@@ -27,7 +32,11 @@ function SearchItems({ searchTerm, setSearchTerm, withStorefront = false }) {
       settings.dropzonePayload
     )
   ) : !withStorefront ? (
-    <SearchModal searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    <SearchModal
+      setIsShowingModal={setIsShowingModal}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />
   ) : null
 }
 

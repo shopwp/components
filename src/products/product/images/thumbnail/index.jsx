@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import ProductImage from "../image"
 import ProductGalleryContext from "../gallery/_state/context"
 import { FilterHook } from "@shopwp/common"
@@ -14,8 +12,6 @@ function ProductThumbnailImage({
   const { useEffect, useContext, useState } = wp.element
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const [isActive, setIsActive] = useState(() => false)
-
-  const ThumbnailCSS = css``
 
   useEffect(() => {
     if (!galleryState.featImage) {
@@ -52,7 +48,6 @@ function ProductThumbnailImage({
 
   return (
     <div
-      css={ThumbnailCSS}
       className="wps-component swp-product-thumbnail wps-component-products-images-thumbnail"
       role="button"
       aria-label="Product Images Thumbnail"

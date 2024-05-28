@@ -1,8 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import {
-  containerFluidCSS,
-  flexRowNoBreakCSS,
   findNewPotentialTotal,
   getElementForCSSVariables,
 } from "@shopwp/common"
@@ -60,9 +56,6 @@ function Quantity({
       setQuantity(maxQuantity)
     }
   }, [maxQuantity, selectedVariant, quantity])
-
-  const quantityInputCSS = css``
-  const quantityContainer = css``
 
   function handleQuantityChange(e) {
     if (isUpdating) {
@@ -236,11 +229,8 @@ function Quantity({
   }, [fontSize])
 
   return (
-    <div
-      className="swp-l-rel100 swp-quantity-container wps-quantity-container"
-      css={[quantityContainer]}
-    >
-      <div css={[flexRowNoBreakCSS]}>
+    <div className="swp-l-rel100 swp-quantity-container wps-quantity-container">
+      <div className="swp-l-row-no-wrap">
         <QuantityButton
           type="decrement"
           onClick={handleDecrement}
@@ -255,7 +245,6 @@ function Quantity({
           min={minQuantity > 1 ? minQuantity : 1}
           onFocus={(e) => e.currentTarget.select()}
           aria-label="Product Quantity Input"
-          css={quantityInputCSS}
           value={quantity}
           onChange={handleQuantityChange}
           onBlur={handleQuantityChange}

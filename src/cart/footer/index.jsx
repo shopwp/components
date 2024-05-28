@@ -40,6 +40,11 @@ function CartFooter() {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
+  const orderAttributes = wp.hooks.applyFilters(
+    "cart.visibleCartAttributes",
+    shopState.cartData.attributes
+  )
+
   return (
     <section
       className="swp-cart-footer wps-cart-footer"
@@ -48,11 +53,11 @@ function CartFooter() {
       data-is-showing-cart-discount={shopwp.general.enableDiscountCodes}
     >
       <Suspense fallback={<CartFooterSkeleton />}>
-        {shopState.cartData && shopState.cartData.attributes.length ? (
+        {shopState.cartData && orderAttributes.length ? (
           <div className="swp-cart-attrs-footer">
             <p className="swp-cart-attrs-heading">Order attributes:</p>
             <CartAttributes
-              attributes={shopState.cartData.attributes}
+              attributes={orderAttributes}
               cartData={shopState.cartData}
             />
           </div>

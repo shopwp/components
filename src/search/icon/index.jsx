@@ -1,20 +1,7 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 function SearchIcon() {
-  const SearchIconCSS = css`
-    position: absolute;
-    right: 17px;
-    top: 14px;
-
-    path {
-      color: #bebebe;
-    }
-  `
-
   return (
     <svg
-      css={SearchIconCSS}
+      className="swp-search-icon"
       aria-hidden="true"
       focusable="false"
       role="img"

@@ -181,29 +181,16 @@ function ProductVariantButtonValueButton({
         )}
 
         {variantObject && (
-          <ProductVariantButtonPrice
-            variantObject={variantObject}
-            settings={settings}
-          />
+          <ProductVariantButtonPrice variantObject={variantObject} />
         )}
       </FilterHook>
     </button>
   )
 }
 
-function ProductVariantButtonPrice({ variantObject, settings }) {
-  const variantObjectCSS = css`
-    && {
-      font-size: 15px;
-      margin-top: 5px;
-      margin-bottom: 0;
-      display: inline;
-      margin-left: 10px;
-    }
-  `
-
+function ProductVariantButtonPrice({ variantObject }) {
   return (
-    <p css={variantObjectCSS} className="wps-variant-button-price">
+    <p className="swp-variant-button-price wps-variant-button-price">
       <Price price={variantObject[0].node.price.amount} />
     </p>
   )

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import {
   FilterHook,
   containerFluidCSS,
@@ -43,10 +41,6 @@ const CartLineItemLeftInStock = wp.element.lazy(() =>
   import(
     /* webpackChunkName: 'CartLineItemLeftInStock-public' */ "./left-in-stock"
   )
-)
-
-const CartLineItemDiscounts = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'CartLineItemDiscounts-public' */ "./discounts")
 )
 
 function CartLineItem({ lineItem }) {
@@ -100,12 +94,6 @@ function CartLineItem({ lineItem }) {
     return lineItem.merchandise.title !== shopState.t.l.defaultTitle
   }
 
-  const lineItemStyles = css``
-  const lineItemInner = css``
-  const lineItemTitle = css``
-  const cartLineItemContentCSS = css``
-  const lineItemQuantityWrapperCSS = css``
-
   function hasDiscounts() {
     if (!lineItem.discountAllocations || !lineItem.discountAllocations.length) {
       return false
@@ -129,25 +117,20 @@ function CartLineItem({ lineItem }) {
       data-wps-is-updating={isUpdating}
       data-wps-is-available={lineItem.merchandise.availableForSale}
       ref={lineItemElement}
-      css={lineItemStyles}
       role="listitem"
     >
-      <div className="swp-cart-lineitem-inner" css={lineItemInner}>
+      <div className="swp-cart-lineitem-inner">
         <span className="swp-lineitem-quantity-label">{lineItem.quantity}</span>
 
         <CartLineItemImage lineItem={lineItem} settings={cartState.settings} />
 
-        <div
-          className="swp-cart-lineitem-content wps-cart-lineitem-content"
-          css={cartLineItemContentCSS}
-        >
+        <div className="swp-cart-lineitem-content wps-cart-lineitem-content">
           <FilterHook
             name="before.lineItemTitle"
             args={[cartState, lineItem]}
           />
 
           <div
-            css={lineItemTitle}
             className="swp-cart-lineitem-title-wrap wps-cart-lineitem-title"
             data-wps-is-empty={hasRealVariant() ? "false" : "true"}
           >
@@ -183,10 +166,7 @@ function CartLineItem({ lineItem }) {
                 className="swp-l-rel100 swp-mt15 swp-cart-lineitem-quantity-wrapper"
                 css={containerFluidCSS}
               >
-                <div
-                  className="swp-l-row swp-m-l-row swp-cart-lineitem-quantity-inner"
-                  css={lineItemQuantityWrapperCSS}
-                >
+                <div className="swp-l-row swp-m-l-row swp-cart-lineitem-quantity-inner">
                   <CartLineItemQuantity
                     lineItem={lineItem}
                     setNotice={setNotice}

@@ -4,7 +4,7 @@ import Notice from "../../../notice"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
-function SearchModal({ searchTerm, setSearchTerm }) {
+function SearchModal({ searchTerm, setSearchTerm, setIsShowingModal }) {
   const { useEffect, useRef } = wp.element
 
   const componentRef = useRef(null)
@@ -16,8 +16,7 @@ function SearchModal({ searchTerm, setSearchTerm }) {
   // Function to handle clicks outside the component
   const handleClickOutside = (event) => {
     if (componentRef.current && !componentRef.current.contains(event.target)) {
-      // Clicked outside the component, do something
-      setSearchTerm("")
+      setIsShowingModal(false)
     }
   }
 

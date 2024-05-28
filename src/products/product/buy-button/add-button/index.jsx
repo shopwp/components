@@ -23,7 +23,6 @@ function ProductAddButton({
   linkTarget,
   linkTo,
   linkWithBuyButton,
-  addToCartButtonTextColor,
   isDirectCheckout,
   hasManyVariants,
   productDispatch,
@@ -89,7 +88,6 @@ function ProductAddButton({
             <AddButton
               hasLink={hasLink}
               linkWithBuyButton={linkWithBuyButton}
-              addToCartButtonTextColor={addToCartButtonTextColor}
               isDirectCheckout={isDirectCheckout}
               hasManyVariants={hasManyVariants}
               addedToCart={addedToCart}

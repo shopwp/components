@@ -1,11 +1,9 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
-import Product from "../../products/product"
-import Pagination from "../../pagination"
 import { usePayloadState } from "../../items/_state/payload/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import { useRequestsState } from "../../items/_state/requests/hooks"
+import Product from "../../products/product"
+import Pagination from "../../pagination"
 
 const Notice = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Notice-public' */ "../../notice")
@@ -16,13 +14,8 @@ function StorefrontItems() {
   const settings = useSettingsState()
   const requestsState = useRequestsState()
 
-  const storefrontItemsWrapperCSS = css``
-
   return usePortal(
-    <div
-      className="swp-storefront-items-wrapper"
-      css={storefrontItemsWrapperCSS}
-    >
+    <div className="swp-storefront-items-wrapper">
       {payload && payload.length ? (
         <Pagination queryType="products" payload={payload}>
           <Product settings={settings} />

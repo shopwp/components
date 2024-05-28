@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import ProductGalleryContext from "../gallery/_state/context"
 import ProductImage from "../image"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
@@ -98,36 +96,6 @@ function ProductFeaturedImage() {
     })
   }
 
-  const paneElementCSS = css`
-    position: relative;
-    cursor: ${showZoom()
-      ? "crosshair"
-      : settings.linkTo === "none"
-      ? "default"
-      : "pointer"};
-    overflow: hidden;
-  `
-
-  const ProductImageFeaturedWrapperCSS = css`
-    display: flex;
-    align-items: flex-start;
-    justify-content: ${settings.imagesAlign === "left"
-      ? "flex-start"
-      : settings.imagesAlign === "right"
-      ? "flex-end"
-      : settings.imagesAlign};
-
-    > img,
-    a img {
-      display: block;
-      flex: ${settings.imagesAlign !== "left" ? "1" : "none"};
-    }
-
-    + div {
-      background-size: cover !important;
-    }
-  `
-
   const isOutOfStock = productState.payload.availableForSale === false
 
   function isShowingNextOnHover() {
@@ -178,7 +146,7 @@ function ProductFeaturedImage() {
 
       zoom.createZoomImage(zoomContainer.current, {
         zoomImageSource: newSrc,
-        disableScrollLock: true,
+        disableScrollLock: shopwp.misc.isMobile ? false : true,
         zoomImageProps: {
           alt: galleryState.featImage.altText
             ? galleryState.featImage.altText
@@ -197,8 +165,9 @@ function ProductFeaturedImage() {
 
   return (
     <div
-      className="wps-gallery-featured-wrapper"
-      css={paneElementCSS}
+      className="swp-gallery-featured-wrapper wps-gallery-featured-wrapper"
+      data-show-zoom={showZoom()}
+      data-link-to={settings.linkTo}
       onMouseEnter={isShowingNextOnHover() ? onMouseEnter : undefined}
       onMouseLeave={isShowingNextOnHover() ? onMouseLeave : undefined}
     >
@@ -229,7 +198,7 @@ function ProductFeaturedImage() {
                 " swp-zoom-is-" +
                 zoom.zoomImageState.zoomedImgStatus
               }
-              css={ProductImageFeaturedWrapperCSS}
+              data-align={settings.imagesAlign}
               ref={zoomContainer}
             >
               {zoom.zoomImageState.zoomedImgStatus === "loading" ? (

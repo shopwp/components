@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
 import { useProductState } from "../_state/hooks"
 import { FilterHook } from "@shopwp/common"
@@ -18,8 +16,6 @@ function ProductBuyButton() {
   const settings = useSettingsState()
   const shopState = useShopState()
 
-  const buyButtonWrapperCSS = css``
-
   useEffect(() => {
     wp.hooks.doAction("on.productBuyButtonRender", productState)
   }, [])
@@ -27,7 +23,6 @@ function ProductBuyButton() {
   return usePortal(
     <ProductBuyButtonProvider payload={productState.payload}>
       <div
-        css={buyButtonWrapperCSS}
         className={
           "swp-l-col swp-0" + settings.isSingleComponent
             ? " swp-mb20 "

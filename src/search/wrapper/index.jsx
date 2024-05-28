@@ -4,6 +4,7 @@ import SearchForm from "../form"
 function SearchWrapper({ withStorefront = false, hasStorefrontSelections }) {
   const { Suspense, useState } = wp.element
   const [searchTerm, setSearchTerm] = useState(false)
+  const [isShowingModal, setIsShowingModal] = useState(false)
 
   return (
     <Suspense fallback={false}>
@@ -13,11 +14,13 @@ function SearchWrapper({ withStorefront = false, hasStorefrontSelections }) {
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           withStorefront={withStorefront}
+          setIsShowingModal={setIsShowingModal}
         />
-        {searchTerm ? (
+        {isShowingModal && searchTerm ? (
           <SearchItems
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
+            setIsShowingModal={setIsShowingModal}
             withStorefront={withStorefront}
           />
         ) : null}

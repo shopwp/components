@@ -1,8 +1,6 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useProductState, useProductDispatch } from "../_state/hooks"
-import { removeProductIdPrefix, findVariantFromVariantId } from "@shopwp/common"
+import { removeProductIdPrefix } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 import ErrorFallback from "../../../error-fallback"
 import BuyButtonSkeleton from "../buy-button/skeleton"
@@ -35,7 +33,6 @@ const ProductBuyButton = wp.element.lazy(() =>
   import(/* webpackChunkName: 'ProductBuyButton-public' */ "../buy-button")
 )
 
-// import Reviews from "../../../reviews";
 const Reviews = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Reviews-public' */ "../../../reviews")
 )
@@ -54,28 +51,6 @@ function ProductWrapper({ payload }) {
     productState.payload ? productState.payload.id : ""
   )
 
-  const ProductWrapperCSS = css`
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    width: 100%;
-    max-width: ${productState.payload &&
-    !settings.isModal &&
-    !settings.fullWidth
-      ? "400px"
-      : "100%"};
-
-    > div:nth-last-of-type(2) {
-      flex: ${isAlignHeight() ? "1" : "none"};
-    }
-  `
-
-  function isAlignHeight() {
-    return shopwp.general.alignHeight || settings.alignHeight
-  }
-
   useEffect(() => {
     if (payload !== productState.payload) {
       productDispatch({ type: "SET_PAYLOAD", payload: payload })
@@ -91,7 +66,7 @@ function ProductWrapper({ payload }) {
         payload: productState.payload.variants.edges[0].node,
       })
     }
-  }, [settings.selectFirstVariant])
+  }, [settings.selectFirstVariant, productState.payload])
 
   return (
     <li
@@ -99,8 +74,7 @@ function ProductWrapper({ payload }) {
         shopwp.misc.isSingularProducts ? "" : "https://schema.org/Product"
       }
       itemScope={shopwp.misc.isSingularProducts ? false : true}
-      css={ProductWrapperCSS}
-      className="swp-item wps-item"
+      className="swp-item wps-item swp-0 swp-l-col"
       aria-label={productState.payload.title}
       role="listitem"
       data-product-id={productState.payload ? productId : false}
@@ -108,6 +82,9 @@ function ProductWrapper({ payload }) {
         productState.payload ? productState.payload.availableForSale : false
       }
       data-wpshopify-is-on-sale={productState.isOnSale}
+      data-is-align-height={shopwp.general.alignHeight || settings.alignHeight}
+      data-is-modal={settings.isModal}
+      data-is-full-width={settings.fullWidth}
     >
       <meta itemProp="productID" content={productState.payload.id} />
       {productState.payload.vendor ? (

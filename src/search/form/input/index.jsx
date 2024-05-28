@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useShopState } from "@shopwp/components"
 import { useFirstRender, useDebounce } from "@shopwp/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
@@ -17,6 +15,7 @@ function SearchInput({
   searchTerm,
   setSearchTerm,
   withStorefront,
+  setIsShowingModal,
 }) {
   const { useEffect, useState, Suspense } = wp.element
   const [localTerm, setLocalTerm] = useState("")
@@ -27,6 +26,9 @@ function SearchInput({
   const requestsDispatch = useRequestsDispatch()
   const settings = useSettingsState()
   const shopState = useShopState()
+
+  const onFocus = () => setIsShowingModal(true)
+  const onBlur = () => setIsShowingModal(false)
 
   // TODO: Remove this somehow
   function setNativeInput() {
@@ -95,6 +97,8 @@ function SearchInput({
       },
     })
 
+    setIsShowingModal(true)
+
     setSearchTerm(debouncedSearchTerm)
 
     if (!debouncedSearchTerm) {
@@ -113,10 +117,6 @@ function SearchInput({
 
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
   }, [debouncedSearchTerm])
-
-  const spinnerCSS = css``
-  const searchInputCSS = css``
-  const searchInputWrapperCSS = css``
 
   function onChange(e) {
     setLocalTerm(e.target.value)
@@ -142,17 +142,10 @@ function SearchInput({
     }
   }
 
-  function onBlur() {
-    if (shopwp.misc.isAdmin || settings.dropzonePayload) {
-      return
-    }
-  }
-
   return (
     <Suspense fallback={false}>
       <div
         className="swp-search-input-wrapper wps-search-input-wrapper"
-        css={searchInputWrapperCSS}
         data-is-fetching-new={requestsState.isFetchingNew}
       >
         <input
@@ -164,16 +157,14 @@ function SearchInput({
           val={localTerm ? localTerm : ""}
           placeholder={settings.searchPlaceholderText}
           aria-label={settings.searchPlaceholderText}
-          css={searchInputCSS}
           onChange={onChange}
           onBlur={onBlur}
+          onFocus={onFocus}
         />
         {!localTerm ? <SearchIcon /> : null}
 
         {requestsState.isFetchingNew && !requestsState.isBootstrapping ? (
-          <div className="swp-search-spinner" css={spinnerCSS}>
-            {shopState.t.l.loading} ...
-          </div>
+          <div className="swp-search-spinner">{shopState.t.l.loading} ...</div>
         ) : null}
       </div>
     </Suspense>

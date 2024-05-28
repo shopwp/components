@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { usePortal } from "@shopwp/hooks"
 import { FilterHook } from "@shopwp/common"
 import { hasLink } from "@shopwp/common"
@@ -11,8 +9,6 @@ function ProductTitle() {
   const settings = useSettingsState()
   const productState = useProductState()
 
-  const titleStylesWrapper = css``
-
   return usePortal(
     <div
       className={
@@ -23,7 +19,6 @@ function ProductTitle() {
       aria-label={productState.payload.title + " product title"}
       data-wps-component-order="0"
       data-is-single-component={settings.isSingleComponent}
-      css={titleStylesWrapper}
     >
       {hasLink(settings) ? (
         <Link
@@ -44,7 +39,11 @@ function ProductTitle() {
 
 function Title({ classList }) {
   const productState = useProductState()
-  const CustomHeading = `h${shopwp.misc.isSingularProducts ? "1" : "2"}`
+  const CustomHeading = wp.hooks.applyFilters(
+    "product.titleHeadingTag",
+    `h${shopwp.misc.isSingularProducts ? "1" : "2"}`,
+    productState.payload
+  )
 
   const heading = wp.hooks.applyFilters(
     "product.titleText",

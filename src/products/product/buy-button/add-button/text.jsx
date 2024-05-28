@@ -5,7 +5,6 @@ import { useShopState } from "@shopwp/components"
 
 function AddButtonText({
   addedToCart,
-  addToCartButtonTextColor,
   productBuyButtonState,
   settings,
   isDirectCheckout,
@@ -56,19 +55,9 @@ function AddButtonText({
     setText(getText())
   }, [shopState.t, settings])
 
-  const AddButtonTextCSS = css`
-    display: block;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    color: ${addToCartButtonTextColor ? addToCartButtonTextColor : "inherit"};
-    transition: all 0.2s ease;
-  `
-
   return (
     <span
       className="swp-add-to-cart-text"
-      css={AddButtonTextCSS}
       ref={addedTest}
       aria-label={productState.payload.title + " add to cart text"}
     >

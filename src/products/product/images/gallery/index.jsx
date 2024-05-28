@@ -7,8 +7,8 @@ import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
 function ProductGallery({ carousel }) {
   const { useEffect, useContext } = wp.element
-  const productState = useProductState()
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
+  const productState = useProductState()
   const settings = useSettingsState()
 
   function hasManyImages() {

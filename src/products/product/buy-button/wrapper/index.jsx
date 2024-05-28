@@ -3,6 +3,8 @@ import {
   findVariantFromSelectedOptions,
   allOptionsSelectedMatch,
   FilterHook,
+  isHidingControls,
+  shouldShowQuantity,
 } from "@shopwp/common"
 
 import isEmpty from "lodash-es/isEmpty"
@@ -15,7 +17,6 @@ import {
 import ProductAddButton from "../add-button"
 import ProductOptions from "../options"
 import SubscriptionsBuyButton from "../subscriptions"
-import { useAction } from "@shopwp/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
@@ -47,48 +48,8 @@ function ProductBuyButtonWrapper() {
     shouldShowSubscriptions(productState.payload, settings)
   )
 
-  function isHidingControls() {
-    if (settings.variantId) {
-      return true
-    }
-
-    if (settings.linkTo === "none") {
-      return false
-    }
-
-    if ((settings.isSingular && settings.postId) || isDirectCheckout) {
-      return false
-    }
-
-    if (
-      settings.linkTo === "shopify" ||
-      settings.linkTo === "wordpress" ||
-      settings.linkTo === "modal"
-    ) {
-      if (settings.linkWithBuyButton) {
-        return false
-      }
-
-      return true
-    }
-
-    return false
-  }
-
   function shouldShowOptions() {
-    return productState.hasManyVariants && !isHidingControls()
-  }
-
-  function shouldShowQuantity() {
-    if (settings.hideQuantity) {
-      return false
-    }
-
-    if (settings.variantId) {
-      return true
-    }
-
-    return !isHidingControls()
+    return productState.hasManyVariants && !isHidingControls(settings)
   }
 
   var availableOptions = onlyAvailableOptionsFromVariants(
@@ -172,7 +133,7 @@ function ProductBuyButtonWrapper() {
         />
       )}
 
-      {showSubscriptions && !isHidingControls() ? (
+      {showSubscriptions && !isHidingControls(settings) ? (
         <SubscriptionsBuyButton
           payload={productState.payload}
           settings={settings}
@@ -182,13 +143,12 @@ function ProductBuyButtonWrapper() {
       <FilterHook name="before.productActionButton" args={[productState]} />
 
       <ProductAddButton
-        shouldShowQuantity={shouldShowQuantity()}
+        shouldShowQuantity={shouldShowQuantity(settings)}
         addedToCart={productState.addedToCart}
         hasLink={productState.hasLink}
         linkTarget={settings.linkTarget}
         linkTo={settings.linkTo}
         linkWithBuyButton={settings.linkWithBuyButton}
-        addToCartButtonTextColor={settings.addToCartButtonTextColor}
         isDirectCheckout={isDirectCheckout}
         hasManyVariants={productState.hasManyVariants}
         productDispatch={productDispatch}

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { objectIsEmpty } from "@shopwp/common"
 import { usePortal } from "@shopwp/hooks"
 import { useStorefrontState } from "../_state/hooks"
@@ -16,14 +14,11 @@ function StorefrontSelections() {
   const storefrontState = useStorefrontState()
   const settings = useSettingsState()
 
-  const StorefrontSelectionsCSS = css``
-
   return (
     <Suspense fallback={false}>
       <div
         id="shopwp-storefront-selections"
         className="swp-storefront-selections"
-        css={StorefrontSelectionsCSS}
       >
         {usePortal(
           !objectIsEmpty(storefrontState.selections) ? (

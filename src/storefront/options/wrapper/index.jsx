@@ -1,5 +1,6 @@
 import StorefrontFilterOptionsHeading from "../heading"
 import { usePortal } from "@shopwp/hooks"
+import { FilterHook } from "@shopwp/common"
 
 const OptionCollections = wp.element.lazy(() =>
   import(
@@ -30,6 +31,7 @@ function StorefrontOptionsWrapper({ settings }) {
         {settings.showOptionsHeading ? (
           <StorefrontFilterOptionsHeading settings={settings} />
         ) : null}
+        <FilterHook name="before.storefrontFilters" args={[settings]} />
         <aside className="swp-storefront-sidebar wps-storefront-sidebar">
           {settings.showTags ? <OptionTags settings={settings} /> : null}
           {settings.showVendors ? <OptionVendors settings={settings} /> : null}
@@ -39,6 +41,7 @@ function StorefrontOptionsWrapper({ settings }) {
           ) : null}
           {settings.showPrice ? <OptionPrice settings={settings} /> : null}
         </aside>
+        <FilterHook name="after.storefrontFilters" args={[settings]} />
       </div>
     </div>,
     settings.dropzoneOptions

@@ -3,7 +3,12 @@ import PaginationItems from "./items"
 import { usePayloadState } from "../items/_state/payload/hooks"
 import { addFinishedLoadingClass } from "@shopwp/common"
 
-function Pagination({ children, payload = false, customPagination = false }) {
+function Pagination({
+  children,
+  payload = false,
+  customPagination = false,
+  queryType,
+}) {
   const { useEffect, Suspense } = wp.element
 
   payload = payload ? payload : usePayloadState()
