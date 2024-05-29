@@ -1,6 +1,21 @@
 import { findSavedBuyerIdentity } from "@shopwp/common"
 
+function getInitialCartState() {
+  if (shopwp.misc.isAdmin) {
+    return true
+  }
+
+  if (window.shopwpDivi) {
+    if (window.shopwpDivi.isEditingTemplateLayout) {
+      return true
+    }
+  }
+
+  return false
+}
+
 function ShopInitialState(props) {
+  var isCartLoaded = getInitialCartState()
   var savedIdentity = findSavedBuyerIdentity()
 
   /*
@@ -36,9 +51,9 @@ function ShopInitialState(props) {
     buyerIdentity: buyerIdentity,
     jwt: props.jwt ? props.jwt : false,
     isCartOpen: false,
-    isCartReady: false,
+    isCartReady: isCartLoaded,
     cartData: false,
-    isCartUpdating: shopwp.misc.isAdmin ? false : true,
+    isCartUpdating: isCartLoaded,
     theme: shopwp.misc.theme,
     productsVisible: false,
     trackingParams: false,

@@ -33,6 +33,7 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
     null,
     element ? element.dataset.wpshopifyComponentId : ""
   )
+
   const doChangeSettings = useAction("do.changeSettings")
   const doChangeVarsCSS = useAction("do.changeVarsCSS")
 

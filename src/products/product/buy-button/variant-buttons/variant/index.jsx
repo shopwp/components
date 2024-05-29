@@ -150,6 +150,7 @@ function ProductVariantButtonValueButton({
   return (
     <button
       css={defaultStyles}
+      className="swp-product-variant-button"
       type="button"
       onMouseDown={onSelection}
       data-is-variant-selected={isSelected}

@@ -21,7 +21,8 @@ function ProductGalleryWrapper() {
         className={
           settings.isSingleComponent
             ? "swp-mb20 "
-            : "" + "swp-component wps-component wps-component-products-images"
+            : "" +
+              "swp-component wps-component swp-l-mw100 swp-component-products-images wps-component-products-images"
         }
         aria-label="Product Images"
         data-is-single-component={settings.isSingleComponent}
