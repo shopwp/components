@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import {
   useRequestsState,
   useRequestsDispatch,
@@ -12,8 +10,6 @@ function StorefrontSelectionsClear() {
   const requestsDispatch = useRequestsDispatch()
   const storefrontDispatch = useStorefrontDispatch()
   const settings = useSettingsState()
-
-  const clearAllCSS = css``
 
   function clearAllSelections() {
     storefrontDispatch({ type: "CLEAR_SELECTIONS" })
@@ -46,7 +42,6 @@ function StorefrontSelectionsClear() {
     <div
       className="swp-storefront-clear-selections wps-filter-selections-clear"
       onClick={clearAllSelections}
-      css={clearAllCSS}
     >
       {settings.clearFilterSelectionsText}
     </div>

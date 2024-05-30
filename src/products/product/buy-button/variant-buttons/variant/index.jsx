@@ -7,6 +7,7 @@ import {
 } from "@shopwp/common"
 import { Price } from "@shopwp/components"
 import { useSettingsState } from "../../../../../items/_state/settings/hooks"
+import colorAlpha from "color-alpha"
 
 function ProductVariantButtonValue({
   optionObj,
@@ -17,6 +18,8 @@ function ProductVariantButtonValue({
   totalOptions,
   isAvailableInShopify,
 }) {
+  const { useRef } = wp.element
+
   const settings = useSettingsState()
   const isSelected = isMatching(selectedOptions, optionObj)
   const border = isSelected ? "#415aff" : "#606060"
@@ -72,39 +75,42 @@ function ProductVariantButtonValue({
       return defaultCustomStyles
     }
 
-    let variantValue = wp.hooks.applyFilters(
-      "product.colorSwatchValue",
-      optionObj.value
-    )
+    let variantValue = wp.hooks
+      .applyFilters("product.colorSwatchValue", optionObj.value)
+      .toLowerCase()
 
-    if (variantValue === "white" || variantValue === "White") {
-      var border = isSelected ? "3px solid #333" : "1px solid #333"
-    } else {
-      var border = isSelected ? "1px solid " + variantValue : "none"
+    function convertToAlpha(variantValue) {
+      if (isAvailableToSelect) {
+        return variantValue
+      }
+
+      return colorAlpha(variantValue, 0.1)
     }
 
     return `
         margin: 0 10px 10px 0;
-        outline: none;
         padding: 10px;
-        background-color: ${variantValue};
+        background-color: ${convertToAlpha(variantValue)};
         text-indent: 150%;
         white-space: nowrap;
-        overflow: hidden;
         width: 40px;
         height: 40px;
         font-size: 0;
-        opacity: ${isAvailableToSelect ? 1 : 0.1};
         border-radius: 50%;
-        border: ${border};
-        box-shadow: ${isSelected ? "inset 0 0 0px 4px white" : "none"};
+        border: none;
+        box-shadow: ${isSelected ? "inset 0 0 0px 2px white" : "none"};
+        outline: ${isSelected ? "2px dotted " + variantValue : "none"};
         transition: all ease 0.15s;
         line-height: 11;
+        overflow: hidden;
+        transform: ${isSelected ? "scale(1.1)" : "none"};
 
+        &:focus,
         &:hover {
-            transform: scale(1.2);
             cursor: ${!isSelected ? "pointer" : "auto"};
             opacity: 1 !important;
+            box-shadow: ${isSelected ? "inset 0 0 0px 2px white" : "none"};
+            outline: ${isSelected ? "2px dotted " + variantValue : "none"};
         }
       `
   }

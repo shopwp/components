@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
@@ -10,7 +8,6 @@ function Carousel({
   children,
   settings,
   customSettings,
-  extraCSS,
   customChange = false,
 }) {
   var sliderRef = false
@@ -20,8 +17,6 @@ function Carousel({
   const [carouselSettings, setCarouselSettings] = useState(
     combineSettings(settings, customSettings)
   )
-
-  const CarouselCSS = css``
 
   useEffect(() => {
     if (customChange !== false) {
@@ -81,7 +76,6 @@ function Carousel({
     <Slider
       {...carouselSettings}
       ref={(slider) => (sliderRef = slider)}
-      css={[CarouselCSS, extraCSS]}
       className="swp-carousel"
     >
       {children}

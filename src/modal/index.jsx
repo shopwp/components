@@ -45,7 +45,7 @@ function Modal({ isModalOpen, onModalClose, children }) {
       isOpen={isModalOpen}
       onRequestClose={onModalClose}
       style={customStyles}
-      bodyOpenClassName="wps-modal-open"
+      bodyOpenClassName="swp-modal-open wps-modal-open"
       parentSelector={() => parent}
       shouldReturnFocusAfterClose={false}
     >

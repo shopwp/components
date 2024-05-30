@@ -4,7 +4,7 @@ import Notice from "../../../notice"
 import { usePayloadState } from "../../../items/_state/payload/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
-function SearchModal({ searchTerm, setSearchTerm, setIsShowingModal }) {
+function SearchModal({ searchTerm, setIsShowingModal }) {
   const { useEffect, useRef } = wp.element
 
   const componentRef = useRef(null)
@@ -15,7 +15,13 @@ function SearchModal({ searchTerm, setSearchTerm, setIsShowingModal }) {
 
   // Function to handle clicks outside the component
   const handleClickOutside = (event) => {
+    var modalIsOpen = document.body.classList.contains("swp-modal-open")
+
     if (componentRef.current && !componentRef.current.contains(event.target)) {
+      if (modalIsOpen) {
+        return
+      }
+
       setIsShowingModal(false)
     }
   }

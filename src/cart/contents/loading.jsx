@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { IconLogo } from "@shopwp/components"
 import { useShopState } from "@shopwp/components"
 
@@ -11,11 +9,9 @@ function CartLoadingContents() {
   const shopState = useShopState()
   const { Suspense } = wp.element
 
-  const updatingOverlayTextCSS = css``
-
   return (
     <Suspense fallback="Loading...">
-      <div className="swp-cart-overlay" css={[updatingOverlayTextCSS]}>
+      <div className="swp-cart-overlay">
         <IconLogo color="#000" />
 
         {shopState.t.l.updatingCart}

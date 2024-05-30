@@ -46,15 +46,18 @@ function PaginationLoadMore() {
       <div
         disabled={requestsState.isFetchingNew}
         className="swp-btn swp-button-pagination wps-btn-next-page"
+        data-is-working={requestsState.isFetchingNew}
         onClick={onClick}
         onKeyDown={onKeyDown}
         tabIndex="0"
       >
         {requestsState.isFetchingNew ? (
           <Loader isLoading={requestsState.isFetchingNew} />
-        ) : (
-          settings.paginationLoadMoreText
-        )}
+        ) : null}
+
+        <span className="swp-add-to-cart-text">
+          {settings.paginationLoadMoreText}
+        </span>
       </div>
     </InView>,
     settings.dropzoneLoadMore

@@ -10,7 +10,6 @@ const SearchModal = wp.element.lazy(() =>
 
 function SearchItems({
   searchTerm,
-  setSearchTerm,
   setIsShowingModal,
   withStorefront = false,
 }) {
@@ -35,7 +34,6 @@ function SearchItems({
     <SearchModal
       setIsShowingModal={setIsShowingModal}
       searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
     />
   ) : null
 }

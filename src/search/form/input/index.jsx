@@ -28,7 +28,6 @@ function SearchInput({
   const shopState = useShopState()
 
   const onFocus = () => setIsShowingModal(true)
-  const onBlur = () => setIsShowingModal(false)
 
   // TODO: Remove this somehow
   function setNativeInput() {
@@ -158,7 +157,6 @@ function SearchInput({
           placeholder={settings.searchPlaceholderText}
           aria-label={settings.searchPlaceholderText}
           onChange={onChange}
-          onBlur={onBlur}
           onFocus={onFocus}
         />
         {!localTerm ? <SearchIcon /> : null}

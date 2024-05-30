@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useFirstRender } from "@shopwp/hooks"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import { useSettingsState } from "../../items/_state/settings/hooks"
@@ -40,9 +38,6 @@ function StorefrontWrapper() {
   const requestsDispatch = useRequestsDispatch()
   const storefrontState = useStorefrontState()
   const storefrontDispatch = useStorefrontDispatch()
-
-  const StorefrontCSS = css``
-  const SelectorsCSS = css``
 
   function setInitialSelections() {
     var initialSelections = getInitialSelections(settings)
@@ -174,7 +169,6 @@ function StorefrontWrapper() {
       <section
         id="shopwp-storefront"
         className="swp-storefront"
-        css={StorefrontCSS}
         data-is-fetching={requestsState.isFetchingNew}
       >
         <div className="swp-l-row">
@@ -186,10 +180,7 @@ function StorefrontWrapper() {
           ) : null}
         </div>
 
-        <div
-          className="swp-storefront-selectors swp-l-row swp-l-row-between"
-          css={SelectorsCSS}
-        >
+        <div className="swp-storefront-selectors swp-l-row swp-l-row-between">
           {settings.showSelections ? <StorefrontSelections /> : null}
         </div>
 

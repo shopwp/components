@@ -19,7 +19,6 @@ function SearchWrapper({ withStorefront = false, hasStorefrontSelections }) {
         {isShowingModal && searchTerm ? (
           <SearchItems
             searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
             setIsShowingModal={setIsShowingModal}
             withStorefront={withStorefront}
           />

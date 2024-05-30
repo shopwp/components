@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { buildNewSelection } from "@shopwp/common"
 import { useStorefrontState, useStorefrontDispatch } from "../_state/hooks"
 import { useShopState, IconRemove } from "@shopwp/components"
@@ -44,13 +42,10 @@ function StorefrontSelectionsValue({ selectionType, val }) {
     }
   }
 
-  const selectionValueCSS = css``
-
   return (
     <span
       className="swp-storefront-selection-value wps-filter-selection-value wps-mr-2"
       onClick={onClick}
-      css={selectionValueCSS}
       data-initial-selection={isAnInitialSelection}
     >
       {selectionType === "available_for_sale"
