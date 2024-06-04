@@ -35,14 +35,22 @@ function CartFooterSkeleton() {
   )
 }
 
+function hideCertainAttributes(attrs) {
+  var attrKeysToHide = ["ShopWP Site"]
+
+  return attrs.filter((attr) => !attrKeysToHide.includes(attr.key))
+}
+
 function CartFooter() {
   const cartState = useCartState()
   const shopState = useShopState()
   const { Suspense } = wp.element
 
-  const orderAttributes = wp.hooks.applyFilters(
-    "cart.visibleCartAttributes",
-    shopState.cartData.attributes
+  const orderAttributes = hideCertainAttributes(
+    wp.hooks.applyFilters(
+      "cart.visibleCartAttributes",
+      shopState.cartData.attributes
+    )
   )
 
   return (
