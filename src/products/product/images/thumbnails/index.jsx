@@ -23,9 +23,9 @@ function ProductThumbnailImages({ customOnClick }) {
     grid-column-gap: 15px;
     grid-row-gap: 0px;
     margin-top: ${!settings.showThumbsCarousel
-      ? "11px"
+      ? "12px"
       : productState.payload.media.edges.length <= 5
-      ? "11px"
+      ? "12px"
       : "3px"};
     max-width: 400px;
 

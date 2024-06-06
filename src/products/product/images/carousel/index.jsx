@@ -2,13 +2,42 @@ import Carousel from "../../../../carousel"
 import ProductFeaturedImageVideo from "../video"
 import ProductThumbnailImages from "../thumbnails"
 import ProductImage from "../image"
+import ProductGalleryContext from "../gallery/_state/context"
+import { useProductState } from "../../_state/hooks"
 
 function ProductCarouselImages({ images, settings }) {
-  const { useState } = wp.element
+  const { useState, useContext } = wp.element
   const [customChange, setCustomChange] = useState(false)
+  const [, galleryDispatch] = useContext(ProductGalleryContext)
+  const productState = useProductState()
 
   function customOnClick(index) {
     setCustomChange(index)
+  }
+
+  const disableZoom = wp.hooks.applyFilters("product.disableImageZoom", false)
+
+  function showZoom() {
+    if (disableZoom) {
+      return false
+    }
+
+    if (settings.showZoom === null) {
+      return shopwp.general.productsImagesShowZoom
+    }
+
+    return settings.showZoom
+  }
+
+  function onSlideChange(newIndex) {
+    var foundNextImage = productState.payload.media.edges[newIndex].node
+
+    if (foundNextImage) {
+      galleryDispatch({
+        type: "SET_FEAT_IMAGE",
+        payload: foundNextImage.image,
+      })
+    }
   }
 
   return (
@@ -22,6 +51,7 @@ function ProductCarouselImages({ images, settings }) {
           dots: settings.imageCarouselThumbs ? false : settings.carouselDots,
         }}
         customChange={customChange}
+        onSlideChange={onSlideChange}
       >
         {images.map((image) => (
           <div
@@ -32,7 +62,11 @@ function ProductCarouselImages({ images, settings }) {
             }
           >
             {image.node.mediaContentType === "IMAGE" ? (
-              <ProductImage image={image.node.image} isFeatured={true} />
+              <ProductImage
+                image={image.node.image}
+                isFeatured={true}
+                showZoom={showZoom()}
+              />
             ) : (
               <ProductFeaturedImageVideo
                 key={image.node.previewImage.id}

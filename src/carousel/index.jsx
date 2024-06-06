@@ -9,6 +9,7 @@ function Carousel({
   settings,
   customSettings,
   customChange = false,
+  onSlideChange = false,
 }) {
   var sliderRef = false
 
@@ -17,6 +18,12 @@ function Carousel({
   const [carouselSettings, setCarouselSettings] = useState(
     combineSettings(settings, customSettings)
   )
+
+  function beforeChangeFn(oldIndex, newIndex) {
+    if (onSlideChange) {
+      onSlideChange(newIndex)
+    }
+  }
 
   useEffect(() => {
     if (customChange !== false) {
@@ -30,6 +37,7 @@ function Carousel({
 
   function combineSettings(settings, customSettings) {
     var defaults = {
+      beforeChange: beforeChangeFn,
       dots: settings.carouselDots,
       infinite: settings.carouselInfinite,
       autoplay: settings.carouselAutoplay,
@@ -76,7 +84,11 @@ function Carousel({
     <Slider
       {...carouselSettings}
       ref={(slider) => (sliderRef = slider)}
-      className="swp-carousel"
+      className={`swp-carousel ${
+        settings.carouselSlidesToShow === 1
+          ? ` swp-carousel-showing-one-slide`
+          : ``
+      }`}
     >
       {children}
     </Slider>

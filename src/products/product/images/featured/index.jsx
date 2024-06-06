@@ -3,17 +3,6 @@ import ProductImage from "../image"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState } from "../../_state/hooks"
 
-import {
-  getImageWidth,
-  getImageHeight,
-  addCustomSizingToImageUrl,
-} from "@shopwp/common"
-import { useZoomImageMove } from "@zoom-image/react"
-
-const Loader = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Loader-public' */ "../../../../loader")
-)
-
 const ProductImageSoldOutLabel = wp.element.lazy(() =>
   import(
     /* webpackChunkName: 'ProductImageSoldOutLabel-public' */ "../sold-out-label"
@@ -31,19 +20,18 @@ const ProductFeaturedImageVideo = wp.element.lazy(() =>
 )
 
 function ProductFeaturedImage() {
-  const { useEffect, useContext, useRef, useState, Suspense } = wp.element
+  const { useContext, useRef, useState, Suspense } = wp.element
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
   const [originalFeatImg] = useState(galleryState.featImage)
   const settings = useSettingsState()
   const productState = useProductState()
 
   const zoomContainer = useRef()
-  const zoom = useZoomImageMove()
 
   const disableZoom = wp.hooks.applyFilters("product.disableImageZoom", false)
 
   function showZoom() {
-    if (settings.linkTo !== "none") {
+    if (disableZoom) {
       return false
     }
 
@@ -118,50 +106,50 @@ function ProductFeaturedImage() {
     return settings.imagesShowNextOnHover
   }
 
-  useEffect(() => {
-    if (
-      !galleryState.featImage ||
-      galleryState.featImageIsVideo ||
-      settings.showZoom === false ||
-      disableZoom
-    ) {
-      return
-    }
+  // useEffect(() => {
+  //   if (
+  //     !galleryState.featImage ||
+  //     galleryState.featImageIsVideo ||
+  //     settings.showZoom === false ||
+  //     disableZoom
+  //   ) {
+  //     return
+  //   }
 
-    var newSrc = addCustomSizingToImageUrl({
-      src: galleryState.featImage.originalSrc,
-      width: getImageWidth(settings, false, 2),
-      height: getImageHeight(settings, false, 2),
-      crop: settings.imagesSizingCrop,
-    })
+  //   var newSrc = addCustomSizingToImageUrl({
+  //     src: galleryState.featImage.originalSrc,
+  //     width: getImageWidth(settings, false, 2),
+  //     height: getImageHeight(settings, false, 2),
+  //     crop: settings.imagesSizingCrop,
+  //   })
 
-    if (!newSrc) {
-      newSrc = galleryState.featImagePlaceholder.src
-    }
+  //   if (!newSrc) {
+  //     newSrc = galleryState.featImagePlaceholder.src
+  //   }
 
-    if (zoomContainer.current && settings.linkTo !== "modal") {
-      if (newSrc && newSrc.includes("public/imgs/placeholder")) {
-        return
-      }
+  //   if (zoomContainer.current && settings.linkTo !== "modal") {
+  //     if (newSrc && newSrc.includes("public/imgs/placeholder")) {
+  //       return
+  //     }
 
-      zoom.createZoomImage(zoomContainer.current, {
-        zoomImageSource: newSrc,
-        disableScrollLock: shopwp.misc.isMobile ? false : true,
-        zoomImageProps: {
-          alt: galleryState.featImage.altText
-            ? galleryState.featImage.altText
-            : productState.payload.title,
-        },
-      })
-    }
-  }, [
-    zoomContainer,
-    galleryState.featImage,
-    settings.showZoom,
-    productState.payload,
-    galleryState.featImageIsVideo,
-    settings.linkTo,
-  ])
+  //     zoom.createZoomImage(zoomContainer.current, {
+  //       zoomImageSource: newSrc,
+  //       disableScrollLock: shopwp.misc.isMobile ? false : true,
+  //       zoomImageProps: {
+  //         alt: galleryState.featImage.altText
+  //           ? galleryState.featImage.altText
+  //           : productState.payload.title,
+  //       },
+  //     })
+  //   }
+  // }, [
+  //   zoomContainer,
+  //   galleryState.featImage,
+  //   settings.showZoom,
+  //   productState.payload,
+  //   galleryState.featImageIsVideo,
+  //   settings.linkTo,
+  // ])
 
   return (
     <div
@@ -193,20 +181,14 @@ function ProductFeaturedImage() {
             ) : null}
 
             <div
-              className={
-                "swp-product-image-wrapper wps-product-image-wrapper" +
-                " swp-zoom-is-" +
-                zoom.zoomImageState.zoomedImgStatus
-              }
+              className={"swp-product-image-wrapper wps-product-image-wrapper"}
               data-align={settings.imagesAlign}
               ref={zoomContainer}
             >
-              {zoom.zoomImageState.zoomedImgStatus === "loading" ? (
-                <Loader />
-              ) : null}
               <ProductImage
                 settings={settings}
                 isFeatured={true}
+                showZoom={showZoom()}
                 image={galleryState.featImage}
               />
             </div>

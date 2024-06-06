@@ -9,7 +9,12 @@ const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../../link")
 )
 
-function ProductImage({ image, isFeatured, isVideo = false }) {
+function ProductImage({
+  image,
+  isFeatured,
+  isVideo = false,
+  showZoom = false,
+}) {
   const { useEffect, useContext, useRef, useState } = wp.element
   const imageRef = useRef()
   const [galleryState, galleryDispatch] = useContext(ProductGalleryContext)
@@ -80,6 +85,7 @@ function ProductImage({ image, isFeatured, isVideo = false }) {
         linkTo={settings.linkTo}
         isVideo={isVideo}
         settings={settings}
+        showZoom={false}
       />
     </Link>
   ) : (
@@ -93,6 +99,7 @@ function ProductImage({ image, isFeatured, isVideo = false }) {
       linkTo={settings.linkTo}
       isVideo={isVideo}
       settings={settings}
+      showZoom={showZoom}
     />
   )
 }

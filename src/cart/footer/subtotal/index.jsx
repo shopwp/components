@@ -43,7 +43,7 @@ function CartFooterSubtotal() {
 
       <div className="wps-total-amount swp-total-amount swp-l-row swp-m-l-row swp-l-row-between swp-mb5 swp-mt10">
         <p className="wps-total-prefix swp-total-prefix swp-0">
-          {shopState.t.l.total}
+          {shopState.t.l.subtotal}
         </p>
         {shopState.cartData && shopState.cartData?.cost ? (
           <p>

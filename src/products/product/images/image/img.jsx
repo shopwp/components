@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { getImageWidth, getImageHeight } from "@shopwp/common"
+import ImageZoom from "react-image-zooom"
 
 function Img(props) {
   function isSelectedImage() {
@@ -29,70 +28,52 @@ function Img(props) {
     }
   }
 
-  const featThumbStyles = css``
+  var altText = props.image
+    ? props.image.altText
+      ? props.image.altText
+      : props.payload
+      ? props.payload.title
+      : "Product image"
+    : props.payload.title + " featured image"
 
-  const thumbnailStyles = css`
-    display: block;
-    margin-bottom: ${props.isFeatured ? "0px" : "10px"};
-    max-width: 100%;
-    filter: ${props.isVideo ? "brightness(0.5)" : "none"};
-
-    @keyframes a {
-      0% {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    + img {
-      animation: a 0.3s ease-out;
-    }
-
-    &:focus,
-    &:active {
-      outline: ${props.isFeatured ? "none" : "1px dashed #000000"};
-      outline-offset: ${props.isFeatured ? "none" : "3px"};
-    }
-
-    &:hover {
-      cursor: ${props.isFeatured
-        ? "default" && props.linkTo !== "modal"
-        : "pointer"};
-    }
-  `
+  var width = getImageWidth(props.settings, !props.isFeatured).toString()
+  var height = getImageHeight(props.settings, !props.isFeatured).toString()
 
   return (
     <>
-      <img
-        css={isSelectedImage() ? featThumbStyles : thumbnailStyles}
-        ref={props.imageRef}
-        itemProp="image"
-        crossOrigin="anonymous"
-        referrerPolicy="no-referrer"
-        src={
-          props.src ? props.src : props.galleryState.featImagePlaceholder.src
-        }
-        className={
-          (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
-          " swp-mw100 wps-product-image"
-        }
-        loading="lazy"
-        alt={
-          props.image
-            ? props.image.altText
-              ? props.image.altText
-              : props.payload
-              ? props.payload.title
-              : "Product image"
-            : props.payload.title + " featured image"
-        }
-        aria-label={props.payload ? props.payload.title : "Product image"}
-        data-zoom={props.image ? props.image.originalSrc : false}
-        width={getImageWidth(props.settings, !props.isFeatured).toString()}
-        height={getImageHeight(props.settings, !props.isFeatured).toString()}
-      />
+      {props.showZoom && props.src ? (
+        <ImageZoom
+          src={props.src}
+          alt={altText}
+          zoom="300"
+          width={width}
+          height={height}
+        />
+      ) : (
+        <img
+          ref={props.imageRef}
+          itemProp="image"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+          src={
+            props.src ? props.src : props.galleryState.featImagePlaceholder.src
+          }
+          className={
+            (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
+            " swp-mw100 swp-product-image wps-product-image"
+          }
+          loading={props.settings.imagesLazyLoad ? "lazy" : "eager"}
+          alt={altText}
+          aria-label={props.payload ? props.payload.title : "Product image"}
+          data-zoom={props.image ? props.image.originalSrc : false}
+          width={width}
+          height={height}
+          data-is-featured={props.isFeatured}
+          data-link-to={props.linkTo}
+          data-is-video={props.isVideo}
+        />
+      )}
+
       {props.isVideo ? (
         <svg
           className="swp-video-icon"
