@@ -2,7 +2,7 @@ import memoize from "memoize-one"
 import CheckboxItem from "../group-item-value"
 import { useStorefrontDispatch, useStorefrontState } from "../../_state/hooks"
 import { useRequestsState } from "../../../items/_state/requests/hooks"
-import { useVirtual } from "react-virtual"
+import { useVirtualizer } from "@tanstack/react-virtual"
 
 const Row = wp.element.memo(({ data, index, size, start }) => {
   const {
@@ -71,9 +71,9 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
 
   const parentRef = wp.element.useRef()
 
-  const rowVirtualizer = useVirtual({
-    size: filterOptions.length,
-    parentRef,
+  const rowVirtualizer = useVirtualizer({
+    count: filterOptions.length,
+    getScrollElement: () => parentRef.current,
     estimateSize: wp.element.useCallback(() => 30, []),
   })
 
