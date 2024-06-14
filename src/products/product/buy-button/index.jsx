@@ -33,15 +33,7 @@ function ProductBuyButton() {
         data-is-single-component={settings.isSingleComponent}
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
-
-        {settings.linkTo !== "none" || productState.payload.availableForSale ? (
-          <ProductBuyButtonWrapper />
-        ) : (
-          <FilterHook name="product.unavailableHtml" args={[productState]}>
-            <Notice status="warning">{shopState.t.l.outOfStock}</Notice>
-          </FilterHook>
-        )}
-
+        <ProductBuyButtonWrapper />
         <FilterHook name="after.productBuyButton" args={[productState]} />
       </div>
     </ProductBuyButtonProvider>,

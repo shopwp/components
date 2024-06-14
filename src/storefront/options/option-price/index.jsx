@@ -9,7 +9,6 @@ const StorefrontFilterOptionsGroup = wp.element.lazy(() =>
 )
 
 function OptionPrice({ settings }) {
-  const shouldOpen = shouldOpenOnLoad(settings, "price")
   const shopState = useShopState()
   const priceValues = [
     shopState.t.l.priceLvl1,
@@ -21,7 +20,7 @@ function OptionPrice({ settings }) {
 
   return (
     <StorefrontFilterOptionsGroup
-      openOnLoad={shouldOpen}
+      openOnLoad={shouldOpenOnLoad(settings, "price")}
       isLoadingItems={false}
       groupType="price"
       areFilterOptionsEmpty={false}

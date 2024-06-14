@@ -28,13 +28,18 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
 
   const shopState = useShopState()
   const doShopHydrate = useAction("do.shopHydrate")
+
   const doChangeQuery = useAction(
     "do.changeQuery",
     null,
     element ? element.dataset.wpshopifyComponentId : ""
   )
 
-  const doChangeSettings = useAction("do.changeSettings")
+  const doChangeSettings = useAction(
+    "do.changeSettings",
+    null,
+    element ? element.dataset.wpshopifyComponentId : ""
+  )
   const doChangeVarsCSS = useAction("do.changeVarsCSS")
 
   useEffect(() => {
@@ -139,9 +144,20 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
       return
     }
 
+    /* 
+    
+    If landing here, that means the user has more than one component added, trying to render.
+    
+    This makes sure we only render the correct one
+
+    */
+    if (doChangeQuery.id !== element.dataset.wpshopifyComponentId) {
+      return
+    }
+
     var newQueryParams = {
       ...requestsState.queryParams,
-      ...doChangeQuery,
+      ...doChangeQuery.data,
     }
 
     if (isTheSameObject(newQueryParams, requestsState.queryParams)) {
@@ -174,7 +190,11 @@ function ItemsWrapper({ settings, queryType, queryParams, element, children }) {
       return
     }
 
-    var formatted = underscoreToCamel(doChangeSettings)
+    if (doChangeSettings.id !== element.dataset.wpshopifyComponentId) {
+      return
+    }
+
+    var formatted = underscoreToCamel(doChangeSettings.data)
 
     var newSettings = {
       ...settings,

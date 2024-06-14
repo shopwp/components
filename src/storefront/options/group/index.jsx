@@ -16,7 +16,7 @@ function StorefrontFilterOptionsGroup({
   noFilterGroupFoundText,
   items,
 }) {
-  const { useState, Suspense } = wp.element
+  const { useState, Suspense, useEffect } = wp.element
   const shopState = useShopState()
   const [isOpen, setIsOpen] = useState(openOnLoad)
 
@@ -27,6 +27,14 @@ function StorefrontFilterOptionsGroup({
       onOpen(!isOpen)
     }
   }
+
+  useEffect(() => {
+    if (openOnLoad) {
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
+    }
+  }, [openOnLoad])
 
   return (
     <StorefrontFilter

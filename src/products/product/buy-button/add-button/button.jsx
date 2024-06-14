@@ -79,7 +79,9 @@ function AddButton({
   const settings = useSettingsState()
   const shopState = useShopState()
   const [shouldShake, setShouldShake] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(
+    !productState.payload.availableForSale && linkTo === "none"
+  )
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const button = useRef()
 
@@ -210,7 +212,12 @@ function AddButton({
     )
 
     if (!allOptionsSelected) {
-      setIsDisabled(false)
+      if (!productState.payload.availableForSale && linkTo === "none") {
+        setIsDisabled(true)
+      } else {
+        setIsDisabled(false)
+      }
+
       return
     }
 

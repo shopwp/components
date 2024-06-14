@@ -15,20 +15,6 @@ function ProductCarouselImages({ images, settings }) {
     setCustomChange(index)
   }
 
-  const disableZoom = wp.hooks.applyFilters("product.disableImageZoom", false)
-
-  function showZoom() {
-    if (disableZoom) {
-      return false
-    }
-
-    if (settings.showZoom === null) {
-      return shopwp.general.productsImagesShowZoom
-    }
-
-    return settings.showZoom
-  }
-
   function onSlideChange(newIndex) {
     var foundNextImage = productState.payload.media.edges[newIndex].node
 
@@ -62,11 +48,7 @@ function ProductCarouselImages({ images, settings }) {
             }
           >
             {image.node.mediaContentType === "IMAGE" ? (
-              <ProductImage
-                image={image.node.image}
-                isFeatured={true}
-                showZoom={showZoom()}
-              />
+              <ProductImage image={image.node.image} isFeatured={true} />
             ) : (
               <ProductFeaturedImageVideo
                 key={image.node.previewImage.id}

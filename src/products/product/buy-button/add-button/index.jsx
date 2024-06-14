@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
-import { mq, getMaxQuantity } from "@shopwp/common"
+import { FilterHook, getMaxQuantity } from "@shopwp/common"
+import { useShopState } from "@shopwp/components"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import AddButtonWrapper from "./wrapper"
@@ -34,6 +35,7 @@ function ProductAddButton({
   const settings = useSettingsState()
   const productState = useProductState()
   const [notice, setNotice] = wp.element.useState(false)
+  const shopState = useShopState()
 
   const maxQu = getMaxQuantity(
     settings.showInventoryLevels,
@@ -103,6 +105,12 @@ function ProductAddButton({
       productState.payload.availableForSale &&
       productState.payload.totalInventory ? (
         <ProductBuyButtonLeftInStock />
+      ) : null}
+
+      {!productState.payload.availableForSale && linkTo === "none" ? (
+        <FilterHook name="product.unavailableHtml" args={[productState]}>
+          <Notice status="warning">{shopState.t.l.outOfStock}</Notice>
+        </FilterHook>
       ) : null}
     </div>
   )

@@ -9,12 +9,11 @@ const StorefrontFilterOptionsGroupOption = wp.element.lazy(() =>
 )
 
 function OptionTypes({ settings }) {
-  const shouldOpen = shouldOpenOnLoad(settings, "types")
   const shopState = useShopState()
 
   return (
     <StorefrontFilterOptionsGroupOption
-      openOnLoad={shouldOpen}
+      openOnLoad={shouldOpenOnLoad(settings, "types")}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
       queryFn={getAllTypes}
       groupType="types"

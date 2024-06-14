@@ -1,5 +1,4 @@
 import { getImageWidth, getImageHeight } from "@shopwp/common"
-import ImageZoom from "react-image-zooom"
 
 function Img(props) {
   function isSelectedImage() {
@@ -41,38 +40,26 @@ function Img(props) {
 
   return (
     <>
-      {props.showZoom && props.src ? (
-        <ImageZoom
-          src={props.src}
-          alt={altText}
-          zoom="300"
-          width={width}
-          height={height}
-        />
-      ) : (
-        <img
-          ref={props.imageRef}
-          itemProp="image"
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
-          src={
-            props.src ? props.src : props.galleryState.featImagePlaceholder.src
-          }
-          className={
-            (isSelectedImage() ? "swp-feat-image" : "swp-thumb-image") +
-            " swp-mw100 swp-product-image wps-product-image"
-          }
-          loading={props.settings.imagesLazyLoad ? "lazy" : "eager"}
-          alt={altText}
-          aria-label={props.payload ? props.payload.title : "Product image"}
-          data-zoom={props.image ? props.image.originalSrc : false}
-          width={width}
-          height={height}
-          data-is-featured={props.isFeatured}
-          data-link-to={props.linkTo}
-          data-is-video={props.isVideo}
-        />
-      )}
+      <img
+        ref={props.imageRef}
+        itemProp="image"
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
+        src={
+          props.src ? props.src : props.galleryState.featImagePlaceholder.src
+        }
+        className="swp-mw100 swp-product-image wps-product-image"
+        loading={props.settings.imagesLazyLoad ? "lazy" : "eager"}
+        alt={altText}
+        aria-label={props.payload ? props.payload.title : "Product image"}
+        data-zoom={props.image ? props.image.originalSrc : false}
+        width={width}
+        height={height}
+        data-is-featured={props.isFeatured}
+        data-link-to={props.linkTo}
+        data-is-video={props.isVideo}
+        data-is-selected={isSelectedImage()}
+      />
 
       {props.isVideo ? (
         <svg

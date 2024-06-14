@@ -15,7 +15,7 @@ function OptionCollections({ settings }) {
   const [existingCollections, setExistingCollections] = useState([])
   const [itemsRaw, setItemsRaw] = useState([])
   const [filterableValues, setFilterableValues] = useState([])
-  const shouldOpen = shouldOpenOnLoad(settings, "collections")
+
   const shopState = useShopState()
 
   function createFilterableValues(resp) {
@@ -100,7 +100,7 @@ function OptionCollections({ settings }) {
     <StorefrontFilterOptionsGroup
       error={error}
       onOpen={onOpen}
-      openOnLoad={shouldOpen}
+      openOnLoad={shouldOpenOnLoad(settings, "collections")}
       isLoadingItems={isLoadingItems}
       groupType="collections"
       areFilterOptionsEmpty={isEmpty(filterableValues)}

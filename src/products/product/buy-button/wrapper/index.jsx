@@ -143,7 +143,7 @@ function ProductBuyButtonWrapper() {
       <FilterHook name="before.productActionButton" args={[productState]} />
 
       <ProductAddButton
-        shouldShowQuantity={shouldShowQuantity(settings)}
+        shouldShowQuantity={shouldShowQuantity(settings, productState.payload)}
         addedToCart={productState.addedToCart}
         hasLink={productState.hasLink}
         linkTarget={settings.linkTarget}
