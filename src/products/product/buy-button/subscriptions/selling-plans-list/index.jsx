@@ -13,18 +13,21 @@ function SellingPlansList({ plans }) {
   const productState = useProductState()
   const productDispatch = useProductDispatch()
 
-  const newPlans = plans
-    .map((plan) => {
-      if (plan.node.type === "onetime") {
-        return false
-      }
+  const newPlans = wp.hooks.applyFilters(
+    "product.subscriptionPlanLabels",
+    plans
+      .map((plan) => {
+        if (plan.node.type === "onetime") {
+          return false
+        }
 
-      return {
-        label: plan.node.name,
-        value: plan.node.name,
-      }
-    })
-    .filter(Boolean)
+        return {
+          label: plan.node.name,
+          value: plan.node.name,
+        }
+      })
+      .filter(Boolean)
+  )
 
   const [selectedOption, setSelectedOption] = useState(newPlans[0])
 

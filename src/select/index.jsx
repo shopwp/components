@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { Menu, MenuButton } from "@szhsin/react-menu"
 import "@szhsin/react-menu/dist/index.css"
 import "@szhsin/react-menu/dist/transitions/slide.css"
@@ -89,9 +87,6 @@ function Dropdown({
     }
   }, [selectedOptions, selectedOption])
 
-  const DropdownButtonCSS = css``
-  const DropdownLabel = css``
-
   function onMenuChange(open) {
     setIsOpen(open.open)
   }
@@ -113,7 +108,6 @@ function Dropdown({
           data-is-selected={selected}
           data-is-missing-selections={missingSelections}
           className="swp-dropdown-label"
-          css={DropdownLabel}
         >
           {isBusy ? <Loader /> : null}
           <Menu
@@ -122,7 +116,7 @@ function Dropdown({
             gap={5}
             onMenuChange={onMenuChange}
             menuButton={
-              <MenuButton css={DropdownButtonCSS}>
+              <MenuButton>
                 <span>
                   {wp.hooks.applyFilters(
                     "product.optionName",

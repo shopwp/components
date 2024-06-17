@@ -1,7 +1,10 @@
 import { getPrices } from "@shopwp/common"
 
 function defaultSellingGroups(props) {
-  if (props.payload && props.payload.requiresSellingPlan) {
+  if (
+    (props.payload && props.payload.requiresSellingPlan) ||
+    props.settings.subscriptionsHideOnetime
+  ) {
     return [{ id: "subscription" }]
   } else {
     return [{ id: "onetime" }, { id: "subscription" }]

@@ -5,6 +5,7 @@ import { isOneTimeSub, maybeFindFirstSellingPlan } from "@shopwp/common"
 import { useProductState, useProductDispatch } from "../../../_state/hooks"
 
 function SellingGroups() {
+  const { useEffect } = wp.element
   const subscriptionsBuyButtonState = useSubscriptionsBuyButtonState()
   const productDispatch = useProductDispatch()
   const productState = useProductState()
@@ -32,6 +33,22 @@ function SellingGroups() {
       payload: subType,
     })
   }
+
+  useEffect(() => {
+    if (productState.selectedSubscription) {
+      if (productState.selectedSubscription.recurringDeliveries) {
+        productDispatch({
+          type: "SET_ACTIVE_SELLING_GROUP",
+          payload: "subscription",
+        })
+      } else {
+        productDispatch({
+          type: "SET_ACTIVE_SELLING_GROUP",
+          payload: "onetime",
+        })
+      }
+    }
+  }, [])
 
   return (
     <RadioGroup
