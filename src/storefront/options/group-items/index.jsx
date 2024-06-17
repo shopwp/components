@@ -90,7 +90,7 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
       <li
         className="ListInner"
         style={{
-          height: `${rowVirtualizer.totalSize}px`,
+          height: `${rowVirtualizer.getTotalSize()}px`,
           width: "100%",
           position: "relative",
           listStyle: "none",
@@ -98,13 +98,13 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
           padding: 0,
         }}
       >
-        {rowVirtualizer.virtualItems.map((virtualRow) => (
+        {rowVirtualizer.getVirtualItems().map((virtualItem) => (
           <Row
-            key={virtualRow.index + virtualRow.end}
+            key={virtualItem.key}
             data={itemData}
-            index={virtualRow.index}
-            size={virtualRow.size}
-            start={virtualRow.start}
+            index={virtualItem.index}
+            size={virtualItem.size}
+            start={virtualItem.start}
           />
         ))}
       </li>
