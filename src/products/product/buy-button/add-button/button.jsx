@@ -412,7 +412,7 @@ function DirectCheckoutButton({
     <AutoClickLink href={checkoutLink} callback={callbackAfter} />
   ) : (
     <div
-      className="swp-btn swp-l-flex swp-btn swp-btn-direct-checkout"
+      className="swp-btn swp-l-flex swp-btn swp-btn-add-to-cart swp-btn-direct-checkout"
       onClick={onCheckout}
       ref={button}
       data-is-disabled={isCheckingOut || isDisabled}

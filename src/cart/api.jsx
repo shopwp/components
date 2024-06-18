@@ -326,7 +326,9 @@ function directCheckout(data, shopState) {
             discountCodes: data?.discountCodes ? data.discountCodes : [],
             note: data?.note ? data.note : "",
             attributes: data?.attributes ? data.attributes : [],
-            buyerIdentity: shopState.buyerIdentity,
+            buyerIdentity: data?.buyerIdentity
+              ? data?.buyerIdentity
+              : shopState.buyerIdentity,
           },
           shopState,
           data
