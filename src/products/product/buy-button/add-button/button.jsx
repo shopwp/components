@@ -331,6 +331,15 @@ function DirectCheckoutButton({
 
   var shouldDisable = false
 
+  function openCheckoutInPopout(link) {
+    window.open(
+      link,
+      "popup",
+      "location=0,width=750,height=650,left=500,top=55"
+    )
+    return false
+  }
+
   async function onCheckout(e) {
     if (!variant && hasManyVariants) {
       productDispatch({ type: "SET_MISSING_SELECTIONS", payload: true })
@@ -391,7 +400,12 @@ function DirectCheckoutButton({
         trackingParams: shopState.trackingParams,
       })
 
-      setCheckoutLink(checkoutURL)
+      if (shopwp.general.checkoutButtonTarget === "popout") {
+        openCheckoutInPopout(checkoutURL)
+        callbackAfter()
+      } else {
+        setCheckoutLink(checkoutURL)
+      }
     }
   }
 

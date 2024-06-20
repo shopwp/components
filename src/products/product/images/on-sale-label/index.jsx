@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
-
 import {
   filterOnlyAvailableVariants,
   findLargestSalePercentage,
@@ -12,13 +9,8 @@ function ProductImageOnSaleLabel({ text, showSaleNoticePercentage, payload }) {
   )
   const salePercentage = findLargestSalePercentage(onlyAvailableVariants)
 
-  const ProductImageOnSaleLabelCSS = css``
-
   return (
-    <span
-      className="swp-on-sale-label wps-product-image-on-sale-label"
-      css={ProductImageOnSaleLabelCSS}
-    >
+    <span className="swp-on-sale-label wps-product-image-on-sale-label">
       {text}
       {salePercentage && showSaleNoticePercentage
         ? " - Up to " + salePercentage + "% off"
