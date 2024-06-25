@@ -143,8 +143,8 @@ function ProductWrapper({ payload }) {
 
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={false}>
-              {settings.excludes &&
-              settings.excludes.includes("pricing") ? null : (
+              {(settings.excludes && settings.excludes.includes("pricing")) ||
+              settings.showPricingAboveAddToCartButton ? null : (
                 <ProductPricing />
               )}
             </Suspense>

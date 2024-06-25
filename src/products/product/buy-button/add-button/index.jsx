@@ -106,12 +106,6 @@ function ProductAddButton({
       productState.payload.totalInventory ? (
         <ProductBuyButtonLeftInStock />
       ) : null}
-
-      {!productState.payload.availableForSale && linkTo === "none" ? (
-        <FilterHook name="product.unavailableHtml" args={[productState]}>
-          <Notice status="warning">{shopState.t.l.outOfStock}</Notice>
-        </FilterHook>
-      ) : null}
     </div>
   )
 }

@@ -20,6 +20,12 @@ import SubscriptionsBuyButton from "../subscriptions"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 import { useProductState, useProductDispatch } from "../../_state/hooks"
 import { useShopState } from "@shopwp/components"
+import { ErrorBoundary } from "react-error-boundary"
+import ErrorFallback from "../../../../error-fallback"
+
+const ProductPricing = wp.element.lazy(() =>
+  import(/* webpackChunkName: 'ProductPricing-public' */ "../../pricing")
+)
 
 function shouldShowSubscriptions(payload, settings) {
   var sellingPlanGroups = payload.sellingPlanGroups
@@ -141,6 +147,16 @@ function ProductBuyButtonWrapper() {
       ) : null}
 
       <FilterHook name="before.productActionButton" args={[productState]} />
+
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Suspense fallback={false}>
+          {settings.excludes &&
+          !settings.excludes.includes("pricing") &&
+          settings.showPricingAboveAddToCartButton ? (
+            <ProductPricing />
+          ) : null}
+        </Suspense>
+      </ErrorBoundary>
 
       <ProductAddButton
         shouldShowQuantity={shouldShowQuantity(settings, productState.payload)}

@@ -25,7 +25,8 @@ function AddButtonText({
         settings,
         isDirectCheckout,
         settings.linkWithBuyButton,
-        shopState
+        shopState,
+        productState.payload
       )
     }
 
