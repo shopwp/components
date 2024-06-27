@@ -80,7 +80,30 @@ function CartWrapper() {
     const discountCodeFromURL = getURLParam("discount")
 
     if (discountCodeFromURL) {
-      updateDiscount(cartDispatch, shopState, discountCodeFromURL, shopDispatch)
+      if (shopState.cartData.totalQuantity === 0) {
+        cartDispatch({
+          type: "SET_NOTICE",
+          payload: {
+            type: "info",
+            message:
+              "Discount code: " +
+              discountCodeFromURL.toUpperCase() +
+              " will be applied after adding something to the cart.",
+          },
+        })
+
+        localStorage.setItem("shopwp-cart-discount", discountCodeFromURL)
+      } else {
+        updateDiscount(
+          cartDispatch,
+          shopState,
+          discountCodeFromURL,
+          shopDispatch,
+          function () {
+            localStorage.removeItem("shopwp-cart-discount")
+          }
+        )
+      }
     }
   }
 

@@ -144,6 +144,13 @@ function ProductImage({ image, isFeatured, isVideo = false }) {
       return
     }
 
+    if (
+      galleryState.featImage.originalSrc === shopwp.misc.placeholderProductImage
+    ) {
+      setShouldShowZoom(false)
+      return
+    }
+
     var newSrc = addCustomSizingToImageUrl({
       src: galleryState.featImage.originalSrc,
       width: getImageWidth(settings, false, 2),

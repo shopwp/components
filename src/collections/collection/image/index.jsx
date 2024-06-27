@@ -17,7 +17,7 @@ function CollectionImage() {
   const [imageSrc, setImageSrc] = useState(() => {
     return collectionState.payload.image
       ? collectionState.payload.image.originalSrc
-      : shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png"
+      : shopwp.misc.placeholderProductImage
   })
 
   useEffect(() => {

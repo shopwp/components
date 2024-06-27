@@ -165,6 +165,12 @@ async function addLines(
   if (existingCartId !== response.data.id) {
     localStorage.setItem("shopwp-cart-id", response.data.id)
   }
+
+  var savedDiscountFromUrl = localStorage.getItem("shopwp-cart-discount")
+
+  if (savedDiscountFromUrl) {
+    updateDiscount(cartDispatch, shopState, savedDiscountFromUrl, shopDispatch)
+  }
 }
 
 async function updateAttrs(data, shopState, cartDispatch, shopDispatch) {
@@ -250,6 +256,7 @@ async function getExistingCart(
 
   if (maybeApiErrorMessage) {
     console.warn("ShopWP Error: ", maybeApiErrorMessage)
+    localStorage.removeItem("shopwp-cart-discount")
     localStorage.removeItem("shopwp-cart-id")
 
     if (!response || response.success === false) {
@@ -356,26 +363,6 @@ function directCheckout(data, shopState) {
     })
   })
 }
-
-// function combineDiscounts(shopState, discountToAdd) {
-//   var newDiscountCodesToAdd = [discountToAdd]
-
-//   if (shopState.cartData.discountCodes.length) {
-//     var currentlyAppliedCodes = shopState.cartData.discountCodes.map(
-//       (ds) => ds.code
-//     )
-//   } else {
-//     var currentlyAppliedCodes = []
-//   }
-
-//   return currentlyAppliedCodes.concat(newDiscountCodesToAdd)
-// }
-// function subtractDiscounts(shopState, discountToRemove) {
-//   var newlist = shopState.cartData.discountCodes.filter(
-//     (d) => d.code !== discountToRemove
-//   )
-//   return newlist.map((ds) => ds.code)
-// }
 
 async function updateDiscount(
   cartDispatch,

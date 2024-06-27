@@ -17,13 +17,12 @@ function ProductGalleryInitialState(props) {
     featImage: props.payload
       ? featImage
       : {
-          originalSrc:
-            shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png",
+          originalSrc: shopwp.misc.placeholderProductImage,
           altText: "Placeholder Product Image",
         },
     featImageElement: false,
     featImagePlaceholder: {
-      originalSrc: shopwp.misc.pluginsDirURL + "public/imgs/placeholder.png",
+      originalSrc: shopwp.misc.placeholderProductImage,
       altText: "Placeholder Product Image",
     },
   }
