@@ -58,6 +58,8 @@ function ShopReducer(state, action) {
 
       forceCartTabbing(action.payload)
 
+      wp.hooks.doAction("on.cartToggle", action.payload, updatedShopState)
+
       return updatedShopState
     }
 

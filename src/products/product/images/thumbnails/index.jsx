@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react"
 import Thumbnails from "./mapped"
-import { to, mq, doFeaturedSizing } from "@shopwp/common"
 import isEmpty from "lodash-es/isEmpty"
+import { to, doFeaturedSizing } from "@shopwp/common"
 import { useProductState } from "../../_state/hooks"
 import { useSettingsState } from "../../../../items/_state/settings/hooks"
 
@@ -15,30 +15,6 @@ function ProductThumbnailImages({ customOnClick }) {
   const [thumbnails] = useState(
     wp.hooks.applyFilters("product.thumbnails", productState.payload.media)
   )
-
-  const thumbnailsWrapperCSS = css`
-    display: ${settings.showThumbsCarousel ? "flex" : "grid"};
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 15px;
-    grid-row-gap: 0px;
-    margin-top: ${!settings.showThumbsCarousel
-      ? "12px"
-      : productState.payload.media.edges.length <= 5
-      ? "12px"
-      : "3px"};
-    max-width: 400px;
-
-    ${mq("small")} {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0px 12px;
-
-      > div {
-        width: 57px;
-      }
-    }
-  `
 
   function hasImages() {
     return productState.payload && !isEmpty(productState.payload.media)
@@ -76,12 +52,12 @@ function ProductThumbnailImages({ customOnClick }) {
 
   return hasImages() ? (
     <div
-      className="wps-thumbnails-wrapper"
+      className="wps-thumbnails-wrapper swp-thumbnails-wrapper"
       aria-label="Product Thumbnails"
       data-is-showing-thumbs-carousel={
         settings.showThumbsCarousel && thumbnails.edges.length > 5
       }
-      css={thumbnailsWrapperCSS}
+      data-less-images={productState.payload.media.edges.length <= 5}
       onMouseEnter={preloadStatus === "idle" ? onMouseEnter : undefined}
     >
       <Thumbnails

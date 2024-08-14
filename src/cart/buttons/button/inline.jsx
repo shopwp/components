@@ -47,7 +47,8 @@ function CartIcon({ settings, element }) {
       }`}
       onMouseUp={onMouseUp}
     >
-      {settings.showCounter || settings.showCounter === "undefined" ? (
+      {shopState.cartData &&
+      (settings.showCounter || settings.showCounter === "undefined") ? (
         <CartCounter
           totalLineItems={
             shopState.cartData.totalQuantity

@@ -1,11 +1,9 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useSettingsState } from "../../items/_state/settings/hooks"
 import {
   useRequestsState,
   useRequestsDispatch,
 } from "../../items/_state/requests/hooks"
-import { mq, findDefaultSelectVal } from "@shopwp/common"
+import { findDefaultSelectVal } from "@shopwp/common"
 
 const Dropdown = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Select-public' */ "../../select")
@@ -59,23 +57,8 @@ function ProductsPageSize() {
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
   }
 
-  const pageSizeWrapperCSS = css`
-    width: auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    align-items: baseline;
-    margin-left: 10px;
-
-    ${mq("medium")} {
-      width: 100%;
-      margin-left: 0;
-    }
-  `
-
   return (
-    <div id="shopwp-storefront-page-size" css={pageSizeWrapperCSS}>
+    <div id="shopwp-storefront-page-size" className="swp-page-size">
       <Suspense fallback="Loading page size...">
         <Dropdown
           settings={settings}

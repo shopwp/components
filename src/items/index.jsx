@@ -10,7 +10,7 @@ function Items(props) {
   const shopState = useShopState()
 
   return (
-    <RequestsProvider buyerIdentity={shopState.buyerIdentity} {...props}>
+    <RequestsProvider shopState={shopState} {...props}>
       <PayloadProvider {...props}>
         <SettingsProvider {...props}>
           <ItemsProvider {...props}>

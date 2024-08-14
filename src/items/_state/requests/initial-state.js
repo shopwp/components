@@ -6,7 +6,7 @@ function RequestsInitialState({
   queryType = "products",
   isFetchingNew = true,
   payload = false,
-  buyerIdentity = false,
+  shopState,
 }) {
   if (queryType === "collections") {
     var collection_titles = false
@@ -91,18 +91,25 @@ function RequestsInitialState({
       : false
   }
 
-  const finalQueryParams = {
+  var finalQueryParams = {
     query: query,
     first: first,
     sortKey: sortKey,
     reverse: reverse,
-    language: buyerIdentity
-      ? buyerIdentity.language
-      : shopwp.general.languageCode.toUpperCase(),
-    country: buyerIdentity
-      ? buyerIdentity.country
-      : shopwp.general.countryCode.toUpperCase(),
+    language: shopState.buyerIdentity.language,
+    country: shopState.buyerIdentity.country,
     collection_titles: collection_titles,
+  }
+
+  if (shopState.buyerIdentity.customerAccessToken) {
+    finalQueryParams.buyer = {
+      customerAccessToken: shopState.buyerIdentity.customerAccessToken,
+    }
+
+    if (shopState.buyerIdentity.companyLocationId) {
+      finalQueryParams.buyer.companyLocationId =
+        shopState.buyerIdentity.companyLocationId
+    }
   }
 
   return {

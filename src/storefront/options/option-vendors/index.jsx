@@ -14,6 +14,7 @@ function OptionVendors({ settings }) {
   return (
     <StorefrontFilterOptionsGroupOption
       openOnLoad={shouldOpenOnLoad(settings, "vendors")}
+      shopState={shopState}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
       queryFn={getAllVendors}
       groupType="vendors"

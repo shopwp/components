@@ -1,11 +1,3 @@
-import { updateAttrs } from "../../api.jsx"
-import { intersectAttributes } from "@shopwp/common"
-import {
-  useCartDispatch,
-  useShopState,
-  useShopDispatch,
-} from "@shopwp/components"
-
 function CartAttribute({ attribute, onRemove }) {
   return (
     <div
@@ -22,10 +14,6 @@ function CartAttribute({ attribute, onRemove }) {
 }
 
 function CartAttributes({ attributes, cartData }) {
-  const shopState = useShopState()
-  const shopDispatch = useShopDispatch()
-  const cartDispatch = useCartDispatch()
-
   function onRemove(attribute) {
     return
     // var newAttrs = intersectAttributes(attribute, cartData.attributes)

@@ -1,3 +1,4 @@
+import { createStorefrontApiClient } from "@shopify/storefront-api-client"
 import { findSavedBuyerIdentity } from "@shopwp/common"
 
 function getInitialCartState() {
@@ -30,6 +31,8 @@ function ShopInitialState(props) {
     phone: "",
     email: "",
     token: "",
+    customerAccessToken: false,
+    companyLocationId: false,
     country: props.country
       ? props.country.toUpperCase()
       : savedIdentity
@@ -47,6 +50,14 @@ function ShopInitialState(props) {
       : false,
   }
 
+  const client = shopwp.connection.storefront.storefrontAccessToken
+    ? createStorefrontApiClient({
+        storeDomain: "https://" + shopwp.connection.storefront.domain,
+        apiVersion: shopwp.connection.storefront.apiVersion,
+        publicAccessToken: shopwp.connection.storefront.storefrontAccessToken,
+      })
+    : false
+
   var state = {
     buyerIdentity: buyerIdentity,
     jwt: props.jwt ? props.jwt : false,
@@ -58,6 +69,7 @@ function ShopInitialState(props) {
     productsVisible: false,
     trackingParams: false,
     directCheckoutError: null,
+    client: client,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)

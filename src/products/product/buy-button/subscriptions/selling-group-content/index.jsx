@@ -1,14 +1,20 @@
-import { Radio } from "react-radio-group"
 import { useProductState } from "../../../_state/hooks"
 import ProductPricesSubscription from "../../../pricing/subscription"
+import { useSubscriptionsBuyButtonState } from "../_state/hooks"
 
-function SellingGroupContent({ subType, text, isSelected }) {
+function SellingGroupContent({ subType, text, isSelected, index }) {
   const productState = useProductState()
+  const subscriptionsBuyButtonState = useSubscriptionsBuyButtonState()
 
   return (
     <div className="swp-selling-group-content" data-is-selected={isSelected}>
       <label tabIndex="0">
-        <Radio value={subType} />
+        <input
+          type="radio"
+          name={subscriptionsBuyButtonState.id + "subscriptions"}
+          value={subType}
+          defaultChecked={index === 0}
+        />
         <div className="shopwp-radio-control"></div>
         <div className="swp-radio-text shopwp-radio-text">
           <p className="swp-radio-label">

@@ -1,8 +1,4 @@
-import {
-  FilterHook,
-  containerFluidCSS,
-  findPercentageDiff,
-} from "@shopwp/common"
+import { FilterHook, findPercentageDiff } from "@shopwp/common"
 import { useCartState, useShopState, Price } from "@shopwp/components"
 
 import Notice from "../../notice"
@@ -134,10 +130,7 @@ function CartLineItem({ lineItem }) {
             className="swp-cart-lineitem-title-wrap wps-cart-lineitem-title"
             data-wps-is-empty={hasRealVariant() ? "false" : "true"}
           >
-            <div
-              className="wps-cart-lineitem-title-wrapper"
-              css={containerFluidCSS}
-            >
+            <div className="swp-cart-lineitem-title-wrapper">
               <div className="swp-l-row">
                 <CartLineItemTitle
                   lineItem={lineItem}
@@ -162,10 +155,7 @@ function CartLineItem({ lineItem }) {
             </Notice>
           ) : (
             <>
-              <div
-                className="swp-l-rel100 swp-mt15 swp-cart-lineitem-quantity-wrapper"
-                css={containerFluidCSS}
-              >
+              <div className="swp-l-rel100 swp-mt15 swp-cart-lineitem-quantity-wrapper">
                 <div className="swp-l-row swp-m-l-row swp-cart-lineitem-quantity-inner">
                   <CartLineItemQuantity
                     lineItem={lineItem}

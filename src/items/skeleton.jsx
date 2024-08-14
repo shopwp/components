@@ -64,11 +64,23 @@ function ProductsSkeleton() {
   )
 }
 
+function ButtonSkeleton() {
+  return (
+    <div className="shopwp-skeleton-row">
+      <div className="shopwp-col shopwp-skeleton-product swp-l-row swp-l-row-center">
+        <div className="shopwp-skeleton-component shopwp-skeleton-product-title"></div>
+      </div>
+    </div>
+  )
+}
+
 function ItemsSkeleton({ skeletonType }) {
   return (
     <div className="swp-skeleton shopwp-skeleton">
       {skeletonType === "shopwp/title" || skeletonType === "shopwp/search" ? (
         <TitleSkeleton />
+      ) : skeletonType === "shopwp/button" ? (
+        <ButtonSkeleton />
       ) : skeletonType === "shopwp/pricing" ? (
         <PricingSkeleton />
       ) : skeletonType === "shopwp/description" ? (

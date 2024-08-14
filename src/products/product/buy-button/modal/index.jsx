@@ -36,13 +36,50 @@ function htmlTemp(payload, settings) {
   )
 }
 
+function findAllModalSettings(settings) {
+  return Object.keys(settings)
+    .filter(function (k) {
+      return k.indexOf("modal") == 0
+    })
+    .reduce(function (newData, k) {
+      newData[k] = settings[k]
+      return newData
+    }, {})
+}
+
+function transformKeys(obj) {
+  const newObj = {}
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && key.startsWith("modal")) {
+      // Remove the "modal" prefix
+      let newKey = key.replace(/^modal/, "")
+
+      // Transform the new key to camel case (first letter lowercase)
+      newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
+
+      // Assign the value to the new key in the new object
+      newObj[newKey] = obj[key]
+    }
+  }
+
+  return Object.keys(newObj).length > 0 ? newObj : {}
+}
+
 function customModalSettings(settings, payload) {
-  return wp.hooks.applyFilters("product.modalSettings", {
+  var modalSettings = transformKeys(findAllModalSettings(settings))
+
+  var modalSettingsCombined = {
     ...settings,
-    payload: payload,
+    ...modalSettings,
+  }
+
+  return wp.hooks.applyFilters("product.modalSettings", {
+    ...modalSettingsCombined,
     titleTypeFontSize: "28px",
-    linkTo: "none",
     htmlTemplateData: htmlTemp(payload, settings),
+    payload: payload,
+    linkTo: "none",
     fullWidth: true,
     isModal: true,
     pagination: false,

@@ -1,7 +1,7 @@
 import SellingGroupContent from "../selling-group-content"
 import { useShopState } from "@shopwp/components"
 
-function SellingGroupOnetime({ isSelected }) {
+function SellingGroupOnetime({ isSelected, index }) {
   const shopState = useShopState()
 
   return (
@@ -9,6 +9,7 @@ function SellingGroupOnetime({ isSelected }) {
       isSelected={isSelected}
       subType="onetime"
       text={shopState.t.l.oneTimePurchase}
+      index={index}
     />
   )
 }

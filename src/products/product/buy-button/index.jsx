@@ -1,20 +1,14 @@
 import { usePortal } from "@shopwp/hooks"
-import { useProductState } from "../_state/hooks"
 import { FilterHook } from "@shopwp/common"
+import { useProductState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useShopState } from "@shopwp/components"
 import ProductBuyButtonWrapper from "./wrapper"
 import ProductBuyButtonProvider from "./_state/provider"
-
-const Notice = wp.element.lazy(() =>
-  import(/* webpackChunkName: 'Notice-public' */ "../../../notice")
-)
 
 function ProductBuyButton() {
   const { useEffect } = wp.element
   const productState = useProductState()
   const settings = useSettingsState()
-  const shopState = useShopState()
 
   useEffect(() => {
     wp.hooks.doAction("on.productBuyButtonRender", productState)

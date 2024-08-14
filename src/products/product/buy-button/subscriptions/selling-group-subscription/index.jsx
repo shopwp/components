@@ -2,7 +2,7 @@ import SellingGroupContent from "../selling-group-content"
 import SellingPlans from "../selling-plans"
 import { useShopState } from "@shopwp/components"
 
-function SellingGroupSubscription({ isSelected }) {
+function SellingGroupSubscription({ isSelected, index }) {
   const shopState = useShopState()
 
   return (
@@ -11,6 +11,7 @@ function SellingGroupSubscription({ isSelected }) {
         isSelected={isSelected}
         subType="subscription"
         text={shopState.t.l.subscription}
+        index={index}
       />
 
       <SellingPlans />

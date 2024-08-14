@@ -36,7 +36,7 @@ function findSingleVariantFromPayload(payload) {
   return payload.variants.edges[0]
 }
 
-function buildLines(variant, quantity, productState, buttonRef) {
+function buildLines(variant, quantity, productState, buttonRef, cartData) {
   var customAttrs = wp.hooks.applyFilters(
     "cart.lineItemAttributes",
     [],
@@ -57,7 +57,13 @@ function buildLines(variant, quantity, productState, buttonRef) {
     data["sellingPlanId"] = productState.selectedSubscription.id
   }
 
-  return wp.hooks.applyFilters("cart.lineItems", [data], variant, productState)
+  return wp.hooks.applyFilters(
+    "cart.lineItems",
+    [data],
+    variant,
+    productState,
+    cartData
+  )
 }
 
 function AddButton({
@@ -80,7 +86,8 @@ function AddButton({
   const shopState = useShopState()
   const [shouldShake, setShouldShake] = useState(false)
   const [isDisabled, setIsDisabled] = useState(
-    !productState.payload.availableForSale && linkTo === "none"
+    (!productState.payload.availableForSale && linkTo === "none") ||
+      (!productState.payload.availableForSale && productState.isModalOpen)
   )
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const button = useRef()
@@ -141,7 +148,27 @@ function AddButton({
       return
     }
 
-    const lines = buildLines(variant, quantity, productState, button.current)
+    const lines = buildLines(
+      variant,
+      quantity,
+      productState,
+      button.current,
+      shopState.cartData
+    )
+
+    if (lines.error) {
+      productBuyButtonDispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message: lines.error,
+        },
+      })
+
+      productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
+
+      return
+    }
 
     if (
       shopwp.cart.maxQuantity &&
@@ -364,7 +391,27 @@ function DirectCheckoutButton({
 
     setIsCheckingOut(true)
 
-    const lines = buildLines(variant, quantity, productState, button.current)
+    const lines = buildLines(
+      variant,
+      quantity,
+      productState,
+      button.current,
+      shopState.cartData
+    )
+
+    if (lines.error) {
+      productBuyButtonDispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message: lines.error,
+        },
+      })
+
+      productDispatch({ type: "SET_SELECTED_VARIANT", payload: false })
+
+      return
+    }
 
     var checkoutData = {
       lines: lines,

@@ -14,6 +14,7 @@ function OptionTypes({ settings }) {
   return (
     <StorefrontFilterOptionsGroupOption
       openOnLoad={shouldOpenOnLoad(settings, "types")}
+      shopState={shopState}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
       queryFn={getAllTypes}
       groupType="types"

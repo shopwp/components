@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import { useShopState, useShopDispatch } from "@shopwp/components"
 import { useCartDispatch } from "@shopwp/components"
 import { removeLines } from "../../api.jsx"
@@ -19,12 +17,9 @@ function CartLineItemRemove({ lineItem }) {
     wp.hooks.doAction("on.lineItemRemove", lineItem, lineItem.merchandise.id)
   }
 
-  const removeStyles = css``
-
   return (
     <a
       className="swp-cart-lineitem-remove wps-cart-lineitem-remove"
-      css={removeStyles}
       onClick={onRemove}
       tabIndex="0"
       href="#!"

@@ -82,7 +82,7 @@ function StorefrontFilterOptionsGroupItems({ filterOptions, itemType }) {
       className={"wps-" + itemType}
       ref={parentRef}
       style={{
-        height: `250px`,
+        height: `auto`,
         width: `300px`,
         overflow: "auto",
       }}

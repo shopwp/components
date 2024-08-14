@@ -1,4 +1,5 @@
 import { to } from "@shopwp/common"
+import isObject from "lodash-es/isObject"
 import isEmpty from "lodash-es/isEmpty"
 import { maybeHandleApiError } from "@shopwp/api"
 
@@ -17,6 +18,7 @@ function StorefrontFilterOptionsGroupOption({
   openOnLoad = false,
   filterName = false,
   noFilterGroupFoundText,
+  shopState,
 }) {
   const { useState, useEffect } = wp.element
   const [isLoadingItems, setIsLoadingItems] = useState(true)
@@ -36,7 +38,31 @@ function StorefrontFilterOptionsGroupOption({
 
     setIsLoadingItems(true)
 
-    const [err, resp] = await to(queryFn())
+    const [err, resp] = await to(queryFn(shopState.client))
+
+    var foundData = resp[Object.keys(resp)[0]]
+
+    function removeDuplicateValues(stuff) {
+      return [...new Set(stuff)]
+    }
+
+    function onlyValues(data) {
+      return data.map((data) => {
+        if (isObject(data.node)) {
+          return data.node[Object.keys(data.node)[0]]
+        } else {
+          return data.node
+        }
+      })
+    }
+
+    const properForm = onlyValues(foundData.edges)
+
+    var onlytruthy = properForm.filter(Boolean)
+
+    var nondupes = removeDuplicateValues(onlytruthy)
+
+    var foundData = nondupes.sort()
 
     setIsLoadingItems(false)
 
@@ -48,9 +74,9 @@ function StorefrontFilterOptionsGroupOption({
     }
 
     if (filterName) {
-      var filterData = wp.hooks.applyFilters(filterName, resp.data)
+      var filterData = wp.hooks.applyFilters(filterName, foundData)
     } else {
-      var filterData = resp.data
+      var filterData = foundData
     }
 
     setExistingItems(filterData)

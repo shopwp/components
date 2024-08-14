@@ -1,4 +1,3 @@
-import { RadioGroup } from "react-radio-group"
 import SellingGroup from "../selling-group"
 import { useSubscriptionsBuyButtonState } from "../_state/hooks"
 import { isOneTimeSub, maybeFindFirstSellingPlan } from "@shopwp/common"
@@ -10,12 +9,12 @@ function SellingGroups() {
   const productDispatch = useProductDispatch()
   const productState = useProductState()
 
-  /*
-  
-  subType can be either 'onetime' or 'subscription'
-  
-  */
-  function onChange(subType) {
+  function setActiveSubscription(subType) {
+    productDispatch({
+      type: "SET_ACTIVE_SELLING_GROUP",
+      payload: subType,
+    })
+
     if (isOneTimeSub(subType)) {
       productDispatch({
         type: "SET_SELECTED_SUBSCRIPTION",
@@ -27,43 +26,44 @@ function SellingGroups() {
         payload: maybeFindFirstSellingPlan(productState.payload),
       })
     }
+  }
 
-    productDispatch({
-      type: "SET_ACTIVE_SELLING_GROUP",
-      payload: subType,
-    })
+  /*
+  
+  subType can be either 'onetime' or 'subscription'
+  
+  */
+  function onChange(e) {
+    setActiveSubscription(e.target.value)
   }
 
   useEffect(() => {
     if (productState.selectedSubscription) {
       if (productState.selectedSubscription.recurringDeliveries) {
-        productDispatch({
-          type: "SET_ACTIVE_SELLING_GROUP",
-          payload: "subscription",
-        })
+        setActiveSubscription("subscription")
       } else {
-        productDispatch({
-          type: "SET_ACTIVE_SELLING_GROUP",
-          payload: "onetime",
-        })
+        setActiveSubscription("onetime")
+      }
+    } else {
+      if (subscriptionsBuyButtonState.sellingGroups.length) {
+        var firstSub = subscriptionsBuyButtonState.sellingGroups[0]
+
+        setActiveSubscription(firstSub.id)
       }
     }
   }, [])
 
   return (
-    <RadioGroup
-      name={subscriptionsBuyButtonState.id + "subscriptions"}
-      selectedValue={productState.activeSellingGroup}
-      onChange={onChange}
-    >
-      {subscriptionsBuyButtonState.sellingGroups.map((sellingGroup) => (
+    <form onChange={onChange}>
+      {subscriptionsBuyButtonState.sellingGroups.map((sellingGroup, index) => (
         <SellingGroup
           key={sellingGroup.id}
           subType={sellingGroup.id}
           isSelected={productState.activeSellingGroup === sellingGroup.id}
+          index={index}
         />
       ))}
-    </RadioGroup>
+    </form>
   )
 }
 

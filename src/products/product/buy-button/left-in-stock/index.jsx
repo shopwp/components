@@ -31,7 +31,11 @@ function ProductBuyButtonLeftInStock() {
   }, [productState.selectedVariant])
 
   return quantityLeft && quantityLeft > 0 && productState.selectedVariant ? (
-    <ProductBuyButtonTextNotice settings={settings} />
+    <ProductBuyButtonTextNotice
+      settings={settings}
+      quantityLeft={quantityLeft}
+      productState={productState}
+    />
   ) : null
 }
 

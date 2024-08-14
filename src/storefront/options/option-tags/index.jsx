@@ -14,6 +14,7 @@ function OptionTags({ settings }) {
   return (
     <StorefrontFilterOptionsGroupOption
       openOnLoad={shouldOpenOnLoad(settings, "tags")}
+      shopState={shopState}
       noFilterGroupFoundText={shopState.t.n.noItemsLeft}
       queryFn={getAllTags}
       groupType="tags"

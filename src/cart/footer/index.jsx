@@ -62,7 +62,7 @@ function CartFooter() {
     >
       <Suspense fallback={<CartFooterSkeleton />}>
         {shopState.cartData && orderAttributes.length ? (
-          <div className="swp-cart-attrs-footer">
+          <div className="swp-mb20 swp-cart-attrs-footer">
             <p className="swp-cart-attrs-heading">Order attributes:</p>
             <CartAttributes
               attributes={orderAttributes}

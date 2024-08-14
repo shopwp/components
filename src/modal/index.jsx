@@ -1,9 +1,6 @@
 import ReactModal from "react-modal"
-// import Dialog from "rc-dialog"
 
-if (shopwp.misc.isAdmin) {
-  ReactModal.setAppElement(".wp-admin")
-} else {
+if (!shopwp.misc.isAdmin) {
   ReactModal.setAppElement("#shopwp-root")
 }
 
@@ -42,6 +39,7 @@ function Modal({ isModalOpen, onModalClose, children }) {
 
   return (
     <ReactModal
+      ariaHideApp={shopwp.misc.isAdmin}
       isOpen={isModalOpen}
       onRequestClose={onModalClose}
       style={customStyles}

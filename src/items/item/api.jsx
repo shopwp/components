@@ -163,17 +163,19 @@ function useGetItemsQuery(setNotice) {
         payload: 0,
       })
 
+      var toUpdate = {
+        items: [],
+        replace: true,
+        totalShown: totalShown,
+        limit: limit,
+        pageSize: pageSize,
+        pagination: pagination,
+        settings: settings,
+      }
+
       payloadDispatch({
         type: "UPDATE_PAYLOAD",
-        payload: {
-          items: [],
-          replace: true,
-          totalShown: totalShown,
-          limit: limit,
-          pageSize: pageSize,
-          pagination: pagination,
-          settings: settings,
-        },
+        payload: toUpdate,
       })
 
       setNotice({
@@ -212,17 +214,19 @@ function useGetItemsQuery(setNotice) {
         })
       }
 
+      var toUpdate2 = {
+        items: newItems.edges,
+        replace: requestsState.isReplacing,
+        totalShown: totalShown,
+        limit: limit,
+        pageSize: pageSize,
+        pagination: pagination,
+        settings: settings,
+      }
+
       payloadDispatch({
         type: "UPDATE_PAYLOAD",
-        payload: {
-          items: newItems.edges,
-          replace: requestsState.isReplacing,
-          totalShown: totalShown,
-          limit: limit,
-          pageSize: pageSize,
-          pagination: pagination,
-          settings: settings,
-        },
+        payload: toUpdate2,
       })
 
       shopDispatch({

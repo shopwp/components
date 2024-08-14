@@ -9,12 +9,10 @@ import {
   maybeHandleApiError,
   applyDiscount,
   updateNote,
-  updateBuyerIdentity,
 } from "@shopwp/api"
-import Cookies from "js-cookie"
 
 function hasDiscount(cartData) {
-  if (!cartData.discountCodes) {
+  if (!cartData || !cartData.discountCodes) {
     return false
   }
 
@@ -39,18 +37,21 @@ async function updateLines(
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [updateError, response] = await to(
-    updateLineItems({
-      cartId: shopState.cartData.id,
-      lines: [
-        {
-          merchandiseId: lineItem.merchandise.id,
-          id: lineItem.id,
-          quantity: newQuantity,
-          attributes: lineItem.attributes ? lineItem.attributes : [],
-        },
-      ],
-      buyerIdentity: shopState.buyerIdentity,
-    })
+    updateLineItems(
+      {
+        cartId: shopState.cartData.id,
+        lines: [
+          {
+            merchandiseId: lineItem.merchandise.id,
+            id: lineItem.id,
+            quantity: newQuantity,
+            attributes: lineItem.attributes ? lineItem.attributes : [],
+          },
+        ],
+        buyerIdentity: shopState.buyerIdentity,
+      },
+      shopState.client
+    )
   )
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
@@ -78,7 +79,7 @@ async function updateLines(
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartLinesUpdate.cart,
   })
 }
 
@@ -86,11 +87,14 @@ async function removeLines(lineItemIds, shopState, cartDispatch, shopDispatch) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [error, response] = await to(
-    removeLineItems({
-      lineIds: lineItemIds,
-      cartId: shopState.cartData.id,
-      buyerIdentity: shopState.buyerIdentity,
-    })
+    removeLineItems(
+      {
+        lineIds: lineItemIds,
+        cartId: shopState.cartData.id,
+        buyerIdentity: shopState.buyerIdentity,
+      },
+      shopState.client
+    )
   )
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
@@ -111,7 +115,7 @@ async function removeLines(lineItemIds, shopState, cartDispatch, shopDispatch) {
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartLinesRemove.cart,
   })
 }
 
@@ -124,7 +128,7 @@ async function addLines(
 ) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
-  const [addError, response] = await to(addLineItems(data))
+  const [addError, response] = await to(addLineItems(data, shopState.client))
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
@@ -153,17 +157,17 @@ async function addLines(
     return
   }
 
-  wp.hooks.doAction("on.afterAddToCart", data.lines, response.data)
+  wp.hooks.doAction("on.afterAddToCart", data.lines, response.cartLinesAdd.cart)
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartLinesAdd.cart,
   })
 
   var existingCartId = localStorage.getItem("shopwp-cart-id")
 
-  if (existingCartId !== response.data.id) {
-    localStorage.setItem("shopwp-cart-id", response.data.id)
+  if (existingCartId !== response.cartLinesAdd.cart.id) {
+    localStorage.setItem("shopwp-cart-id", response.cartLinesAdd.cart.id)
   }
 
   var savedDiscountFromUrl = localStorage.getItem("shopwp-cart-discount")
@@ -177,11 +181,14 @@ async function updateAttrs(data, shopState, cartDispatch, shopDispatch) {
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [addError, response] = await to(
-    updateCartAttributes({
-      attributes: data,
-      cartId: shopState.cartData.id,
-      buyerIdentity: shopState.buyerIdentity,
-    })
+    updateCartAttributes(
+      {
+        attributes: data,
+        cartId: shopState.cartData.id,
+        buyerIdentity: shopState.buyerIdentity,
+      },
+      shopState.client
+    )
   )
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
@@ -201,7 +208,7 @@ async function updateAttrs(data, shopState, cartDispatch, shopDispatch) {
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartAttributesUpdate.cart,
   })
 }
 
@@ -213,6 +220,9 @@ async function getExistingCart(
   shopDispatch
 ) {
   function updateCartState(cartData) {
+    if (!cartData) {
+      return
+    }
     shopDispatch({
       type: "SET_CART_DATA",
       payload: cartData,
@@ -238,15 +248,11 @@ async function getExistingCart(
 
   const [getCartError, response] = await to(
     getCart(
-      wp.hooks.applyFilters(
-        "cart.getExistingSettings",
-        {
-          id: cartId,
-          buyerIdentity: shopState.buyerIdentity,
-        },
-        cartState,
-        shopState
-      )
+      {
+        id: cartId,
+        buyerIdentity: shopState.buyerIdentity,
+      },
+      shopState.client
     )
   )
 
@@ -259,14 +265,19 @@ async function getExistingCart(
     localStorage.removeItem("shopwp-cart-discount")
     localStorage.removeItem("shopwp-cart-id")
 
-    if (!response || response.success === false) {
+    if (!response) {
       createNewCart(cartState, shopState, cartDispatch, shopDispatch)
     }
 
     return
   }
 
-  updateCartState(response.data)
+  if (!response.cart) {
+    createNewCart(cartState, shopState, cartDispatch, shopDispatch)
+    return
+  }
+
+  updateCartState(response.cart)
 }
 
 async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
@@ -294,7 +305,8 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
         },
         cartState,
         shopState
-      )
+      ),
+      shopState.client
     )
   )
 
@@ -310,10 +322,10 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
   } else {
     shopDispatch({
       type: "SET_CART_DATA",
-      payload: response.data,
+      payload: response.cartCreate.cart,
     })
 
-    localStorage.setItem("shopwp-cart-id", response.data.id)
+    localStorage.setItem("shopwp-cart-id", response.cartCreate.cart.id)
   }
 
   shopDispatch({
@@ -339,7 +351,8 @@ function directCheckout(data, shopState) {
           },
           shopState,
           data
-        )
+        ),
+        shopState.client
       )
     )
 
@@ -357,11 +370,19 @@ function directCheckout(data, shopState) {
     }
 
     resolve({
-      checkoutUrl: response.data.checkoutUrl,
+      checkoutUrl: response.cartCreate.cart.checkoutUrl,
       trackingParams: shopState.trackingParams,
       target: linkTarget,
     })
   })
+}
+
+function onlyApplicableDiscounts(discountCodes) {
+  if (!discountCodes || discountCodes.length === 0) {
+    return []
+  }
+
+  return discountCodes.filter((code) => code.applicable)
 }
 
 async function updateDiscount(
@@ -391,18 +412,55 @@ async function updateDiscount(
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
   cartDispatch({ type: "SET_IS_ADDING_DISCOUNT_CODE", payload: true })
 
-  var discountOptions = {
-    cartId: shopState.cartData.id,
-    existingDiscountCodes: shopState.cartData.discountCodes,
-    buyerIdentity: shopState.buyerIdentity,
-    discountToChange: discount,
-    isRemoving: shouldRemove,
-  }
-
-  const [errorDiscount, response] = await to(applyDiscount(discountOptions))
+  const [errorDiscount, response] = await to(
+    applyDiscount(
+      {
+        cartId: shopState.cartData.id,
+        existingDiscountCodes: shopState.cartData.discountCodes,
+        buyerIdentity: shopState.buyerIdentity,
+        discountToChange: discount,
+        isRemoving: shouldRemove,
+      },
+      shopState.client
+    )
+  )
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
   cartDispatch({ type: "SET_IS_ADDING_DISCOUNT_CODE", payload: false })
+
+  var applicableDiscountCodes = onlyApplicableDiscounts(
+    response.cartDiscountCodesUpdate.cart.discountCodes
+  )
+
+  /*
+
+  Only run these checks when adding a discount code
+
+  */
+  if (!shouldRemove) {
+    // Is the added code found in list of applicable codes?
+    var foundCode = applicableDiscountCodes.filter((code) => {
+      return code.code === discount
+    })
+
+    // If the user entered an invalid code, or the list of applied codes is empty ...
+    if (
+      !applicableDiscountCodes ||
+      applicableDiscountCodes.length === 0 ||
+      !foundCode ||
+      foundCode.length === 0
+    ) {
+      cartDispatch({
+        type: "SET_NOTICE",
+        payload: {
+          type: "error",
+          message:
+            "The discount code entered is either inactive or not valid for some products in your cart. Please try a different code.",
+        },
+      })
+      return
+    }
+  }
 
   var maybeApiError = maybeHandleApiError(errorDiscount, response)
 
@@ -419,11 +477,11 @@ async function updateDiscount(
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartDiscountCodesUpdate.cart,
   })
 
   if (afterUpdatingDiscount) {
-    afterUpdatingDiscount(response.data)
+    afterUpdatingDiscount(response.cartDiscountCodesUpdate.cart)
   }
 
   cartDispatch({
@@ -447,11 +505,14 @@ async function updateCartNote(
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
   const [noteError, response] = await to(
-    updateNote({
-      cartId: shopState.cartData.id,
-      note: note,
-      buyerIdentity: shopState.buyerIdentity,
-    })
+    updateNote(
+      {
+        cartId: shopState.cartData.id,
+        note: note,
+        buyerIdentity: shopState.buyerIdentity,
+      },
+      shopState.client
+    )
   )
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
@@ -469,7 +530,7 @@ async function updateCartNote(
     return
   }
 
-  wp.hooks.doAction("on.cartNoteChange", response.data)
+  wp.hooks.doAction("on.cartNoteChange", response.cartNoteUpdate.cart)
 
   if (inputElement) {
     inputElement.current.focus()
@@ -477,7 +538,7 @@ async function updateCartNote(
 
   shopDispatch({
     type: "SET_CART_DATA",
-    payload: response.data,
+    payload: response.cartNoteUpdate.cart,
   })
 
   cartDispatch({ type: "SET_CART_NOTE", payload: note })
@@ -489,48 +550,43 @@ async function updateIdentity(
   shopDispatch,
   cartDispatch
 ) {
-  shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
-
-  Cookies.remove("shopwp_buyer_identity")
-  Cookies.set("shopwp_buyer_identity", buyerIdentity.language, {
-    expires: 90,
-  })
-
-  const [error, response] = await to(
-    updateBuyerIdentity({
-      cartId: cartId,
-      buyerIdentity: buyerIdentity,
-    })
-  )
-
-  shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
-
-  var maybeApiError = maybeHandleApiError(error, response)
-
-  if (maybeApiError) {
-    cartDispatch({
-      type: "SET_NOTICE",
-      payload: {
-        type: "error",
-        message: maybeApiError,
-      },
-    })
-    return
-  }
-
-  shopDispatch({
-    type: "SET_CART_DATA",
-    payload: response.data,
-  })
-
-  var discount = hasDiscount(response.data)
-
-  if (discount) {
-    cartDispatch({
-      type: "SET_DISCOUNT_CODE",
-      payload: discount,
-    })
-  }
+  // shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
+  // Cookies.remove("shopwp_buyer_identity")
+  // Cookies.set("shopwp_buyer_identity", buyerIdentity.language, {
+  //   expires: 90,
+  // })
+  // const [error, response] = await to(
+  //   updateBuyerIdentity(
+  //     {
+  //       cartId: cartId,
+  //       buyerIdentity: buyerIdentity,
+  //     },
+  //     shopState.client
+  //   )
+  // )
+  // shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
+  // var maybeApiError = maybeHandleApiError(error, response)
+  // if (maybeApiError) {
+  //   cartDispatch({
+  //     type: "SET_NOTICE",
+  //     payload: {
+  //       type: "error",
+  //       message: maybeApiError,
+  //     },
+  //   })
+  //   return
+  // }
+  // shopDispatch({
+  //   type: "SET_CART_DATA",
+  //   payload: response.data,
+  // })
+  // var discount = hasDiscount(response.data)
+  // if (discount) {
+  //   cartDispatch({
+  //     type: "SET_DISCOUNT_CODE",
+  //     payload: discount,
+  //   })
+  // }
 }
 
 export {

@@ -31,6 +31,14 @@ function Quantity({
   const debouncedQuantity = useDebounce(parseInt(quantity), 20)
   const isFirstRender = useFirstRender()
 
+  maxQuantity = wp.hooks.applyFilters(
+    "cart.maxQuantity",
+    maxQuantity,
+    lineItem,
+    selectedVariant,
+    shopState.cartData
+  )
+
   const maxQuantityNoticeMessage =
     maxQuantity === 1
       ? "You may only buy one of this item."
