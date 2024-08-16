@@ -84,6 +84,7 @@ function ProductAddButton({
             linkWithBuyButton={linkWithBuyButton}
             isDirectCheckout={isDirectCheckout}
             payload={productState.payload}
+            manualLink={settings.linkToUrl}
           >
             <AddButton
               hasLink={hasLink}

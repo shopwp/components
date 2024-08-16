@@ -88,4 +88,4 @@ function ModalContent({ onClose, children }) {
   )
 }
 
-export default wp.element.memo(Modal)
+export default Modal

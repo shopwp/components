@@ -248,6 +248,7 @@ function ProductImage({ image, isFeatured, isVideo = false }) {
         <Link
           type="products"
           linkTo={settings.linkTo}
+          manualLink={settings.linkToUrl}
           target={settings.linkTarget}
           payload={productState.payload}
         >

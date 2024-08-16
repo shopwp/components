@@ -112,6 +112,8 @@ function CartLineItem({ lineItem }) {
       className="swp-cart-lineitem swp-mb30 wps-cart-lineitem"
       data-wps-is-updating={isUpdating}
       data-wps-is-available={lineItem.merchandise.availableForSale}
+      data-variant-id={lineItem.merchandise.id}
+      data-product-id={lineItem.merchandise.product.id}
       ref={lineItemElement}
       role="listitem"
     >

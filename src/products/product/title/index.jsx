@@ -25,6 +25,7 @@ function ProductTitle() {
           type="products"
           target={settings.linkTarget}
           linkTo={settings.linkTo}
+          manualLink={settings.linkToUrl}
           payload={productState.payload}
         >
           <Title classList={"swp-product-title " + settings.titleClassName} />

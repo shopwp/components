@@ -256,6 +256,8 @@ async function getExistingCart(
     )
   )
 
+  wp.hooks.doAction("on.cartLoad", response.cart)
+
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
 
   var maybeApiErrorMessage = maybeHandleApiError(getCartError, response)
@@ -319,6 +321,8 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
       type: "SET_CART_DATA",
       payload: false,
     })
+
+    wp.hooks.doAction("on.cartLoad", false)
   } else {
     shopDispatch({
       type: "SET_CART_DATA",
@@ -326,6 +330,8 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
     })
 
     localStorage.setItem("shopwp-cart-id", response.cartCreate.cart.id)
+
+    wp.hooks.doAction("on.cartLoad", response.cartCreate.cart)
   }
 
   shopDispatch({
@@ -336,24 +342,23 @@ async function createNewCart(cartState, shopState, cartDispatch, shopDispatch) {
 
 function directCheckout(data, shopState) {
   return new Promise(async (resolve, reject) => {
+    var finalData = wp.hooks.applyFilters(
+      "cart.directCheckoutSettings",
+      {
+        lines: data.lines,
+        discountCodes: data?.discountCodes ? data.discountCodes : [],
+        note: data?.note ? data.note : "",
+        attributes: data?.attributes ? data.attributes : [],
+        buyerIdentity: data?.buyerIdentity
+          ? data?.buyerIdentity
+          : shopState.buyerIdentity,
+      },
+      shopState,
+      data
+    )
+
     const [directCheckoutError, response] = await to(
-      createCart(
-        wp.hooks.applyFilters(
-          "cart.directCheckoutSettings",
-          {
-            lines: data.lines,
-            discountCodes: data?.discountCodes ? data.discountCodes : [],
-            note: data?.note ? data.note : "",
-            attributes: data?.attributes ? data.attributes : [],
-            buyerIdentity: data?.buyerIdentity
-              ? data?.buyerIdentity
-              : shopState.buyerIdentity,
-          },
-          shopState,
-          data
-        ),
-        shopState.client
-      )
+      createCart(finalData, shopState.client)
     )
 
     var maybeApiError = maybeHandleApiError(directCheckoutError, response)

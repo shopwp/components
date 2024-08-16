@@ -298,6 +298,8 @@ function CartWrapper() {
       openCart()
     }
 
+    // wp.hooks.doAction("do.closeModal", true)
+
     addLines(dataToAdd, cartDispatch, shopDispatch, cartState, shopState)
   }, [lineItemsAdded])
 

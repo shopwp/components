@@ -56,6 +56,7 @@ function CollectionImage() {
         <Link
           type="collections"
           linkTo={settings.collectionsLinkTo}
+          manualLink={settings.collectionsLinkToUrl}
           target={settings.collectionsLinkTarget}
           payload={collectionState.payload}
         >

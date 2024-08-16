@@ -28,17 +28,15 @@ function LinkNormal({
     payload
   )
 
+  var targetFinal = wp.hooks.applyFilters(
+    "misc.linkTarget",
+    getTarget(target),
+    type,
+    payload
+  )
+
   return (
-    <a
-      href={link}
-      className={className}
-      target={wp.hooks.applyFilters(
-        "misc.linkTarget",
-        getTarget(target),
-        type,
-        payload
-      )}
-    >
+    <a href={link} className={className} target={targetFinal}>
       {children}
     </a>
   )

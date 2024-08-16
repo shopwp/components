@@ -10,9 +10,16 @@ function AddButtonWrapper({
   isDirectCheckout,
   linkWithBuyButton,
   payload,
+  manualLink,
 }) {
   return hasLink && !isDirectCheckout && !linkWithBuyButton ? (
-    <Link type="products" linkTo={linkTo} target={linkTarget} payload={payload}>
+    <Link
+      type="products"
+      linkTo={linkTo}
+      target={linkTarget}
+      payload={payload}
+      manualLink={manualLink}
+    >
       {children}
     </Link>
   ) : (
