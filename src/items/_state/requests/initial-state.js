@@ -91,6 +91,18 @@ function RequestsInitialState({
       : false
   }
 
+  var productMetafields = queryParams?.productMetafields
+    ? queryParams.productMetafields
+    : settings?.productMetafields
+    ? settings.productMetafields
+    : "[]"
+
+  var productVariantMetafields = queryParams?.productVariantMetafields
+    ? queryParams.productVariantMetafields
+    : settings?.productVariantMetafields
+    ? settings.productVariantMetafields
+    : "[]"
+
   var finalQueryParams = {
     query: query,
     first: first,
@@ -99,6 +111,8 @@ function RequestsInitialState({
     language: shopState.buyerIdentity.language,
     country: shopState.buyerIdentity.country,
     collection_titles: collection_titles,
+    productMetafields: productMetafields,
+    productVariantMetafields: productVariantMetafields,
   }
 
   if (shopState.buyerIdentity.customerAccessToken) {

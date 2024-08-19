@@ -252,20 +252,25 @@ function useGetItemsQuery(setNotice) {
             type: "SET_HAS_PREVIOUS_PAGE",
             payload: false,
           })
-
-          return
         }
+      } else {
+        if (newItems.pageInfo.cursor) {
+          requestsDispatch({
+            type: "SET_CURSOR",
+            payload: newItems.pageInfo.cursor,
+          })
+        }
+
+        requestsDispatch({
+          type: "SET_HAS_NEXT_PAGE",
+          payload: newItems.pageInfo.hasNextPage,
+        })
+
+        requestsDispatch({
+          type: "SET_HAS_PREVIOUS_PAGE",
+          payload: newItems.pageInfo.hasPreviousPage,
+        })
       }
-
-      requestsDispatch({
-        type: "SET_HAS_NEXT_PAGE",
-        payload: newItems.pageInfo.hasNextPage,
-      })
-
-      requestsDispatch({
-        type: "SET_HAS_PREVIOUS_PAGE",
-        payload: newItems.pageInfo.hasPreviousPage,
-      })
     }
   }
 }
