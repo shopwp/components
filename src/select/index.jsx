@@ -107,9 +107,9 @@ function Dropdown({
           data-is-inline={inline}
           data-is-selected={selected}
           data-is-missing-selections={missingSelections}
+          data-is-busy={isBusy}
           className="swp-dropdown-label"
         >
-          {isBusy ? <Loader /> : null}
           <Menu
             aria-label="Select dropdown menu"
             onItemClick={onItemClick}
