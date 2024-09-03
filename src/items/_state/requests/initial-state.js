@@ -108,19 +108,25 @@ function RequestsInitialState({
     first: first,
     sortKey: sortKey,
     reverse: reverse,
-    language: shopState.buyerIdentity.language,
-    country: shopState.buyerIdentity.country,
+    language: shopState.language,
+    country: shopState.buyerIdentity.countryCode,
     collection_titles: collection_titles,
     productMetafields: productMetafields,
     productVariantMetafields: productVariantMetafields,
   }
 
-  if (shopState.buyerIdentity.customerAccessToken) {
+  if (
+    shopState.buyerIdentity.customerAccessToken &&
+    shopState.buyerIdentity.customerAccessToken !== ""
+  ) {
     finalQueryParams.buyer = {
       customerAccessToken: shopState.buyerIdentity.customerAccessToken,
     }
 
-    if (shopState.buyerIdentity.companyLocationId) {
+    if (
+      shopState.buyerIdentity.companyLocationId &&
+      shopState.buyerIdentity.companyLocationId !== ""
+    ) {
       finalQueryParams.buyer.companyLocationId =
         shopState.buyerIdentity.companyLocationId
     }

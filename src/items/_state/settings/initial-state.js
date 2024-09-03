@@ -19,7 +19,7 @@ function SettingsInitialState({
     }
   }
 
-  updateVariablesInCSS(componentType, settings, element)
+  // updateVariablesInCSS(componentType, settings, element)
 
   return {
     ...settings,

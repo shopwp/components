@@ -38,7 +38,14 @@ function StorefrontFilterOptionsGroupOption({
 
     setIsLoadingItems(true)
 
-    const [err, resp] = await to(queryFn(shopState.client))
+    const [err, resp] = await to(queryFn(shopState))
+
+    setIsLoadingItems(false)
+
+    if (err) {
+      setError(JSON.stringify(err))
+      return
+    }
 
     var foundData = resp[Object.keys(resp)[0]]
 

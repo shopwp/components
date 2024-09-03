@@ -28,26 +28,27 @@ function ShopInitialState(props) {
   
   */
   const buyerIdentity = {
-    phone: "",
-    email: "",
-    token: "",
-    customerAccessToken: false,
-    companyLocationId: false,
-    country: props.country
+    countryCode: props.country
       ? props.country.toUpperCase()
       : savedIdentity
       ? savedIdentity.country.toUpperCase()
       : false,
-    language: props.language
-      ? props.language.toUpperCase()
-      : savedIdentity
-      ? savedIdentity.language.toUpperCase()
-      : false,
-    currency: props.currency
-      ? props.currency.toUpperCase()
-      : savedIdentity
-      ? savedIdentity.currency.toUpperCase()
-      : false,
+  }
+
+  if (props.companyLocationId && props.companyLocationId !== "") {
+    buyerIdentity.companyLocationId = props.companyLocationId
+  }
+
+  if (props.customerAccessToken && props.customerAccessToken !== "") {
+    buyerIdentity.customerAccessToken = props.customerAccessToken
+  }
+
+  if (props.phone && props.phone !== "") {
+    buyerIdentity.phone = props.phone
+  }
+
+  if (props.email && props.email !== "") {
+    buyerIdentity.email = props.email
   }
 
   const client = shopwp.connection.storefront.storefrontAccessToken
@@ -70,6 +71,16 @@ function ShopInitialState(props) {
     trackingParams: false,
     directCheckoutError: null,
     client: client,
+    language: props.language
+      ? props.language.toUpperCase()
+      : savedIdentity
+      ? savedIdentity.language.toUpperCase()
+      : false,
+    currency: props.currency
+      ? props.currency.toUpperCase()
+      : savedIdentity
+      ? savedIdentity.currency.toUpperCase()
+      : false,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)

@@ -102,10 +102,7 @@ function ProductPrices() {
         }
       />
       <meta itemProp="price" content={prices.regPrices[0]} />
-      <meta
-        itemProp="priceCurrency"
-        content={shopState.buyerIdentity.currency}
-      />
+      <meta itemProp="priceCurrency" content={shopState.currency} />
 
       <FilterHook name="before.productPricing" args={[productState]} />
 

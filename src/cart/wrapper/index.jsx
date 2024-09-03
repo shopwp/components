@@ -144,7 +144,13 @@ function CartWrapper() {
       return
     }
 
-    updateIdentity(cartId, shopState.buyerIdentity, shopDispatch, cartDispatch)
+    updateIdentity(
+      cartId,
+      shopState.buyerIdentity,
+      shopState,
+      shopDispatch,
+      cartDispatch
+    )
   }, [shopState.buyerIdentity])
 
   useEffect(() => {
