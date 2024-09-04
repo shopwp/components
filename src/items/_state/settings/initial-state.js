@@ -5,7 +5,6 @@ import isBase64 from "is-base64"
 function SettingsInitialState({
   settings = false,
   componentType = "products",
-  element,
 }) {
   settings = mergeDefaults(settings, defaults[componentType])
 
@@ -18,8 +17,6 @@ function SettingsInitialState({
       var htmlTemplateData = ""
     }
   }
-
-  // updateVariablesInCSS(componentType, settings, element)
 
   return {
     ...settings,

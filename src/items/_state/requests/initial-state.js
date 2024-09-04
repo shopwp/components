@@ -60,11 +60,19 @@ function RequestsInitialState({
       }
     }
 
-    var query = queryParams?.query
-      ? queryParams.query
-      : settings?.query
-      ? settings.query
-      : false
+    if (queryType === "collectionProducts") {
+      var query = queryParams?.collectionsQuery
+        ? queryParams.collectionsQuery
+        : settings?.collectionsQuery
+        ? settings.collectionsQuery
+        : false
+    } else {
+      var query = queryParams?.query
+        ? queryParams.query
+        : settings?.query
+        ? settings.query
+        : false
+    }
 
     if (!query && collection_titles) {
       query = "collection:" + collection_titles
