@@ -56,8 +56,6 @@ function CartWrapper() {
   const doDirectCheckout = useAction("do.directCheckout")
   const doUpdateBuyerIdentity = useAction("do.updateBuyerIdentity")
 
-  const [cartId] = useState(() => localStorage.getItem("shopwp-cart-id"))
-
   function openCart() {
     shopDispatch({ type: "TOGGLE_CART", payload: true })
   }
@@ -126,6 +124,8 @@ function CartWrapper() {
   useEffect(() => {
     addCustomLinkTriggers()
 
+    const cartId = localStorage.getItem("shopwp-cart-id")
+
     if (cartId) {
       getExistingCart(cartId, cartState, shopState, cartDispatch, shopDispatch)
     } else {
@@ -145,7 +145,7 @@ function CartWrapper() {
     }
 
     updateIdentity(
-      cartId,
+      shopState.cartData.id,
       shopState.buyerIdentity,
       shopState,
       shopDispatch,

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react"
 import ProductOption from "../option"
 import ProductVariantButtonGroupWrapper from "./variant-button-group-wrapper"
 
@@ -10,7 +8,7 @@ function ProductVariantButtons({
   variants,
 }) {
   return options ? (
-    <div className="wpshopify-products-variant-buttons">
+    <div className="swp-variant-buttons wpshopify-products-variant-buttons">
       {options.map(
         (option) =>
           option && (
