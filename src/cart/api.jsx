@@ -383,7 +383,15 @@ function directCheckout(data, shopState) {
     )
 
     const [directCheckoutError, response] = await to(
-      createCart(finalData, shopState.client)
+      createCart(
+        wp.hooks.applyFilters(
+          "cart.createSettings",
+          finalData,
+          false,
+          shopState
+        ),
+        shopState
+      )
     )
 
     var maybeApiError = maybeHandleApiError(directCheckoutError, response)

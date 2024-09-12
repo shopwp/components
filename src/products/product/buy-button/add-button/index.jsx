@@ -58,7 +58,7 @@ function ProductAddButton({
         data-should-show-quantity={shouldShowQuantity}
         data-should-link-to={linkTo}
       >
-        <div className="swp-add-to-cart-inner swp-l-row swp-l-col-start">
+        <div className="swp-add-to-cart-inner swp-l-row swp-l-col-start swp-l-col-stretch">
           {shouldShowQuantity ? (
             <Quantity
               dispatch={productDispatch}
