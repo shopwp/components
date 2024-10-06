@@ -249,28 +249,6 @@ async function getExistingCart(
 
   shopDispatch({ type: "SET_IS_CART_UPDATING", payload: true })
 
-  if (shopwp.misc.cacheEnabled) {
-    var existingCartId = localStorage.getItem("shopwp-cart-id")
-
-    var [queryCacheError, queryCache] = await to(getCache(existingCartId))
-
-    if (queryCacheError) {
-      clearCache()
-      createNewCart(cartState, shopState, cartDispatch, shopDispatch)
-      return
-    }
-
-    shopDispatch({ type: "SET_IS_CART_UPDATING", payload: false })
-
-    if (queryCache) {
-      wp.hooks.doAction("on.cartLoad", queryCache)
-
-      updateCartState(queryCache)
-
-      return
-    }
-  }
-
   const [getCartError, response] = await to(
     getCart(
       {
