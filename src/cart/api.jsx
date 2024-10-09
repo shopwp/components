@@ -437,7 +437,7 @@ async function updateDiscount(
         discountToChange: discount,
         isRemoving: shouldRemove,
       },
-      shopState.client
+      shopState
     )
   )
 
