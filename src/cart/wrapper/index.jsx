@@ -280,6 +280,16 @@ function CartWrapper() {
 
     var lineItems = addDefaults(lineItemsAdded)
 
+    lines = lines.map((line) => {
+      let stringedId = String(line.merchandiseId)
+
+      if (!stringedId.includes("gid://shopify/ProductVariant/")) {
+        line.merchandiseId = "gid://shopify/ProductVariant/" + stringedId
+      }
+
+      return line
+    })
+
     var dataToAdd = {
       cartId: shopState.cartData.id,
       buyerIdentity: shopState.buyerIdentity,

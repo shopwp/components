@@ -1,5 +1,4 @@
 import { createStorefrontApiClient } from "@shopify/storefront-api-client"
-import { findSavedBuyerIdentity } from "@shopwp/common"
 
 function getInitialCartState() {
   if (shopwp.misc.isAdmin) {
@@ -15,20 +14,58 @@ function getInitialCartState() {
   return false
 }
 
+function get_lang() {
+  if (shopwp.misc.siteLang === shopwp.general.languageCode) {
+    return shopwp.general.languageCode
+  } else {
+    return shopwp.misc.siteLang
+  }
+}
+
+function findSavedBuyerIdentity(sessionValue) {
+  // We don't want to use the "users" saved value in the admin area
+  if (!sessionValue || shopwp.misc.isAdmin) {
+    let defaults = {
+      language: get_lang(),
+      country: shopwp.general.countryCode,
+      currency: shopwp.general.currencyCode,
+    }
+
+    return defaults
+  }
+
+  sessionValue = JSON.parse(sessionValue)
+
+  var finalStuff = {
+    language: sessionValue?.language ? sessionValue.language : get_lang(),
+    country: sessionValue?.country
+      ? sessionValue.country
+      : shopwp.general.countryCode,
+    currency: sessionValue?.currency
+      ? sessionValue.currency
+      : shopwp.general.currencyCode,
+  }
+
+  return finalStuff
+}
+
 function ShopInitialState(props) {
   var isCartLoaded = getInitialCartState()
-  var savedIdentity = findSavedBuyerIdentity()
+  var savedIdentity = findSavedBuyerIdentity(
+    sessionStorage.getItem("shopwp-buyer-identity")
+  )
 
   /*
   
   Priorities:
+
   1. Use identity from shortcode / Render API
   2. Use cached identity from LS
   3. Use default plugin settings (will populate on server-side)
   
   */
   const buyerIdentity = {
-    countryCode: props.country
+    country: props.country
       ? props.country.toUpperCase()
       : savedIdentity
       ? savedIdentity.country.toUpperCase()
@@ -59,6 +96,18 @@ function ShopInitialState(props) {
       })
     : false
 
+  const lang = props.language
+    ? props.language.toUpperCase()
+    : savedIdentity
+    ? savedIdentity.language.toUpperCase()
+    : false
+
+  const currency = props.currency
+    ? props.currency.toUpperCase()
+    : savedIdentity
+    ? savedIdentity.currency.toUpperCase()
+    : false
+
   var state = {
     buyerIdentity: buyerIdentity,
     jwt: props.jwt ? props.jwt : false,
@@ -71,16 +120,8 @@ function ShopInitialState(props) {
     trackingParams: false,
     directCheckoutError: null,
     client: client,
-    language: props.language
-      ? props.language.toUpperCase()
-      : savedIdentity
-      ? savedIdentity.language.toUpperCase()
-      : false,
-    currency: props.currency
-      ? props.currency.toUpperCase()
-      : savedIdentity
-      ? savedIdentity.currency.toUpperCase()
-      : false,
+    language: lang,
+    currency: currency,
   }
 
   state.t = wp.hooks.applyFilters("shop.textContent", shopwp.t, state)

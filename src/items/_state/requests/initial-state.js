@@ -117,7 +117,7 @@ function RequestsInitialState({
     sortKey: sortKey,
     reverse: reverse,
     language: shopState.language,
-    country: shopState.buyerIdentity.countryCode,
+    country: shopState.buyerIdentity.country,
     collection_titles: collection_titles,
     productMetafields: productMetafields,
     productVariantMetafields: productVariantMetafields,

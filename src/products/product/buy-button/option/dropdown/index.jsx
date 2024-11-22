@@ -56,6 +56,16 @@ function ProductOptionDropdown({
     var selectedOption = false
   }
 
+  if (selectedVariant) {
+    var selectedOption = {
+      label: productBuyButtonState.selectedOptions[option.name],
+      value: {
+        name: option.name,
+        value: productBuyButtonState.selectedOptions[option.name],
+      },
+    }
+  }
+
   return (
     <div className="swp-btn-dropdown-wrapper wps-btn-dropdown-wrapper">
       <div

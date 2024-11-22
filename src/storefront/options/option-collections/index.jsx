@@ -25,6 +25,30 @@ function OptionCollections({ settings }) {
   }
 
   async function grabCollections(cursor = false) {
+    // If user is syncing by certain collections, make sure to only show these collections
+    if (shopwp.general.syncByCollections.length) {
+      const correctShape = {
+        edges: shopwp.general.syncByCollections.map((collection) => {
+          return {
+            node: collection,
+          }
+        }),
+      }
+
+      setItemsRaw(correctShape.edges)
+      setHasNextPage(false)
+
+      const finalCollections = wp.hooks.applyFilters(
+        "storefront.availableCollections",
+        createFilterableValues(correctShape)
+      )
+
+      setFilterableValues(finalCollections)
+      setExistingCollections(finalCollections)
+
+      return
+    }
+
     setIsLoadingItems(true)
 
     var params = {

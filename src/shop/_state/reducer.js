@@ -5,6 +5,10 @@ import { maybeSetCache } from "@shopwp/api"
 function forceCartTabbing(isOpeningCart) {
   const cartElement = document.querySelector(".swp-cart-container")
 
+  if (!cartElement) {
+    return
+  }
+
   const focusableElements =
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
   const firstFocusableElement =

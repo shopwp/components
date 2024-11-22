@@ -17,6 +17,7 @@ function ProductInitialState(props) {
       : false,
     props.payload
   )
+
   if (props.settings.subscriptionsSelectOnLoad) {
     selectedSubscription = maybeFindFirstSellingPlan(props.payload)
   }
