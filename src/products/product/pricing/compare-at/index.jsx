@@ -10,12 +10,23 @@ function ProductPricesCompareAt({
   settings,
   productState,
 }) {
-  const ProductPricesCompareAtWrapperCSS = css``
+  function showSalePrice() {
+    if (
+      (compareAt &&
+        selectedVariant &&
+        selectedVariant.compareAtPrice.amount !==
+          selectedVariant.price.amount) ||
+      !productState.hasManyVariants
+    ) {
+      return true
+    }
 
+    return false
+  }
   return (
     <>
       <div className="swp-l-row swp-l-baseline swp-m-l-row">
-        {(compareAt && selectedVariant) || !productState.hasManyVariants ? (
+        {showSalePrice() ? (
           <ProductPriceSaleNotice
             fontSize={settings.pricingCompareAtTypeFontSize}
             color={settings.pricingCompareAtTypeSaleTextColor}
@@ -29,11 +40,8 @@ function ProductPricesCompareAt({
           prices={prices}
         />
 
-        {(compareAt && selectedVariant) || !productState.hasManyVariants ? (
-          <div
-            className="swp-pricing-compare-at wps-product-prices-compare-at"
-            css={ProductPricesCompareAtWrapperCSS}
-          >
+        {showSalePrice() ? (
+          <div className="swp-pricing-compare-at wps-product-prices-compare-at">
             <ProductPrice
               prices={prices}
               selectedVariant={selectedVariant}

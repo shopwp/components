@@ -50,41 +50,30 @@ function CartLineItem({ lineItem }) {
   const shopState = useShopState()
   const lineItemElement = useRef()
 
-  function findLineItemPrice() {
+  function findSalePrice() {
+    // If there are any discount codes used, prioritize
+    if (lineItem.discountAllocations.length) {
+      return lineItem.cost.subtotalAmount.amount
+    }
+
+    // Only use the sale price if a value is entered and it's greater than the normal price
     if (
-      !shopState.cartData.discountAllocations ||
-      shopState.cartData.discountAllocations.length === 0
+      lineItem.cost.compareAtAmountPerQuantity &&
+      lineItem.cost.compareAtAmountPerQuantity.amount !==
+        lineItem.cost.amountPerQuantity.amount
     ) {
-      return lineItem.cost.totalAmount.amount
+      return lineItem.cost.compareAtAmountPerQuantity.amount
     }
 
-    var regPrice = parseFloat(lineItem.cost.totalAmount.amount)
-
-    var finalDiscountAmount = shopState.cartData.discountAllocations.reduce(
-      (accumulator, currentValue) =>
-        accumulator + parseFloat(currentValue.discountedAmount.amount),
-      0
-    )
-
-    var adjusted = regPrice - finalDiscountAmount
-
-    if (adjusted < 0) {
-      return 0
-    }
-
-    return adjusted
+    // No sale price found
+    return false
   }
-
-  const lineItemTotal = findLineItemPrice()
 
   const regPrice = lineItem.cost.totalAmount
     ? lineItem.cost.totalAmount.amount
     : false
 
-  const salePrice = lineItem.discountAllocations.length
-    ? lineItem.cost.subtotalAmount.amount
-    : false
-  // const salePrice = false
+  const salePrice = findSalePrice()
 
   function hasRealVariant() {
     return lineItem.merchandise.title !== shopState.t.l.defaultTitle
@@ -204,17 +193,14 @@ function CartLineItem({ lineItem }) {
                         <span className="swp-lineitem-price-breakdown-label">
                           Price per item:
                         </span>
-                        <span className="swp-l-row swp-m-l-row swp-lineitem-price-breakdown-value">
-                          {lineItem.cost.compareAtAmountPerQuantity ? (
+                        <span
+                          className={`swp-l-row swp-m-l-row swp-l-flex swp-l-row-end swp-lineitem-price-breakdown-value`}
+                        >
+                          {salePrice ? (
                             <span className="swp-lineitem-was-price-wrap">
                               {shopState.t.l.was}
                               <span>
-                                <Price
-                                  price={
-                                    lineItem.cost.compareAtAmountPerQuantity
-                                      .amount
-                                  }
-                                />
+                                <Price price={salePrice} />
                               </span>
                             </span>
                           ) : null}
