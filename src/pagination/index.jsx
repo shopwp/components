@@ -18,7 +18,7 @@ function Pagination({
       wp.hooks.doAction("on.itemsLoad", payload)
       addFinishedLoadingClass()
     }
-  }, [])
+  }, [payload])
 
   return customPagination ? (
     children
