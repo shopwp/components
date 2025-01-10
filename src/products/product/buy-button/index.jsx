@@ -17,14 +17,10 @@ function ProductBuyButton() {
   return usePortal(
     <ProductBuyButtonProvider payload={productState.payload}>
       <div
-        className={
-          "swp-l-col swp-0" + settings.isSingleComponent
-            ? " swp-mb20 "
-            : "" +
-              " swp-component wps-component wps-component-products-buy-button"
-        }
+        className="swp-mb20 swp-buy-button-wrapper"
         aria-label="Product Buy Button"
         data-is-single-component={settings.isSingleComponent}
+        data-hide-variant-options={settings.hideVariantOptions}
       >
         <FilterHook name="before.productBuyButton" args={[productState]} />
         <ProductBuyButtonWrapper />

@@ -8,9 +8,15 @@ import {
 
 function ProductInitialState(props) {
   var selectedSubscription = false
+  var selectFirstVariant = props.settings.selectFirstVariant
   const variantIdFromURL = getURLParam("variant")
 
-  const preselectVariant = wp.hooks.applyFilters(
+  if (props.settings.selectVariant) {
+    var preselectVariant =
+      "gid://shopify/ProductVariant/" + props.settings.selectVariant
+  }
+
+  var preselectVariantFromFilter = wp.hooks.applyFilters(
     "product.preSelectVariantById",
     variantIdFromURL
       ? "gid://shopify/ProductVariant/" + variantIdFromURL
@@ -18,8 +24,17 @@ function ProductInitialState(props) {
     props.payload
   )
 
+  // Ensures backwards compatibility. Might want to think about removing filter.
+  if (preselectVariantFromFilter) {
+    preselectVariant = preselectVariantFromFilter
+  }
+
   if (props.settings.subscriptionsSelectOnLoad) {
     selectedSubscription = maybeFindFirstSellingPlan(props.payload)
+  }
+
+  if (preselectVariant) {
+    selectFirstVariant = false
   }
 
   return {
@@ -37,7 +52,7 @@ function ProductInitialState(props) {
     missingSelections: false,
     quantity: getInitialQuantity(props.settings),
     isModalOpen: false,
-    selectFirstVariant: props.settings.selectFirstVariant,
+    selectFirstVariant: selectFirstVariant,
     preSelectVariant: preselectVariant,
     defaultGalleryCarouselSettings: {
       carouselPrevArrow: props.settings.carouselPrevArrow,
