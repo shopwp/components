@@ -1,69 +1,66 @@
 import { usePortal } from "@shopwp/hooks"
 import { addCustomSizingToImageUrl } from "@shopwp/common"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
-import { useCollectionState } from "../_state/hooks"
 import Img from "../../../products/product/images/image/img"
 
 const Link = wp.element.lazy(() =>
   import(/* webpackChunkName: 'Link-public' */ "../../../link")
 )
 
-function CollectionImage() {
+function CollectionImage({ payload }) {
   const { useEffect, useRef, useState } = wp.element
-  const collectionState = useCollectionState()
   const settings = useSettingsState()
   const imageRef = useRef()
-
-  const [imageSrc, setImageSrc] = useState(() => {
-    return collectionState.payload.image
-      ? collectionState.payload.image.originalSrc
+  const [imageSrc, setImageSrc] = useState(
+    payload.image
+      ? payload.image.originalSrc
       : shopwp.misc.placeholderProductImage
-  })
+  )
 
   useEffect(() => {
     if (!imageSrc) {
       return
     }
 
-    if (
-      settings.collectionsImagesSizingToggle &&
-      collectionState.payload.image
-    ) {
-      setImageSrc(
-        addCustomSizingToImageUrl({
-          src: collectionState.payload.image.originalSrc,
-          width:
-            settings.collectionsImagesSizingWidth === 0
-              ? "auto"
-              : settings.collectionsImagesSizingWidth,
-          height:
-            settings.collectionsImagesSizingHeight === 0
-              ? "auto"
-              : settings.collectionsImagesSizingHeight,
-          crop: settings.collectionsImagesSizingCrop,
-          scale: settings.collectionsImagesSizingScale,
-        })
-      )
+    if (!payload.image) {
+      setImageSrc(shopwp.misc.placeholderProductImage)
+      return
     }
-  }, [settings])
+
+    setImageSrc(
+      addCustomSizingToImageUrl({
+        src: payload.image.originalSrc,
+        width:
+          settings.collectionsImagesSizingWidth === 0
+            ? "auto"
+            : settings.collectionsImagesSizingWidth,
+        height:
+          settings.collectionsImagesSizingHeight === 0
+            ? "auto"
+            : settings.collectionsImagesSizingHeight,
+        crop: settings.collectionsImagesSizingCrop,
+        scale: settings.collectionsImagesSizingScale,
+      })
+    )
+  }, [settings, payload.image])
 
   return usePortal(
     imageSrc ? (
       <div
         className="swp-mb20 swp-mw100 wps-component swp-collection-image wps-component-collection-image"
-        aria-label={collectionState.payload.title + " collection image"}
+        aria-label={payload.title + " collection image"}
       >
         <Link
           type="collections"
           linkTo={settings.collectionsLinkTo}
           manualLink={settings.collectionsLinkToUrl}
           target={settings.collectionsLinkTarget}
-          payload={collectionState.payload}
+          payload={payload}
         >
           <Img
-            payload={collectionState.payload}
+            payload={payload}
             imageRef={imageRef}
-            image={collectionState.payload.image}
+            image={payload.image}
             src={imageSrc}
             isFeatured={true}
             linkTo={settings.collectionsLinkTo}

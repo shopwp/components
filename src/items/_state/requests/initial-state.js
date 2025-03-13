@@ -60,19 +60,11 @@ function RequestsInitialState({
       }
     }
 
-    if (queryType === "collectionProducts") {
-      var query = queryParams?.collectionsQuery
-        ? queryParams.collectionsQuery
-        : settings?.collectionsQuery
-        ? settings.collectionsQuery
-        : false
-    } else {
-      var query = queryParams?.query
-        ? queryParams.query
-        : settings?.query
-        ? settings.query
-        : false
-    }
+    var query = queryParams?.query
+      ? queryParams.query
+      : settings?.query
+      ? settings.query
+      : false
 
     if (!query && collection_titles) {
       query = "collection:" + collection_titles
@@ -123,6 +115,12 @@ function RequestsInitialState({
     productVariantMetafields: productVariantMetafields,
   }
 
+  if (shopwp.general.syncByCollections.length) {
+    if (settings.ids) {
+      finalQueryParams.ids = settings.ids
+    }
+  }
+
   if (
     shopState.buyerIdentity.customerAccessToken &&
     shopState.buyerIdentity.customerAccessToken !== ""
@@ -151,7 +149,7 @@ function RequestsInitialState({
     initialFetch: true,
     nextQueryId: false,
     hasMoreItems: false,
-    isReplacing: false,
+    isReplacing: finalQueryParams.ids ? true : false,
     hasNextPage: false,
     hasPreviousPage: false,
     withProducts:

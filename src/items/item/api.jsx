@@ -2,6 +2,7 @@ import {
   fetchProducts,
   fetchProductsByCollections,
   fetchCollections,
+  fetchCollection,
   getTemplate,
   maybeHandleApiError,
   maybeAlterErrorMessage,
@@ -47,18 +48,32 @@ function useGetItemsQuery(setNotice) {
           onError(err)
         })
     } else if (requestsState.queryType === "collections") {
-      fetchCollections(
-        requestsState.queryParams,
-        shopState,
-        requestsState.cursor,
-        requestsState.withProducts
-      )
-        .then((response) => {
-          onSuccess(response)
-        })
-        .catch((err) => {
-          onError(err)
-        })
+      if (settings.collectionsId) {
+        fetchCollection(
+          requestsState.queryParams,
+          settings.collectionsId,
+          shopState
+        )
+          .then((response) => {
+            onSuccess(response)
+          })
+          .catch((err) => {
+            onError(err)
+          })
+      } else {
+        fetchCollections(
+          requestsState.queryParams,
+          shopState,
+          requestsState.cursor,
+          requestsState.withProducts
+        )
+          .then((response) => {
+            onSuccess(response)
+          })
+          .catch((err) => {
+            onError(err)
+          })
+      }
     } else {
       fetchProducts(requestsState.queryParams, shopState, requestsState.cursor)
         .then((response) => {
@@ -214,7 +229,7 @@ function useGetItemsQuery(setNotice) {
         })
       }
 
-      var toUpdate2 = {
+      const toUpdate = {
         items: newItems.edges,
         replace: requestsState.isReplacing,
         totalShown: totalShown,
@@ -226,7 +241,7 @@ function useGetItemsQuery(setNotice) {
 
       payloadDispatch({
         type: "UPDATE_PAYLOAD",
-        payload: toUpdate2,
+        payload: toUpdate,
       })
 
       shopDispatch({
@@ -234,10 +249,10 @@ function useGetItemsQuery(setNotice) {
         payload: true,
       })
 
-      if (lastItem) {
+      if (lastItem?.cursor) {
         requestsDispatch({
           type: "SET_CURSOR",
-          payload: lastItem.cursor,
+          payload: lastItem?.cursor,
         })
       }
 
@@ -254,22 +269,24 @@ function useGetItemsQuery(setNotice) {
           })
         }
       } else {
-        if (newItems.pageInfo.cursor) {
+        if (newItems.pageInfo) {
+          if (newItems.pageInfo.cursor) {
+            requestsDispatch({
+              type: "SET_CURSOR",
+              payload: newItems.pageInfo.cursor,
+            })
+          }
+
           requestsDispatch({
-            type: "SET_CURSOR",
-            payload: newItems.pageInfo.cursor,
+            type: "SET_HAS_NEXT_PAGE",
+            payload: newItems.pageInfo.hasNextPage,
+          })
+
+          requestsDispatch({
+            type: "SET_HAS_PREVIOUS_PAGE",
+            payload: newItems.pageInfo.hasPreviousPage,
           })
         }
-
-        requestsDispatch({
-          type: "SET_HAS_NEXT_PAGE",
-          payload: newItems.pageInfo.hasNextPage,
-        })
-
-        requestsDispatch({
-          type: "SET_HAS_PREVIOUS_PAGE",
-          payload: newItems.pageInfo.hasPreviousPage,
-        })
       }
     }
   }

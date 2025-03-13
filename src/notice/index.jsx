@@ -8,6 +8,7 @@ function Notice({
   isFetchingNew = false,
   className = false,
 }) {
+  // @ts-ignore
   const { useEffect } = wp.element
 
   useEffect(() => {

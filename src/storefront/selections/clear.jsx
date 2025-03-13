@@ -31,10 +31,12 @@ function StorefrontSelectionsClear() {
     })
 
     requestsDispatch({ type: "SET_IS_FETCHING_NEW", payload: true })
+
     storefrontDispatch({
       type: "SET_HAS_STOREFRONT_SELECTIONS",
       payload: false,
     })
+
     storefrontDispatch({ type: "SET_SEARCH_QUERY", payload: false })
   }
 

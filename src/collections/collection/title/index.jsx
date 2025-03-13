@@ -1,6 +1,5 @@
 import { usePortal } from "@shopwp/hooks"
 import { hasLink } from "@shopwp/common"
-import { useCollectionState } from "../_state/hooks"
 import { useSettingsState } from "../../../items/_state/settings/hooks"
 
 const Link = wp.element.lazy(() =>
@@ -19,14 +18,13 @@ function TitleContent({ payload, settings }) {
     </CustomHeading>
   )
 }
-function CollectionTitle() {
+function CollectionTitle({ payload }) {
   const settings = useSettingsState()
-  const collectionState = useCollectionState()
 
   return usePortal(
     <div
       className="wps-component wps-component-collection-title"
-      aria-label={collectionState.payload.title + " collection title"}
+      aria-label={payload.title + " collection title"}
     >
       {hasLink(settings) && !settings.collectionsIsSingular ? (
         <Link
@@ -34,12 +32,12 @@ function CollectionTitle() {
           linkTo={settings.collectionsLinkTo}
           manualLink={settings.collectionsLinkToUrl}
           target={settings.collectionsLinkTarget}
-          payload={collectionState.payload}
+          payload={payload}
         >
-          <TitleContent payload={collectionState.payload} settings={settings} />
+          <TitleContent payload={payload} settings={settings} />
         </Link>
       ) : (
-        <TitleContent payload={collectionState.payload} settings={settings} />
+        <TitleContent payload={payload} settings={settings} />
       )}
     </div>,
     settings.collectionsDropzoneCollectionTitle

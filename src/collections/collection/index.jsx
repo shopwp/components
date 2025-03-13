@@ -9,7 +9,6 @@ import CollectionProducts from "./products"
 
 function Collection(props) {
   const settings = useSettingsState()
-
   return (
     <li
       className={`swp-l-col swp-0 swp-mw100 ${itemWidthClass(
@@ -19,15 +18,15 @@ function Collection(props) {
       <CollectionProvider {...props}>
         {settings.collectionsExcludes &&
         settings.collectionsExcludes.includes("image") ? null : (
-          <CollectionImage />
+          <CollectionImage payload={props.payload} />
         )}
         {settings.collectionsExcludes &&
         settings.collectionsExcludes.includes("title") ? null : (
-          <CollectionTitle />
+          <CollectionTitle payload={props.payload} />
         )}
         {settings.collectionsExcludes &&
         settings.collectionsExcludes.includes("description") ? null : (
-          <CollectionDescription />
+          <CollectionDescription payload={props.payload} />
         )}
         {settings.collectionsExcludes &&
         settings.collectionsExcludes.includes("products") ? null : (

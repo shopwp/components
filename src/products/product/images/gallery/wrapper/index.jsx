@@ -29,16 +29,7 @@ function ProductGalleryWrapper() {
       >
         <ProductGalleryProvider payload={productState.payload}>
           <ProductGallery
-            carousel={
-              <ProductCarouselImages
-                settings={settings}
-                images={
-                  productState.payload.media
-                    ? productState.payload.media.edges
-                    : false
-                }
-              />
-            }
+            carousel={<ProductCarouselImages settings={settings} />}
           />
         </ProductGalleryProvider>
       </div>

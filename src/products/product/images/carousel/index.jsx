@@ -5,8 +5,8 @@ import ProductImage from "../image"
 import ProductGalleryContext from "../gallery/_state/context"
 import { useProductState } from "../../_state/hooks"
 
-function ProductCarouselImages({ images, settings }) {
-  const { useState, useContext } = wp.element
+function ProductCarouselImages({ settings }) {
+  const { useState, useContext, useEffect } = wp.element
   const [customChange, setCustomChange] = useState(false)
   const [, galleryDispatch] = useContext(ProductGalleryContext)
   const productState = useProductState()
@@ -26,6 +26,18 @@ function ProductCarouselImages({ images, settings }) {
     }
   }
 
+  useEffect(() => {
+    const foundIndex = productState.payload.media.edges.findIndex(
+      (image) =>
+        image.node.image.originalSrc ===
+        productState.selectedVariant.image?.originalSrc
+    )
+
+    if (foundIndex > -1) {
+      setCustomChange(foundIndex)
+    }
+  }, [productState.selectedVariant])
+
   return (
     <>
       <Carousel
@@ -39,7 +51,7 @@ function ProductCarouselImages({ images, settings }) {
         customChange={customChange}
         onSlideChange={onSlideChange}
       >
-        {images.map((image) => (
+        {productState.payload.media.edges.map((image) => (
           <div
             key={
               image.node.mediaContentType === "IMAGE"
